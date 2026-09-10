@@ -1,0 +1,108 @@
+{
+  "letter-spacing": {
+    "display": {
+      "$type": "number",
+      "$value": -2,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Display"
+      }
+    },
+    "h1": {
+      "$type": "number",
+      "$value": -2,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Heading/H1"
+      }
+    },
+    "h2": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Heading/H2"
+      }
+    },
+    "h3": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Heading/H3"
+      }
+    },
+    "h4": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Heading/H4"
+      }
+    },
+    "h5": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Heading/H5"
+      }
+    },
+    "h6": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Heading/H6"
+      }
+    },
+    "body-s": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Body/S"
+      }
+    },
+    "body-m": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Body/M"
+      }
+    },
+    "caption": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Caption"
+      }
+    },
+    "label-s": {
+      "$type": "number",
+      "$value": 10,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Label-S"
+      }
+    },
+    "label-m": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Label-M"
+      }
+    },
+    "quote": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "unit": "percent",
+        "com.figma.textStyle": "Quote"
+      }
+    }
+  }
+}

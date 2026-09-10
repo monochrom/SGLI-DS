@@ -1,0 +1,88 @@
+/* SGLI – Grid & Container
+   Figma Grid Styles: Desktop 12 / 24 / 40, Phone 12 / 8 / 16. Tablet 12 / 16 / 24 (Repo-Entscheidung).
+   Mobile first. Breakpoints: md 768 (Tablet), lg 1024 (Desktop), siehe dist/css/layout.css. */
+
+:root {
+  --grid-columns: var(--grid-phone-columns);
+  --grid-gutter: var(--grid-phone-gutter);
+  --grid-margin: var(--grid-phone-margin);
+  --container-max: var(--viewport-desktop); /* 1440, Figma-Artboard. Bei Bedarf anheben. */
+}
+@media (min-width: 768px) {
+  :root {
+    --grid-columns: var(--grid-tablet-columns);
+    --grid-gutter: var(--grid-tablet-gutter);
+    --grid-margin: var(--grid-tablet-margin);
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --grid-columns: var(--grid-desktop-columns);
+    --grid-gutter: var(--grid-desktop-gutter);
+    --grid-margin: var(--grid-desktop-margin);
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--grid-margin);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  row-gap: var(--grid-row-gap, var(--grid-gutter));
+}
+
+/* Spaltenbreiten: .col-span-N, ab Tablet .md\:col-span-N, ab Desktop .lg\:col-span-N */
+.col-span-1 { grid-column: span 1; }
+.col-span-2 { grid-column: span 2; }
+.col-span-3 { grid-column: span 3; }
+.col-span-4 { grid-column: span 4; }
+.col-span-5 { grid-column: span 5; }
+.col-span-6 { grid-column: span 6; }
+.col-span-7 { grid-column: span 7; }
+.col-span-8 { grid-column: span 8; }
+.col-span-9 { grid-column: span 9; }
+.col-span-10 { grid-column: span 10; }
+.col-span-11 { grid-column: span 11; }
+.col-span-12 { grid-column: span 12; }
+.col-span-full { grid-column: 1 / -1; }
+
+@media (min-width: 768px) {
+  .md\:col-span-1 { grid-column: span 1; }
+  .md\:col-span-2 { grid-column: span 2; }
+  .md\:col-span-3 { grid-column: span 3; }
+  .md\:col-span-4 { grid-column: span 4; }
+  .md\:col-span-5 { grid-column: span 5; }
+  .md\:col-span-6 { grid-column: span 6; }
+  .md\:col-span-7 { grid-column: span 7; }
+  .md\:col-span-8 { grid-column: span 8; }
+  .md\:col-span-9 { grid-column: span 9; }
+  .md\:col-span-10 { grid-column: span 10; }
+  .md\:col-span-11 { grid-column: span 11; }
+  .md\:col-span-12 { grid-column: span 12; }
+  .md\:col-start-2 { grid-column-start: 2; }
+  .md\:col-start-3 { grid-column-start: 3; }
+  .md\:col-start-4 { grid-column-start: 4; }
+}
+@media (min-width: 1024px) {
+  .lg\:col-span-1 { grid-column: span 1; }
+  .lg\:col-span-2 { grid-column: span 2; }
+  .lg\:col-span-3 { grid-column: span 3; }
+  .lg\:col-span-4 { grid-column: span 4; }
+  .lg\:col-span-5 { grid-column: span 5; }
+  .lg\:col-span-6 { grid-column: span 6; }
+  .lg\:col-span-7 { grid-column: span 7; }
+  .lg\:col-span-8 { grid-column: span 8; }
+  .lg\:col-span-9 { grid-column: span 9; }
+  .lg\:col-span-10 { grid-column: span 10; }
+  .lg\:col-span-11 { grid-column: span 11; }
+  .lg\:col-span-12 { grid-column: span 12; }
+  .lg\:col-start-2 { grid-column-start: 2; }
+  .lg\:col-start-3 { grid-column-start: 3; }
+  .lg\:col-start-4 { grid-column-start: 4; }
+}

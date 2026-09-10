@@ -1,0 +1,17 @@
+/* SGLI – Section Spacing
+   Figma Layout-Collection: section-spacing/y/{default,compact,none}, section-spacing/x/{default,none}.
+   Werte wechseln per Breakpoint in dist/css/layout.css. */
+
+.section {
+  padding-block: var(--section-spacing-y-default);
+  padding-inline: var(--section-spacing-x-default);
+}
+.section--compact {
+  padding-block: var(--section-spacing-y-compact);
+}
+.section--flush-y {
+  padding-block: var(--section-spacing-y-none);
+}
+.section--flush-x {
+  padding-inline: var(--section-spacing-x-none);
+}

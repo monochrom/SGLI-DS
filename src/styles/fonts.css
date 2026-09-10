@@ -1,0 +1,40 @@
+/* SGLI – Fonts (self-hosted, keine externen Requests)
+   Switzer: Fontshare Free Font License (assets/fonts/switzer/FFL.txt)
+   IBM Plex Mono: SIL Open Font License (assets/fonts/ibm-plex-mono/LICENSE.txt)
+   Pfade sind relativ zu src/styles/. In Craft auf den Asset-Pfad anpassen. */
+
+@font-face {
+  font-family: "Switzer";
+  src: url("../../assets/fonts/switzer/Switzer-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("../../assets/fonts/switzer/Switzer-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("../../assets/fonts/switzer/Switzer-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("../../assets/fonts/switzer/Switzer-SemiboldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../../assets/fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

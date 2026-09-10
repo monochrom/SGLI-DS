@@ -1,0 +1,14 @@
+{
+  "color": {
+    "bg": {
+      "inset": {
+        "$type": "color",
+        "$value": "{color.surface.300}"
+      },
+      "module": {
+        "$type": "color",
+        "$value": "{color.surface.200}"
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+/* SGLI – Base: Dokument, Elemente → Text Styles
+   Mapping HTML-Element → Figma Text Style. Utility-Klassen liegen in dist/css/text-styles.css. */
+
+html {
+  font-size: 100%; /* 16px Basis für rem */
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body-m);
+  line-height: var(--line-height-body-m);
+  letter-spacing: var(--letter-spacing-body-m);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-page);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-semibold);
+  text-wrap: balance;
+}
+h1 { font-size: var(--font-size-h1); line-height: var(--line-height-h1); letter-spacing: var(--letter-spacing-h1); }
+h2 { font-size: var(--font-size-h2); line-height: var(--line-height-h2); letter-spacing: var(--letter-spacing-h2); }
+h3 { font-size: var(--font-size-h3); line-height: var(--line-height-h3); letter-spacing: var(--letter-spacing-h3); }
+h4 { font-size: var(--font-size-h4); line-height: var(--line-height-h4); letter-spacing: var(--letter-spacing-h4); }
+h5 { font-size: var(--font-size-h5); line-height: var(--line-height-h5); letter-spacing: var(--letter-spacing-h5); }
+h6 { font-size: var(--font-size-h6); line-height: var(--line-height-h6); letter-spacing: var(--letter-spacing-h6); }
+
+p {
+  text-wrap: pretty;
+}
+
+small {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+blockquote {
+  font-size: var(--font-size-quote);
+  line-height: var(--line-height-quote);
+  letter-spacing: var(--letter-spacing-quote);
+}
+
+a {
+  color: var(--color-interactive);
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: from-font;
+}
+a:hover {
+  color: var(--color-interactive-hover);
+}
+
+hr {
+  border: 0;
+  border-top: var(--border-default) solid var(--color-divider-default);
+}
+
+::selection {
+  background-color: var(--color-accent-highlight);
+  color: var(--color-neutral-900);
+}
+
+/* Screenreader-only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

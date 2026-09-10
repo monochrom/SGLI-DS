@@ -1,0 +1,42 @@
+{
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": [
+          "Switzer",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$extensions": {
+          "com.figma.variable": "font-family/Switzer"
+        }
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "IBM Plex Mono",
+          "ui-monospace",
+          "monospace"
+        ],
+        "$extensions": {
+          "com.figma.variable": "font-family/IBM Plex Mono"
+        }
+      }
+    },
+    "weight": {
+      "regular": {
+        "$type": "fontWeight",
+        "$value": 400
+      },
+      "medium": {
+        "$type": "fontWeight",
+        "$value": 500
+      },
+      "semibold": {
+        "$type": "fontWeight",
+        "$value": 600
+      }
+    }
+  }
+}

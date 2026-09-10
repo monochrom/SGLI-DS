@@ -1,0 +1,10 @@
+{
+  "color": {
+    "bg": {
+      "module": {
+        "$type": "color",
+        "$value": "{color.surface.300}"
+      }
+    }
+  }
+}

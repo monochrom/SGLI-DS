@@ -1,0 +1,20 @@
+/* SGLI – Modul-Kontexte
+   Die 7 Figma Semantic-Modes sind Hintergrund-Kontexte für Module, keine Themes.
+   Ein Modul-Wrapper bekommt data-context="…", dist/css/contexts.css überschreibt darin
+   die semantischen Tokens. Ohne Attribut gilt surface-50 (Default aus tokens.css).
+
+   Kontexte: surface-50 (Default) · surface-100 · surface-200 · surface-300 · surface-400
+             primary-900 (invers, helle Schrift) · secondary-400 (Grün, dunkle Schrift) */
+
+[data-context] {
+  background-color: var(--color-bg-module);
+  color: var(--color-text-primary);
+}
+
+/* Flächen innerhalb eines Kontexts */
+.surface-card {
+  background-color: var(--color-bg-card);
+}
+.surface-inset {
+  background-color: var(--color-bg-inset);
+}

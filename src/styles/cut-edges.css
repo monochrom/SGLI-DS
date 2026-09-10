@@ -1,0 +1,72 @@
+/* SGLI – Cut-Edges („Der Schnitt“)
+   Figma Component-Set „cut-edges“ (Modules, 2072:9560): position = before | after, color = 7 Kontexte.
+   Geometrie aus Figma (Vector, Constraints SCALE, also proportional zur Breite):
+     before  1440 × 280  Polygon (0,0) (1440,280) (0,280)      → Diagonale, Modulfarbe unter der Linie, links hoch
+     after   1440 × 224  Polygon (0,0) (1152.5,224) (1440,0)   → asymmetrisches V, tiefster Punkt bei 80,03 % der Breite
+   Die Keile tragen color/bg/module des Kontexts, in dem sie stehen. Der Rest ist transparent,
+   dahinter liegt Page-Hintergrund oder das Nachbarmodul.
+
+   Markup:
+     <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after">
+       <div class="cut-edges__body section">…</div>
+     </section>
+   Der Wrapper selbst ist transparent, die Fläche liegt auf .cut-edges__body. */
+
+.cut-edges {
+  --cut-before-ratio: 1440 / 280;
+  --cut-after-ratio: 1440 / 224;
+  --cut-after-x: 80.03%;
+  position: relative;
+  background-color: transparent;
+}
+
+.cut-edges__body {
+  background-color: var(--color-bg-module);
+}
+
+.cut-edges--before::before,
+.cut-edges--after::after {
+  content: "";
+  display: block;
+  width: 100%;
+  background-color: var(--color-bg-module);
+  pointer-events: none;
+}
+
+.cut-edges--before::before {
+  aspect-ratio: var(--cut-before-ratio);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.cut-edges--after::after {
+  aspect-ratio: var(--cut-after-ratio);
+  clip-path: polygon(0 0, var(--cut-after-x) 100%, 100% 0);
+}
+
+/* Entschieden 2026-09-10: Keile belegen eigenen Platz (rechteckiger Container, Höhe = Shape-Höhe).
+   Die Overlap-Variante unten bleibt ungenutzt, bis Danilo die Module gesondert brieft (weitere
+   Funktionalität hinter den Cut-Edges, siehe PLAN.md To-dos). */
+.cut-edges--overlap {
+  z-index: 1;
+}
+.cut-edges--overlap.cut-edges--before {
+  margin-top: calc(-100% / (1440 / 280));
+}
+.cut-edges--overlap.cut-edges--after {
+  margin-bottom: calc(-100% / (1440 / 224));
+}
+
+/* Standalone-Element, falls ein Keil ohne Wrapper gebraucht wird */
+.cut-edge {
+  display: block;
+  width: 100%;
+  background-color: var(--color-bg-module);
+}
+.cut-edge--before {
+  aspect-ratio: 1440 / 280;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+.cut-edge--after {
+  aspect-ratio: 1440 / 224;
+  clip-path: polygon(0 0, 80.03% 100%, 100% 0);
+}

@@ -1,0 +1,16 @@
+{
+  "border": {
+    "default": {
+      "$type": "dimension",
+      "$value": "1px"
+    },
+    "focus-inner": {
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "focus-outer": {
+      "$type": "dimension",
+      "$value": "4px"
+    }
+  }
+}

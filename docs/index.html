@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGLI Design System – Foundations</title>
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <style>
+    /* Nur Doku-Layout, kein Teil des Design Systems */
+    .doc-nav { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-bg-card); border-bottom: var(--border-default) solid var(--color-divider-default); }
+    .doc-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-16); padding: var(--space-12) var(--grid-margin); list-style: none; margin: 0; }
+    .doc-nav a { text-decoration: none; }
+    .doc-section { padding-block: var(--space-64); border-bottom: var(--border-default) solid var(--color-divider-default); }
+    .doc-section > h2 { margin-bottom: var(--space-24); }
+    .doc-section > p { max-width: 70ch; margin-bottom: var(--space-24); color: var(--color-text-secondary); }
+    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-12); }
+    .swatch { border: var(--border-default) solid var(--color-divider-default); border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg-card); }
+    .swatch__color { height: 64px; }
+    .swatch__meta { padding: var(--space-8) var(--space-10); font-size: var(--font-size-caption); line-height: var(--line-height-caption); }
+    .swatch__meta strong { display: block; font-weight: var(--font-weight-semibold); overflow-wrap: anywhere; }
+    .swatch__meta span { color: var(--color-text-secondary); }
+    table.doc-table { border-collapse: collapse; width: 100%; font-size: var(--font-size-body-s); line-height: var(--line-height-body-s); }
+    .doc-table th, .doc-table td { text-align: left; padding: var(--space-8) var(--space-10); border-bottom: var(--border-default) solid var(--color-divider-default); vertical-align: top; }
+    .doc-table th { font-weight: var(--font-weight-semibold); }
+    .doc-table code { font-family: var(--font-family-mono); font-size: 0.85em; }
+    .ok { color: var(--color-feedback-success); font-weight: var(--font-weight-semibold); }
+    .fail { color: var(--color-feedback-error); font-weight: var(--font-weight-semibold); }
+    .type-row { display: grid; grid-template-columns: 160px 1fr; gap: var(--space-24); align-items: baseline; padding-block: var(--space-16); border-bottom: var(--border-default) solid var(--color-divider-default); }
+    .type-row small { color: var(--color-text-secondary); display: block; }
+    .space-row { display: flex; align-items: center; gap: var(--space-16); padding-block: var(--space-4); }
+    .space-row .bar { height: 16px; background: var(--color-interactive); }
+    .space-row code { width: 120px; }
+    .ctx-demo { display: grid; gap: var(--space-16); }
+    .ctx-demo .module { padding: var(--space-24); border-radius: var(--radius-md); }
+    .ctx-demo .module .row { display: flex; flex-wrap: wrap; gap: var(--space-12); align-items: center; margin-top: var(--space-12); }
+    .ctx-demo .chip-demo { padding: var(--space-4) var(--space-12); border: var(--border-default) solid var(--color-border-default); border-radius: var(--radius-full); font-size: var(--font-size-label-m); }
+    .ctx-demo .btn-demo { padding: var(--space-10) var(--space-20); border-radius: var(--radius-full); background: var(--color-button-primary-bg); color: var(--color-button-primary-fg); font-weight: var(--font-weight-semibold); }
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--space-12); }
+    .icon-grid .cell { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); padding: var(--space-16); background: var(--color-bg-card); border-radius: var(--radius-md); font-size: var(--font-size-caption); text-align: center; overflow-wrap: anywhere; }
+    .grid-demo .col { background: var(--color-primary-100); text-align: center; padding: var(--space-8) 0; font-size: var(--font-size-caption); border-radius: var(--radius-sm); }
+    .bp-table td:nth-child(2) { font-family: var(--font-family-mono); }
+    .focus-demo { display: flex; flex-wrap: wrap; gap: var(--space-16); }
+    .focus-demo button, .focus-demo a, .focus-demo input { padding: var(--space-10) var(--space-16); border: var(--border-default) solid var(--color-border-default); border-radius: var(--radius-sm); background: var(--color-bg-card); }
+    .cut-demo { display: grid; gap: 0; }
+  </style>
+</head>
+<body>
+  <nav class="doc-nav" aria-label="Abschnitte">
+    <ul>
+      <li><a href="#colors">Farben</a></li>
+      <li><a href="#contexts">Kontexte</a></li>
+      <li><a href="#contrast">Kontrast</a></li>
+      <li><a href="#typography">Typografie</a></li>
+      <li><a href="#spacing">Spacing</a></li>
+      <li><a href="#layout">Layout &amp; Breakpoints</a></li>
+      <li><a href="#focus">Fokus</a></li>
+      <li><a href="#icons">Icons</a></li>
+      <li><a href="#cut-edges">Cut-Edges</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <header class="doc-section">
+      <p class="text-label-s">SGLI Design System · Foundations</p>
+      <h1>Foundations</h1>
+      <p>Alle Werte kommen aus <code>dist/css</code>, generiert aus den Figma-Tokens. Diese Seite liest <code>dist/json/tokens.flat.json</code> und <code>dist/icons/icons.json</code>, sie aktualisiert sich mit jedem Build. Lokal starten mit <code>npm run docs</code>.</p>
+    </header>
+
+    <section id="colors" class="doc-section">
+      <h2>Farben (Primitives)</h2>
+      <p>Skalen neutral, primary, secondary, surface, accent und feedback. Alpha-Werte werden auf der Doku-Fläche komponiert dargestellt.</p>
+      <div id="color-groups"></div>
+    </section>
+
+    <section id="contexts" class="doc-section">
+      <h2>Kontexte (Semantic-Modes)</h2>
+      <p>Ein Modul bekommt <code>data-context</code>. Alle semantischen Tokens stellen sich darauf ein. Ohne Attribut gilt surface-50.</p>
+      <div class="ctx-demo" id="ctx-demo"></div>
+    </section>
+
+    <section id="contrast" class="doc-section">
+      <h2>Kontrast-Matrix (WCAG 2.2 AA)</h2>
+      <p>Berechnet aus den Tokens je Kontext. Text 4.5:1, UI-Elemente und Icons 3:1. Verstöße werden in Figma korrigiert, nicht im Code (siehe <code>npm run tokens:lint</code>).</p>
+      <div style="overflow-x:auto"><table class="doc-table" id="contrast-table"></table></div>
+    </section>
+
+    <section id="typography" class="doc-section">
+      <h2>Typografie</h2>
+      <p>13 Text Styles aus Figma. Größen mobile first mit Tablet ab 768 px und Desktop ab 1024 px. Fenster verkleinern, um die Stufen zu sehen.</p>
+      <div id="type-specimens"></div>
+    </section>
+
+    <section id="spacing" class="doc-section">
+      <h2>Spacing, Radius, Border, Size</h2>
+      <div id="spacing"></div>
+    </section>
+
+    <section id="layout" class="doc-section">
+      <h2>Layout &amp; Breakpoints</h2>
+      <p>12-Spalten-Grid mit Gutter und Margin je Breakpoint. Section-Spacing aus der Figma Layout-Collection.</p>
+      <table class="doc-table bp-table" id="bp-table"></table>
+      <h3 style="margin-top:var(--space-32)">Grid</h3>
+      <div class="grid grid-demo" style="margin-top:var(--space-16)">
+        <div class="col col-span-12 md:col-span-6 lg:col-span-4">12 · md 6 · lg 4</div>
+        <div class="col col-span-12 md:col-span-6 lg:col-span-4">12 · md 6 · lg 4</div>
+        <div class="col col-span-12 md:col-span-12 lg:col-span-4">12 · md 12 · lg 4</div>
+        <div class="col col-span-6 lg:col-span-3">6 · lg 3</div>
+        <div class="col col-span-6 lg:col-span-3">6 · lg 3</div>
+        <div class="col col-span-6 lg:col-span-3">6 · lg 3</div>
+        <div class="col col-span-6 lg:col-span-3">6 · lg 3</div>
+      </div>
+    </section>
+
+    <section id="focus" class="doc-section">
+      <h2>Fokus</h2>
+      <p>Doppelter Ring: innen 2 px, außen 4 px. Mit Tab durch die Elemente gehen. Unten der invertierte Kontext.</p>
+      <div class="focus-demo">
+        <button type="button">Button</button>
+        <a href="#focus">Link</a>
+        <input type="text" placeholder="Input" aria-label="Beispiel-Eingabe">
+      </div>
+      <div class="focus-demo" data-context="primary-900" style="margin-top:var(--space-16); padding: var(--space-24); border-radius: var(--radius-md)">
+        <button type="button">Button</button>
+        <a href="#focus">Link</a>
+      </div>
+    </section>
+
+    <section id="icons" class="doc-section">
+      <h2>Icons</h2>
+      <p>Alle im Design genutzten Icons (Phosphor Regular, 32er Raster) plus die vier Custom-Carets. Sprite unter <code>dist/icons/sprite.svg</code>, Größen sm 16 / md 20 / lg 24.</p>
+      <div class="icon-grid" id="icon-grid"></div>
+    </section>
+
+    <section id="cut-edges" class="doc-section">
+      <h2>Cut-Edges</h2>
+      <p>„Der Schnitt“: Keile in Modulfarbe oben (Diagonale) und unten (asymmetrisches V). Geometrie 1:1 aus Figma, proportional zur Breite.</p>
+      <div class="cut-demo">
+        <section data-context="surface-300" class="cut-edges cut-edges--after"><div class="cut-edges__body section section--compact"><h3>surface-300, after</h3></div></section>
+        <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after"><div class="cut-edges__body section section--compact"><h3>primary-900, before + after</h3><p>Fließtext auf invertiertem Kontext.</p></div></section>
+        <section data-context="secondary-400" class="cut-edges cut-edges--before"><div class="cut-edges__body section section--compact"><h3>secondary-400, before</h3></div></section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const CONTEXTS = ['surface-50','surface-100','surface-200','surface-300','surface-400','primary-900','secondary-400'];
+    const el = (tag, attrs = {}, html = '') => { const n = document.createElement(tag); Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v)); n.innerHTML = html; return n; };
+
+    async function main() {
+      const tokens = await (await fetch('../dist/json/tokens.flat.json')).json();
+      const icons = await (await fetch('../dist/icons/icons.json')).json();
+      renderColors(tokens); renderContexts(); renderContrast(tokens); renderType(tokens); renderSpacing(tokens); renderBreakpoints(tokens); renderIcons(icons);
+    }
+
+    function renderColors(tokens) {
+      const groups = {};
+      for (const [name, t] of Object.entries(tokens)) {
+        if (t.type !== 'color' || !t.file.startsWith('tokens/primitives')) continue;
+        const g = t.path.slice(0, 2).join('/') + (t.path[2] === 'alpha' ? '/alpha' : '');
+        (groups[g] = groups[g] || []).push([name, t]);
+      }
+      const root = document.getElementById('color-groups');
+      for (const [g, list] of Object.entries(groups)) {
+        root.append(el('h3', { style: 'margin:var(--space-24) 0 var(--space-12)' }, g));
+        const grid = el('div', { class: 'doc-grid' });
+        for (const [name, t] of list) grid.append(el('div', { class: 'swatch' }, `<div class="swatch__color" style="background:${t.value}"></div><div class="swatch__meta"><strong>--${name}</strong><span>${t.value}</span></div>`));
+        root.append(grid);
+      }
+    }
+
+    function renderContexts() {
+      const root = document.getElementById('ctx-demo');
+      for (const c of CONTEXTS) root.append(el('div', { class: 'module', 'data-context': c }, `
+        <p class="text-label-s">data-context="${c}"</p>
+        <h3>Überschrift im Kontext</h3>
+        <p>Fließtext in <span style="color:var(--color-text-primary)">text/primary</span>, <span style="color:var(--color-text-secondary)">text/secondary</span> und <a href="#contexts">ein Link</a>.</p>
+        <div class="row"><span class="btn-demo">Button Primary</span><span class="chip-demo">Chip</span><span class="surface-card" style="padding:var(--space-8) var(--space-12);border-radius:var(--radius-sm)">bg/card</span><span class="surface-inset" style="padding:var(--space-8) var(--space-12);border-radius:var(--radius-sm)">bg/inset</span></div>`));
+    }
+
+    // --- Kontrast ---
+    const hexToRgba = (hex) => { const h = hex.replace('#',''); const n = parseInt(h.slice(0,6),16); const a = h.length === 8 ? parseInt(h.slice(6,8),16)/255 : 1; return { r:(n>>16)&255, g:(n>>8)&255, b:n&255, a }; };
+    const comp = (f,b) => ({ r:f.r*f.a+b.r*(1-f.a), g:f.g*f.a+b.g*(1-f.a), b:f.b*f.a+b.b*(1-f.a) });
+    const lum = ({r,g,b}) => { const f = c => { c/=255; return c<=0.03928?c/12.92:((c+0.055)/1.055)**2.4 }; return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b) };
+    const ratio = (fg,bg) => { const B=hexToRgba(bg), F=comp(hexToRgba(fg),B); const [l1,l2]=[lum(F),lum(B)].sort((a,b)=>b-a); return (l1+0.05)/(l2+0.05) };
+    const PAIRS = [
+      ['color-text-primary','color-bg-module',4.5,'Text auf Modul'],['color-text-secondary','color-bg-module',4.5,'Sekundärtext auf Modul'],
+      ['color-text-primary','color-bg-card',4.5,'Text auf Card'],['color-text-primary','color-bg-inset',4.5,'Text auf Inset'],
+      ['color-interactive','color-bg-module',4.5,'Link'],['color-interactive-secondary','color-bg-module',4.5,'Link sekundär'],
+      ['color-button-primary-fg','color-button-primary-bg',4.5,'Button Primary'],['color-button-secondary-fg','color-bg-module',4.5,'Button Secondary'],
+      ['color-chip-fg','color-bg-module',4.5,'Chip'],['color-chip-fg-active','color-chip-bg-active',4.5,'Chip aktiv'],
+      ['color-icon-primary','color-bg-module',3,'Icon'],['color-border-default','color-bg-module',3,'Rahmen'],['color-border-focus-outer','color-bg-module',3,'Fokusring'],
+      ['color-toggle-track-off','color-bg-module',3,'Toggle aus'],['color-feedback-error','color-bg-module',4.5,'Fehlertext'],
+    ];
+    function renderContrast(tokens) {
+      // Werte je Kontext aus dem gerenderten CSS lesen (contexts.css ist die Wahrheit im Browser)
+      const probe = el('div'); document.body.append(probe);
+      const valueIn = (ctx, name) => { probe.setAttribute('data-context', ctx); const v = getComputedStyle(probe).getPropertyValue('--' + name).trim(); return resolveVar(v, ctx); };
+      const resolveVar = (v, ctx) => { const m = v.match(/^var\(--([^)]+)\)$/); return m ? valueIn(ctx, m[1]) : v; };
+      const table = document.getElementById('contrast-table');
+      table.append(el('thead', {}, `<tr><th>Paar</th>${CONTEXTS.map(c => `<th>${c}</th>`).join('')}</tr>`));
+      const tb = el('tbody');
+      for (const [fg, bg, min, label] of PAIRS) {
+        const cells = CONTEXTS.map(c => { const f = valueIn(c, fg), b = valueIn(c, bg); if (!f || !b) return '<td>–</td>'; const r = ratio(f, b); return `<td class="${r >= min ? 'ok' : 'fail'}" title="${f} auf ${b}">${r.toFixed(2)}</td>`; }).join('');
+        tb.append(el('tr', {}, `<td>${label}<br><small style="color:var(--color-text-secondary)">min ${min}:1</small></td>${cells}`));
+      }
+      table.append(tb); probe.remove();
+    }
+
+    function renderType(tokens) {
+      const root = document.getElementById('type-specimens');
+      const styles = ['display','h1','h2','h3','h4','h5','h6','body-m','body-s','caption','label-m','label-s','quote'];
+      const figma = { display:'Display', h1:'Heading/H1', h2:'Heading/H2', h3:'Heading/H3', h4:'Heading/H4', h5:'Heading/H5', h6:'Heading/H6', 'body-m':'Body/M', 'body-s':'Body/S', caption:'Caption', 'label-m':'Label-M', 'label-s':'Label-S', quote:'Quote' };
+      for (const s of styles) {
+        const lh = tokens['line-height-' + s]?.value, ls = tokens['letter-spacing-' + s]?.value;
+        root.append(el('div', { class: 'type-row' }, `<div><code>.text-${s}</code><small>${figma[s]}</small><small>LH ${lh} · LS ${ls}</small><small class="live" data-style="${s}"></small></div><div class="text-${s}">Gedenkstätte Lindenstraße</div>`));
+      }
+      const update = () => root.querySelectorAll('.live').forEach(n => { const cs = getComputedStyle(root.querySelector('.text-' + n.dataset.style)); n.textContent = `${parseFloat(cs.fontSize)}px · ${cs.fontWeight} · ${cs.fontFamily.split(',')[0].replace(/"/g,'')}`; });
+      update(); addEventListener('resize', update);
+    }
+
+    function renderSpacing(tokens) {
+      const root = document.getElementById('spacing');
+      const groups = [['space','Space'],['radius','Radius'],['border','Border'],['size','Size']];
+      for (const [prefix, title] of groups) {
+        root.append(el('h3', { style: 'margin:var(--space-24) 0 var(--space-12)' }, title));
+        for (const [name, t] of Object.entries(tokens)) {
+          if (t.path[0] !== prefix) continue;
+          const px = parseFloat(t.value);
+          root.append(el('div', { class: 'space-row' }, `<code>--${name}</code><div class="bar" style="width:${Math.min(px, 400)}px;${prefix==='radius'?`border-radius:${t.value};width:48px;height:48px`:''}"></div><span>${t.value}</span>`));
+        }
+      }
+    }
+
+    function renderBreakpoints(tokens) {
+      const t = document.getElementById('bp-table');
+      t.innerHTML = `<thead><tr><th>Breakpoint</th><th>min-width</th><th>Figma-Mode</th><th>Grid</th><th>section-spacing y / x</th></tr></thead>`;
+      const rows = [
+        ['(Basis)', '0', 'Phone', `${tokens['grid-phone-columns'].value} / ${tokens['grid-phone-gutter'].value} / ${tokens['grid-phone-margin'].value}`, '64 / 16'],
+        ['sm', tokens['breakpoint-sm'].value, '–', 'wie Basis', 'wie Basis'],
+        ['md', tokens['breakpoint-md'].value, 'Tablet', `${tokens['grid-tablet-columns'].value} / ${tokens['grid-tablet-gutter'].value} / ${tokens['grid-tablet-margin'].value}`, '96 / 24'],
+        ['lg', tokens['breakpoint-lg'].value, 'Desktop', `${tokens['grid-desktop-columns'].value} / ${tokens['grid-desktop-gutter'].value} / ${tokens['grid-desktop-margin'].value}`, '112 / 40'],
+        ['xl', tokens['breakpoint-xl'].value, '–', 'wie lg', 'wie lg'],
+        ['2xl', tokens['breakpoint-2xl'].value, '– (Artboard)', 'wie lg', 'wie lg'],
+      ];
+      const tb = el('tbody'); rows.forEach(r => tb.append(el('tr', {}, r.map(c => `<td>${c}</td>`).join('')))); t.append(tb);
+    }
+
+    function renderIcons(icons) {
+      const root = document.getElementById('icon-grid');
+      for (const n of icons) root.append(el('div', { class: 'cell' }, `<svg class="icon icon--lg" aria-hidden="true"><use href="../dist/icons/sprite.svg#icon-${n}"></use></svg><span>${n}</span>`));
+    }
+
+    main().catch(e => { document.querySelector('main').prepend(el('p', { class: 'fail' }, 'Konnte dist/ nicht laden. Bitte npm run build und npm run docs ausführen. ' + e)); });
+  </script>
+</body>
+</html>

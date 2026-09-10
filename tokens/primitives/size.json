@@ -1,0 +1,38 @@
+{
+  "size": {
+    "control": {
+      "sm": {
+        "$type": "dimension",
+        "$value": "36px"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "44px"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "52px"
+      }
+    },
+    "icon": {
+      "sm": {
+        "$type": "dimension",
+        "$value": "16px"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "20px"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "24px"
+      }
+    },
+    "touch": {
+      "min": {
+        "$type": "dimension",
+        "$value": "44px"
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+/* SGLI Design System – generiert aus tokens/ (Quelle: Figma „SGLI – Design“). Nicht von Hand ändern. */
+/* Semantic-Modes als Modul-Kontexte. Default (surface-50) steht in tokens.css. */
+
+/* Figma Semantic-Mode surface-100 */
+[data-context="surface-100"] {
+  --color-bg-inset: var(--color-surface-200);
+  --color-bg-module: var(--color-surface-100);
+}
+
+/* Figma Semantic-Mode surface-200 */
+[data-context="surface-200"] {
+  --color-bg-inset: var(--color-surface-300);
+  --color-bg-module: var(--color-surface-200);
+}
+
+/* Figma Semantic-Mode surface-300 */
+[data-context="surface-300"] {
+  --color-bg-module: var(--color-surface-300);
+}
+
+/* Figma Semantic-Mode surface-400 */
+[data-context="surface-400"] {
+  --color-bg-module: var(--color-surface-400);
+}
+
+/* Figma Semantic-Mode primary-900 */
+[data-context="primary-900"] {
+  --color-text-primary: var(--color-neutral-0);
+  --color-text-secondary: var(--color-neutral-300);
+  --color-bg-card: var(--color-primary-800);
+  --color-bg-inset: var(--color-primary-700);
+  --color-bg-module: var(--color-primary-900);
+  --color-divider-default: var(--color-neutral-alpha-0-40);
+  --color-border-default: var(--color-neutral-0);
+  --color-border-focus-inner: var(--color-primary-700);
+  --color-border-focus-outer: var(--color-neutral-0);
+  --color-interactive: var(--color-secondary-300);
+  --color-interactive-hover: var(--color-secondary-200);
+  --color-interactive-secondary: var(--color-secondary-300);
+  --color-interactive-secondary-hover: var(--color-secondary-200);
+  --color-feedback-error: var(--color-error-bg);
+  --color-feedback-error-bg: var(--color-error-dark);
+  --color-feedback-success: var(--color-success-bg);
+  --color-feedback-success-bg: var(--color-success-dark);
+  --color-feedback-warning: var(--color-warning-bg);
+  --color-feedback-warning-bg: var(--color-warning-dark);
+  --color-feedback-info: var(--color-primary-100);
+  --color-feedback-info-bg: var(--color-primary-600);
+  --color-icon-primary: var(--color-neutral-0);
+  --color-button-primary-bg: var(--color-neutral-0);
+  --color-button-primary-bg-hover: var(--color-neutral-200);
+  --color-button-primary-bg-pressed: var(--color-neutral-300);
+  --color-button-primary-fg: var(--color-primary-900);
+  --color-button-secondary-fg: var(--color-neutral-0);
+  --color-button-secondary-fg-hover: var(--color-primary-200);
+  --color-button-secondary-fg-pressed: var(--color-primary-300);
+  --color-button-icon-border: var(--color-neutral-0);
+  --color-button-icon-bg-hover: var(--color-neutral-alpha-0-5);
+  --color-button-icon-bg-pressed: var(--color-neutral-alpha-0-10);
+  --color-button-icon-fg: var(--color-neutral-0);
+  --color-toggle-track-off: var(--color-neutral-alpha-0-40);
+  --color-toggle-track-on: var(--color-neutral-0);
+  --color-toggle-thumb: var(--color-neutral-900);
+  --color-chip-bg: var(--color-neutral-alpha-0-0);
+  --color-chip-bg-hover: var(--color-neutral-alpha-0-10);
+  --color-chip-bg-active: var(--color-neutral-0);
+  --color-chip-fg: var(--color-neutral-0);
+  --color-chip-fg-active: var(--color-primary-900);
+  --color-chip-badge-bg: var(--color-neutral-alpha-0-10);
+  --color-chip-badge-bg-active: var(--color-neutral-alpha-900-20);
+  --color-chip-badge-fg: var(--color-neutral-0);
+  --color-chip-badge-fg-active: var(--color-primary-900);
+}
+
+/* Figma Semantic-Mode secondary-400 */
+[data-context="secondary-400"] {
+  --color-bg-inset: var(--color-neutral-100);
+  --color-bg-module: var(--color-secondary-400);
+}

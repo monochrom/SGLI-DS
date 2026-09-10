@@ -1,0 +1,16 @@
+{
+  "viewport": {
+    "phone": {
+      "$type": "dimension",
+      "$value": "375px"
+    },
+    "tablet": {
+      "$type": "dimension",
+      "$value": "768px"
+    },
+    "desktop": {
+      "$type": "dimension",
+      "$value": "1440px"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "font-size": {
+    "display": {
+      "$type": "dimension",
+      "$value": "112px"
+    },
+    "h2": {
+      "$type": "dimension",
+      "$value": "48px"
+    },
+    "h3": {
+      "$type": "dimension",
+      "$value": "32px"
+    },
+    "h4": {
+      "$type": "dimension",
+      "$value": "24px"
+    },
+    "h5": {
+      "$type": "dimension",
+      "$value": "20px"
+    },
+    "quote": {
+      "$type": "dimension",
+      "$value": "32px"
+    }
+  }
+}

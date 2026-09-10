@@ -1,0 +1,186 @@
+{
+  "text-style": {
+    "display": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.semibold}",
+        "fontSize": "{font-size.display}",
+        "lineHeight": "{line-height.display}",
+        "letterSpacing": "{letter-spacing.display}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Display",
+        "textTransform": "none"
+      }
+    },
+    "h1": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.semibold}",
+        "fontSize": "{font-size.h1}",
+        "lineHeight": "{line-height.h1}",
+        "letterSpacing": "{letter-spacing.h1}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Heading/H1",
+        "textTransform": "none"
+      }
+    },
+    "h2": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.semibold}",
+        "fontSize": "{font-size.h2}",
+        "lineHeight": "{line-height.h2}",
+        "letterSpacing": "{letter-spacing.h2}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Heading/H2",
+        "textTransform": "none"
+      }
+    },
+    "h3": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.semibold}",
+        "fontSize": "{font-size.h3}",
+        "lineHeight": "{line-height.h3}",
+        "letterSpacing": "{letter-spacing.h3}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Heading/H3",
+        "textTransform": "none"
+      }
+    },
+    "h4": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.semibold}",
+        "fontSize": "{font-size.h4}",
+        "lineHeight": "{line-height.h4}",
+        "letterSpacing": "{letter-spacing.h4}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Heading/H4",
+        "textTransform": "none"
+      }
+    },
+    "h5": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.semibold}",
+        "fontSize": "{font-size.h5}",
+        "lineHeight": "{line-height.h5}",
+        "letterSpacing": "{letter-spacing.h5}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Heading/H5",
+        "textTransform": "none"
+      }
+    },
+    "h6": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.semibold}",
+        "fontSize": "{font-size.h6}",
+        "lineHeight": "{line-height.h6}",
+        "letterSpacing": "{letter-spacing.h6}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Heading/H6",
+        "textTransform": "none"
+      }
+    },
+    "body-m": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.regular}",
+        "fontSize": "{font-size.body-m}",
+        "lineHeight": "{line-height.body-m}",
+        "letterSpacing": "{letter-spacing.body-m}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Body/M",
+        "textTransform": "none"
+      }
+    },
+    "body-s": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.regular}",
+        "fontSize": "{font-size.body-s}",
+        "lineHeight": "{line-height.body-s}",
+        "letterSpacing": "{letter-spacing.body-s}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Body/S",
+        "textTransform": "none"
+      }
+    },
+    "caption": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.regular}",
+        "fontSize": "{font-size.caption}",
+        "lineHeight": "{line-height.caption}",
+        "letterSpacing": "{letter-spacing.caption}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Caption",
+        "textTransform": "none"
+      }
+    },
+    "label-m": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.regular}",
+        "fontSize": "{font-size.label-m}",
+        "lineHeight": "{line-height.label-m}",
+        "letterSpacing": "{letter-spacing.label-m}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Label-M",
+        "textTransform": "none"
+      }
+    },
+    "label-s": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.mono}",
+        "fontWeight": "{font.weight.medium}",
+        "fontSize": "{font-size.label-s}",
+        "lineHeight": "{line-height.label-s}",
+        "letterSpacing": "{letter-spacing.label-s}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Label-S",
+        "textTransform": "uppercase"
+      }
+    },
+    "quote": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontWeight": "{font.weight.regular}",
+        "fontSize": "{font-size.quote}",
+        "lineHeight": "{line-height.quote}",
+        "letterSpacing": "{letter-spacing.quote}"
+      },
+      "$extensions": {
+        "com.figma.textStyle": "Quote",
+        "textTransform": "none"
+      }
+    }
+  }
+}

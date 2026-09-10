@@ -1,0 +1,2365 @@
+{
+  "border-default": {
+    "value": "1px",
+    "type": "dimension",
+    "path": [
+      "border",
+      "default"
+    ],
+    "original": "1px",
+    "file": "tokens/primitives/border.json"
+  },
+  "border-focus-inner": {
+    "value": "2px",
+    "type": "dimension",
+    "path": [
+      "border",
+      "focus-inner"
+    ],
+    "original": "2px",
+    "file": "tokens/primitives/border.json"
+  },
+  "border-focus-outer": {
+    "value": "4px",
+    "type": "dimension",
+    "path": [
+      "border",
+      "focus-outer"
+    ],
+    "original": "4px",
+    "file": "tokens/primitives/border.json"
+  },
+  "color-neutral-0": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "0"
+    ],
+    "original": "#fffdf9",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-50": {
+    "value": "#faf9f5",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "50"
+    ],
+    "original": "#faf9f5",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-100": {
+    "value": "#f2f0ec",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "100"
+    ],
+    "original": "#f2f0ec",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-200": {
+    "value": "#e4e2de",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "200"
+    ],
+    "original": "#e4e2de",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-300": {
+    "value": "#c8c6c3",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "300"
+    ],
+    "original": "#c8c6c3",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-400": {
+    "value": "#8f8d89",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "400"
+    ],
+    "original": "#8f8d89",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-500": {
+    "value": "#75736f",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "500"
+    ],
+    "original": "#75736f",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-600": {
+    "value": "#565450",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "600"
+    ],
+    "original": "#565450",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-700": {
+    "value": "#3d3b38",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "700"
+    ],
+    "original": "#3d3b38",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-800": {
+    "value": "#292825",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "800"
+    ],
+    "original": "#292825",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-900": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "900"
+    ],
+    "original": "#1a1917",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-900-0": {
+    "value": "#1a191700",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "900-0"
+    ],
+    "original": "#1a191700",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-900-5": {
+    "value": "#1a19170d",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "900-5"
+    ],
+    "original": "#1a19170d",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-900-10": {
+    "value": "#1a19171a",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "900-10"
+    ],
+    "original": "#1a19171a",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-900-20": {
+    "value": "#1a191733",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "900-20"
+    ],
+    "original": "#1a191733",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-900-40": {
+    "value": "#1a191766",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "900-40"
+    ],
+    "original": "#1a191766",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-900-60": {
+    "value": "#1a191799",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "900-60"
+    ],
+    "original": "#1a191799",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-0-0": {
+    "value": "#fffdf900",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "0-0"
+    ],
+    "original": "#fffdf900",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-0-5": {
+    "value": "#fffdf90d",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "0-5"
+    ],
+    "original": "#fffdf90d",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-0-10": {
+    "value": "#fffdf91a",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "0-10"
+    ],
+    "original": "#fffdf91a",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-0-20": {
+    "value": "#fffdf933",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "0-20"
+    ],
+    "original": "#fffdf933",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-0-40": {
+    "value": "#fffdf966",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "0-40"
+    ],
+    "original": "#fffdf966",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-neutral-alpha-0-60": {
+    "value": "#fffdf999",
+    "type": "color",
+    "path": [
+      "color",
+      "neutral",
+      "alpha",
+      "0-60"
+    ],
+    "original": "#fffdf999",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-50": {
+    "value": "#f3f2f8",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "50"
+    ],
+    "original": "#f3f2f8",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-100": {
+    "value": "#e7e4f1",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "100"
+    ],
+    "original": "#e7e4f1",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-200": {
+    "value": "#cfcbe1",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "200"
+    ],
+    "original": "#cfcbe1",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-300": {
+    "value": "#ada6c9",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "300"
+    ],
+    "original": "#ada6c9",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-400": {
+    "value": "#7f74af",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "400"
+    ],
+    "original": "#7f74af",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-500": {
+    "value": "#5b4d99",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "500"
+    ],
+    "original": "#5b4d99",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-600": {
+    "value": "#3d2f79",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "600"
+    ],
+    "original": "#3d2f79",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-700": {
+    "value": "#2e2263",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "700"
+    ],
+    "original": "#2e2263",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-800": {
+    "value": "#251b50",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "800"
+    ],
+    "original": "#251b50",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-primary-900": {
+    "value": "#201747",
+    "type": "color",
+    "path": [
+      "color",
+      "primary",
+      "900"
+    ],
+    "original": "#201747",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-50": {
+    "value": "#f5faf7",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "50"
+    ],
+    "original": "#f5faf7",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-100": {
+    "value": "#e8f3ec",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "100"
+    ],
+    "original": "#e8f3ec",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-200": {
+    "value": "#d3e4d9",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "200"
+    ],
+    "original": "#d3e4d9",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-300": {
+    "value": "#adcab8",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "300"
+    ],
+    "original": "#adcab8",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-400": {
+    "value": "#89b399",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "400"
+    ],
+    "original": "#89b399",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-500": {
+    "value": "#619e78",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "500"
+    ],
+    "original": "#619e78",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-600": {
+    "value": "#407755",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "600"
+    ],
+    "original": "#407755",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-700": {
+    "value": "#315e42",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "700"
+    ],
+    "original": "#315e42",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-800": {
+    "value": "#254b34",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "800"
+    ],
+    "original": "#254b34",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-secondary-900": {
+    "value": "#1a3725",
+    "type": "color",
+    "path": [
+      "color",
+      "secondary",
+      "900"
+    ],
+    "original": "#1a3725",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-surface-50": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "surface",
+      "50"
+    ],
+    "original": "#fffdf9",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-surface-100": {
+    "value": "#f8f5f1",
+    "type": "color",
+    "path": [
+      "color",
+      "surface",
+      "100"
+    ],
+    "original": "#f8f5f1",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-surface-200": {
+    "value": "#f2ede8",
+    "type": "color",
+    "path": [
+      "color",
+      "surface",
+      "200"
+    ],
+    "original": "#f2ede8",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-surface-300": {
+    "value": "#e7ded5",
+    "type": "color",
+    "path": [
+      "color",
+      "surface",
+      "300"
+    ],
+    "original": "#e7ded5",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-surface-400": {
+    "value": "#d8d3cc",
+    "type": "color",
+    "path": [
+      "color",
+      "surface",
+      "400"
+    ],
+    "original": "#d8d3cc",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-accent-highlight": {
+    "value": "#eaff00",
+    "type": "color",
+    "path": [
+      "color",
+      "accent",
+      "highlight"
+    ],
+    "original": "#eaff00",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-success-strong": {
+    "value": "#16a34a",
+    "type": "color",
+    "path": [
+      "color",
+      "success",
+      "strong"
+    ],
+    "original": "#16a34a",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-success-bg": {
+    "value": "#ecfdf3",
+    "type": "color",
+    "path": [
+      "color",
+      "success",
+      "bg"
+    ],
+    "original": "#ecfdf3",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-success-dark": {
+    "value": "#15803d",
+    "type": "color",
+    "path": [
+      "color",
+      "success",
+      "dark"
+    ],
+    "original": "#15803d",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-warning-strong": {
+    "value": "#d97706",
+    "type": "color",
+    "path": [
+      "color",
+      "warning",
+      "strong"
+    ],
+    "original": "#d97706",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-warning-bg": {
+    "value": "#fff7e6",
+    "type": "color",
+    "path": [
+      "color",
+      "warning",
+      "bg"
+    ],
+    "original": "#fff7e6",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-warning-dark": {
+    "value": "#b45309",
+    "type": "color",
+    "path": [
+      "color",
+      "warning",
+      "dark"
+    ],
+    "original": "#b45309",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-error-strong": {
+    "value": "#dc2626",
+    "type": "color",
+    "path": [
+      "color",
+      "error",
+      "strong"
+    ],
+    "original": "#dc2626",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-error-bg": {
+    "value": "#fef2f2",
+    "type": "color",
+    "path": [
+      "color",
+      "error",
+      "bg"
+    ],
+    "original": "#fef2f2",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-error-dark": {
+    "value": "#b91c1c",
+    "type": "color",
+    "path": [
+      "color",
+      "error",
+      "dark"
+    ],
+    "original": "#b91c1c",
+    "file": "tokens/primitives/color.json"
+  },
+  "color-text-primary": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "text",
+      "primary"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-text-secondary": {
+    "value": "#565450",
+    "type": "color",
+    "path": [
+      "color",
+      "text",
+      "secondary"
+    ],
+    "original": "{color.neutral.600}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-bg-page": {
+    "value": "#f8f5f1",
+    "type": "color",
+    "path": [
+      "color",
+      "bg",
+      "page"
+    ],
+    "original": "{color.surface.100}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-bg-card": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "bg",
+      "card"
+    ],
+    "original": "{color.surface.50}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-bg-inset": {
+    "value": "#f8f5f1",
+    "type": "color",
+    "path": [
+      "color",
+      "bg",
+      "inset"
+    ],
+    "original": "{color.surface.100}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-bg-module": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "bg",
+      "module"
+    ],
+    "original": "{color.surface.50}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-divider-default": {
+    "value": "#1a191733",
+    "type": "color",
+    "path": [
+      "color",
+      "divider",
+      "default"
+    ],
+    "original": "{color.neutral.alpha.900-20}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-border-default": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "border",
+      "default"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-border-focus-inner": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "border",
+      "focus-inner"
+    ],
+    "original": "{color.neutral.0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-border-focus-outer": {
+    "value": "#201747",
+    "type": "color",
+    "path": [
+      "color",
+      "border",
+      "focus-outer"
+    ],
+    "original": "{color.primary.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-interactive": {
+    "value": "#3d2f79",
+    "type": "color",
+    "path": [
+      "color",
+      "interactive"
+    ],
+    "original": "{color.primary.600}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-interactive-hover": {
+    "value": "#2e2263",
+    "type": "color",
+    "path": [
+      "color",
+      "interactive-hover"
+    ],
+    "original": "{color.primary.700}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-interactive-secondary": {
+    "value": "#407755",
+    "type": "color",
+    "path": [
+      "color",
+      "interactive-secondary"
+    ],
+    "original": "{color.secondary.600}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-interactive-secondary-hover": {
+    "value": "#315e42",
+    "type": "color",
+    "path": [
+      "color",
+      "interactive-secondary-hover"
+    ],
+    "original": "{color.secondary.700}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-error": {
+    "value": "#b91c1c",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "error"
+    ],
+    "original": "{color.error.dark}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-error-bg": {
+    "value": "#fef2f2",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "error-bg"
+    ],
+    "original": "{color.error.bg}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-success": {
+    "value": "#15803d",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "success"
+    ],
+    "original": "{color.success.dark}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-success-bg": {
+    "value": "#ecfdf3",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "success-bg"
+    ],
+    "original": "{color.success.bg}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-warning": {
+    "value": "#b45309",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "warning"
+    ],
+    "original": "{color.warning.dark}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-warning-bg": {
+    "value": "#fff7e6",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "warning-bg"
+    ],
+    "original": "{color.warning.bg}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-info": {
+    "value": "#3d2f79",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "info"
+    ],
+    "original": "{color.primary.600}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-feedback-info-bg": {
+    "value": "#f3f2f8",
+    "type": "color",
+    "path": [
+      "color",
+      "feedback",
+      "info-bg"
+    ],
+    "original": "{color.primary.50}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-icon-primary": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "icon",
+      "primary"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-primary-bg": {
+    "value": "#201747",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "primary",
+      "bg"
+    ],
+    "original": "{color.primary.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-primary-bg-hover": {
+    "value": "#2e2263",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "primary",
+      "bg-hover"
+    ],
+    "original": "{color.primary.700}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-primary-bg-pressed": {
+    "value": "#3d2f79",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "primary",
+      "bg-pressed"
+    ],
+    "original": "{color.primary.600}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-primary-fg": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "primary",
+      "fg"
+    ],
+    "original": "{color.neutral.0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-secondary-fg": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "secondary",
+      "fg"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-secondary-fg-hover": {
+    "value": "#3d2f79",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "secondary",
+      "fg-hover"
+    ],
+    "original": "{color.primary.600}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-secondary-fg-pressed": {
+    "value": "#2e2263",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "secondary",
+      "fg-pressed"
+    ],
+    "original": "{color.primary.700}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-icon-border": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "icon",
+      "border"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-icon-bg-hover": {
+    "value": "#1a19170d",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "icon",
+      "bg-hover"
+    ],
+    "original": "{color.neutral.alpha.900-5}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-icon-bg-pressed": {
+    "value": "#1a19171a",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "icon",
+      "bg-pressed"
+    ],
+    "original": "{color.neutral.alpha.900-10}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-button-icon-fg": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "button",
+      "icon",
+      "fg"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-toggle-track-off": {
+    "value": "#8f8d89",
+    "type": "color",
+    "path": [
+      "color",
+      "toggle",
+      "track-off"
+    ],
+    "original": "{color.neutral.400}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-toggle-track-on": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "toggle",
+      "track-on"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-toggle-thumb": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "toggle",
+      "thumb"
+    ],
+    "original": "{color.neutral.0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-bg": {
+    "value": "#1a191700",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "bg"
+    ],
+    "original": "{color.neutral.alpha.900-0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-bg-hover": {
+    "value": "#1a19171a",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "bg-hover"
+    ],
+    "original": "{color.neutral.alpha.900-10}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-bg-active": {
+    "value": "#201747",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "bg-active"
+    ],
+    "original": "{color.primary.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-fg": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "fg"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-fg-active": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "fg-active"
+    ],
+    "original": "{color.neutral.0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-badge-bg": {
+    "value": "#1a19171a",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "badge-bg"
+    ],
+    "original": "{color.neutral.alpha.900-10}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-badge-bg-active": {
+    "value": "#fffdf933",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "badge-bg-active"
+    ],
+    "original": "{color.neutral.alpha.0-20}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-badge-fg": {
+    "value": "#201747",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "badge-fg"
+    ],
+    "original": "{color.primary.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-chip-badge-fg-active": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "chip",
+      "badge-fg-active"
+    ],
+    "original": "{color.neutral.0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "radius-none": {
+    "value": "0px",
+    "type": "dimension",
+    "path": [
+      "radius",
+      "none"
+    ],
+    "original": "0px",
+    "file": "tokens/primitives/radius.json"
+  },
+  "radius-sm": {
+    "value": "4px",
+    "type": "dimension",
+    "path": [
+      "radius",
+      "sm"
+    ],
+    "original": "4px",
+    "file": "tokens/primitives/radius.json"
+  },
+  "radius-md": {
+    "value": "8px",
+    "type": "dimension",
+    "path": [
+      "radius",
+      "md"
+    ],
+    "original": "8px",
+    "file": "tokens/primitives/radius.json"
+  },
+  "radius-lg": {
+    "value": "12px",
+    "type": "dimension",
+    "path": [
+      "radius",
+      "lg"
+    ],
+    "original": "12px",
+    "file": "tokens/primitives/radius.json"
+  },
+  "radius-full": {
+    "value": "9999px",
+    "type": "dimension",
+    "path": [
+      "radius",
+      "full"
+    ],
+    "original": "9999px",
+    "file": "tokens/primitives/radius.json"
+  },
+  "size-control-sm": {
+    "value": "36px",
+    "type": "dimension",
+    "path": [
+      "size",
+      "control",
+      "sm"
+    ],
+    "original": "36px",
+    "file": "tokens/primitives/size.json"
+  },
+  "size-control-md": {
+    "value": "44px",
+    "type": "dimension",
+    "path": [
+      "size",
+      "control",
+      "md"
+    ],
+    "original": "44px",
+    "file": "tokens/primitives/size.json"
+  },
+  "size-control-lg": {
+    "value": "52px",
+    "type": "dimension",
+    "path": [
+      "size",
+      "control",
+      "lg"
+    ],
+    "original": "52px",
+    "file": "tokens/primitives/size.json"
+  },
+  "size-icon-sm": {
+    "value": "16px",
+    "type": "dimension",
+    "path": [
+      "size",
+      "icon",
+      "sm"
+    ],
+    "original": "16px",
+    "file": "tokens/primitives/size.json"
+  },
+  "size-icon-md": {
+    "value": "20px",
+    "type": "dimension",
+    "path": [
+      "size",
+      "icon",
+      "md"
+    ],
+    "original": "20px",
+    "file": "tokens/primitives/size.json"
+  },
+  "size-icon-lg": {
+    "value": "24px",
+    "type": "dimension",
+    "path": [
+      "size",
+      "icon",
+      "lg"
+    ],
+    "original": "24px",
+    "file": "tokens/primitives/size.json"
+  },
+  "size-touch-min": {
+    "value": "44px",
+    "type": "dimension",
+    "path": [
+      "size",
+      "touch",
+      "min"
+    ],
+    "original": "44px",
+    "file": "tokens/primitives/size.json"
+  },
+  "space-0": {
+    "value": "0px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "0"
+    ],
+    "original": "0px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-2": {
+    "value": "2px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "2"
+    ],
+    "original": "2px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-4": {
+    "value": "4px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "4"
+    ],
+    "original": "4px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-6": {
+    "value": "6px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "6"
+    ],
+    "original": "6px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-8": {
+    "value": "8px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "8"
+    ],
+    "original": "8px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-10": {
+    "value": "10px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "10"
+    ],
+    "original": "10px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-12": {
+    "value": "12px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "12"
+    ],
+    "original": "12px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-16": {
+    "value": "16px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "16"
+    ],
+    "original": "16px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-18": {
+    "value": "18px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "18"
+    ],
+    "original": "18px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-20": {
+    "value": "20px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "20"
+    ],
+    "original": "20px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-24": {
+    "value": "24px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "24"
+    ],
+    "original": "24px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-32": {
+    "value": "32px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "32"
+    ],
+    "original": "32px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-40": {
+    "value": "40px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "40"
+    ],
+    "original": "40px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-48": {
+    "value": "48px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "48"
+    ],
+    "original": "48px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-64": {
+    "value": "64px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "64"
+    ],
+    "original": "64px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-80": {
+    "value": "80px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "80"
+    ],
+    "original": "80px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-96": {
+    "value": "96px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "96"
+    ],
+    "original": "96px",
+    "file": "tokens/primitives/space.json"
+  },
+  "space-112": {
+    "value": "112px",
+    "type": "dimension",
+    "path": [
+      "space",
+      "112"
+    ],
+    "original": "112px",
+    "file": "tokens/primitives/space.json"
+  },
+  "viewport-phone": {
+    "value": "375px",
+    "type": "dimension",
+    "path": [
+      "viewport",
+      "phone"
+    ],
+    "original": "375px",
+    "file": "tokens/primitives/viewport.json"
+  },
+  "viewport-tablet": {
+    "value": "768px",
+    "type": "dimension",
+    "path": [
+      "viewport",
+      "tablet"
+    ],
+    "original": "768px",
+    "file": "tokens/primitives/viewport.json"
+  },
+  "viewport-desktop": {
+    "value": "1440px",
+    "type": "dimension",
+    "path": [
+      "viewport",
+      "desktop"
+    ],
+    "original": "1440px",
+    "file": "tokens/primitives/viewport.json"
+  },
+  "z-base": {
+    "value": 0,
+    "type": "number",
+    "path": [
+      "z",
+      "base"
+    ],
+    "original": 0,
+    "file": "tokens/primitives/z-index.json"
+  },
+  "z-dropdown": {
+    "value": 1000,
+    "type": "number",
+    "path": [
+      "z",
+      "dropdown"
+    ],
+    "original": 1000,
+    "file": "tokens/primitives/z-index.json"
+  },
+  "z-sticky": {
+    "value": 1100,
+    "type": "number",
+    "path": [
+      "z",
+      "sticky"
+    ],
+    "original": 1100,
+    "file": "tokens/primitives/z-index.json"
+  },
+  "z-overlay": {
+    "value": 1300,
+    "type": "number",
+    "path": [
+      "z",
+      "overlay"
+    ],
+    "original": 1300,
+    "file": "tokens/primitives/z-index.json"
+  },
+  "z-modal": {
+    "value": 1400,
+    "type": "number",
+    "path": [
+      "z",
+      "modal"
+    ],
+    "original": 1400,
+    "file": "tokens/primitives/z-index.json"
+  },
+  "z-toast": {
+    "value": 1500,
+    "type": "number",
+    "path": [
+      "z",
+      "toast"
+    ],
+    "original": 1500,
+    "file": "tokens/primitives/z-index.json"
+  },
+  "font-family-sans": {
+    "value": "Switzer, system-ui, sans-serif",
+    "type": "fontFamily",
+    "path": [
+      "font",
+      "family",
+      "sans"
+    ],
+    "original": [
+      "Switzer",
+      "system-ui",
+      "sans-serif"
+    ],
+    "file": "tokens/typography/font.json",
+    "extensions": {
+      "com.figma.variable": "font-family/Switzer"
+    }
+  },
+  "font-family-mono": {
+    "value": "\"IBM Plex Mono\", ui-monospace, monospace",
+    "type": "fontFamily",
+    "path": [
+      "font",
+      "family",
+      "mono"
+    ],
+    "original": [
+      "IBM Plex Mono",
+      "ui-monospace",
+      "monospace"
+    ],
+    "file": "tokens/typography/font.json",
+    "extensions": {
+      "com.figma.variable": "font-family/IBM Plex Mono"
+    }
+  },
+  "font-weight-regular": {
+    "value": 400,
+    "type": "fontWeight",
+    "path": [
+      "font",
+      "weight",
+      "regular"
+    ],
+    "original": 400,
+    "file": "tokens/typography/font.json"
+  },
+  "font-weight-medium": {
+    "value": 500,
+    "type": "fontWeight",
+    "path": [
+      "font",
+      "weight",
+      "medium"
+    ],
+    "original": 500,
+    "file": "tokens/typography/font.json"
+  },
+  "font-weight-semibold": {
+    "value": 600,
+    "type": "fontWeight",
+    "path": [
+      "font",
+      "weight",
+      "semibold"
+    ],
+    "original": 600,
+    "file": "tokens/typography/font.json"
+  },
+  "font-size-display": {
+    "value": "4rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "display"
+    ],
+    "original": "64px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-h1": {
+    "value": "2.625rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "h1"
+    ],
+    "original": "42px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-h2": {
+    "value": "2rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "h2"
+    ],
+    "original": "32px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-h3": {
+    "value": "1.5rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "h3"
+    ],
+    "original": "24px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-h4": {
+    "value": "1.25rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "h4"
+    ],
+    "original": "20px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-h5": {
+    "value": "1.125rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "h5"
+    ],
+    "original": "18px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-h6": {
+    "value": "1.125rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "h6"
+    ],
+    "original": "18px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-body-s": {
+    "value": "0.875rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "body-s"
+    ],
+    "original": "14px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-body-m": {
+    "value": "1rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "body-m"
+    ],
+    "original": "16px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-caption": {
+    "value": "0.8125rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "caption"
+    ],
+    "original": "13px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-label-m": {
+    "value": "0.9375rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "label-m"
+    ],
+    "original": "15px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-label-s": {
+    "value": "0.75rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "label-s"
+    ],
+    "original": "12px",
+    "file": "tokens/typography/phone.json"
+  },
+  "font-size-quote": {
+    "value": "1.5rem",
+    "type": "dimension",
+    "path": [
+      "font-size",
+      "quote"
+    ],
+    "original": "24px",
+    "file": "tokens/typography/phone.json"
+  },
+  "line-height-display": {
+    "value": "1",
+    "type": "number",
+    "path": [
+      "line-height",
+      "display"
+    ],
+    "original": 100,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Display"
+    }
+  },
+  "line-height-h1": {
+    "value": "1.2",
+    "type": "number",
+    "path": [
+      "line-height",
+      "h1"
+    ],
+    "original": 120,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H1"
+    }
+  },
+  "line-height-h2": {
+    "value": "1.2",
+    "type": "number",
+    "path": [
+      "line-height",
+      "h2"
+    ],
+    "original": 120,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H2"
+    }
+  },
+  "line-height-h3": {
+    "value": "1.2",
+    "type": "number",
+    "path": [
+      "line-height",
+      "h3"
+    ],
+    "original": 120,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H3"
+    }
+  },
+  "line-height-h4": {
+    "value": "1.2",
+    "type": "number",
+    "path": [
+      "line-height",
+      "h4"
+    ],
+    "original": 120,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H4"
+    }
+  },
+  "line-height-h5": {
+    "value": "1.35",
+    "type": "number",
+    "path": [
+      "line-height",
+      "h5"
+    ],
+    "original": 135,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H5"
+    }
+  },
+  "line-height-h6": {
+    "value": "1.4",
+    "type": "number",
+    "path": [
+      "line-height",
+      "h6"
+    ],
+    "original": 140,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H6"
+    }
+  },
+  "line-height-body-s": {
+    "value": "1.4",
+    "type": "number",
+    "path": [
+      "line-height",
+      "body-s"
+    ],
+    "original": 140,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Body/S"
+    }
+  },
+  "line-height-body-m": {
+    "value": "1.5",
+    "type": "number",
+    "path": [
+      "line-height",
+      "body-m"
+    ],
+    "original": 150,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Body/M"
+    }
+  },
+  "line-height-caption": {
+    "value": "1.4",
+    "type": "number",
+    "path": [
+      "line-height",
+      "caption"
+    ],
+    "original": 140,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Caption"
+    }
+  },
+  "line-height-label-s": {
+    "value": "1.08",
+    "type": "number",
+    "path": [
+      "line-height",
+      "label-s"
+    ],
+    "original": 108,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Label-S"
+    }
+  },
+  "line-height-label-m": {
+    "value": "1.2",
+    "type": "number",
+    "path": [
+      "line-height",
+      "label-m"
+    ],
+    "original": 120,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Label-M"
+    }
+  },
+  "line-height-quote": {
+    "value": "1.2",
+    "type": "number",
+    "path": [
+      "line-height",
+      "quote"
+    ],
+    "original": 120,
+    "file": "tokens/typography/line-height.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Quote"
+    }
+  },
+  "letter-spacing-display": {
+    "value": "-0.02em",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "display"
+    ],
+    "original": -2,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Display"
+    }
+  },
+  "letter-spacing-h1": {
+    "value": "-0.02em",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "h1"
+    ],
+    "original": -2,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H1"
+    }
+  },
+  "letter-spacing-h2": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "h2"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H2"
+    }
+  },
+  "letter-spacing-h3": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "h3"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H3"
+    }
+  },
+  "letter-spacing-h4": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "h4"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H4"
+    }
+  },
+  "letter-spacing-h5": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "h5"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H5"
+    }
+  },
+  "letter-spacing-h6": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "h6"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Heading/H6"
+    }
+  },
+  "letter-spacing-body-s": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "body-s"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Body/S"
+    }
+  },
+  "letter-spacing-body-m": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "body-m"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Body/M"
+    }
+  },
+  "letter-spacing-caption": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "caption"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Caption"
+    }
+  },
+  "letter-spacing-label-s": {
+    "value": "0.1em",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "label-s"
+    ],
+    "original": 10,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Label-S"
+    }
+  },
+  "letter-spacing-label-m": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "label-m"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Label-M"
+    }
+  },
+  "letter-spacing-quote": {
+    "value": "0",
+    "type": "number",
+    "path": [
+      "letter-spacing",
+      "quote"
+    ],
+    "original": 0,
+    "file": "tokens/typography/letter-spacing.json",
+    "extensions": {
+      "unit": "percent",
+      "com.figma.textStyle": "Quote"
+    }
+  },
+  "section-spacing-y-default": {
+    "value": "64px",
+    "type": "dimension",
+    "path": [
+      "section-spacing",
+      "y",
+      "default"
+    ],
+    "original": "{space.64}",
+    "file": "tokens/layout/phone.json"
+  },
+  "section-spacing-y-compact": {
+    "value": "32px",
+    "type": "dimension",
+    "path": [
+      "section-spacing",
+      "y",
+      "compact"
+    ],
+    "original": "{space.32}",
+    "file": "tokens/layout/phone.json"
+  },
+  "section-spacing-y-none": {
+    "value": "0px",
+    "type": "dimension",
+    "path": [
+      "section-spacing",
+      "y",
+      "none"
+    ],
+    "original": "{space.0}",
+    "file": "tokens/layout/phone.json"
+  },
+  "section-spacing-x-default": {
+    "value": "16px",
+    "type": "dimension",
+    "path": [
+      "section-spacing",
+      "x",
+      "default"
+    ],
+    "original": "{space.16}",
+    "file": "tokens/layout/phone.json"
+  },
+  "section-spacing-x-none": {
+    "value": "0px",
+    "type": "dimension",
+    "path": [
+      "section-spacing",
+      "x",
+      "none"
+    ],
+    "original": "{space.0}",
+    "file": "tokens/layout/phone.json"
+  },
+  "breakpoint-sm": {
+    "value": "480px",
+    "type": "dimension",
+    "path": [
+      "breakpoint",
+      "sm"
+    ],
+    "original": "480px",
+    "file": "tokens/layout/breakpoints.json"
+  },
+  "breakpoint-md": {
+    "value": "768px",
+    "type": "dimension",
+    "path": [
+      "breakpoint",
+      "md"
+    ],
+    "original": "768px",
+    "file": "tokens/layout/breakpoints.json",
+    "extensions": {
+      "com.figma.mode": "Tablet"
+    }
+  },
+  "breakpoint-lg": {
+    "value": "1024px",
+    "type": "dimension",
+    "path": [
+      "breakpoint",
+      "lg"
+    ],
+    "original": "1024px",
+    "file": "tokens/layout/breakpoints.json",
+    "extensions": {
+      "com.figma.mode": "Desktop"
+    }
+  },
+  "breakpoint-xl": {
+    "value": "1280px",
+    "type": "dimension",
+    "path": [
+      "breakpoint",
+      "xl"
+    ],
+    "original": "1280px",
+    "file": "tokens/layout/breakpoints.json"
+  },
+  "breakpoint-2xl": {
+    "value": "1440px",
+    "type": "dimension",
+    "path": [
+      "breakpoint",
+      "2xl"
+    ],
+    "original": "1440px",
+    "file": "tokens/layout/breakpoints.json"
+  },
+  "grid-phone-columns": {
+    "value": 12,
+    "type": "number",
+    "path": [
+      "grid",
+      "phone",
+      "columns"
+    ],
+    "original": 12,
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-phone-gutter": {
+    "value": "8px",
+    "type": "dimension",
+    "path": [
+      "grid",
+      "phone",
+      "gutter"
+    ],
+    "original": "8px",
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-phone-margin": {
+    "value": "16px",
+    "type": "dimension",
+    "path": [
+      "grid",
+      "phone",
+      "margin"
+    ],
+    "original": "16px",
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-tablet-columns": {
+    "value": 12,
+    "type": "number",
+    "path": [
+      "grid",
+      "tablet",
+      "columns"
+    ],
+    "original": 12,
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-tablet-gutter": {
+    "value": "16px",
+    "type": "dimension",
+    "path": [
+      "grid",
+      "tablet",
+      "gutter"
+    ],
+    "original": "16px",
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-tablet-margin": {
+    "value": "24px",
+    "type": "dimension",
+    "path": [
+      "grid",
+      "tablet",
+      "margin"
+    ],
+    "original": "24px",
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-desktop-columns": {
+    "value": 12,
+    "type": "number",
+    "path": [
+      "grid",
+      "desktop",
+      "columns"
+    ],
+    "original": 12,
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-desktop-gutter": {
+    "value": "24px",
+    "type": "dimension",
+    "path": [
+      "grid",
+      "desktop",
+      "gutter"
+    ],
+    "original": "24px",
+    "file": "tokens/layout/grid.json"
+  },
+  "grid-desktop-margin": {
+    "value": "40px",
+    "type": "dimension",
+    "path": [
+      "grid",
+      "desktop",
+      "margin"
+    ],
+    "original": "40px",
+    "file": "tokens/layout/grid.json"
+  }
+}

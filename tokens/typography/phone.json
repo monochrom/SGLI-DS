@@ -1,0 +1,56 @@
+{
+  "font-size": {
+    "display": {
+      "$type": "dimension",
+      "$value": "64px"
+    },
+    "h1": {
+      "$type": "dimension",
+      "$value": "42px"
+    },
+    "h2": {
+      "$type": "dimension",
+      "$value": "32px"
+    },
+    "h3": {
+      "$type": "dimension",
+      "$value": "24px"
+    },
+    "h4": {
+      "$type": "dimension",
+      "$value": "20px"
+    },
+    "h5": {
+      "$type": "dimension",
+      "$value": "18px"
+    },
+    "h6": {
+      "$type": "dimension",
+      "$value": "18px"
+    },
+    "body-s": {
+      "$type": "dimension",
+      "$value": "14px"
+    },
+    "body-m": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "caption": {
+      "$type": "dimension",
+      "$value": "13px"
+    },
+    "label-m": {
+      "$type": "dimension",
+      "$value": "15px"
+    },
+    "label-s": {
+      "$type": "dimension",
+      "$value": "12px"
+    },
+    "quote": {
+      "$type": "dimension",
+      "$value": "24px"
+    }
+  }
+}

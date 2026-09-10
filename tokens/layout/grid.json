@@ -1,0 +1,46 @@
+{
+  "grid": {
+    "phone": {
+      "columns": {
+        "$type": "number",
+        "$value": 12
+      },
+      "gutter": {
+        "$type": "dimension",
+        "$value": "8px"
+      },
+      "margin": {
+        "$type": "dimension",
+        "$value": "16px"
+      }
+    },
+    "tablet": {
+      "columns": {
+        "$type": "number",
+        "$value": 12
+      },
+      "gutter": {
+        "$type": "dimension",
+        "$value": "16px"
+      },
+      "margin": {
+        "$type": "dimension",
+        "$value": "24px"
+      }
+    },
+    "desktop": {
+      "columns": {
+        "$type": "number",
+        "$value": 12
+      },
+      "gutter": {
+        "$type": "dimension",
+        "$value": "24px"
+      },
+      "margin": {
+        "$type": "dimension",
+        "$value": "40px"
+      }
+    }
+  }
+}

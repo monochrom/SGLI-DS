@@ -1,0 +1,20 @@
+{
+  "section-spacing": {
+    "y": {
+      "default": {
+        "$type": "dimension",
+        "$value": "{space.96}"
+      },
+      "compact": {
+        "$type": "dimension",
+        "$value": "{space.48}"
+      }
+    },
+    "x": {
+      "default": {
+        "$type": "dimension",
+        "$value": "{space.24}"
+      }
+    }
+  }
+}

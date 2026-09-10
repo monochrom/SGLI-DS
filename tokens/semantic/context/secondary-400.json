@@ -1,0 +1,14 @@
+{
+  "color": {
+    "bg": {
+      "inset": {
+        "$type": "color",
+        "$value": "{color.neutral.100}"
+      },
+      "module": {
+        "$type": "color",
+        "$value": "{color.secondary.400}"
+      }
+    }
+  }
+}

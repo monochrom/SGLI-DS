@@ -1,0 +1,20 @@
+{
+  "name": "sgli-design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SGLI Design System – Tokens, Foundations und Komponenten (Quelle: Figma „SGLI – Design“)",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "tokens:build": "node scripts/build-tokens.mjs",
+    "tokens:lint": "node scripts/lint-tokens.mjs",
+    "icons:sprite": "node scripts/build-sprite.mjs",
+    "build": "npm run tokens:build && npm run tokens:lint && npm run icons:sprite",
+    "docs": "npx --yes serve -l 4321 ."
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.4.0"
+  }
+}

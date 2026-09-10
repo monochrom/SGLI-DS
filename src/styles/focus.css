@@ -1,0 +1,20 @@
+/* SGLI – Fokus (WCAG 2.2, 2.4.7 / 2.4.11 / 2.4.13)
+   Doppelter Ring: innen 2px (color/border/focus-inner), außen 4px (color/border/focus-outer).
+   Beide Farben wechseln mit dem Kontext (primary-900 invertiert). Nur bei Tastaturfokus. */
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: var(--border-focus-inner);
+  box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
+  border-radius: var(--radius-sm);
+}
+
+/* Elemente, die den Ring innen tragen sollen (z. B. Vollflächen-Links auf Cards) */
+.focus-inset:focus-visible {
+  outline-offset: calc(-1 * var(--border-focus-outer));
+  box-shadow: inset 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
+}

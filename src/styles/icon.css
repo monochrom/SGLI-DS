@@ -1,0 +1,15 @@
+/* SGLI – Icons (SVG-Sprite)
+   <svg class="icon icon--md" aria-hidden="true" focusable="false"><use href="…/dist/icons/sprite.svg#icon-ArrowRight"></use></svg>
+   Farbe über currentColor, Größen aus size/icon/{sm,md,lg}. */
+
+.icon {
+  display: inline-block;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+  flex: none;
+  fill: currentColor;
+  vertical-align: middle;
+}
+.icon--sm { width: var(--size-icon-sm); height: var(--size-icon-sm); }
+.icon--md { width: var(--size-icon-md); height: var(--size-icon-md); }
+.icon--lg { width: var(--size-icon-lg); height: var(--size-icon-lg); }
