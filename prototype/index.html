@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bildung – Prototyp Filter-System – SGLI</title>
+  <meta name="robots" content="noindex">
+  <!-- Design System (read-only eingebunden): Tokens, Foundations, Core Components -->
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../src/components/index.css">
+  <!-- Prototyp-Module -->
+  <link rel="stylesheet" href="./prototype.css">
+</head>
+<body>
+
+  <a class="sr-only" href="#angebote">Zu den Bildungsangeboten springen</a>
+
+  <!-- ===== navigation (Figma 2548:24968) ===== -->
+  <header class="site-nav" data-context="surface-50">
+    <div class="site-nav__inner">
+      <a class="site-nav__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+      <div class="site-nav__actions">
+        <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
+        <div class="site-nav__buttons">
+          <button class="btn btn--icon site-nav__translate" type="button" aria-label="Sprache wechseln">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Translate"></use></svg>
+          </button>
+          <button class="btn btn--icon" type="button" aria-label="Suche öffnen">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+          </button>
+          <button class="btn btn--primary" type="button">Menü</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== hero-default (Figma 2548:24974) ===== -->
+    <section class="hero-default" data-context="surface-100">
+      <div class="hero-default__text">
+        <p class="module-label">Bildung</p>
+        <h1 class="hero-default__title">Lernen am<br>historischen Ort</h1>
+        <p class="hero-default__intro">Historische Quellen, persönliche Schicksale und gesellschaftliche Fragen eröffnen neue Perspektiven auf Geschichte und Gegenwart.</p>
+      </div>
+    </section>
+
+    <!-- ===== education-filter + list-item-education (Figma 2548:24978, 2548:25016) ===== -->
+    <section class="edu-filter-section" data-context="surface-100" id="angebote" aria-labelledby="angebote-heading">
+      <div class="wrap">
+        <h2 class="sr-only" id="angebote-heading">Bildungsangebote filtern</h2>
+
+        <div class="edu-filter">
+          <div class="edu-filter__content">
+            <div class="edu-filter__row">
+              <p class="edu-filter__label module-label" id="label-zielgruppe">Angebote für</p>
+              <ul class="edu-filter__chips" data-filter-category aria-labelledby="label-zielgruppe"></ul>
+            </div>
+            <div class="edu-filter__row" data-filter-detail-row hidden>
+              <p class="edu-filter__label module-label" id="label-detail">Genauer filtern</p>
+              <ul class="edu-filter__chips" data-filter-detail aria-labelledby="label-detail"></ul>
+            </div>
+          </div>
+          <div class="edu-filter__actions">
+            <p class="tag" data-filter-count aria-live="polite">47 Angebote</p>
+            <button class="edu-filter__reset" type="button" data-filter-reset hidden>Filter zurücksetzen</button>
+          </div>
+        </div>
+
+        <ul class="edu-list" data-edu-list aria-label="Bildungsangebote"></ul>
+        <p class="edu-list__empty" data-edu-empty hidden>Für diese Auswahl gibt es derzeit kein Angebot. Bitte einen Filter entfernen oder alle zurücksetzen.</p>
+        <div class="edu-list__more" data-edu-more-wrap hidden>
+          <button class="btn btn--primary" type="button" data-edu-more>Weitere Angebote laden</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== cut-edges + text-content-grid (Figma 2548:24994) ===== -->
+    <section class="cut-edges cut-edges--before cut-edges--after" data-context="primary-900" aria-labelledby="vermitteln-heading">
+      <div class="cut-edges__body text-content-grid">
+        <div class="wrap">
+          <header class="section-header--center">
+            <p class="module-label">Bildungsarbeit</p>
+            <h2 id="vermitteln-heading">Wie wir Geschichte vermitteln</h2>
+            <p class="section-header__intro">Die Bildungsarbeit der Gedenkstätte Lindenstraße orientiert sich an den Erfahrungen und Biografien der Menschen, die an diesem Ort verfolgt, inhaftiert oder von politischen Umbrüchen betroffen waren. Unsere Angebote fördern die aktive Auseinandersetzung mit Geschichte, Gegenwart und gesellschaftlicher Verantwortung.</p>
+          </header>
+
+          <div class="text-row text-row--2">
+            <div>
+              <p>Die Stiftung Gedenkstätte Lindenstraße bietet ein vielfältiges Bildungs- und Vermittlungsprogramm für Interessierte aller Altersgruppen an. Ein zentraler Ansatzpunkt der Bildungsarbeit sind die Biografien der Menschen, die aus politischen oder rassistischen Gründen im Nationalsozialismus verfolgt oder in der Sowjetischen Besatzungszeit und in der DDR in der Lindenstraße inhaftiert waren. Dieser biografische Ansatz ermöglicht einen niedrigschwelligen, empathischen Zugang und findet sich in allen Vermittlungsformaten wieder.</p>
+            </div>
+            <div>
+              <p>Das Spektrum an Formaten reicht von Führungen, Zeitzeug:innengesprächen, Workshops bis hin zu digitalen Spurensuchen. Besucher:innenorientierung ist eine wichtige Prämisse unserer Bildungsarbeit.</p>
+              <p>Alle Workshops sind modular angelegt und je nach Interessen und Vorkenntnissen flexibel kombinierbar. Gern beraten wir Sie und stellen Ihnen ein individuelles Programm für Ihren Besuch zusammen!</p>
+            </div>
+          </div>
+
+          <figure class="image-section">
+            <img class="image-section__img" src="./assets/img/image-section.jpg" alt="Zwei Besucher mit Audioguides betrachten eine Zellentür in der Gedenkstätte" width="1200" height="800">
+            <figcaption class="image-section__caption">Bildunterschrift</figcaption>
+          </figure>
+
+          <div class="text-row text-row--3">
+            <div>
+              <h3>Entdecken, Forschen und Diskutieren</h3>
+              <p class="text-body-s">Die Formate sind handlungsorientiert: Die Besucher:innen lernen entdeckend, forschend und diskutierend den historischen Ort kennen. Methodische Vielfalt und kreative Präsentationsformen wecken das Interesse für die historischen Themen. Aktivierende Methoden stärken die Kompetenzentwicklung.</p>
+            </div>
+            <div>
+              <h3>Multiperspektivisch und kontrovers</h3>
+              <p class="text-body-s">Die Besucher:innen werden durch multiperspektivische und kontroverse Darstellungen zur kritischen Auseinandersetzung mit der Geschichte angeregt.</p>
+            </div>
+            <div>
+              <h3>Gegenwartsbezug und Menschenrechtsbildung</h3>
+              <p class="text-body-s">Die Lebenswelt der Besucher:innen findet ebenso Berücksichtigung wie der Bezug zu aktuellen Themen und Fragestellungen. Dieser Gegenwarts- und Lebensweltbezug unterstützt die kritische Reflexion und verdeutlicht den Besucher:innen die Relevanz der Inhalte für die heutige Zeit und für sie selbst. Hierbei wird u. a. auf den Ansatz der Menschenrechtsbildung zurückgegriffen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== image-text-single (Figma 2548:25002) ===== -->
+    <section class="image-text" data-context="surface-300" aria-labelledby="buchung-heading">
+      <div class="wrap image-text__grid">
+        <img class="image-text__img" src="./assets/img/image-text-single.jpg" alt="Eine Besuchergruppe im Innenhof der Gedenkstätte hört einer Führung zu" width="1200" height="900">
+        <div class="image-text__body">
+          <p class="module-label">Gruppen</p>
+          <h2 id="buchung-heading">Buchung &amp; Organisation</h2>
+          <p class="image-text__lead">Sie möchten ein Bildungsangebot buchen oder haben Fragen zur Planung? Hier finden Sie die wichtigsten Informationen zur Organisation Ihres Besuchs.</p>
+          <h3>Individuelle Terminvereinbarung</h3>
+          <p>Bildungsangebote finden nach vorheriger Anmeldung statt. Gemeinsam mit Ihnen stimmen wir Termin, Umfang und Inhalte passend zu Ihrer Gruppe ab.</p>
+          <h3>Flexible Angebotsgestaltung</h3>
+          <p>Viele Angebote sind modular aufgebaut und können je nach Altersgruppe, Vorwissen und zeitlichem Rahmen angepasst werden.</p>
+          <h3>Beratung und Kontakt</h3>
+          <p>Gern beraten wir Sie bei der Auswahl eines geeigneten Angebots und unterstützen Sie bei der Planung Ihres Besuchs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== contact-section (Figma 2548:25003) ===== -->
+    <section class="contact" data-context="surface-200" aria-labelledby="kontakt-heading">
+      <div class="wrap contact__grid">
+        <div class="contact__intro">
+          <p class="module-label">Kontakt</p>
+          <h2 id="kontakt-heading">Individuelle Beratung</h2>
+          <p>Gern beraten wir Sie bei der Auswahl eines passenden Bildungsangebots und unterstützen Sie bei der Planung Ihres Besuchs. Gemeinsam stellen wir ein Programm zusammen, das zu Ihrer Gruppe, Ihren Interessen und Ihrem zeitlichen Rahmen passt.</p>
+        </div>
+        <div class="contact__card">
+          <p class="module-label">Ihre Ansprechpartnerin</p>
+          <p class="contact__name"><strong>Anja Lehmann</strong></p>
+          <address>
+            Stiftung Gedenkstätte Lindenstraße<br>
+            Tel. 0331-971 89 005<br>
+            <a href="mailto:email@gedenkstaette-lindenstrasse.de">email@gedenkstaette-lindenstrasse.de</a>
+          </address>
+          <a class="btn btn--primary" href="#">Zum Kontaktformular</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-slider (Figma 2548:25004) ===== -->
+    <section class="teaser-slider" data-context="surface-100" aria-labelledby="projekte-heading" data-slider>
+      <div class="wrap">
+        <header class="section-header--split">
+          <div>
+            <p class="module-label">Projektarbeit</p>
+            <h2 id="projekte-heading">Aktuelle Projekte</h2>
+          </div>
+          <p class="section-header__intro">Über die Bildungsangebote hinaus entwickelt die Stiftung Gedenkstätte Lindenstraße Projekte, die neue Zugänge zur Geschichte eröffnen und unterschiedliche Zielgruppen ansprechen.</p>
+        </header>
+        <ul class="teaser-slider__track" data-slider-track aria-label="Projekte">
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-1.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur</h3>
+              <p>Das neue, vom Bund geförderte Bildungsprojekt „Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur“ der Stiftung Gedenkstätte …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-2.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Graphic Novel UNVERGESSEN</h3>
+              <p>Mit der Graphic Novel „UNVERGESSEN. Geschichten nationalsozialistischer Verfolgung aus Potsdam“ sucht die Gedenkstätte Lindenstraße nach …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-3.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Graphic Novel „Grenzlinien“</h3>
+              <p>Anlässlich des 60. Jahrestags des Mauerbaus gab die Stiftung Gedenkstätte Lindenstraße die Graphic Novel „Grenzlinien“ heraus. Darin …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-4.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur</h3>
+              <p>Das neue, vom Bund geförderte Bildungsprojekt „Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur“ der Stiftung Gedenkstätte …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-2.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Graphic Novel UNVERGESSEN</h3>
+              <p>Mit der Graphic Novel „UNVERGESSEN. Geschichten nationalsozialistischer Verfolgung aus Potsdam“ sucht die Gedenkstätte Lindenstraße nach …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+        </ul>
+        <div class="teaser-slider__nav">
+          <button class="btn btn--icon" type="button" data-slider-prev aria-label="Vorherige Projekte">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-ArrowLeft"></use></svg>
+          </button>
+          <button class="btn btn--icon" type="button" data-slider-next aria-label="Weitere Projekte">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-ArrowRight"></use></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== faq-section (Figma 2548:25005) ===== -->
+    <section class="faq" data-context="surface-300" aria-labelledby="faq-heading">
+      <div class="wrap faq__grid">
+        <div class="faq__intro">
+          <p class="module-label">Ihr Besuch</p>
+          <h2 id="faq-heading">Gut zu wissen</h2>
+          <p>Sie haben weitere Fragen zu unseren Bildungsangeboten oder möchten einen Besuch planen? Unser Team unterstützt Sie gerne persönlich.</p>
+          <a class="btn btn--primary" href="#">Kontakt</a>
+        </div>
+        <div class="faq__list">
+          <details class="faq-item" open>
+            <summary class="faq-item__q">Was erwartet mich in der Dauerausstellung?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Die Dauerausstellung führt durch die Geschichte der Lindenstraße und ihrer unterschiedlichen Nutzungen im 20. Jahrhundert. Im Mittelpunkt stehen die Menschen, die während der NS-Diktatur, der sowjetischen Besatzungszeit und der SED-Diktatur verfolgt, inhaftiert oder verurteilt wurden – sowie die Ereignisse der Friedlichen Revolution 1989/90.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Wie lange dauert ein Besuch der Ausstellungen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Für die Dauerausstellung sollten Sie etwa 90 Minuten einplanen. Mit Führung oder Sonderausstellung entsprechend mehr.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Gibt es neben der Dauerausstellung auch Sonderausstellungen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Ja, wechselnde Sonderausstellungen vertiefen einzelne Themen und Biografien. Aktuelle Informationen finden Sie unter Ausstellungen.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Kann ich die Ausstellungen mit einem Audioguide besuchen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Ein Audioguide steht in Deutsch und Englisch kostenfrei an der Kasse zur Verfügung.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Warum ist die Lindenstraße ein besonderer Ausstellungsort?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Das Gebäude wurde in drei politischen Systemen als Gefängnis genutzt und 1989 von der Bürgerbewegung besetzt. Die Ausstellung findet am authentischen Ort statt.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-feature (Figma 2548:25006) ===== -->
+    <section class="teaser-feature" data-context="surface-300" aria-labelledby="stiftung-heading">
+      <div class="wrap">
+        <div class="feature-card" data-context="surface-100">
+          <div class="feature-card__text">
+            <h3 id="stiftung-heading">Die Stiftung hinter dem Lernort</h3>
+            <p>Die Stiftung Gedenkstätte Lindenstraße bewahrt, erforscht und vermittelt die Geschichte des historischen Ortes. Erfahren Sie mehr über ihre Aufgaben, Projekte und die Menschen, die diese Arbeit ermöglichen.</p>
+            <a class="btn btn--secondary" href="#">Mehr erfahren</a>
+          </div>
+          <div class="feature-card__media">
+            <img class="feature-card__img" src="./assets/img/feature.jpg" alt="Innenhof der Gedenkstätte Lindenstraße mit Backsteingebäuden und offenem Tor" width="1200" height="675">
+            <svg class="feature-card__deco" viewBox="0 0 622.513 634.924" aria-hidden="true" focusable="false"><path d="M4.83068 551.338L111.439 572.545L428.914 630.668L577.069 515.993L617.831 301.566L510.438 281.93L548.849 86.3543L131.82 4.66798L4.83068 551.338Z" fill="none" stroke="currentColor" stroke-width="8"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== footer (Figma 2548:25007) ===== -->
+  <footer class="site-footer" data-context="primary-900">
+    <div class="site-footer__top">
+      <a class="site-footer__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+      <nav class="site-footer__cols" aria-label="Footer">
+        <ul>
+          <li><a href="#">Besuch planen</a></li>
+          <li><a href="#">Ausstellungen</a></li>
+          <li><a href="#">Veranstaltungen</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Haftbücher &amp; Schicksale</a></li>
+          <li><a href="#">Bildung</a></li>
+          <li><a href="#">Die Stiftung</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Kontakt</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Stiftung Gedenkstätte Lindenstraße</p>
+      <ul class="site-footer__legal">
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Cookies</a></li>
+        <li><a href="#">Digitale Barrierefreiheit</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ===== Off-Canvas Detailfilter (bg/card) ===== -->
+  <div class="offcanvas__backdrop" data-offcanvas-backdrop></div>
+  <aside class="offcanvas" data-offcanvas role="dialog" aria-modal="true" aria-labelledby="offcanvas-title" aria-hidden="true">
+    <div class="offcanvas__head">
+      <div>
+        <p class="module-label">Genauer filtern</p>
+        <h2 class="offcanvas__title text-h3" id="offcanvas-title" data-offcanvas-title>Filter</h2>
+      </div>
+      <button class="btn btn--icon" type="button" data-offcanvas-close aria-label="Filter schließen">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-X"></use></svg>
+      </button>
+    </div>
+    <div class="offcanvas__body">
+      <fieldset class="offcanvas__options" data-offcanvas-options aria-label="Optionen"></fieldset>
+      <p class="offcanvas__hint">Prototyp: Die Optionsliste ist ein Platzhalter, damit sich ein Wert setzen lässt. Die Zahl in Klammern ist die Trefferzahl mit dieser Option.</p>
+    </div>
+    <div class="offcanvas__foot">
+      <button class="btn btn--primary" type="button" data-offcanvas-apply>Angebote anzeigen</button>
+      <button class="btn btn--secondary" type="button" data-offcanvas-clear hidden>Auswahl löschen</button>
+    </div>
+  </aside>
+
+  <p class="proto-bar" aria-hidden="true">Prototyp · Stand 2026-09-10</p>
+
+  <script src="./data.js"></script>
+  <script src="./filter.js"></script>
+</body>
+</html>
