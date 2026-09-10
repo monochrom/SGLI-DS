@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkbox & Radio – SGLI</title>
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="./checkbox.css">
+  <link rel="stylesheet" href="../preview.css">
+</head>
+<body>
+  <main class="preview">
+    <h1 class="text-h3">Checkbox &amp; Radio</h1>
+    <p class="preview__meta">Figma: Checkbox · Radio. Tab zeigt den Fokusring um die ganze Zeile.</p>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Checkbox</h2>
+      <div class="preview__row">
+        <label class="choice"><input class="choice__input" type="checkbox"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Unchecked</span></label>
+        <label class="choice"><input class="choice__input" type="checkbox" checked><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Checked</span></label>
+        <label class="choice"><input class="choice__input" type="checkbox" disabled><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Disabled</span></label>
+        <label class="choice"><input class="choice__input" type="checkbox" checked disabled><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Disabled Checked</span></label>
+      </div>
+      <div style="margin-top:var(--space-16)">
+        <label class="choice choice--error"><input class="choice__input" type="checkbox" aria-invalid="true" aria-describedby="c-err"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Label</span></label>
+        <p class="choice__error" id="c-err">Error message</p>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Radio</h2>
+      <fieldset class="choice-group">
+        <legend class="choice-group__legend">Auswahl</legend>
+        <label class="choice choice--radio"><input class="choice__input" type="radio" name="r" checked><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Selected</span></label>
+        <label class="choice choice--radio"><input class="choice__input" type="radio" name="r"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Unselected</span></label>
+        <label class="choice choice--radio"><input class="choice__input" type="radio" name="r" disabled><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Disabled</span></label>
+      </fieldset>
+      <div style="margin-top:var(--space-16)">
+        <label class="choice choice--radio choice--error"><input class="choice__input" type="radio" name="r2" aria-invalid="true" aria-describedby="r-err"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Label</span></label>
+        <p class="choice__error" id="r-err">Error message</p>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">In allen Kontexten</h2>
+      <div class="preview__contexts" data-preview-contexts>
+        <template>
+          <label class="choice"><input class="choice__input" type="checkbox"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Unchecked</span></label>
+          <label class="choice"><input class="choice__input" type="checkbox" checked><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Checked</span></label>
+          <label class="choice choice--radio"><input class="choice__input" type="radio" checked><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Selected</span></label>
+          <label class="choice choice--radio"><input class="choice__input" type="radio"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Unselected</span></label>
+        </template>
+      </div>
+    </section>
+  </main>
+  <script src="../preview.js"></script>
+</body>
+</html>

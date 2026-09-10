@@ -1,0 +1,126 @@
+/* SGLI – Button
+   Figma: Button/Primary (1604:84), Button/Secondary (1604:5083), Button/Icon (1604:5185)
+   Props: State = Default | Hover | Pressed | Disabled | Focused · Size = Desktop | Mobile
+   Alle Buttons sind rechteckig (kein Radius). Label = Text Style Label-S (IBM Plex Mono 500, 12px, uppercase, LS 10 %).
+   Size Mobile ist die größere Variante (Touch): Padding-Y 18 statt 16, Icon-Button 49 statt 45.
+   Umschaltpunkt Mobile → Desktop: lg (1024). Über --btn-breakpoint-Regel unten anpassbar.
+   Fokus kommt global aus src/styles/focus.css (innen 2px, außen 4px).
+   Für Styleguide-Vorschauen erzwingen .is-hover / .is-active die Zustände. */
+
+.btn {
+  /* Größen: Mobile als Default (mobile first) */
+  --btn-pad-y: var(--space-18);
+  --btn-pad-x: var(--space-20);
+  --btn-size: 49px; /* = Höhe Button/Primary Mobile: 18 + 13 (Label-S Zeile) + 18 */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+  border-radius: var(--radius-none);
+  background: none;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+@media (min-width: 1024px) {
+  .btn {
+    --btn-pad-y: var(--space-16);
+    --btn-size: 45px; /* 16 + 13 + 16 */
+  }
+}
+
+/* ---------- Primary ---------- */
+.btn--primary {
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  min-height: var(--btn-size);
+  background-color: var(--color-button-primary-bg);
+  color: var(--color-button-primary-fg);
+}
+.btn--primary:hover,
+.btn--primary.is-hover {
+  background-color: var(--color-button-primary-bg-hover);
+}
+.btn--primary:active,
+.btn--primary.is-active {
+  background-color: var(--color-button-primary-bg-pressed);
+}
+
+/* ---------- Secondary (Textlink mit Unterstrich) ---------- */
+.btn--secondary {
+  padding: var(--space-10) 0;
+  border-bottom: var(--border-default) solid currentColor;
+  color: var(--color-button-secondary-fg);
+}
+.btn--secondary:hover,
+.btn--secondary.is-hover {
+  color: var(--color-button-secondary-fg-hover);
+}
+.btn--secondary:active,
+.btn--secondary.is-active {
+  color: var(--color-button-secondary-fg-pressed);
+}
+
+/* ---------- Icon ---------- */
+.btn--icon {
+  width: var(--btn-size);
+  height: var(--btn-size);
+  padding: 0;
+  border: var(--border-default) solid var(--color-button-icon-border);
+  color: var(--color-button-icon-fg);
+}
+.btn--icon .icon {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+}
+.btn--icon:hover,
+.btn--icon.is-hover {
+  background-color: var(--color-button-icon-bg-hover);
+}
+.btn--icon:active,
+.btn--icon.is-active {
+  background-color: var(--color-button-icon-bg-pressed);
+}
+
+/* ---------- Disabled (Figma: Opacity 40 %) ---------- */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn:disabled:hover,
+.btn[aria-disabled="true"]:hover,
+.btn:disabled:active,
+.btn[aria-disabled="true"]:active {
+  /* keine Hover/Pressed-Farbe im Disabled-Zustand */
+  background-color: var(--color-button-primary-bg);
+}
+.btn--secondary:disabled,
+.btn--secondary[aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-button-secondary-fg);
+}
+.btn--icon:disabled,
+.btn--icon[aria-disabled="true"] {
+  background-color: transparent;
+}
+
+/* ---------- Modifier ---------- */
+.btn--block {
+  display: flex;
+  width: 100%;
+}

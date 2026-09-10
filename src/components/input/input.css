@@ -1,0 +1,246 @@
+/* SGLI – Input (Text, Select, Search, Date, Textarea)
+   Figma: Input Text (1649:52), Input Select (1658:6475), Input Search (1658:6517), Input Date (1840:204), Textarea (1658:6547)
+   States: Default | Focused | Filled | Focused Filled | Error | Disabled
+
+   Muster aus Figma: 48 px hohe Box mit 1 px Rahmen (border/default), Padding-X 8.
+   Leer: Label (Label-M, text/secondary) steht als Platzhalter mittig.
+   Fokus oder gefüllt: Label wird zu Label-S (Mono, uppercase, text/secondary; im Fokus text/primary)
+   und rückt nach oben (Label 13 + Gap 4 + Wert 19 = 36, mittig in 48 → Label-Top 6 px).
+   Error: Rahmen und Label feedback/error, WarningCircle 24 rechts, Fehlertext (Caption) mit Gap 4 darunter.
+   Disabled: Opacity 40 %. Fokus: Doppelring innen 2 / außen 4 um die Box.
+
+   Markup:
+   <div class="field">
+     <div class="field__box">
+       <input class="field__input" id="name" type="text" placeholder=" ">
+       <label class="field__label" for="name">Name</label>
+     </div>
+     <p class="field__error" id="name-error">Fehlermeldung</p>
+   </div>
+   placeholder=" " (Leerzeichen) ist Pflicht, damit :placeholder-shown den Leerzustand erkennt. */
+
+.field {
+  --field-height: 48px;
+  --field-pad-x: var(--space-8);
+  --field-label-top: 6px;
+  display: block;
+  color: var(--color-text-primary);
+}
+
+.field__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--field-height);
+  padding: 0 var(--field-pad-x);
+  border: var(--border-default) solid var(--color-border-default);
+  background-color: transparent;
+  transition: border-color 120ms ease;
+}
+
+.field__input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 14px 0 15px; /* 19 px Zeile mittig in 48 */
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+  color: var(--color-text-primary);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.field__input::placeholder {
+  color: transparent; /* Label übernimmt den Platzhalter */
+}
+.field__input::-webkit-search-decoration,
+.field__input::-webkit-search-cancel-button,
+.field__input::-webkit-calendar-picker-indicator {
+  appearance: none;
+  -webkit-appearance: none;
+  display: none;
+}
+
+.field__label {
+  position: absolute;
+  left: var(--field-pad-x);
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: calc(100% - 2 * var(--field-pad-x));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+  transition: top 120ms ease, transform 120ms ease, font-size 120ms ease, color 120ms ease;
+}
+
+/* ---------- Floating: Fokus oder gefüllt ---------- */
+.field__box:focus-within .field__label,
+.field__input:not(:placeholder-shown) ~ .field__label,
+.field--floated .field__label,
+.field--date .field__label {
+  top: var(--field-label-top);
+  transform: none;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+}
+.field__box:focus-within .field__label {
+  color: var(--color-text-primary);
+}
+.field__box:focus-within .field__input,
+.field__input:not(:placeholder-shown),
+.field--floated .field__input,
+.field--date .field__input {
+  padding-top: 23px; /* 6 + 13 + 4 */
+  padding-bottom: 6px;
+}
+
+/* ---------- Fokusring (Figma: innen 2 / außen 4 um die Box) ---------- */
+.field__box:focus-within {
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: var(--border-focus-inner);
+  box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
+}
+
+/* ---------- Icon rechts (Search, Date, Select, Error) ---------- */
+.field__icon {
+  flex: none;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  color: var(--color-icon-primary);
+  pointer-events: none;
+}
+
+/* ---------- Select ---------- */
+.field--select .field__input {
+  cursor: pointer;
+  padding-right: calc(var(--size-icon-lg) + var(--space-12));
+}
+.field--select .field__icon {
+  position: absolute;
+  right: var(--field-pad-x);
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* Select hat keinen Placeholder: erste Option value="" gilt als leer */
+.field--select .field__input:has(option[value=""]:checked):not(:focus) ~ .field__label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+  text-transform: none;
+}
+.field--select .field__input:has(option[value=""]:checked):not(:focus) {
+  padding-top: 14px;
+  padding-bottom: 15px;
+}
+.field--select .field__input:not(:has(option[value=""]:checked)) ~ .field__label,
+.field--select .field__input:focus ~ .field__label {
+  top: var(--field-label-top);
+  transform: none;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+}
+.field--select .field__input:not(:has(option[value=""]:checked)),
+.field--select .field__input:focus {
+  padding-top: 23px;
+  padding-bottom: 6px;
+}
+.field--select option {
+  color: var(--color-neutral-900);
+  background: var(--color-neutral-0);
+}
+
+/* ---------- Textarea ---------- */
+.field--textarea .field__box {
+  align-items: flex-start;
+  min-height: 100px;
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+.field--textarea .field__input {
+  min-height: calc(100px - 2 * var(--space-4) - 2 * var(--border-default));
+  padding: 11px 0 var(--space-4);
+  resize: vertical;
+}
+.field--textarea .field__label {
+  top: 15px;
+  transform: none;
+}
+.field--textarea .field__box:focus-within .field__label,
+.field--textarea .field__input:not(:placeholder-shown) ~ .field__label {
+  top: var(--field-label-top);
+}
+.field--textarea .field__box:focus-within .field__input,
+.field--textarea .field__input:not(:placeholder-shown) {
+  padding-top: 23px;
+  padding-bottom: var(--space-4);
+}
+
+/* ---------- Error ---------- */
+.field--error .field__box {
+  border-color: var(--color-feedback-error);
+}
+.field--error .field__label {
+  color: var(--color-feedback-error);
+}
+.field--error .field__box:focus-within .field__label {
+  color: var(--color-feedback-error);
+}
+.field--error .field__icon--error {
+  color: var(--color-feedback-error);
+}
+.field__error {
+  display: block;
+  margin: var(--space-4) 0 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-feedback-error);
+}
+.field:not(.field--error) .field__error,
+.field:not(.field--error) .field__icon--error {
+  display: none;
+}
+
+/* ---------- Disabled (Figma: Opacity 40 %) ---------- */
+.field--disabled,
+.field:has(.field__input:disabled) {
+  opacity: 0.4;
+}
+.field__input:disabled {
+  cursor: not-allowed;
+}
+
+/* ---------- Hilfetext (nicht in Figma, für Formulare vorbereitet) ---------- */
+.field__hint {
+  display: block;
+  margin: var(--space-4) 0 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-secondary);
+}

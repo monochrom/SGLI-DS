@@ -10,7 +10,6 @@
   outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
   outline-offset: var(--border-focus-inner);
   box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
-  border-radius: var(--radius-sm);
 }
 
 /* Elemente, die den Ring innen tragen sollen (z. B. Vollflächen-Links auf Cards) */

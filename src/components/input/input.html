@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Input – SGLI</title>
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="./input.css">
+  <link rel="stylesheet" href="../preview.css">
+</head>
+<body>
+  <main class="preview">
+    <h1 class="text-h3">Input</h1>
+    <p class="preview__meta">Figma: Input Text · Input Select · Input Search · Input Date · Textarea. Klick in ein Feld zeigt Focused, Eingabe zeigt Filled.</p>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Input Text</h2>
+      <div class="preview__stack">
+        <div class="field">
+          <div class="field__box">
+            <input class="field__input" id="t1" type="text" placeholder=" ">
+            <label class="field__label" for="t1">Label</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field__box">
+            <input class="field__input" id="t2" type="text" placeholder=" " value="Input value">
+            <label class="field__label" for="t2">Label</label>
+          </div>
+        </div>
+        <div class="field field--error">
+          <div class="field__box">
+            <input class="field__input" id="t3" type="text" placeholder=" " value="Input value" aria-invalid="true" aria-describedby="t3-error">
+            <label class="field__label" for="t3">Label</label>
+            <svg class="icon field__icon field__icon--error" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-WarningCircle"></use></svg>
+          </div>
+          <p class="field__error" id="t3-error">Error message</p>
+        </div>
+        <div class="field">
+          <div class="field__box">
+            <input class="field__input" id="t4" type="text" placeholder=" " disabled>
+            <label class="field__label" for="t4">Label</label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Input Select</h2>
+      <div class="preview__stack">
+        <div class="field field--select">
+          <div class="field__box">
+            <select class="field__input" id="s1">
+              <option value="">&nbsp;</option>
+              <option>Option A</option>
+              <option>Option B</option>
+            </select>
+            <label class="field__label" for="s1">Label</label>
+            <svg class="icon field__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+          </div>
+        </div>
+        <div class="field field--select">
+          <div class="field__box">
+            <select class="field__input" id="s2">
+              <option value="">&nbsp;</option>
+              <option selected>Selected option</option>
+              <option>Option B</option>
+            </select>
+            <label class="field__label" for="s2">Label</label>
+            <svg class="icon field__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+          </div>
+        </div>
+        <div class="field field--select field--error">
+          <div class="field__box">
+            <select class="field__input" id="s3" aria-invalid="true" aria-describedby="s3-error">
+              <option value="">&nbsp;</option>
+              <option selected>Selected option</option>
+            </select>
+            <label class="field__label" for="s3">Label</label>
+            <svg class="icon field__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+          </div>
+          <p class="field__error" id="s3-error">Error message</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Input Search</h2>
+      <div class="preview__stack">
+        <div class="field">
+          <div class="field__box">
+            <input class="field__input" id="q1" type="search" placeholder=" ">
+            <label class="field__label" for="q1">Suche</label>
+            <svg class="icon field__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field__box">
+            <input class="field__input" id="q2" type="search" placeholder=" " value="Search query">
+            <label class="field__label" for="q2">Suche</label>
+            <svg class="icon field__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Input Date</h2>
+      <div class="preview__stack">
+        <div class="field field--date">
+          <div class="field__box">
+            <input class="field__input" id="d1" type="date" placeholder=" ">
+            <label class="field__label" for="d1">Datum</label>
+            <svg class="icon field__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-CalendarBlank"></use></svg>
+          </div>
+        </div>
+        <div class="field field--date">
+          <div class="field__box">
+            <input class="field__input" id="d2" type="date" placeholder=" " value="2026-08-15">
+            <label class="field__label" for="d2">Datum</label>
+            <svg class="icon field__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-CalendarBlank"></use></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Textarea</h2>
+      <div class="preview__stack">
+        <div class="field field--textarea">
+          <div class="field__box">
+            <textarea class="field__input" id="a1" placeholder=" " rows="3"></textarea>
+            <label class="field__label" for="a1">Nachricht</label>
+          </div>
+        </div>
+        <div class="field field--textarea">
+          <div class="field__box">
+            <textarea class="field__input" id="a2" placeholder=" " rows="3">Textarea content</textarea>
+            <label class="field__label" for="a2">Nachricht</label>
+          </div>
+        </div>
+        <div class="field field--textarea field--error">
+          <div class="field__box">
+            <textarea class="field__input" id="a3" placeholder=" " rows="3" aria-invalid="true" aria-describedby="a3-error">Textarea content</textarea>
+            <label class="field__label" for="a3">Nachricht</label>
+          </div>
+          <p class="field__error" id="a3-error">Error message</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">In allen Kontexten</h2>
+      <div class="preview__contexts" data-preview-contexts>
+        <template>
+          <div class="field" style="flex:1 1 240px">
+            <div class="field__box">
+              <input class="field__input" type="text" placeholder=" " aria-label="Label">
+              <label class="field__label">Label</label>
+            </div>
+          </div>
+          <div class="field" style="flex:1 1 240px">
+            <div class="field__box">
+              <input class="field__input" type="text" placeholder=" " value="Input value" aria-label="Label">
+              <label class="field__label">Label</label>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+  </main>
+  <script src="../preview.js"></script>
+</body>
+</html>

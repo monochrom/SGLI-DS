@@ -1,0 +1,93 @@
+/* SGLI – Chip
+   Figma: Chip (2301:85). Props: Label, Count, Badge (bool), Icon (bool), State = Default | Hover | Active | Focused | Disabled, Viewport = Desktop | Phone
+   Padding 8 / 12, Gap 6, Label-M, kein Radius. Default: chip/bg (transparent) + 1 px border/default.
+   Hover: chip/bg-hover. Active: chip/bg-active + chip/fg-active, ohne Rahmen. Disabled: Opacity 40 %.
+   Badge: Padding 4 / 6, Caption, chip/badge-bg + badge-fg (Active: badge-bg-active + badge-fg-active).
+   Icon 20 px (size/icon/md): CaretRight (Default), X (Active).
+   Höhe: Desktop 40, Phone 44 (Touch). Phone ist Default, Desktop ab lg (1024).
+
+   Markup (Filter):
+   <button class="chip" type="button" aria-pressed="false">
+     <span class="chip__label">Führungen</span>
+     <span class="chip__badge">12</span>
+     <svg class="icon chip__icon" aria-hidden="true"><use href="…#icon-CaretRight"></use></svg>
+   </button>
+   aria-pressed="true" = State Active. Für Links <a class="chip"> ohne aria-pressed. */
+
+.chip {
+  --chip-min-h: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: var(--chip-min-h);
+  margin: 0;
+  padding: var(--space-8) var(--space-12);
+  border: var(--border-default) solid var(--color-border-default);
+  border-radius: var(--radius-none);
+  background-color: var(--color-chip-bg);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+  color: var(--color-chip-fg);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+@media (min-width: 1024px) {
+  .chip {
+    --chip-min-h: 40px;
+  }
+}
+
+.chip:hover,
+.chip.is-hover {
+  background-color: var(--color-chip-bg-hover);
+}
+
+.chip[aria-pressed="true"],
+.chip.is-active {
+  border-color: transparent;
+  background-color: var(--color-chip-bg-active);
+  color: var(--color-chip-fg-active);
+}
+
+.chip__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-chip-badge-bg);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-chip-badge-fg);
+}
+.chip[aria-pressed="true"] .chip__badge,
+.chip.is-active .chip__badge {
+  background-color: var(--color-chip-badge-bg-active);
+  color: var(--color-chip-badge-fg-active);
+}
+
+.chip__icon {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}
+
+.chip:disabled,
+.chip[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: var(--color-chip-bg);
+}
+
+/* Gruppe */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

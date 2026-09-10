@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGLI Design System – Components</title>
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <style>
+    .doc-nav { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-bg-card); border-bottom: var(--border-default) solid var(--color-divider-default); }
+    .doc-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-16); padding: var(--space-12) var(--grid-margin); list-style: none; margin: 0; }
+    .doc-nav a { text-decoration: none; }
+    .doc-section { padding-block: var(--space-48); border-bottom: var(--border-default) solid var(--color-divider-default); }
+    .doc-section > h2 { margin-bottom: var(--space-8); }
+    .doc-section > p { color: var(--color-text-secondary); margin-bottom: var(--space-16); max-width: 70ch; }
+    .doc-section iframe { width: 100%; height: 760px; border: var(--border-default) solid var(--color-divider-default); background: var(--color-bg-page); }
+    .doc-links { display: flex; gap: var(--space-16); margin-bottom: var(--space-16); font-size: var(--font-size-body-s); }
+  </style>
+</head>
+<body>
+  <nav class="doc-nav" aria-label="Komponenten">
+    <ul>
+      <li><a href="./index.html">← Foundations</a></li>
+      <li><a href="#button">Button</a></li>
+      <li><a href="#input">Input</a></li>
+      <li><a href="#toggle">Toggle</a></li>
+      <li><a href="#checkbox">Checkbox &amp; Radio</a></li>
+      <li><a href="#chip">Chip</a></li>
+      <li><a href="#tag">Tag</a></li>
+    </ul>
+  </nav>
+  <main class="container">
+    <header class="doc-section">
+      <p class="text-label-s">SGLI Design System · Components</p>
+      <h1>Core Components</h1>
+      <p>Jede Komponente hat einen Ordner unter <code>src/components/</code> mit CSS, Vorschau-HTML und README. Alle Komponenten auf einmal: <code>src/components/index.css</code>. Die Vorschauen unten sind die HTML-Dateien selbst, eingebettet; jede zeigt am Ende alle 7 Kontexte.</p>
+    </header>
+
+    <section id="button" class="doc-section">
+      <h2>Button</h2>
+      <p>Primary, Secondary, Icon. Figma Button/Primary, Button/Secondary, Button/Icon.</p>
+      <div class="doc-links"><a href="../src/components/button/button.html">Vorschau öffnen</a><a href="../src/components/button/README.md">README</a></div>
+      <iframe src="../src/components/button/button.html" title="Button Vorschau" loading="lazy"></iframe>
+    </section>
+
+    <section id="input" class="doc-section">
+      <h2>Input</h2>
+      <p>Text, Select, Search, Date, Textarea mit schwebendem Label. Figma Input Text, Input Select, Input Search, Input Date, Textarea.</p>
+      <div class="doc-links"><a href="../src/components/input/input.html">Vorschau öffnen</a><a href="../src/components/input/README.md">README</a></div>
+      <iframe src="../src/components/input/input.html" title="Input Vorschau" loading="lazy" style="height:1400px"></iframe>
+    </section>
+
+    <section id="toggle" class="doc-section">
+      <h2>Toggle</h2>
+      <p>Schalter mit role="switch". Figma Toggle.</p>
+      <div class="doc-links"><a href="../src/components/toggle/toggle.html">Vorschau öffnen</a><a href="../src/components/toggle/README.md">README</a></div>
+      <iframe src="../src/components/toggle/toggle.html" title="Toggle Vorschau" loading="lazy"></iframe>
+    </section>
+
+    <section id="checkbox" class="doc-section">
+      <h2>Checkbox &amp; Radio</h2>
+      <p>Figma Checkbox, Radio.</p>
+      <div class="doc-links"><a href="../src/components/checkbox/checkbox.html">Vorschau öffnen</a><a href="../src/components/checkbox/README.md">README</a></div>
+      <iframe src="../src/components/checkbox/checkbox.html" title="Checkbox und Radio Vorschau" loading="lazy"></iframe>
+    </section>
+
+    <section id="chip" class="doc-section">
+      <h2>Chip</h2>
+      <p>Filter-Chips mit Badge und Icon, aria-pressed. Figma Chip.</p>
+      <div class="doc-links"><a href="../src/components/chip/chip.html">Vorschau öffnen</a><a href="../src/components/chip/README.md">README</a></div>
+      <iframe src="../src/components/chip/chip.html" title="Chip Vorschau" loading="lazy"></iframe>
+    </section>
+
+    <section id="tag" class="doc-section">
+      <h2>Tag</h2>
+      <p>Statisches Highlight-Label. Figma tag (Modules).</p>
+      <div class="doc-links"><a href="../src/components/tag/tag.html">Vorschau öffnen</a><a href="../src/components/tag/README.md">README</a></div>
+      <iframe src="../src/components/tag/tag.html" title="Tag Vorschau" loading="lazy" style="height:560px"></iframe>
+    </section>
+  </main>
+</body>
+</html>

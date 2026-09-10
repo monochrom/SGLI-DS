@@ -1,5 +1,11 @@
 {
   "color": {
+    "text": {
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      }
+    },
     "bg": {
       "module": {
         "$type": "color",

@@ -268,7 +268,7 @@ Regel: Figma-Name wird nur normalisiert (Slash → Punkt/Bindestrich, lowercase)
 | **0 Aufräumen** | erledigt 2026-09-10: Memory bereinigt, PLAN.md überarbeitet |
 | **1 Figma-Scan** | erledigt 2026-09-10: alle 4 Collections, 13 Text Styles, 3 Effect Styles, 2 Grid Styles gelesen; Tabellen aktualisiert |
 | **A Foundations** | **erledigt 2026-09-10:** git init, package.json, CLAUDE.md, README; `tokens/**/*.json` (DTCG) per Export-Script; `dist/css/*` + `dist/json/tokens.flat.json` per Style Dictionary; Lint mit Kontrast-Matrix; `src/styles/*` (fonts, reset, base, context, grid, section, focus, icon, cut-edges); Fonts self-hosted; 18 Icons als SVG + Sprite; `docs/index.html` Styleguide, `docs/FIGMA-MAPPING.md`, `docs/CHANGELOG.md`. Noch nicht committed. |
-| **B Core Components** | 14 Component-Sets als HTML/CSS mit allen States |
+| **B Core Components** | **erledigt 2026-09-10:** `src/components/{button,input,toggle,checkbox,chip,tag}/` je CSS + Vorschau-HTML + README; alle States aus Figma, alle 7 Kontexte in jeder Vorschau; `docs/components.html`. Offen: Danilos Sichtprüfung gegen Figma, dann Barrierefreiheits-Check. |
 | **C Prototyp Bildungsangebote** | nötige Module + eine HTML-Seite mit Dummy-Daten und Vanilla-JS-Filter, für den Kundentest |
 | **D Module / Docs / Übergabe** | nach Entscheidung über den Lieferumfang (nächste Woche) |
 
@@ -276,7 +276,7 @@ Regel: Figma-Name wird nur normalisiert (Slash → Punkt/Bindestrich, lowercase)
 
 ## 6. Kontrast-Befunde aus dem Lint (2026-09-10, in Figma zu klären)
 
-`npm run tokens:lint` prüft 31 Paare je Kontext gegen WCAG 2.2 AA (Text 4.5:1, UI 3:1). Ergebnis: surface-50, surface-100 und primary-900 sind sauber. Befunde:
+`npm run tokens:lint` prüft 31 Paare je Kontext gegen WCAG 2.2 AA (Text 4.5:1, UI 3:1). Stand nach Nachscan 2026-09-10 (text/secondary in surface-400 und secondary-400 auf neutral/700 gelöst): surface-50, surface-100 und primary-900 sind sauber. Verbleibende Befunde:
 
 | Kontext | Paar | Ist | Soll |
 |---|---|---|---|
@@ -286,20 +286,20 @@ Regel: Figma-Name wird nur normalisiert (Slash → Punkt/Bindestrich, lowercase)
 | surface-400 | `color/toggle/track-off` auf `bg/module` | 2.23 | 3.0 |
 | surface-400 | `color/interactive-secondary` auf `bg/module` | 3.54 | 4.5 |
 | surface-400 | `color/feedback/error` (error/dark) auf `bg/module` | 4.35 | 4.5 |
-| secondary-400 | `color/text/secondary` (neutral/600) auf `bg/module` | 3.23 | 4.5 |
 | secondary-400 | `color/interactive-secondary` auf `bg/module` | 2.25 | 4.5 |
 | secondary-400 | `color/toggle/track-off` auf `bg/module` | 1.42 | 3.0 |
 | secondary-400 | `color/feedback/error` auf `bg/module` | 2.76 | 4.5 |
 
-Vorschlag: In den Modes surface-300/400 und secondary-400 dunklere Aliase setzen (z. B. `toggle/track-off` → neutral/500 oder 600, `interactive-secondary` → secondary/700 oder 800, `text/secondary` in secondary-400 → neutral/700 oder 800, `feedback/error` in secondary-400 → error/dark bleibt zu hell, ggf. neutral/900). Divider (alpha 20 %) sind dekorativ und werden nur informativ gelistet.
+Vorschlag: In den Modes surface-200/300/400 und secondary-400 dunklere Aliase setzen (`toggle/track-off` → neutral/500 oder 600, `interactive-secondary` → secondary/700 oder 800, `feedback/error` in surface-400 und secondary-400 → dunkler als error/dark, ggf. neutral/900). Divider (alpha 20 %) sind dekorativ und werden nur informativ gelistet.
 
 ## 7. To-dos
 
 - [ ] **Cut-Edges bei den Modulen schärfen.** Entschieden 2026-09-10: Keile belegen eigenen Platz, rechteckiger Container um die Shape, Höhe der Shape bestimmt Höhe des Containers (kein Overlap). Hinter den Cut-Edges steckt weitere Funktionalität, Danilo brieft dazu gesondert, bevor die Module gebaut werden. `.cut-edges--overlap` bleibt bis dahin ungenutzt.
 - [ ] **Barrierefreiheits-Check** (WCAG 2.2 AA / BFSG): Kontrast-Befunde aus Abschnitt 6 in Figma lösen, dann Lint erneut; Fokus-Reihenfolge, Tastaturbedienung, Zoom 200 %/400 %, Reflow, Screenreader-Semantik der Core Components und Module. Als eigener Schritt nach Phase B einplanen.
-- [ ] Danilo prüft Styleguide (`npm run docs` → http://localhost:4321/docs/).
-- [ ] Erster Commit.
-- [ ] Phase B Core Components: Button (Primary/Secondary/Icon), Inputs, Toggle, Checkbox, Radio, Chip, Tag.
+- [ ] Danilo prüft Styleguide (`npm run docs` → http://localhost:4321/docs/ und /docs/components.html).
+- [ ] Commit über die GitHub-App (macht Danilo).
+- [x] Phase B Core Components: Button (Primary/Secondary/Icon), Inputs, Toggle, Checkbox, Radio, Chip, Tag.
+- [ ] Phase C Prototyp Bildungsangebote: wartet auf Danilos Template-Node-ID und das Cut-Edges-Briefing.
 
 ## 8. Entschieden (nicht mehr offen)
 

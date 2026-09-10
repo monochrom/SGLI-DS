@@ -20,6 +20,7 @@
 
 /* Figma Semantic-Mode surface-400 */
 [data-context="surface-400"] {
+  --color-text-secondary: var(--color-neutral-700);
   --color-bg-module: var(--color-surface-400);
 }
 
@@ -74,6 +75,7 @@
 
 /* Figma Semantic-Mode secondary-400 */
 [data-context="secondary-400"] {
+  --color-text-secondary: var(--color-neutral-700);
   --color-bg-inset: var(--color-neutral-100);
   --color-bg-module: var(--color-secondary-400);
 }

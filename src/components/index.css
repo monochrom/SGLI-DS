@@ -1,0 +1,7 @@
+/* SGLI Design System – Core Components (alle auf einmal) */
+@import "./button/button.css";
+@import "./input/input.css";
+@import "./toggle/toggle.css";
+@import "./checkbox/checkbox.css";
+@import "./chip/chip.css";
+@import "./tag/tag.css";

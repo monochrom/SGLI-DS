@@ -1,0 +1,132 @@
+/* SGLI – Checkbox & Radio
+   Figma: Checkbox (1859:171) States Unchecked | Checked | Focused Off | Focused On | Error | Disabled
+          Radio (1859:182)    States Unselected | Selected | Focused Off | Focused On | Error | Disabled
+   Box 16 × 16, 1 px border/default innen; gewählt: Fläche text/primary mit Check-Icon 16 (Checkbox)
+   bzw. Punkt 6 px (Radio, Radius full). Label Caption in text/primary, Gap 8.
+   Error: Rahmen und Label feedback/error, Fehlertext Caption mit Gap 4. Disabled Opacity 40 %.
+   Fokus: Doppelring um die ganze Zeile (Box + Label), wie in Figma.
+
+   Punkt und Haken sind an color/bg/module gebunden (in Figma korrigiert 2026-09-10), damit sie
+   im Kontext primary-900 dunkel auf der hellen Fläche stehen.
+
+   Markup:
+   <label class="choice">
+     <input class="choice__input" type="checkbox" name="a">
+     <span class="choice__box" aria-hidden="true"></span>
+     <span class="choice__label">Label</span>
+   </label>
+   Radio: type="radio" und Klasse .choice--radio. */
+
+.choice {
+  --choice-size: 16px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+.choice__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.choice__box {
+  position: relative;
+  flex: none;
+  width: var(--choice-size);
+  height: var(--choice-size);
+  box-sizing: border-box;
+  border: var(--border-default) solid var(--color-border-default);
+  background-color: transparent;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.choice--radio .choice__box {
+  border-radius: var(--radius-full);
+}
+
+/* Checked: Fläche text/primary, Haken als Maske (Icon Check aus dem Sprite, hier inline) */
+.choice__input:checked ~ .choice__box {
+  background-color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+}
+.choice:not(.choice--radio) .choice__input:checked ~ .choice__box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-bg-module);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M28.7 9.7 12.7 25.7a1 1 0 0 1-1.4 0l-7-7a1 1 0 0 1 1.4-1.4L12 23.6 27.3 8.3a1 1 0 0 1 1.4 1.4Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M28.7 9.7 12.7 25.7a1 1 0 0 1-1.4 0l-7-7a1 1 0 0 1 1.4-1.4L12 23.6 27.3 8.3a1 1 0 0 1 1.4 1.4Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.choice--radio .choice__input:checked ~ .choice__box::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-module);
+}
+
+/* Fokus: Ring um die ganze Zeile */
+.choice:has(.choice__input:focus-visible) {
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: var(--border-focus-inner);
+  box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
+}
+
+/* Error */
+.choice--error,
+.choice:has(.choice__input[aria-invalid="true"]) {
+  color: var(--color-feedback-error);
+}
+.choice--error .choice__box,
+.choice:has(.choice__input[aria-invalid="true"]) .choice__box {
+  border-color: var(--color-feedback-error);
+}
+.choice--radio.choice--error .choice__box {
+  border-width: 1.5px;
+}
+.choice__error {
+  display: block;
+  margin: var(--space-4) 0 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-feedback-error);
+}
+
+/* Disabled */
+.choice:has(.choice__input:disabled) {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Gruppe */
+.choice-group {
+  display: grid;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.choice-group__legend {
+  margin-bottom: var(--space-8);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}

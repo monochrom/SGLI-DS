@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-10 – Phase B Core Components
+
+- Figma-Sets ausgelesen (read-only): Button/Primary, Button/Secondary, Button/Icon, Input Text, Input Select, Input Search, Input Date, Textarea, Toggle, Checkbox, Radio, Chip, tag.
+- `src/components/button` (Primary, Secondary, Icon; Mobile/Desktop-Größe ab lg), `input` (fünf Feldtypen, schwebendes Label, Error, Disabled), `toggle` (role=switch), `checkbox` (Checkbox + Radio, Fokusring um die Zeile), `chip` (aria-pressed, Badge, Icon), `tag`.
+- `src/components/index.css` bündelt alle Komponenten. `docs/components.html` bettet die Vorschauen ein. Jede Vorschau zeigt alle 7 Kontexte.
+- `focus.css`: Radius am Fokusring entfernt (Komponenten sind rechteckig).
+- Nachscan Semantic: `text/secondary` in surface-400 und secondary-400 jetzt `neutral/700` (AA). Checkbox/Radio-Innenfarbe auf `bg/module` (in Figma korrigiert), Tag-Text `text/primary` wie in Figma.
+
 ## 2026-09-10 – Phase A Foundations
 
 - Repo angelegt (git, Node 24, Style Dictionary 4.4).

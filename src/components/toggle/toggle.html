@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toggle – SGLI</title>
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="./toggle.css">
+  <link rel="stylesheet" href="../preview.css">
+</head>
+<body>
+  <main class="preview">
+    <h1 class="text-h3">Toggle</h1>
+    <p class="preview__meta">Figma: Toggle. Klicken schaltet um, Tab zeigt den Fokusring.</p>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">States</h2>
+      <div class="preview__row">
+        <label class="toggle"><input class="toggle__input" type="checkbox" role="switch"><span class="toggle__track" aria-hidden="true"></span><span class="toggle__label">Off</span></label>
+        <label class="toggle"><input class="toggle__input" type="checkbox" role="switch" checked><span class="toggle__track" aria-hidden="true"></span><span class="toggle__label">On</span></label>
+        <label class="toggle toggle--error"><input class="toggle__input" type="checkbox" role="switch" aria-invalid="true"><span class="toggle__track" aria-hidden="true"></span><span class="toggle__label">Error</span></label>
+        <label class="toggle"><input class="toggle__input" type="checkbox" role="switch" disabled><span class="toggle__track" aria-hidden="true"></span><span class="toggle__label">Disabled</span></label>
+        <label class="toggle"><input class="toggle__input" type="checkbox" role="switch" checked disabled><span class="toggle__track" aria-hidden="true"></span><span class="toggle__label">Disabled On</span></label>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">In allen Kontexten</h2>
+      <div class="preview__contexts" data-preview-contexts>
+        <template>
+          <label class="toggle"><input class="toggle__input" type="checkbox" role="switch"><span class="toggle__track" aria-hidden="true"></span><span class="toggle__label">Off</span></label>
+          <label class="toggle"><input class="toggle__input" type="checkbox" role="switch" checked><span class="toggle__track" aria-hidden="true"></span><span class="toggle__label">On</span></label>
+        </template>
+      </div>
+    </section>
+  </main>
+  <script src="../preview.js"></script>
+</body>
+</html>

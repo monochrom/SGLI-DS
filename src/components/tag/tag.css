@@ -1,0 +1,19 @@
+/* SGLI – Tag
+   Figma: tag (1969:6853, Modules). Kleines Label auf Highlight-Fläche, z. B. „Heute“.
+   Padding 6 / 8, Label-S in text/primary, Fläche accent/highlight, kein Radius, kein State. */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-8);
+  background-color: var(--color-accent-highlight);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}

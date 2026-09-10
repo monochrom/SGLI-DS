@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chip – SGLI</title>
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="./chip.css">
+  <link rel="stylesheet" href="../preview.css">
+</head>
+<body>
+  <main class="preview">
+    <h1 class="text-h3">Chip</h1>
+    <p class="preview__meta">Figma: Chip. Klick schaltet aria-pressed um (Filter-Verhalten). Fenster unter 1024 px zeigt Viewport=Phone (44 px).</p>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">States</h2>
+      <div class="preview__row">
+        <button class="chip" type="button" aria-pressed="false"><span class="chip__label">Label</span></button>
+        <button class="chip is-hover" type="button" aria-pressed="false"><span class="chip__label">Hover</span></button>
+        <button class="chip" type="button" aria-pressed="true"><span class="chip__label">Active</span></button>
+        <button class="chip" type="button" aria-pressed="false" disabled><span class="chip__label">Disabled</span></button>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Badge und Icon</h2>
+      <div class="preview__row">
+        <button class="chip" type="button" aria-pressed="false"><span class="chip__label">Führungen</span><span class="chip__badge">12</span></button>
+        <button class="chip" type="button" aria-pressed="true"><span class="chip__label">Führungen</span><span class="chip__badge">12</span></button>
+        <button class="chip" type="button" aria-pressed="false"><span class="chip__label">Mehr</span><svg class="icon chip__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-CaretRight"></use></svg></button>
+        <button class="chip" type="button" aria-pressed="true"><span class="chip__label">Workshop</span><svg class="icon chip__icon" aria-hidden="true"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg></button>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Filter-Gruppe (klickbar)</h2>
+      <ul class="chip-group" data-chip-group>
+        <li><button class="chip" type="button" aria-pressed="true"><span class="chip__label">Alle</span><span class="chip__badge">38</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false"><span class="chip__label">Führungen</span><span class="chip__badge">12</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false"><span class="chip__label">Workshops</span><span class="chip__badge">9</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false"><span class="chip__label">Projekttage</span><span class="chip__badge">7</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false"><span class="chip__label">Digital</span><span class="chip__badge">10</span></button></li>
+      </ul>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">In allen Kontexten</h2>
+      <div class="preview__contexts" data-preview-contexts>
+        <template>
+          <button class="chip" type="button" aria-pressed="false"><span class="chip__label">Label</span><span class="chip__badge">3</span></button>
+          <button class="chip" type="button" aria-pressed="true"><span class="chip__label">Active</span><span class="chip__badge">3</span></button>
+        </template>
+      </div>
+    </section>
+  </main>
+  <script src="../preview.js"></script>
+  <script>
+    document.querySelectorAll('.chip[aria-pressed]').forEach(function (c) {
+      c.addEventListener('click', function () { c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') !== 'true'); });
+    });
+  </script>
+</body>
+</html>

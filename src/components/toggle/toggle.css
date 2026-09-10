@@ -1,0 +1,93 @@
+/* SGLI – Toggle
+   Figma: Toggle (1846:179). States: Off | On | Focused Off | Focused On | Error | Disabled
+   Track 44 × 24, Radius full, Padding 4, Thumb 16. Off = toggle/track-off, On = toggle/track-on,
+   Thumb = toggle/thumb, Error = feedback/error, Disabled Opacity 40 %.
+
+   Markup:
+   <label class="toggle">
+     <input class="toggle__input" type="checkbox" role="switch">
+     <span class="toggle__track" aria-hidden="true"></span>
+     <span class="toggle__label">Newsletter</span>
+   </label>
+   Figma zeigt nur den Track. Ein sichtbares oder .sr-only-Label ist trotzdem Pflicht. */
+
+.toggle {
+  --toggle-w: 44px;
+  --toggle-h: 24px;
+  --toggle-pad: var(--space-4);
+  --toggle-thumb: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+.toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.toggle__track {
+  position: relative;
+  flex: none;
+  width: var(--toggle-w);
+  height: var(--toggle-h);
+  border-radius: var(--radius-full);
+  background-color: var(--color-toggle-track-off);
+  transition: background-color 150ms ease;
+}
+.toggle__track::after {
+  content: "";
+  position: absolute;
+  top: var(--toggle-pad);
+  left: var(--toggle-pad);
+  width: var(--toggle-thumb);
+  height: var(--toggle-thumb);
+  border-radius: var(--radius-full);
+  background-color: var(--color-toggle-thumb);
+  transition: transform 150ms ease;
+}
+
+.toggle__input:checked ~ .toggle__track {
+  background-color: var(--color-toggle-track-on);
+}
+.toggle__input:checked ~ .toggle__track::after {
+  transform: translateX(calc(var(--toggle-w) - var(--toggle-thumb) - 2 * var(--toggle-pad)));
+}
+
+/* Fokus: Doppelring um den Track */
+.toggle__input:focus-visible ~ .toggle__track {
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: var(--border-focus-inner);
+  box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
+}
+
+/* Error */
+.toggle--error .toggle__track,
+.toggle__input[aria-invalid="true"] ~ .toggle__track {
+  background-color: var(--color-feedback-error);
+}
+
+/* Disabled */
+.toggle__input:disabled ~ .toggle__track,
+.toggle__input:disabled ~ .toggle__label {
+  opacity: 0.4;
+}
+.toggle:has(.toggle__input:disabled) {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle__track,
+  .toggle__track::after {
+    transition: none;
+  }
+}
