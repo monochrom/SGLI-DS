@@ -159,9 +159,32 @@ body { background-color: var(--color-bg-page); }
   }
 }
 
-/* Chip-Erweiterungen für den Filter: Badge trägt den gewählten Wert, X entfernt */
+/* Chip-Erweiterungen für den Filter: Badge trägt den gewählten Wert */
 .chip .chip__badge { white-space: nowrap; }
 .chip[aria-pressed="true"] .chip__icon { color: var(--color-chip-fg-active); }
+
+/* Geteilter Chip (gesetzter Detailfilter): zwei Buttons, die wie ein Chip aussehen.
+   Links Label + Badge (öffnet das Off-Canvas erneut), rechts das X (entfernt den Wert).
+   Maße wie der Chip aus Figma: Padding 12 außen, Gap 6 zwischen Badge und X. */
+.chip-split {
+  display: inline-flex;
+  align-items: stretch;
+}
+.chip--split-main {
+  padding-right: 0;
+}
+.chip--split-remove {
+  padding-left: var(--space-6);
+}
+.chip-split .chip:hover .chip__label,
+.chip-split .chip:hover .chip__badge {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.chip-split .chip:focus-visible {
+  position: relative;
+  z-index: 1; /* Fokusring liegt über dem Nachbar-Button */
+}
 
 .edu-filter__actions {
   display: flex;

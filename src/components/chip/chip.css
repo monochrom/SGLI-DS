@@ -2,7 +2,7 @@
    Figma: Chip (2301:85). Props: Label, Count, Badge (bool), Icon (bool), State = Default | Hover | Active | Focused | Disabled, Viewport = Desktop | Phone
    Padding 8 / 12, Gap 6, Label-M, kein Radius. Default: chip/bg (transparent) + 1 px border/default.
    Hover: chip/bg-hover. Active: chip/bg-active + chip/fg-active, ohne Rahmen. Disabled: Opacity 40 %.
-   Badge: Padding 4 / 6, Caption, chip/badge-bg + badge-fg (Active: badge-bg-active + badge-fg-active).
+   Badge: Padding horizontal 6, Höhe aus --chip-min-h abgeleitet (passt exakt in Chip-Innenraum), Caption, chip/badge-bg + badge-fg (Active: badge-bg-active + badge-fg-active).
    Icon 20 px (size/icon/md): CaretRight (Default), X (Active).
    Höhe: Desktop 40, Phone 44 (Touch). Phone ist Default, Desktop ab lg (1024).
 
@@ -58,7 +58,9 @@
 .chip__badge {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-4) var(--space-6);
+  box-sizing: border-box;
+  height: calc(var(--chip-min-h) - (2 * var(--space-8)) - (2 * var(--border-default)));
+  padding: 0 var(--space-6);
   background-color: var(--color-chip-badge-bg);
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);

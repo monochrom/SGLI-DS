@@ -7,13 +7,15 @@
      über 20 Angebote   → alle Detailfilter (Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache)
    Ohne gewählte Zielgruppe zeigt Figma keine Detailfilter (Frame „Bildung - Filter Default“).
 
-   Tags in der Liste: 3 Slots. 2 dynamische Slots je Filterstatus, 1 Slot für die Dauer.
-     ungefiltert        → Zielgruppen (max 2, Rest als +N) · Dauer
-     Stufe 9–20         → Thema (max 2) · Dauer
-     Stufe über 20      → Klassenstufe (max 2; ohne Klassenstufe: Thema) · Barrierefreiheit oder Sprache · Dauer
-     Barrierefreiheit hat Vorrang vor Englisch.
+   Tags in der Liste: 3 Slots. 2 dynamische Slots je Filterschritt, 1 Slot für die Dauer.
+     ungefiltert               → Zielgruppen (max 2, Rest als +N) · Dauer
+     Zielgruppe gewählt        → Thema (max 2) · Dauer
+     Zielgruppe + Detailfilter → Klassenstufe (sonst Thema, sonst Format; max 2) · Barrierefreiheit oder Sprache · Dauer
+     Barrierefreiheit hat Vorrang vor Englisch. Das gefilterte Attribut wird als Tag übersprungen.
 
-   Gesetzte Chips tragen ein X und werden per Klick entfernt. Detailfilter-Chips mit Chevron öffnen ein Off-Canvas. */
+   Zielgruppen-Chips: Klick setzt, Klick auf den aktiven Chip (X) entfernt.
+   Detailfilter-Chips: Chevron öffnet ein Off-Canvas. Gesetzt wird der Chip geteilt: Label + Badge öffnen das
+   Off-Canvas erneut (Wert ändern), das X entfernt den Wert. */
 
 (function () {
   'use strict';
@@ -114,20 +116,38 @@
     });
   }
 
-  /* ---------- Tags je Angebot (3 Slots) ---------- */
+  /* ---------- Tags je Angebot (3 Slots) ----------
+     Lesart B (entschieden 2026-09-11): die gesetzten Filter entscheiden, nicht die Ampelstufe.
+       keine Zielgruppe          → Zielgruppen (max 2)
+       Zielgruppe, kein Detail   → Thema (max 2)
+       Zielgruppe + Detailfilter → Slot 1: Klassenstufe, sonst Thema, sonst Format (max 2)
+                                   Slot 2: Barrierefreiheit, sonst Sprache
+     Das Attribut, nach dem gerade gefiltert wird, wird übersprungen (wäre bei allen Treffern gleich). */
   function tagSlots(a) {
-    var t = tier();
     if (!state.zielgruppe) return [{ items: a.zielgruppen, max: 2 }];
-    if (t === 'all') {
-      var slots = [{ items: a.klassenstufe.length ? a.klassenstufe : a.thema, max: 2 }];
-      var extra = null;
-      if (a.barrierefreiheit.length) extra = a.barrierefreiheit[0];
-      else if (includes(a.sprache, 'Englisch') && includes(a.sprache, 'Deutsch')) extra = 'Auch auf Englisch';
-      else if (!includes(a.sprache, 'Deutsch')) extra = 'Auf ' + a.sprache[0];
-      if (extra) slots.push({ items: [extra], max: 1 });
-      return slots;
+    if (!hasDetail()) return [{ items: a.thema, max: 2 }];
+
+    var slots = [];
+    var primary = [
+      { key: 'klassenstufe', items: state.zielgruppe === 'Schulen' ? a.klassenstufe : [] }, /* Klassenstufe nur für Schulen */
+      { key: 'thema', items: a.thema },
+      { key: 'format', items: [a.format] }
+    ];
+    for (var i = 0; i < primary.length; i++) {
+      if (!state.detail[primary[i].key] && primary[i].items.length) {
+        slots.push({ items: primary[i].items, max: 2 });
+        break;
+      }
     }
-    return [{ items: a.thema, max: 2 }];
+
+    var extra = null;
+    if (a.barrierefreiheit.length && !state.detail.foerderbedarf) extra = a.barrierefreiheit[0];
+    else if (!state.detail.sprache) {
+      if (includes(a.sprache, 'Englisch') && includes(a.sprache, 'Deutsch')) extra = 'Auch auf Englisch';
+      else if (!includes(a.sprache, 'Deutsch')) extra = 'Auf ' + a.sprache[0];
+    }
+    if (extra) slots.push({ items: [extra], max: 1 });
+    return slots;
   }
   function renderTags(a) {
     var parts = [];
@@ -168,8 +188,20 @@
       el.detailRow.hidden = false;
       el.detailChips.innerHTML = filters.map(function (f) {
         var val = state.detail[f.key];
-        var attrs = 'data-detail="' + f.key + '"' + (val ? '' : ' aria-haspopup="dialog"');
-        return '<li>' + chipHtml(attrs, f.label, !!val, val || null, val ? 'X' : 'CaretRight') + '</li>';
+        if (!val) {
+          return '<li>' + chipHtml('data-detail="' + f.key + '" aria-haspopup="dialog"', f.label, false, null, 'CaretRight') + '</li>';
+        }
+        /* Geteilter Chip: Label + Badge öffnen das Off-Canvas erneut, das X entfernt den Wert */
+        return '<li class="chip-split">' +
+          '<button class="chip chip--split-main" type="button" aria-pressed="true" aria-haspopup="dialog" data-detail="' + f.key + '">' +
+            '<span class="chip__label">' + esc(f.label) + '</span>' +
+            '<span class="chip__badge">' + esc(val) + '</span>' +
+            '<span class="sr-only">, ändern</span>' +
+          '</button>' +
+          '<button class="chip chip--split-remove" type="button" aria-pressed="true" data-detail-remove="' + f.key + '" aria-label="' + esc(f.label + ': ' + val) + ' entfernen">' +
+            icon('X', 'chip__icon') +
+          '</button>' +
+        '</li>';
       }).join('');
     }
   }
@@ -275,16 +307,19 @@
   });
 
   el.detailChips.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-detail]');
-    if (!btn) return;
-    var key = btn.getAttribute('data-detail');
-    if (state.detail[key]) {
-      delete state.detail[key];
+    var remove = e.target.closest('[data-detail-remove]');
+    if (remove) {
+      var rkey = remove.getAttribute('data-detail-remove');
+      delete state.detail[rkey];
       state.page = 1;
       render();
-    } else {
-      openOffcanvas(key, btn);
+      var chip = el.detailChips.querySelector('[data-detail="' + rkey + '"]');
+      if (chip) chip.focus();
+      return;
     }
+    var btn = e.target.closest('[data-detail]');
+    if (!btn) return;
+    openOffcanvas(btn.getAttribute('data-detail'), btn);
   });
 
   el.reset.addEventListener('click', function () {
