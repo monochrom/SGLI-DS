@@ -39,6 +39,7 @@ body { background-color: var(--color-bg-page); }
 /* ---------- Navigation (Figma: navigation) ---------- */
 .site-nav {
   padding: var(--space-16) var(--grid-margin);
+  background-color: var(--color-bg-page); /* gleicher Hintergrund wie die Seite */
 }
 .site-nav__inner {
   display: flex;
