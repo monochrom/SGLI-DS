@@ -51,11 +51,10 @@
   background-color: var(--color-button-primary-bg);
   color: var(--color-button-primary-fg);
 }
-.btn--primary:hover,
 .btn--primary.is-hover {
   background-color: var(--color-button-primary-bg-hover);
 }
-.btn--primary:active,
+.btn--primary:active:not(:disabled):not([aria-disabled="true"]),
 .btn--primary.is-active {
   background-color: var(--color-button-primary-bg-pressed);
 }
@@ -66,11 +65,10 @@
   border-bottom: var(--border-default) solid currentColor;
   color: var(--color-button-secondary-fg);
 }
-.btn--secondary:hover,
 .btn--secondary.is-hover {
   color: var(--color-button-secondary-fg-hover);
 }
-.btn--secondary:active,
+.btn--secondary:active:not(:disabled):not([aria-disabled="true"]),
 .btn--secondary.is-active {
   color: var(--color-button-secondary-fg-pressed);
 }
@@ -87,36 +85,36 @@
   width: var(--size-icon-lg);
   height: var(--size-icon-lg);
 }
-.btn--icon:hover,
 .btn--icon.is-hover {
   background-color: var(--color-button-icon-bg-hover);
 }
-.btn--icon:active,
+.btn--icon:active:not(:disabled):not([aria-disabled="true"]),
 .btn--icon.is-active {
   background-color: var(--color-button-icon-bg-pressed);
 }
 
-/* ---------- Disabled (Figma: Opacity 40 %) ---------- */
+/* ---------- Hover ----------
+   Nur auf Geräten mit echtem Hover (Maus, Trackpad). Auf Touch bleibt :hover nach dem Tippen
+   am Element kleben, bis woanders getippt wird; der Button sähe dauerhaft gehovert aus.
+   Disabled-Buttons bekommen keine Hover-Farbe. Die .is-hover-Vorschau oben gilt überall. */
+@media (hover: hover) {
+  .btn--primary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-button-primary-bg-hover);
+  }
+  .btn--secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+    color: var(--color-button-secondary-fg-hover);
+  }
+  .btn--icon:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-button-icon-bg-hover);
+  }
+}
+
+/* ---------- Disabled (Figma: Opacity 40 %) ----------
+   Hover/Pressed sind oben per :not() ausgeschlossen, hier wird nichts zurückgesetzt. */
 .btn:disabled,
 .btn[aria-disabled="true"] {
   opacity: 0.4;
   cursor: not-allowed;
-}
-.btn:disabled:hover,
-.btn[aria-disabled="true"]:hover,
-.btn:disabled:active,
-.btn[aria-disabled="true"]:active {
-  /* keine Hover/Pressed-Farbe im Disabled-Zustand */
-  background-color: var(--color-button-primary-bg);
-}
-.btn--secondary:disabled,
-.btn--secondary[aria-disabled="true"] {
-  background-color: transparent;
-  color: var(--color-button-secondary-fg);
-}
-.btn--icon:disabled,
-.btn--icon[aria-disabled="true"] {
-  background-color: transparent;
 }
 
 /* ---------- Modifier ---------- */

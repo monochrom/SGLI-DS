@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-23 – Button: kein Hover auf Touch
+
+- `button.css`: `:hover` für Primary, Secondary und Icon liegt jetzt in `@media (hover: hover)`. Auf Touch blieb der Hover-Zustand nach dem Tippen kleben, bis woanders getippt wurde (gleiches Muster wie `filter-cell` im Prototyp). `.is-hover`-Vorschau bleibt überall aktiv.
+- Nebenbefund behoben: die Disabled-Reset-Regel `.btn:disabled:hover` überstimmte per Spezifität die Variantenregeln und färbte disabled Secondary/Icon-Buttons bei Hover mit `button/primary/bg`. Hover und Pressed schließen Disabled jetzt direkt per `:not()` aus, der Reset-Block entfällt.
+
 ## 2026-09-12 – Bugfix Chip-Badge-Höhe
 
 - `chip.css`: `.chip__badge` hatte eigenes vertikales Padding + Caption-Line-Height unabhängig von `--chip-min-h`. Ab Desktop (≥1024px, `--chip-min-h: 40px`) war der Badge-Content (~26px) größer als der Chip-Innenraum (22px) und drückte den Chip auf ~44px auf – Chips mit Badge/Value wurden sichtbar höher als Chips ohne (aufgefallen im Prototyp „Bildung", Filterzeile). Fix: `.chip__badge` bekommt eine feste, aus `--chip-min-h` abgeleitete Höhe statt vertikalem Padding, passt dadurch an jedem Breakpoint exakt in den Chip.
