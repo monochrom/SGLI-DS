@@ -127,7 +127,6 @@ body { background-color: var(--color-bg-page); }
 .edu-filter__content {
   --edu-filter-gap: var(--space-12);
   display: grid;
-  gap: var(--edu-filter-gap);
   padding: var(--space-16) 0;
   border-top: 2px solid var(--color-border-default);
   border-bottom: 2px solid var(--color-border-default);
@@ -144,19 +143,23 @@ body { background-color: var(--color-bg-page); }
 
 /* Detailfilter-Zeile klappt mit der Zielgruppe (Ampel) auf und zu: Höhe über grid-template-rows
    0fr ↔ 1fr (--motion-slow), der Inhalt blendet in der zweiten Hälfte ein bzw. zuerst aus.
-   Der negative margin-top hebt den Gap von __content auf, solange die Zeile zu ist.
+   Der Abstand zur Zielgruppen-Zeile (--edu-filter-gap) liegt als padding-top auf der inneren __row,
+   nicht als gap auf __content: ein Grid-Gap bleibt auch bei 0fr-Track stehen und ein negativer
+   margin-top verschiebt das Item nur, verkleinert den Track aber nicht. So wird der Abstand mit dem
+   Inhalt weggeclippt und animiert mit auf.
    Zu = visibility: hidden (raus aus Tab-Reihenfolge und Accessibility Tree), kein display: none,
    sonst kann nichts animieren. overflow: hidden nur zu und während der Bewegung (is-animating,
    JS entfernt die Klasse nach transitionend), damit der Fokusring der Chips offen nicht beschnitten wird. */
 .edu-filter__collapse {
   display: grid;
   grid-template-rows: 0fr;
-  margin-top: calc(-1 * var(--edu-filter-gap));
   visibility: hidden;
   transition:
     grid-template-rows var(--motion-slow) var(--ease-out),
-    margin-top var(--motion-slow) var(--ease-out),
     visibility 0s linear var(--motion-slow);
+}
+.edu-filter__collapse-inner > .edu-filter__row {
+  padding-top: var(--edu-filter-gap);
 }
 .edu-filter__collapse-inner {
   min-height: 0;
@@ -170,11 +173,9 @@ body { background-color: var(--color-bg-page); }
 .edu-filter__collapse.is-animating .edu-filter__collapse-inner { overflow: hidden; }
 .edu-filter__collapse.is-open {
   grid-template-rows: 1fr;
-  margin-top: 0;
   visibility: visible;
   transition:
     grid-template-rows var(--motion-slow) var(--ease-out),
-    margin-top var(--motion-slow) var(--ease-out),
     visibility 0s;
 }
 .edu-filter__collapse.is-open .edu-filter__collapse-inner {
