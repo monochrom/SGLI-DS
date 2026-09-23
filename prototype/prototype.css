@@ -279,10 +279,12 @@ body { background-color: var(--color-bg-page); }
 .chip--split-remove {
   padding-left: var(--space-6);
 }
-.chip-split .chip:hover .chip__label,
-.chip-split .chip:hover .chip__badge {
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+@media (hover: hover) {
+  .chip-split .chip:hover .chip__label,
+  .chip-split .chip:hover .chip__badge {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
 }
 .chip-split .chip:focus-visible {
   position: relative;
@@ -310,7 +312,9 @@ body { background-color: var(--color-bg-page); }
   color: var(--color-text-primary);
   cursor: pointer;
 }
-.edu-filter__reset:hover { color: var(--color-interactive); }
+@media (hover: hover) {
+  .edu-filter__reset:hover { color: var(--color-interactive); }
+}
 .edu-filter__reset {
   transition: opacity var(--motion-fast) var(--ease-out), visibility 0s;
 }
@@ -342,7 +346,9 @@ body { background-color: var(--color-bg-page); }
   color: inherit;
   text-decoration: none;
 }
-.edu-item:hover .edu-item__title { color: var(--color-interactive); }
+@media (hover: hover) {
+  .edu-item:hover .edu-item__title { color: var(--color-interactive); }
+}
 .edu-item__head {
   display: flex;
   gap: var(--space-8);
@@ -510,6 +516,10 @@ body { background-color: var(--color-bg-page); }
   color: var(--color-text-secondary);
 }
 .offcanvas__title { margin: 0; }
+/* Der Titel bekommt beim Öffnen den Fokus (tabindex="-1"). Er ist nicht interaktiv, deshalb kein Ring:
+   der sichtbare Ort ist das aufgehende Panel selbst. */
+.offcanvas__title:focus,
+.offcanvas__title:focus-visible { outline: none; box-shadow: none; }
 .offcanvas__body {
   flex: 1 1 auto;
   min-height: 0;
@@ -633,7 +643,11 @@ body:has(.offcanvas[open]) { overflow: hidden; }
   color: var(--color-text-secondary);
   transition: color var(--motion-fast) var(--ease-out);
 }
-.filter-cell:hover { background-color: var(--color-filter-cell-bg-hover); }
+/* Hover nur auf Geräten mit echtem Hover (Maus, Trackpad). Auf Touch bleibt :hover nach dem Tippen
+   am Element kleben, bis woanders getippt wird; die Zelle sähe nach dem Abwählen aus wie gehovert. */
+@media (hover: hover) {
+  .filter-cell:hover { background-color: var(--color-filter-cell-bg-hover); }
+}
 .filter-cell:active { background-color: var(--color-filter-cell-bg-pressed); }
 .filter-cell:has(.filter-cell__input:checked) {
   background-color: var(--color-filter-cell-bg-active);
@@ -930,7 +944,9 @@ body:has(.offcanvas[open]) { overflow: hidden; }
   text-decoration: none;
   color: var(--color-text-primary);
 }
-.site-footer a:hover { text-decoration: underline; }
+@media (hover: hover) {
+  .site-footer a:hover { text-decoration: underline; }
+}
 .site-footer__bottom {
   display: flex;
   flex-wrap: wrap;

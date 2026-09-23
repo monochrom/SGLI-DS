@@ -127,7 +127,8 @@ Figma: Doku „Off-Canvas“ (`2613:31418`), Filter-Panel Desktop `2710:23917`, 
 
 - Natives `<dialog>` mit `showModal()`. Damit: Top-Layer, Escape, Fokus-Trap, Hintergrund inert. Zusätzlich Scroll-Lock auf `body` und `scrollbar-gutter: stable`.
 - Schließen über Close-Button, Escape, Backdrop-Klick und „N Angebote anzeigen“. Alle Wege laufen über das `close`-Event des Dialogs; dort Fokus zurück zum auslösenden Chip (über den Filterschlüssel suchen, der Chip wird beim Rendern ersetzt).
-- Fokus beim Öffnen auf die gewählte, sonst die erste aktive Option.
+- Fokus beim Öffnen auf den Titel (`h2` mit `tabindex="-1"`, kein Fokusring, da nicht interaktiv). Nicht auf die erste Option: Safari und Firefox setzen bei programmatischem `focus()` `:focus-visible`, auf Touch erschiene der Ring auf der Zelle. Tab führt vom Titel zum Close-Button und weiter zu den Optionen.
+- Hover-Zustände nur in `@media (hover: hover)`. Auf Touch bleibt `:hover` nach dem Tippen kleben, eine abgewählte Zelle sähe sonst aus wie gehovert.
 - Trefferzahl je Option: Anzahl der Angebote, die alle **anderen** gesetzten Filter erfüllen und diese Option. Optionen mit 0 Treffern deaktiviert. Kostet eine Count-Query je Option.
 - Auswahl wirkt sofort (Liste dahinter aktualisiert sich). Bei Auswahl nur Zahlen, `disabled` und Button-Labels aktualisieren, die Optionsliste nicht neu bauen (Fokus bliebe sonst nicht auf dem Radio).
 - Gewählte Option per erneutem Klick abwählbar (entschieden 2026-09-23). Radios kennen das nativ nicht: `change` setzt eine neue Option; `click`, Leertaste und Enter auf der bereits gewählten Option entfernen den Wert. Enter im Optionsbereich mit `preventDefault`, sonst schließt die implizite Formular-Submission den Dialog.

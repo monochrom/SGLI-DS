@@ -394,10 +394,10 @@
     lastOpener = opener || null;
     renderOffcanvasOptions();
     if (!el.offcanvas.open) el.offcanvas.showModal();
-    /* Fokus auf die gewählte, sonst die erste aktive Option (Doku: Fokus in das Panel setzen) */
-    var focusTarget = el.ocOptions.querySelector('.filter-cell__input:checked') ||
-      el.ocOptions.querySelector('.filter-cell__input:not(:disabled)') || el.ocClose;
-    focusTarget.focus();
+    /* Fokus auf den Titel (tabindex="-1"), nicht auf die erste Option: Screenreader lesen Kicker + Titel,
+       Tab geht danach zum Close-Button und weiter zu den Optionen. Auf Touch bleibt nichts sichtbar,
+       weil der Titel keinen Fokusring hat (Safari/Firefox setzen bei focus() sonst :focus-visible auf die Zelle). */
+    el.ocTitle.focus({ preventScroll: true });
   }
 
   function closeOffcanvas() {
