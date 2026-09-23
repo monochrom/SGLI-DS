@@ -55,14 +55,18 @@
               <p class="edu-filter__label module-label" id="label-zielgruppe">Angebote für</p>
               <ul class="edu-filter__chips" data-filter-category aria-labelledby="label-zielgruppe"></ul>
             </div>
-            <div class="edu-filter__row" data-filter-detail-row hidden>
-              <p class="edu-filter__label module-label" id="label-detail">Genauer filtern</p>
-              <ul class="edu-filter__chips" data-filter-detail aria-labelledby="label-detail"></ul>
+            <div class="edu-filter__collapse" data-filter-detail-row>
+              <div class="edu-filter__collapse-inner">
+                <div class="edu-filter__row">
+                  <p class="edu-filter__label module-label" id="label-detail">Genauer filtern</p>
+                  <ul class="edu-filter__chips" data-filter-detail aria-labelledby="label-detail"></ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="edu-filter__actions">
             <p class="tag" data-filter-count aria-live="polite">47 Angebote</p>
-            <button class="edu-filter__reset" type="button" data-filter-reset hidden>Filter zurücksetzen</button>
+            <button class="edu-filter__reset is-hidden" type="button" data-filter-reset>Filter zurücksetzen</button>
           </div>
         </div>
 
@@ -318,29 +322,33 @@
     </div>
   </footer>
 
-  <!-- ===== Off-Canvas Detailfilter (bg/card) ===== -->
-  <div class="offcanvas__backdrop" data-offcanvas-backdrop></div>
-  <aside class="offcanvas" data-offcanvas role="dialog" aria-modal="true" aria-labelledby="offcanvas-title" aria-hidden="true">
-    <div class="offcanvas__head">
-      <div>
-        <p class="module-label">Genauer filtern</p>
-        <h2 class="offcanvas__title text-h3" id="offcanvas-title" data-offcanvas-title>Filter</h2>
+  <!-- ===== Off-Canvas Detailfilter (Figma: Off-Canvas 2613:31418, Filter-Panel 2710:23917 / 2710:24111)
+       Natives <dialog>: showModal() liefert Top-Layer, Escape, Fokus-Trap und inerten Hintergrund.
+       Desktop: Panel rechts 520 px. Phone: Bottom Sheet, max. 85 % Viewporthöhe. ===== -->
+  <dialog class="offcanvas" data-offcanvas aria-labelledby="offcanvas-title">
+    <form class="offcanvas__form" method="dialog">
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <p class="text-label-s offcanvas__kicker">Genauer filtern</p>
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-title" data-offcanvas-title>Filter</h2>
+        </div>
+        <button class="btn btn--icon" type="submit" value="close" data-offcanvas-close aria-label="Filter schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <div class="offcanvas__body">
+        <fieldset class="filter-cells" data-offcanvas-options>
+          <legend class="sr-only" data-offcanvas-legend>Filter</legend>
+        </fieldset>
       </div>
-      <button class="btn btn--icon" type="button" data-offcanvas-close aria-label="Filter schließen">
-        <svg class="icon" aria-hidden="true" focusable="false"><use href="../dist/icons/sprite.svg#icon-X"></use></svg>
-      </button>
-    </div>
-    <div class="offcanvas__body">
-      <fieldset class="offcanvas__options" data-offcanvas-options aria-label="Optionen"></fieldset>
-      <p class="offcanvas__hint">Prototyp: Die Optionsliste ist ein Platzhalter, damit sich ein Wert setzen lässt. Die Zahl in Klammern ist die Trefferzahl mit dieser Option.</p>
-    </div>
-    <div class="offcanvas__foot">
-      <button class="btn btn--primary" type="button" data-offcanvas-apply>Angebote anzeigen</button>
-      <button class="btn btn--secondary" type="button" data-offcanvas-clear hidden>Auswahl löschen</button>
-    </div>
-  </aside>
+      <footer class="offcanvas__foot">
+        <button class="btn btn--primary" type="submit" value="apply" data-offcanvas-apply>Angebote anzeigen</button>
+        <button class="btn btn--secondary" type="button" data-offcanvas-clear disabled>Auswahl löschen</button>
+      </footer>
+    </form>
+  </dialog>
 
-  <p class="proto-bar" aria-hidden="true">Prototyp · Stand 2026-09-10</p>
+  <p class="proto-bar" aria-hidden="true">Prototyp · Stand 2026-09-22</p>
 
   <script src="./data.js"></script>
   <script src="./filter.js"></script>

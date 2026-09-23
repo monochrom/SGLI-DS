@@ -43,8 +43,8 @@
     moreWrap: $('[data-edu-more-wrap]'),
     more: $('[data-edu-more]'),
     offcanvas: $('[data-offcanvas]'),
-    backdrop: $('[data-offcanvas-backdrop]'),
     ocTitle: $('[data-offcanvas-title]'),
+    ocLegend: $('[data-offcanvas-legend]'),
     ocOptions: $('[data-offcanvas-options]'),
     ocApply: $('[data-offcanvas-apply]'),
     ocClear: $('[data-offcanvas-clear]'),
@@ -164,46 +164,117 @@
     return parts.join('<span class="edu-item__sep" aria-hidden="true">·</span>');
   }
 
-  /* ---------- Rendering ---------- */
-  function chipHtml(attrs, label, active, badge, iconName) {
-    return '<button class="chip" type="button" aria-pressed="' + (active ? 'true' : 'false') + '" ' + attrs + '>' +
-      '<span class="chip__label">' + esc(label) + '</span>' +
-      (badge ? '<span class="chip__badge">' + esc(badge) + '</span>' : '') +
-      (iconName ? icon(iconName, 'chip__icon') : '') +
-      (active ? '<span class="sr-only">, Filter entfernen</span>' : '') +
-      '</button>';
+  /* ---------- Motion ----------
+     Dauer aus prototype.css (--motion-fast), damit JS-Timer und CSS-Transitions zusammenpassen.
+     Bei prefers-reduced-motion entfällt der Crossfade der Liste komplett. */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function motionVar(name, fallback) {
+    var v = parseInt(getComputedStyle(document.documentElement).getPropertyValue(name), 10);
+    return reduceMotion.matches ? 0 : (isNaN(v) ? fallback : v);
+  }
+  function motionFast() { return motionVar('--motion-fast', 160); }
+  function motionSlow() { return motionVar('--motion-slow', 480); }
+
+  /* ---------- Rendering: Chips ----------
+     Chips werden einmal gebaut und danach nur im Zustand aktualisiert (aria-pressed, Slots, Texte),
+     damit die CSS-Transitions abspielen können. Ein innerHTML-Neuaufbau schneidet jede Animation ab.
+     Slots (Badge, Icon, X-Button) wachsen und schrumpfen über grid-template-columns 0fr ↔ 1fr.
+     Geteilter Chip: Label + Badge öffnen das Off-Canvas erneut, das X entfernt den Wert. */
+  function slot(cls, inner) {
+    return '<span class="chip__slot ' + cls + '"><span class="chip__slot-inner">' + inner + '</span></span>';
+  }
+  function setSlot(root, cls, open) {
+    root.querySelector('.' + cls).classList.toggle('is-open', open);
   }
 
-  function renderChips() {
+  function buildCategoryChips() {
     el.categoryChips.innerHTML = D.ZIELGRUPPEN.map(function (zg) {
-      var active = state.zielgruppe === zg;
-      return '<li>' + chipHtml('data-zielgruppe="' + esc(zg) + '"', zg, active, null, active ? 'X' : null) + '</li>';
+      return '<li><button class="chip" type="button" aria-pressed="false" data-zielgruppe="' + esc(zg) + '">' +
+        '<span class="chip__label">' + esc(zg) + '</span>' +
+        slot('chip__slot--icon', icon('X', 'chip__icon')) +
+        '<span class="sr-only" data-sr></span>' +
+        '</button></li>';
     }).join('');
+  }
+  function updateCategoryChips() {
+    el.categoryChips.querySelectorAll('[data-zielgruppe]').forEach(function (btn) {
+      var active = state.zielgruppe === btn.getAttribute('data-zielgruppe');
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      setSlot(btn, 'chip__slot--icon', active);
+      btn.querySelector('[data-sr]').textContent = active ? ', Filter entfernen' : '';
+    });
+  }
+
+  function buildDetailChips(filters) {
+    el.detailChips.innerHTML = filters.map(function (f) {
+      return '<li class="chip-split" data-filter-key="' + f.key + '">' +
+        '<button class="chip chip--split-main" type="button" aria-pressed="false" aria-haspopup="dialog" data-detail="' + f.key + '">' +
+          '<span class="chip__label">' + esc(f.label) + '</span>' +
+          slot('chip__slot--badge', '<span class="chip__badge"></span>') +
+          slot('chip__slot--icon', icon('CaretRight', 'chip__icon')) +
+          '<span class="sr-only" data-sr></span>' +
+        '</button>' +
+        slot('chip__slot--remove',
+          '<button class="chip chip--split-remove focus-inset" type="button" aria-pressed="true" data-detail-remove="' + f.key + '" tabindex="-1" aria-hidden="true">' +
+            icon('X', 'chip__icon') +
+          '</button>') +
+      '</li>';
+    }).join('');
+    el.detailChips.setAttribute('data-keys', filters.map(function (f) { return f.key; }).join(','));
+  }
+  function updateDetailChips(filters) {
+    filters.forEach(function (f) {
+      var li = el.detailChips.querySelector('[data-filter-key="' + f.key + '"]');
+      var val = state.detail[f.key] || '';
+      var main = li.querySelector('.chip--split-main');
+      var remove = li.querySelector('.chip--split-remove');
+      li.classList.toggle('is-active', !!val);
+      main.setAttribute('aria-pressed', val ? 'true' : 'false');
+      if (val) main.querySelector('.chip__badge').textContent = val; /* Text bleibt beim Ausblenden stehen */
+      setSlot(main, 'chip__slot--badge', !!val);
+      setSlot(main, 'chip__slot--icon', !val);
+      main.querySelector('[data-sr]').textContent = val ? ', ändern' : '';
+      setSlot(li, 'chip__slot--remove', !!val);
+      remove.setAttribute('aria-label', f.label + ': ' + val + ' entfernen');
+      remove.tabIndex = val ? 0 : -1;
+      remove.setAttribute('aria-hidden', val ? 'false' : 'true');
+    });
+  }
+
+  /* Detailfilter-Zeile klappt per CSS auf und zu (grid-template-rows). Während der Bewegung
+     beschneidet is-animating den Inhalt, danach nicht mehr (Fokusring). Beim ersten Render ohne
+     Animation, sonst bliebe is-animating hängen, weil ohne Zustandswechsel kein transitionend kommt. */
+  var detailRowRendered = false;
+  var detailRowTimer = null;
+  function setDetailRow(open) {
+    var row = el.detailRow;
+    var wasOpen = row.classList.contains('is-open');
+    if (detailRowRendered && wasOpen !== open) {
+      row.classList.add('is-animating');
+      clearTimeout(detailRowTimer);
+      detailRowTimer = setTimeout(settleDetailRow, motionSlow() + 50); /* Fallback ohne transitionend */
+    }
+    row.classList.toggle('is-open', open);
+    detailRowRendered = true;
+  }
+  function settleDetailRow() {
+    clearTimeout(detailRowTimer);
+    el.detailRow.classList.remove('is-animating');
+  }
+  el.detailRow.addEventListener('transitionend', function (e) {
+    if (e.target === el.detailRow && e.propertyName === 'grid-template-rows') settleDetailRow();
+  });
+
+  function renderChips() {
+    if (!el.categoryChips.children.length) buildCategoryChips();
+    updateCategoryChips();
 
     var filters = visibleDetailFilters();
-    if (!filters.length) {
-      el.detailRow.hidden = true;
-      el.detailChips.innerHTML = '';
-    } else {
-      el.detailRow.hidden = false;
-      el.detailChips.innerHTML = filters.map(function (f) {
-        var val = state.detail[f.key];
-        if (!val) {
-          return '<li>' + chipHtml('data-detail="' + f.key + '" aria-haspopup="dialog"', f.label, false, null, 'CaretRight') + '</li>';
-        }
-        /* Geteilter Chip: Label + Badge öffnen das Off-Canvas erneut, das X entfernt den Wert */
-        return '<li class="chip-split">' +
-          '<button class="chip chip--split-main" type="button" aria-pressed="true" aria-haspopup="dialog" data-detail="' + f.key + '">' +
-            '<span class="chip__label">' + esc(f.label) + '</span>' +
-            '<span class="chip__badge">' + esc(val) + '</span>' +
-            '<span class="sr-only">, ändern</span>' +
-          '</button>' +
-          '<button class="chip chip--split-remove" type="button" aria-pressed="true" data-detail-remove="' + f.key + '" aria-label="' + esc(f.label + ': ' + val) + ' entfernen">' +
-            icon('X', 'chip__icon') +
-          '</button>' +
-        '</li>';
-      }).join('');
-    }
+    var keys = filters.map(function (f) { return f.key; }).join(',');
+    setDetailRow(filters.length > 0);
+    /* Die Chip-Menge ändert sich nur mit der Zielgruppe (Ampel). Nur dann neu bauen. */
+    if (keys !== el.detailChips.getAttribute('data-keys')) buildDetailChips(filters);
+    updateDetailChips(filters);
   }
 
   function countLabel(n) {
@@ -212,12 +283,32 @@
     return n + ' Angebote';
   }
 
-  function renderList() {
+  /* ---------- Rendering: Liste ----------
+     Filterwechsel: Liste blendet ab (is-updating), wird nach --motion-fast neu gebaut und blendet wieder ein.
+     „Weitere laden“ baut sofort (immediate), damit der Fokus auf das erste neue Angebot gesetzt werden kann. */
+  var listTimer = null;
+  function renderList(immediate) {
     var all = results();
-    var shown = all.slice(0, state.page * PAGE_SIZE);
-
     el.count.textContent = countLabel(all.length);
-    el.reset.hidden = !(state.zielgruppe || hasDetail());
+    el.reset.classList.toggle('is-hidden', !(state.zielgruppe || hasDetail()));
+
+    var delay = motionFast();
+    if (immediate || !el.list.children.length || delay === 0) {
+      window.clearTimeout(listTimer);
+      el.list.classList.remove('is-updating');
+      buildList(all);
+      return;
+    }
+    el.list.classList.add('is-updating');
+    window.clearTimeout(listTimer);
+    listTimer = window.setTimeout(function () {
+      buildList(results());
+      el.list.classList.remove('is-updating');
+    }, delay);
+  }
+
+  function buildList(all) {
+    var shown = all.slice(0, state.page * PAGE_SIZE);
 
     el.list.innerHTML = shown.map(function (a) {
       var tags = renderTags(a);
@@ -249,51 +340,79 @@
   function render() {
     renderChips();
     renderList();
-    if (openFilterKey) renderOffcanvasOptions();
+    if (openFilterKey) updateOffcanvasState();
   }
 
-  /* ---------- Off-Canvas ---------- */
+  /* ---------- Off-Canvas (natives <dialog>, Figma 2613:31418) ----------
+     Optionen als filter-cell (Figma 2646:40456): Radio-Einfachauswahl, Trefferzahl rechts.
+     Die Liste wird nur beim Öffnen gebaut. Bei Auswahl aktualisiert updateOffcanvasState() nur Zahlen,
+     disabled und Button-Labels, damit der fokussierte Radio-Input erhalten bleibt (Pfeiltasten, Fokus-Trap). */
+  function optionCount(f, opt) {
+    return D.ANGEBOTE.filter(function (a) { return matches(a, f.key) && matchesDetail(a, f.key, opt); }).length;
+  }
+
   function renderOffcanvasOptions() {
     var f = filterDef(openFilterKey);
     if (!f) return;
     var current = state.detail[f.key] || '';
     el.ocTitle.textContent = f.label;
-    el.ocOptions.innerHTML = f.options.map(function (opt, i) {
-      var n = D.ANGEBOTE.filter(function (a) { return matches(a, f.key) && matchesDetail(a, f.key, opt); }).length;
+    el.ocLegend.textContent = f.label;
+    el.ocOptions.querySelectorAll('.filter-cell').forEach(function (n) { n.remove(); });
+    el.ocOptions.insertAdjacentHTML('beforeend', f.options.map(function (opt, i) {
+      var n = optionCount(f, opt);
       var id = 'oc-' + f.key + '-' + i;
-      return '<label class="choice choice--radio" for="' + id + '">' +
-        '<input class="choice__input" type="radio" name="offcanvas-option" id="' + id + '" value="' + esc(opt) + '"' + (current === opt ? ' checked' : '') + (n === 0 ? ' disabled' : '') + '>' +
-        '<span class="choice__box" aria-hidden="true"></span>' +
-        '<span class="choice__label">' + esc(opt) + ' <span class="text-secondary">(' + n + ')</span></span>' +
+      return '<label class="filter-cell" for="' + id + '">' +
+        '<input class="filter-cell__input" type="radio" name="offcanvas-option" id="' + id + '" value="' + esc(opt) + '"' + (current === opt ? ' checked' : '') + (n === 0 ? ' disabled' : '') + '>' +
+        '<span class="filter-cell__main">' +
+          '<span class="filter-cell__indicator" aria-hidden="true"></span>' +
+          '<span class="filter-cell__label">' + esc(opt) + '</span>' +
+        '</span>' +
+        '<span class="filter-cell__count"><span data-count>' + n + '</span><span class="sr-only"> Angebote</span></span>' +
         '</label>';
-    }).join('');
-    var n = results().length;
-    el.ocApply.textContent = countLabel(n) + ' anzeigen';
-    el.ocClear.hidden = !current;
+    }).join(''));
+    updateOffcanvasState();
+  }
+
+  function updateOffcanvasState() {
+    var f = filterDef(openFilterKey);
+    if (!f) return;
+    var current = state.detail[f.key] || '';
+    el.ocOptions.querySelectorAll('.filter-cell').forEach(function (cell, i) {
+      var n = optionCount(f, f.options[i]);
+      var input = cell.querySelector('.filter-cell__input');
+      var count = cell.querySelector('[data-count]');
+      count.textContent = n;
+      input.disabled = n === 0 && input.value !== current;
+      input.checked = input.value === current;
+    });
+    el.ocApply.textContent = countLabel(results().length) + ' anzeigen';
+    el.ocClear.disabled = !current;
   }
 
   function openOffcanvas(key, opener) {
     openFilterKey = key;
     lastOpener = opener || null;
     renderOffcanvasOptions();
-    el.offcanvas.classList.add('is-open');
-    el.backdrop.classList.add('is-open');
-    el.offcanvas.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    window.setTimeout(function () { el.ocClose.focus(); }, 30);
+    if (!el.offcanvas.open) el.offcanvas.showModal();
+    /* Fokus auf die gewählte, sonst die erste aktive Option (Doku: Fokus in das Panel setzen) */
+    var focusTarget = el.ocOptions.querySelector('.filter-cell__input:checked') ||
+      el.ocOptions.querySelector('.filter-cell__input:not(:disabled)') || el.ocClose;
+    focusTarget.focus();
   }
 
   function closeOffcanvas() {
-    if (!openFilterKey) return;
+    if (el.offcanvas.open) el.offcanvas.close();
+  }
+
+  /* Ein Pfad für alle Schließwege (Close-Button, „anzeigen“, Escape, Backdrop): Fokus zurück zum Auslöser.
+     Der Chip wurde inzwischen neu gerendert, deshalb über den Filterschlüssel suchen, Fallback lastOpener. */
+  el.offcanvas.addEventListener('close', function () {
     var key = openFilterKey;
     openFilterKey = null;
-    el.offcanvas.classList.remove('is-open');
-    el.backdrop.classList.remove('is-open');
-    el.offcanvas.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    var target = el.detailChips.querySelector('[data-detail="' + key + '"]') || lastOpener;
+    var target = (key && el.detailChips.querySelector('[data-detail="' + key + '"]')) || lastOpener;
     if (target && document.contains(target)) target.focus();
-  }
+    lastOpener = null;
+  });
 
   /* ---------- Events ---------- */
   el.categoryChips.addEventListener('click', function (e) {
@@ -333,16 +452,36 @@
   el.more.addEventListener('click', function () {
     var before = el.list.children.length;
     state.page += 1;
-    renderList();
+    renderList(true);
     var next = el.list.children[before];
     if (next) next.querySelector('a').focus();
   });
 
-  el.ocOptions.addEventListener('change', function (e) {
-    if (!openFilterKey || e.target.name !== 'offcanvas-option') return;
-    state.detail[openFilterKey] = e.target.value;
+  /* Auswahl setzen oder, bei erneutem Klick auf die gewählte Option, wieder aufheben (entschieden 2026-09-23).
+     Radios kennen kein natives Abwählen, daher: change setzt eine neue Option, click/Space/Enter auf der
+     bereits gewählten Option entfernt den Wert. Die Liste wird nicht neu gebaut, der Fokus bleibt. */
+  function setOption(value) {
+    if (!openFilterKey) return;
+    if (state.detail[openFilterKey] === value) delete state.detail[openFilterKey];
+    else state.detail[openFilterKey] = value;
     state.page = 1;
     render();
+  }
+  el.ocOptions.addEventListener('change', function (e) {
+    if (!openFilterKey || e.target.name !== 'offcanvas-option') return;
+    if (state.detail[openFilterKey] !== e.target.value) setOption(e.target.value);
+  });
+  el.ocOptions.addEventListener('click', function (e) {
+    var input = e.target.closest('.filter-cell__input');
+    if (!input || input.disabled || !openFilterKey) return;
+    if (state.detail[openFilterKey] === input.value) setOption(input.value); /* Abwählen */
+  });
+  el.ocOptions.addEventListener('keydown', function (e) {
+    var input = e.target.closest('.filter-cell__input');
+    if (!input || input.disabled || (e.key !== 'Enter' && e.key !== ' ')) return;
+    e.preventDefault(); /* Enter würde sonst das Formular über den ersten Submit-Button schließen,
+                           Space löst auf einem gewählten Radio kein click aus */
+    setOption(input.value);
   });
   el.ocClear.addEventListener('click', function () {
     if (!openFilterKey) return;
@@ -350,18 +489,10 @@
     state.page = 1;
     render();
   });
-  el.ocApply.addEventListener('click', closeOffcanvas);
-  el.ocClose.addEventListener('click', closeOffcanvas);
-  el.backdrop.addEventListener('click', closeOffcanvas);
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && openFilterKey) closeOffcanvas();
-    /* Fokus im Off-Canvas halten */
-    if (e.key === 'Tab' && openFilterKey) {
-      var f = el.offcanvas.querySelectorAll('button:not([hidden]), input:not([disabled]), a[href]');
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
+  /* Close-Button und „anzeigen“ schließen über <form method="dialog">, Escape über das native cancel.
+     Backdrop-Klick: der Klick landet auf dem <dialog> selbst, weil das Formular die Panelfläche füllt. */
+  el.offcanvas.addEventListener('click', function (e) {
+    if (e.target === el.offcanvas) closeOffcanvas();
   });
 
   /* ---------- Teaser-Slider (nur Vor/Zurück) ---------- */

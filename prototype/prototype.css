@@ -4,6 +4,17 @@
    Einheiten wie im Design System: Spacing px über Tokens, Schrift über Text-Style-Variablen.
    Mobile first: Phone = Default, Tablet ab md (768), Desktop ab lg (1024). */
 
+/* ---------- Motion (nur Prototyp, Kandidat für Tokens) ----------
+   fast: Farb- und Opazitätswechsel. base: Größenänderungen, kleine Slide-ins (Chip-Slots, Häkchen).
+   slow: Bewegung, die viel Layout verschiebt (Detailfilter-Zeile) oder den Viewport quert (Off-Canvas).
+   Reduced Motion wird global in src/styles/reset.css auf 0.01 ms gesetzt. */
+:root {
+  --motion-fast: 160ms;
+  --motion-base: 260ms;
+  --motion-slow: 480ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
 /* ---------- Layout-Helfer (nur Prototyp) ---------- */
 .wrap {
   width: 100%;
@@ -113,14 +124,15 @@ body { background-color: var(--color-bg-page); }
 }
 
 .edu-filter__content {
+  --edu-filter-gap: var(--space-12);
   display: grid;
-  gap: var(--space-12);
+  gap: var(--edu-filter-gap);
   padding: var(--space-16) 0;
   border-top: 2px solid var(--color-border-default);
   border-bottom: 2px solid var(--color-border-default);
 }
 @media (min-width: 1024px) {
-  .edu-filter__content { gap: var(--space-16); padding: var(--space-24) 0; }
+  .edu-filter__content { --edu-filter-gap: var(--space-16); padding: var(--space-24) 0; }
 }
 
 .edu-filter__row {
@@ -128,7 +140,47 @@ body { background-color: var(--color-bg-page); }
   gap: var(--space-8);
   align-items: center;
 }
-.edu-filter__row[hidden] { display: none; }
+
+/* Detailfilter-Zeile klappt mit der Zielgruppe (Ampel) auf und zu: Höhe über grid-template-rows
+   0fr ↔ 1fr (--motion-slow), der Inhalt blendet in der zweiten Hälfte ein bzw. zuerst aus.
+   Der negative margin-top hebt den Gap von __content auf, solange die Zeile zu ist.
+   Zu = visibility: hidden (raus aus Tab-Reihenfolge und Accessibility Tree), kein display: none,
+   sonst kann nichts animieren. overflow: hidden nur zu und während der Bewegung (is-animating,
+   JS entfernt die Klasse nach transitionend), damit der Fokusring der Chips offen nicht beschnitten wird. */
+.edu-filter__collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: calc(-1 * var(--edu-filter-gap));
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--motion-slow) var(--ease-out),
+    margin-top var(--motion-slow) var(--ease-out),
+    visibility 0s linear var(--motion-slow);
+}
+.edu-filter__collapse-inner {
+  min-height: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+.edu-filter__collapse:not(.is-open) .edu-filter__collapse-inner,
+.edu-filter__collapse.is-animating .edu-filter__collapse-inner { overflow: hidden; }
+.edu-filter__collapse.is-open {
+  grid-template-rows: 1fr;
+  margin-top: 0;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--motion-slow) var(--ease-out),
+    margin-top var(--motion-slow) var(--ease-out),
+    visibility 0s;
+}
+.edu-filter__collapse.is-open .edu-filter__collapse-inner {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--motion-slow) - var(--motion-base));
+}
 .edu-filter__label {
   margin: 0;
 }
@@ -159,18 +211,67 @@ body { background-color: var(--color-bg-page); }
   }
 }
 
-/* Chip-Erweiterungen für den Filter: Badge trägt den gewählten Wert */
-.chip .chip__badge { white-space: nowrap; }
+/* Chip-Erweiterungen für den Filter: weichere Zustandswechsel als die Core Component (120 ms) */
+.edu-filter .chip {
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    padding var(--motion-base) var(--ease-out);
+}
+.edu-filter .chip__badge {
+  white-space: nowrap;
+  transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
 .chip[aria-pressed="true"] .chip__icon { color: var(--color-chip-fg-active); }
 
-/* Geteilter Chip (gesetzter Detailfilter): zwei Buttons, die wie ein Chip aussehen.
-   Links Label + Badge (öffnet das Off-Canvas erneut), rechts das X (entfernt den Wert).
-   Maße wie der Chip aus Figma: Padding 12 außen, Gap 6 zwischen Badge und X. */
+/* Slots im Chip (Badge, Icon, X-Button): wachsen von 0fr auf 1fr, dazu Fade. Der negative
+   margin-left hebt den Chip-Gap (6) auf, solange der Slot geschlossen ist. Geschlossene Slots sind
+   visibility: hidden, damit Screenreader den alten Badge-Text nicht mitlesen. */
+.chip__slot {
+  display: grid;
+  grid-template-columns: 0fr;
+  margin-left: calc(-1 * var(--space-6));
+  transition:
+    grid-template-columns var(--motion-base) var(--ease-out),
+    margin-left var(--motion-base) var(--ease-out);
+}
+.chip__slot-inner {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    visibility 0s linear var(--motion-base);
+}
+.chip__slot.is-open {
+  grid-template-columns: 1fr;
+  margin-left: 0;
+}
+.chip__slot.is-open .chip__slot-inner {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--motion-fast) var(--ease-out) calc(var(--motion-base) - var(--motion-fast)),
+    visibility 0s;
+}
+
+/* Geteilter Chip (Detailfilter): links Label + Badge (öffnet das Off-Canvas erneut), rechts das X
+   (entfernt den Wert). Maße wie der Chip aus Figma: Padding 12 außen, Gap 6 zwischen Badge und X.
+   Inaktiv ist das X eingeklappt und der Chip sieht aus wie ein einfacher Chip mit Caret. */
 .chip-split {
   display: inline-flex;
   align-items: stretch;
 }
-.chip--split-main {
+.chip-split .chip__slot--remove {
+  margin-left: 0;
+  align-items: stretch;
+}
+.chip-split .chip__slot--remove .chip__slot-inner { align-items: stretch; }
+.chip-split.is-active .chip--split-main {
   padding-right: 0;
 }
 .chip--split-remove {
@@ -208,7 +309,14 @@ body { background-color: var(--color-bg-page); }
   cursor: pointer;
 }
 .edu-filter__reset:hover { color: var(--color-interactive); }
-.edu-filter__reset[hidden] { display: none; }
+.edu-filter__reset {
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s;
+}
+.edu-filter__reset.is-hidden {
+  opacity: 0;
+  visibility: hidden; /* nimmt den Button auch aus Tab-Reihenfolge und Accessibility Tree */
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s linear var(--motion-fast);
+}
 
 /* ---------- Ergebnisliste (Figma: list-item-education) ---------- */
 .edu-list {
@@ -217,7 +325,9 @@ body { background-color: var(--color-bg-page); }
   margin: var(--space-32) 0 0;
   padding: 0;
   list-style: none;
+  transition: opacity var(--motion-fast) var(--ease-out);
 }
+.edu-list.is-updating { opacity: 0.3; } /* Crossfade beim Filterwechsel, Neuaufbau nach --motion-fast */
 @media (min-width: 1024px) {
   .edu-list { margin-top: var(--space-48); }
 }
@@ -317,77 +427,235 @@ body { background-color: var(--color-bg-page); }
 }
 .edu-list__more[hidden] { display: none; }
 
-/* ---------- Off-Canvas für Detailfilter (bg/card) ---------- */
+/* ---------- Off-Canvas (Figma: Off-Canvas 2613:31418) ----------
+   Filter-Panel Desktop 2710:23917 (rechts, 520 px, Padding 24, Gap 48, border-left divider),
+   Phone 2710:24111 (Bottom Sheet, max. 85 % Viewporthöhe, Gap 24, kein Panel-Padding).
+   Natives <dialog>: Top-Layer, Escape, Fokus-Trap und inerter Hintergrund kommen vom Browser.
+   Nur der Body scrollt, Header und Footer bleiben stehen. */
+
+/* Tokens der neuen Figma-Komponente filter-cell (Semantic: color/filter-cell/*), noch nicht in tokens/
+   exportiert. Prototyp-lokale Fallbacks, entfernen sobald dist/css/tokens.css sie liefert.
+   indicator-active: in Figma hartkodiert #CDDC39 (kein Token). Entscheidung 2026-09-22: accent/highlight. */
 .offcanvas {
+  --color-filter-cell-bg-hover: var(--color-neutral-alpha-900-5);
+  --color-filter-cell-bg-pressed: var(--color-neutral-alpha-900-10);
+  --color-filter-cell-bg-active: var(--color-primary-900);
+  --color-filter-cell-fg-active: var(--color-neutral-0);
+  --color-filter-cell-indicator-active: var(--color-accent-highlight);
+  --offcanvas-duration: var(--motion-slow);
+
   position: fixed;
-  inset: 0 0 0 auto;
-  z-index: var(--z-modal);
-  width: min(480px, 100%);
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
+  inset: auto 0 0 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  max-height: 85dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
   background-color: var(--color-bg-card);
   color: var(--color-text-primary);
-  transform: translateX(100%);
-  visibility: hidden;
-  transition: transform 240ms ease, visibility 0s linear 240ms;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition:
+    transform var(--offcanvas-duration) var(--ease-out),
+    overlay var(--offcanvas-duration) ease allow-discrete,
+    display var(--offcanvas-duration) ease allow-discrete;
 }
-.offcanvas.is-open {
-  transform: translateX(0);
-  visibility: visible;
-  transition: transform 240ms ease;
+.offcanvas[open] {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
 }
-.offcanvas__backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-overlay);
+@starting-style {
+  .offcanvas[open] { transform: translateY(100%); }
+}
+.offcanvas::backdrop {
+  background-color: rgba(26, 25, 23, 0.4); /* Fallback für Browser ohne Custom Properties im ::backdrop */
   background-color: var(--color-neutral-alpha-900-40);
   opacity: 0;
-  visibility: hidden;
-  transition: opacity 240ms ease, visibility 0s linear 240ms;
+  transition:
+    opacity var(--offcanvas-duration) ease,
+    overlay var(--offcanvas-duration) ease allow-discrete,
+    display var(--offcanvas-duration) ease allow-discrete;
 }
-.offcanvas__backdrop.is-open {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 240ms ease;
+.offcanvas[open]::backdrop { opacity: 1; }
+@starting-style {
+  .offcanvas[open]::backdrop { opacity: 0; }
+}
+.offcanvas__form {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
 }
 .offcanvas__head {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-16);
-  padding: var(--space-24) var(--space-24) var(--space-16);
+  gap: var(--space-24);
+  margin-bottom: var(--space-24);
+  padding: var(--space-24) var(--space-16) var(--space-16);
   border-bottom: var(--border-default) solid var(--color-divider-default);
 }
-.offcanvas__title { margin: var(--space-8) 0 0; }
+.offcanvas__heading {
+  display: grid;
+  flex: 1 1 auto;
+  gap: var(--space-8);
+  min-width: 0;
+}
+.offcanvas__kicker {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+.offcanvas__title { margin: 0; }
 .offcanvas__body {
   flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
-  padding: var(--space-24);
+  padding-inline: var(--space-16);
 }
-.offcanvas__options {
+.offcanvas__foot {
   display: grid;
-  gap: var(--space-16);
+  gap: var(--space-12);
+  padding: var(--space-24) var(--space-16);
+  border-top: var(--border-default) solid var(--color-divider-default);
+}
+.offcanvas__foot .btn { width: 100%; }
+
+/* Hintergrund sperren, solange der Dialog offen ist. scrollbar-gutter verhindert den Layout-Sprung
+   mit klassischer Scrollbar. */
+html { scrollbar-gutter: stable; }
+body:has(.offcanvas[open]) { overflow: hidden; }
+
+@media (min-width: 1024px) {
+  .offcanvas {
+    inset: 0 0 0 auto;
+    width: 520px;
+    height: 100dvh;
+    max-height: none;
+    padding: var(--space-24);
+    border-left: var(--border-default) solid var(--color-divider-default);
+    transform: translateX(100%);
+  }
+  .offcanvas[open] { transform: translateX(0); }
+  @starting-style {
+    .offcanvas[open] { transform: translateX(100%); }
+  }
+  .offcanvas__head {
+    margin-bottom: var(--space-48);
+    padding: 0 0 var(--space-16);
+  }
+  .offcanvas__body { padding-inline: 0; }
+  .offcanvas__foot {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    padding: var(--space-24) 0 0;
+  }
+  .offcanvas__foot .btn { width: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offcanvas, .offcanvas::backdrop { transition: none; }
+}
+
+/* ---------- filter-cell (Figma: filter-cell 2646:40456, Selection Off/On × State) ----------
+   Zeile 52 px: Padding 16/8, Gap 24, Divider unten. Links Indikator 12 × 12 + Label-M (Gap 12),
+   rechts Trefferzahl als Caption. Einfachauswahl (Radio) trotz quadratischem Indikator, siehe README. */
+.filter-cells {
+  display: grid;
+  min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
-.offcanvas__hint {
-  margin: var(--space-24) 0 0;
+.filter-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  padding: var(--space-16) var(--space-8);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.filter-cell__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.filter-cell__main {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
+}
+.filter-cell__indicator {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: var(--border-default) solid var(--color-border-default);
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+/* Beim Anwählen rastet der Indikator kurz ein (kleiner Überschwinger), beim Abwählen nur Fade */
+@keyframes filter-cell-check {
+  0% { transform: scale(0.6); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.filter-cell__label {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+  overflow-wrap: anywhere;
+}
+.filter-cell__count {
+  flex: none;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
   color: var(--color-text-secondary);
+  transition: color var(--motion-fast) var(--ease-out);
 }
-.offcanvas__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-16) var(--space-24);
-  padding: var(--space-16) var(--space-24) var(--space-24);
-  border-top: var(--border-default) solid var(--color-divider-default);
+.filter-cell:hover { background-color: var(--color-filter-cell-bg-hover); }
+.filter-cell:active { background-color: var(--color-filter-cell-bg-pressed); }
+.filter-cell:has(.filter-cell__input:checked) {
+  background-color: var(--color-filter-cell-bg-active);
+  color: var(--color-filter-cell-fg-active);
 }
-@media (prefers-reduced-motion: reduce) {
-  .offcanvas, .offcanvas__backdrop { transition: none; }
+.filter-cell:has(.filter-cell__input:checked) .filter-cell__count { color: var(--color-filter-cell-fg-active); }
+.filter-cell:has(.filter-cell__input:checked) .filter-cell__indicator {
+  border-color: var(--color-filter-cell-indicator-active);
+  background-color: var(--color-filter-cell-indicator-active);
+  animation: filter-cell-check var(--motion-base) var(--ease-out);
+}
+.filter-cell:has(.filter-cell__input:checked) .filter-cell__count { transition-delay: 40ms; }
+/* Figma: Focused = 4 px focus-outer als Rahmen der Zelle. Innerer Ring (focus-inner) ergänzt,
+   sonst wäre der Ring im Zustand On (primary-900 auf primary-900) unsichtbar. */
+.filter-cell:has(.filter-cell__input:focus-visible) {
+  z-index: 1;
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: calc(-1 * var(--border-focus-outer));
+  box-shadow: inset 0 0 0 calc(var(--border-focus-outer) + var(--border-focus-inner)) var(--color-border-focus-inner);
+}
+.filter-cell:has(.filter-cell__input:disabled) {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
 }
 
 /* ---------- Text-Content-Grid (Figma: section-header, text-row, image-section) ---------- */

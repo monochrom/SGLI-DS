@@ -110,13 +110,32 @@ Phone (unter 1024 px): Chip-Zeilen scrollen horizontal, kein Umbruch, Label steh
 
 ## 6. Off-Canvas
 
-- Öffnet von rechts, Breite 480 px, auf Phone volle Breite. Hintergrund `color/bg/card`. `role="dialog"`, `aria-modal`, Fokus auf Schließen-Button, Escape und Backdrop schließen, Fokus kehrt zum auslösenden Chip zurück.
-- Kopf: Label „Genauer filtern“, Titel = Filtername, Schließen (Button/Icon X).
-- Inhalt: Radio-Liste der Optionen (Core Component Radio). Optional Trefferzahl je Option in Klammern: Anzahl der Angebote, die alle **anderen** gesetzten Filter erfüllen und diese Option. Optionen mit 0 Treffern deaktiviert. Kostet eine Count-Query je Option, verzichtbar.
-- Fuß: Primary „N Angebote anzeigen“ (schließt), Secondary „Auswahl löschen“ (nur wenn ein Wert gesetzt ist).
-- Auswahl wirkt sofort (Liste dahinter aktualisiert sich). Ohne JS: Formular mit Submit, das die URL setzt.
+Figma: Doku „Off-Canvas“ (`2613:31418`), Filter-Panel Desktop `2710:23917`, Phone `2710:24111`, Komponente filter-cell `2646:40456`. Stand 2026-09-22.
 
-Der Inhalt des Off-Canvas ist in Figma noch nicht gestaltet. Die Radio-Liste ist ein Platzhalter.
+**Aufbau**: Backdrop (`neutral/alpha/900-40`), Panel (`color/bg/card`), section-header (Variante Phone/off-canvas: Kicker „Genauer filtern“ Label-S, Titel = Filtername H3, Close Button/Icon 45 px), scrollender Content-Bereich, sticky Action-Bereich.
+
+| | Desktop (ab lg 1024) | Phone |
+|---|---|---|
+| Panel | rechts, 520 px, volle Höhe, Padding 24, Divider links | unten verankert, volle Breite, max. 85 % Viewporthöhe, kein Panel-Padding |
+| Kopf | Padding 0 0 16, Abstand zum Body 48 | Padding 24 16 16, Abstand zum Body 24 |
+| Body | Padding 0, scrollt allein | Padding-inline 16, scrollt allein |
+| Fuß | Divider oben, Padding-top 24, Buttons nebeneinander (Gap 16), Size Desktop | Divider oben, Padding 24 16, Buttons gestapelt in voller Breite (Gap 12), Size Mobile |
+
+**filter-cell** (eine Zeile je Option, 52 px): Padding 16/8, Gap 24, Divider unten. Links Indikator 12 × 12 (1 px `border/default`) und Label (Label-M), Gap 12. Rechts Trefferzahl (Caption, `text/secondary`). States: hover `filter-cell/bg-hover`, pressed `filter-cell/bg-pressed`, on `filter-cell/bg-active` + `filter-cell/fg-active` + Indikator gefüllt (`accent/highlight`, siehe README Annahme 8), focused 4 px `border/focus-outer` (plus innerer Ring), disabled Opacity 40 %. Einfachauswahl: `<input type="radio">` je Zeile, `name` je Filter, Fieldset mit Legend = Filtername.
+
+**Verhalten**
+
+- Natives `<dialog>` mit `showModal()`. Damit: Top-Layer, Escape, Fokus-Trap, Hintergrund inert. Zusätzlich Scroll-Lock auf `body` und `scrollbar-gutter: stable`.
+- Schließen über Close-Button, Escape, Backdrop-Klick und „N Angebote anzeigen“. Alle Wege laufen über das `close`-Event des Dialogs; dort Fokus zurück zum auslösenden Chip (über den Filterschlüssel suchen, der Chip wird beim Rendern ersetzt).
+- Fokus beim Öffnen auf die gewählte, sonst die erste aktive Option.
+- Trefferzahl je Option: Anzahl der Angebote, die alle **anderen** gesetzten Filter erfüllen und diese Option. Optionen mit 0 Treffern deaktiviert. Kostet eine Count-Query je Option.
+- Auswahl wirkt sofort (Liste dahinter aktualisiert sich). Bei Auswahl nur Zahlen, `disabled` und Button-Labels aktualisieren, die Optionsliste nicht neu bauen (Fokus bliebe sonst nicht auf dem Radio).
+- Gewählte Option per erneutem Klick abwählbar (entschieden 2026-09-23). Radios kennen das nativ nicht: `change` setzt eine neue Option; `click`, Leertaste und Enter auf der bereits gewählten Option entfernen den Wert. Enter im Optionsbereich mit `preventDefault`, sonst schließt die implizite Formular-Submission den Dialog.
+- „Auswahl löschen“ immer sichtbar, ohne gesetzten Wert `disabled`; Klick entfernt den Wert, Dialog bleibt offen.
+- Slide-in 240 ms (Phone von unten, Desktop von rechts) über `@starting-style`; bei `prefers-reduced-motion` keine Transition.
+- Ohne JS: Formular mit Submit, das die URL setzt.
+
+**Tokens**: `color/filter-cell/bg-hover|bg-pressed|bg-active|fg-active` sind in Figma neu (Semantic) und müssen in `tokens/` nachgezogen werden. Der Indikator-Wert für „on“ ist in Figma hartkodiert, Token fehlt.
 
 ---
 
@@ -184,5 +203,5 @@ slots.push(dauerText)
 1. Klassenstufe und Förderbedarf nur für passende Zielgruppen anbieten (Abschnitt 4)?
 2. `typ` und `format` zu einem Feld zusammenlegen?
 3. Dauer als Kategorie pflegen oder aus Minuten ableiten?
-4. Trefferzahlen im Off-Canvas gewünscht?
-5. Gestaltung des Off-Canvas-Inhalts in Figma.
+4. ~~Trefferzahlen im Off-Canvas gewünscht?~~ In Figma vorgesehen (2026-09-22).
+5. ~~Gestaltung des Off-Canvas-Inhalts in Figma.~~ Dokumentiert in `2613:31418` (2026-09-22). Offene Punkte an Figma: siehe `README.md`.

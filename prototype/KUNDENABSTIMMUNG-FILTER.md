@@ -52,8 +52,8 @@ Stand 2026-09-11. Grundlage: Filtertabelle des Kunden (Screenshot vom 2026-09-11
 
 ### Off-Canvas
 
-- [ ] Trefferzahlen je Option anzeigen?
-- [ ] Gestaltung des Inhalts in Figma steht aus.
+- [x] Trefferzahlen je Option anzeigen? Im Figma-Design vorgesehen (2026-09-22).
+- [x] Gestaltung des Inhalts in Figma: Doku „Off-Canvas“ `2613:31418`, im Prototyp umgesetzt (2026-09-22).
 
 ---
 
