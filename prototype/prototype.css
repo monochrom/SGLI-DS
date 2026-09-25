@@ -188,6 +188,7 @@ body { background-color: var(--color-bg-page); }
 }
 /* Chips: Phone scrollt horizontal (Figma: keine Umbrüche), Desktop bricht um */
 .edu-filter__chips {
+  position: relative; /* Absolut positionierte Screenreader-Texte bleiben innerhalb der Scrollfläche. */
   display: flex;
   gap: var(--space-8);
   margin: 0;
@@ -434,6 +435,38 @@ body { background-color: var(--color-bg-page); }
   .edu-list__more { margin-top: var(--space-64); }
 }
 .edu-list__more[hidden] { display: none; }
+
+/* Phone: Filter und Scrollflächen über die volle Breite; die Inhalte tragen ihr Padding selbst.
+   Figma: Bildung – Mobile, 2548:25008 (Default) / 2789:41880 (Detailfilter).
+   Tablet und Desktop behalten ihre bisherigen Abstände. */
+@media (max-width: 767px) {
+  .edu-filter-section { padding-inline: var(--section-spacing-x-none); }
+
+  .edu-filter,
+  .edu-filter__content,
+  .edu-filter__row,
+  .edu-filter__collapse { grid-template-columns: minmax(0, 1fr); }
+  .edu-filter__collapse-inner { min-width: 0; }
+
+  .edu-filter__content {
+    --edu-filter-gap: var(--space-20);
+    padding-block: var(--space-20);
+  }
+  .edu-filter__row { gap: var(--space-12); }
+  .edu-filter__label,
+  .edu-filter__actions,
+  .edu-list,
+  .edu-list__empty,
+  .edu-list__more { padding-inline: var(--section-spacing-x-default); }
+
+  .edu-filter__chips {
+    margin-inline: 0;
+    scroll-padding-inline: var(--section-spacing-x-default);
+  }
+
+  .edu-list,
+  .edu-list__more { margin-top: var(--space-48); }
+}
 
 /* ---------- Off-Canvas (Figma: Off-Canvas 2613:31418) ----------
    Filter-Panel Desktop 2710:23917 (rechts, 520 px, Padding 24, Gap 48, border-left divider),
