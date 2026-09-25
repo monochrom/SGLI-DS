@@ -608,7 +608,7 @@ body:has(.offcanvas[open]) { overflow: hidden; }
 }
 
 /* ---------- filter-cell (Figma: filter-cell 2646:40456, Selection Off/On × State) ----------
-   Zeile 52 px: Padding 16/8, Gap 24, Divider unten. Links Indikator 12 × 12 + Label-M (Gap 12),
+   Zeile 52 px: Padding 16/12, Gap 24, Divider unten. Links Indikator 12 × 12 + Label-M (Gap 12),
    rechts Trefferzahl als Caption. Einfachauswahl (Radio) trotz quadratischem Indikator, siehe README. */
 .filter-cells {
   display: grid;
@@ -622,7 +622,7 @@ body:has(.offcanvas[open]) { overflow: hidden; }
   display: flex;
   align-items: center;
   gap: var(--space-24);
-  padding: var(--space-16) var(--space-8);
+  padding: var(--space-16) var(--space-12);
   border-bottom: var(--border-default) solid var(--color-divider-default);
   color: var(--color-text-primary);
   cursor: pointer;
