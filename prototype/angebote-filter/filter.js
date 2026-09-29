@@ -21,7 +21,7 @@
   'use strict';
 
   var D = window.SGLI_DATA;
-  var SPRITE = '../dist/icons/sprite.svg';
+  var SPRITE = '../../dist/icons/sprite.svg';
   var PAGE_SIZE = 10;
 
   var state = {

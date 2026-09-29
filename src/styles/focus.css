@@ -1,6 +1,10 @@
 /* SGLI – Fokus (WCAG 2.2, 2.4.7 / 2.4.11 / 2.4.13)
    Doppelter Ring: innen 2px (color/border/focus-inner), außen 4px (color/border/focus-outer).
-   Beide Farben wechseln mit dem Kontext (primary-900 invertiert). Nur bei Tastaturfokus. */
+   Beide Farben wechseln mit dem Kontext (primary-900 invertiert). Nur bei Tastaturfokus.
+   Regel: Der Ring liegt immer außen (nimmt dem Element keine Fläche). Ausnahme nur, wo ein
+   Scroll-Container ihn abschneiden würde (filter-cell im Off-Canvas).
+   Formularfelder: :focus-visible greift dort auch nach Mausklick. Sie unterscheiden deshalb über
+   data-focus-modality (src/scripts/focus-modality.js), siehe src/components/input/input.css. */
 
 :focus {
   outline: none;

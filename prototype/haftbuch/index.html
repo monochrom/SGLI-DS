@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recherche im Haftbuch – Prototyp – SGLI</title>
+  <meta name="robots" content="noindex">
+  <!-- Design System (read-only eingebunden): Tokens, Foundations, Core Components -->
+  <link rel="stylesheet" href="../../src/styles/index.css">
+  <link rel="stylesheet" href="../../src/components/index.css">
+  <!-- Prototyp-Module -->
+  <link rel="stylesheet" href="./haftbuch.css">
+</head>
+<body>
+
+  <a class="sr-only" href="#recherche">Zur Recherche springen</a>
+
+  <!-- ===== navigation (Figma 2834:26222 / Phone 2834:26229) ===== -->
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a class="site-nav__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+      <div class="site-nav__actions">
+        <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
+        <div class="site-nav__buttons">
+          <div class="site-nav__icons">
+            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Translate"></use></svg>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Leichte Sprache">
+              <span class="icon icon-mask icon-mask--easy-language" aria-hidden="true"></span>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Suche öffnen">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+            </button>
+          </div>
+          <button class="btn btn--primary" type="button">Menü</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== hero-default (Figma 2834:26223) ===== -->
+    <section class="hero-default" data-context="surface-100">
+      <div class="hero-default__text">
+        <p class="module-label">Haftbücher &amp; Schicksale</p>
+        <h1 class="hero-default__title">Recherche im Haftbuch</h1>
+        <p class="hero-default__intro">Durchsuchen Sie die digitalen Haftbücher der Gedenkstätte Lindenstraße und entdecken Sie Informationen zu Menschen, die zwischen 1933 und 1989 in der Lindenstraße inhaftiert waren.</p>
+      </div>
+    </section>
+
+    <!-- ===== haftbuch-list (Figma 2473:10373, Zeilen: list-cell-haftbuch 2311:5) ===== -->
+    <section class="hb" data-context="surface-100" id="recherche" aria-labelledby="hb-heading">
+      <div class="wrap">
+        <h2 class="sr-only" id="hb-heading">Haftbuch durchsuchen</h2>
+
+        <!-- search-section: Input Search (1658:6517) + Input Select (1658:6475) -->
+        <form class="hb-search" role="search" data-hb-form>
+          <div class="field hb-search__query">
+            <div class="field__box">
+              <input class="field__input" id="hb-query" type="search" placeholder=" " autocomplete="off" data-hb-query>
+              <label class="field__label" for="hb-query">Suchbegriff eingeben</label>
+              <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+            </div>
+          </div>
+          <div class="field field--select hb-search__period">
+            <div class="field__box">
+              <select class="field__input" id="hb-period" data-hb-period>
+                <option value="">&nbsp;</option>
+                <option value="ns">NS-Diktatur (1933 – 1945)</option>
+                <option value="sbz">Sowjetische Besatzung (1945 – 1952)</option>
+                <option value="sed">SED-Diktatur (1952 – 1989)</option>
+              </select>
+              <label class="field__label" for="hb-period">Zeitraum wählen</label>
+              <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+            </div>
+          </div>
+        </form>
+
+        <div class="hb-results">
+          <!-- filter-toolbar: alphabet-filter (Chip 2301:85) + results-count (tag 1969:6853) -->
+          <div class="hb-toolbar">
+            <div class="hb-alpha">
+              <p class="hb-alpha__label" id="hb-alpha-label">Anfangsbuchstabe</p>
+              <ul class="hb-alpha__options" aria-labelledby="hb-alpha-label" data-hb-alpha></ul>
+            </div>
+            <div class="hb-toolbar__actions">
+              <p class="tag" aria-live="polite" data-hb-count>0 Einträge</p>
+              <button class="hb-reset is-hidden" type="button" data-hb-reset>Filter zurücksetzen</button>
+            </div>
+          </div>
+
+          <!-- results-section: results-header + list-cell-haftbuch (Item) -->
+          <div class="hb-table">
+            <div class="hb-head" aria-hidden="true">
+              <span class="hb-head__name">Name, Vorname</span>
+              <span class="hb-head__birth">Geburtsdatum</span>
+              <span class="hb-head__place">Geburtsort</span>
+              <span class="hb-head__custody">Haftzeitraum</span>
+            </div>
+            <ul class="hb-rows" aria-label="Einträge im Haftbuch" data-hb-list></ul>
+            <p class="hb-empty" data-hb-empty hidden>Zu dieser Suche gibt es keinen Eintrag. Bitte Suchbegriff oder Filter ändern.</p>
+          </div>
+
+          <div class="hb-more" data-hb-more-wrap hidden>
+            <button class="btn btn--primary" type="button" data-hb-more>Weitere Ergebnisse laden</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-timeline, image-count=4 (Figma 2047:2053) ===== -->
+    <section class="timeline" data-context="surface-300" aria-labelledby="timeline-heading">
+      <div class="wrap">
+        <header class="timeline__header">
+          <div class="timeline__heading">
+            <p class="module-label">Zeitschichten</p>
+            <h2 id="timeline-heading">Geschichte im Kontext verstehen</h2>
+          </div>
+        </header>
+
+        <div class="timeline__content">
+          <img class="timeline__img timeline__img--primary" src="./assets/img/timeline-boykott-1933.jpg" alt="SA-Männer vor einem Geschäft mit Boykottschildern, 1933" width="1200" height="853">
+          <p class="timeline__lead text-h5">Nationalsozialismus, sowjetische Besatzung, SED-Diktatur und Friedliche Revolution prägten die Lindenstraße auf unterschiedliche Weise. Entdecken Sie die historischen Zusammenhänge hinter den Schicksalen der Haftbücher.</p>
+
+          <div class="timeline__left">
+            <img class="timeline__img timeline__img--secondary" src="./assets/img/timeline-panzer-1953.jpg" alt="Sowjetischer Panzer und Menschen auf der Straße am 17. Juni 1953" width="1200" height="798">
+            <ul class="timeline__periods">
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">NS-Diktatur</span><span class="period-link__years">1933 — 1945</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">Sowjetische Besatzung</span><span class="period-link__years">1945 — 1952</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">SED-Diktatur</span><span class="period-link__years">1952 — 1989</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">Friedliche Revolution</span><span class="period-link__years">1989 — 1990</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+            </ul>
+          </div>
+
+          <div class="timeline__right">
+            <img class="timeline__img timeline__img--tertiary" src="./assets/img/timeline-mauerfall-1989.jpg" alt="Menschen auf der Mauer vor dem Brandenburger Tor, November 1989" width="1200" height="676">
+            <img class="timeline__img timeline__img--quaternary" src="./assets/img/timeline-honecker.jpg" alt="Erich Honecker mit Blumenstrauß in einer Menschenmenge" width="1200" height="675">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== faq-section (Figma 2165:2501, Kontext primary-900) ===== -->
+    <section class="faq" data-context="primary-900" aria-labelledby="faq-heading">
+      <div class="wrap faq__grid">
+        <div class="faq__intro">
+          <p class="module-label">Themen &amp; Hintergründe</p>
+          <h2 id="faq-heading">Häufige Fragen zur Recherche</h2>
+          <p>Sie suchen weitere Informationen oder haben Hinweise zu einer Person? Unser Team hilft Ihnen gerne weiter und freut sich über Ihre Kontaktaufnahme.</p>
+        </div>
+        <div class="faq__list">
+          <details class="faq-item" open>
+            <summary class="faq-item__q">Wie kann ich nach einer Person suchen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Nutzen Sie die Suche im digitalen Haftbuch, um nach Namen zu recherchieren. Die Datenbank enthält Informationen zu Personen, die zwischen 1933 und 1989 in der Lindenstraße inhaftiert waren. Die Einträge werden fortlaufend ergänzt und aktualisiert.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Sind alle Inhaftierten in den Haftbüchern erfasst?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Platzhaltertext: Nicht alle Haftbücher sind vollständig überliefert. Die Datenbank wird laufend ergänzt.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Woher stammen die Informationen zu den Personen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Platzhaltertext: Grundlage sind die Haftbücher der Lindenstraße sowie ergänzende Archivbestände.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Was sind die Zeitschichten?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Platzhaltertext: NS-Diktatur, sowjetische Besatzung, SED-Diktatur und Friedliche Revolution.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Kann ich weitere Informationen zu einer Person beitragen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Platzhaltertext: Ja, Hinweise nimmt das Team der Gedenkstätte gerne entgegen.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer (Figma 1932:1864) ===== -->
+  <footer class="site-footer" data-context="primary-900">
+    <div class="site-footer__main">
+      <div class="site-footer__brand">
+        <a class="site-footer__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+        <ul class="site-footer__social" aria-label="Social Media">
+          <li><a href="#" aria-label="Instagram"><span class="icon icon-mask icon-mask--instagram" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="Facebook"><span class="icon icon-mask icon-mask--facebook" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="LinkedIn"><span class="icon icon-mask icon-mask--linkedin" aria-hidden="true"></span></a></li>
+        </ul>
+      </div>
+      <nav class="site-footer__cols" aria-label="Footer">
+        <ul>
+          <li><a href="#">Besuch planen</a></li>
+          <li><a href="#">Ausstellungen</a></li>
+          <li><a href="#">Veranstaltungen</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Haftbücher &amp; Schicksale</a></li>
+          <li><a href="#">Bildung</a></li>
+          <li><a href="#">Die Stiftung</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Kontakt</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Stiftung Gedenkstätte Lindenstraße</p>
+      <ul class="site-footer__legal">
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Cookies</a></li>
+        <li><a href="#">Digitale Barrierefreiheit</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <p class="proto-bar" aria-hidden="true">Prototyp · Dummy-Daten</p>
+
+  <script src="../../src/scripts/focus-modality.js"></script>
+  <script src="./data.js"></script>
+  <script src="./haftbuch.js"></script>
+</body>
+</html>

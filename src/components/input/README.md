@@ -9,7 +9,7 @@ Ein CSS für alle fünf: `.field` mit Modifiern `.field--select`, `.field--texta
 | Figma State | HTML/CSS |
 |---|---|
 | Default | leeres Feld, Label steht als Platzhalter mittig (Label-M, text/secondary) |
-| Focused | `:focus-within` auf der Box: Doppelring, Label wird Label-S oben, text/primary |
+| Focused | `:focus-within` auf der Box, zwei Stufen nach `data-focus-modality` auf `<html>` (Script `src/scripts/focus-modality.js`): Tastatur = Doppelring außen (2 focus-inner + 4 focus-outer, wie Buttons), Maus/Touch = Rahmen 2 px focus-outer ohne Ring. Label wird Label-S oben, text/primary. Das `<input>` selbst trägt keinen Ring |
 | Filled | `:not(:placeholder-shown)`: Label bleibt Label-S oben, text/secondary; Wert Label-M text/primary |
 | Focused Filled | beides |
 | Error | `.field--error`: Rahmen und Label feedback/error, Icon WarningCircle, Fehlertext Caption darunter (Gap 4) |

@@ -2,16 +2,16 @@
 
 Gekapselter Klick-Prototyp für die Abstimmung mit dem Kunden. Quelle: Figma „SGLI – Design“, Section **Bildung** (`2548:24966`) mit den Frames „Bildung - Filter Default / Zielgruppe / Detail“, „Bildung - Mobile“, „Regeln für Filter“ und „Dynamische Ausgabe von Tags“.
 
-Der Prototyp liegt **nur** in `prototype/`. Er liest Tokens, Foundations und Core Components aus `../src` und `../dist`, ändert dort aber nichts.
+Der Prototyp liegt **nur** in `prototype/angebote-filter/`. Er liest Tokens, Foundations und Core Components aus `../../src` und `../../dist`, ändert dort aber nichts.
 
 ## Starten
 
 ```
 npm run docs          # im Repo-Root, Server auf http://localhost:4321
-open http://localhost:4321/prototype/
+open http://localhost:4321/prototype/angebote-filter/
 ```
 
-Ein Server ist nötig, weil die Icons aus dem SVG-Sprite (`dist/icons/sprite.svg`) per `<use href>` geladen werden. Demo-Link mit vorgewählter Zielgruppe: `…/prototype/?zielgruppe=Schulen`.
+Ein Server ist nötig, weil die Icons aus dem SVG-Sprite (`dist/icons/sprite.svg`) per `<use href>` geladen werden. Demo-Link mit vorgewählter Zielgruppe: `…/prototype/angebote-filter/?zielgruppe=Schulen`.
 
 ## Dateien
 

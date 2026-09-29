@@ -1,0 +1,805 @@
+/* SGLI Prototyp „Haftbuch“ – Modul-CSS
+   Gekapselt für den Prototypen. Baut auf den Foundations (../../src/styles) und Core Components
+   (../../src/components) auf, ändert dort nichts. Muster und Werte wie im Prototyp „angebote-filter“.
+   Figma: Section haftbuch (2834:26220), Frames „Recherche - Desktop“ 2834:26221 / „Recherche - Phone“ 2834:26228.
+   Mobile first: Phone = Default, Desktop-Layout ab lg (1024). Tablet (md) nutzt das Phone-Layout
+   mit Tablet-Abständen, weil Figma für diese Seite keinen Tablet-Frame hat. */
+
+/* ---------- Motion (nur Prototyp, Kandidat für Tokens; Werte wie angebote-filter) ---------- */
+:root {
+  --motion-fast: 160ms;
+  --motion-base: 260ms;
+  --motion-slow: 480ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- Layout-Helfer (nur Prototyp) ---------- */
+.wrap {
+  width: 100%;
+  max-width: calc(var(--container-max) - 2 * var(--grid-desktop-margin)); /* 1360 wie Figma */
+  margin-inline: auto;
+}
+.module-label {
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+body { background-color: var(--color-bg-page); }
+
+/* Icons aus Figma, die (noch) nicht im Sprite sind: als Maske, Farbe über currentColor.
+   Dateien unverändert aus Figma in assets/icons/. Kandidaten für assets/icons + Sprite. */
+.icon-mask {
+  display: inline-block;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  background-color: currentColor;
+  -webkit-mask: var(--icon-mask) center / contain no-repeat;
+  mask: var(--icon-mask) center / contain no-repeat;
+}
+.icon-mask--easy-language { --icon-mask: url("./assets/icons/EasyLanguage.svg"); }
+.icon-mask--instagram { --icon-mask: url("./assets/icons/InstagramLogo.svg"); }
+.icon-mask--facebook { --icon-mask: url("./assets/icons/FacebookLogo.svg"); }
+.icon-mask--linkedin { --icon-mask: url("./assets/icons/LinkedinLogo.svg"); }
+
+/* ---------- Navigation (Figma: navigation 1926:1842) ----------
+   Phone: nur Logo + Menü. Desktop: Öffnungszeit, drei Icon-Buttons (Sprache, Leichte Sprache, Suche), Menü. */
+.site-nav {
+  padding: var(--space-16) var(--grid-margin);
+  background-color: var(--color-bg-page);
+}
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+.site-nav__logo {
+  display: block;
+  width: 131px;
+  height: 40px;
+  color: var(--color-text-primary);
+}
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-48);
+}
+.site-nav__hours {
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.site-nav__hours::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-secondary-500);
+}
+.site-nav__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+}
+.site-nav__icons {
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+}
+/* Figma (navigation 2834:26222): Icon-Buttons 45 × 45 ohne Rahmen. Die Core Component btn--icon hat einen. */
+.site-nav__icons .btn--icon { border-color: transparent; }
+@media (min-width: 1024px) {
+  .site-nav { padding: var(--space-24) var(--grid-margin) var(--space-32); }
+  .site-nav__logo { width: 203px; height: 62px; }
+  .site-nav__hours,
+  .site-nav__icons { display: flex; }
+}
+
+/* ---------- Hero (Figma: hero-default 2352:7024) ---------- */
+.hero-default {
+  padding: var(--section-spacing-y-compact) var(--section-spacing-x-default) 0;
+  text-align: center;
+}
+.hero-default__text {
+  max-width: 660px;
+  margin-inline: auto;
+  display: grid;
+  gap: var(--space-16);
+}
+.hero-default__title { margin: 0; text-wrap: wrap; } /* Umbruch wie Figma („Recherche im / Haftbuch“), nicht balanciert */
+.hero-default__intro {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+
+/* ==========================================================================
+   Haftbuch-Liste (Figma: haftbuch-list 2473:10373)
+   search-section → (Phone 80 / Desktop 40) → results-content:
+   filter-toolbar → 48 → results-list → 64 → load-more-button
+   ========================================================================== */
+.hb {
+  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  background-color: var(--color-bg-module);
+}
+
+/* ---------- search-section: Input Search + Input Select ---------- */
+.hb-search {
+  display: grid;
+  gap: var(--space-16);
+  margin: 0;
+}
+@media (min-width: 768px) {
+  .hb-search { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--grid-gutter); }
+}
+@media (min-width: 1024px) {
+  .hb-search { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .hb-search__query { grid-column: 4 / span 3; }
+  .hb-search__period { grid-column: 7 / span 3; }
+}
+.field__input[type="search"] { cursor: text; }
+
+.hb-results {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: var(--space-80);
+}
+@media (min-width: 1024px) {
+  .hb-results { margin-top: var(--space-40); }
+}
+
+/* ---------- filter-toolbar: Anfangsbuchstabe + Trefferzahl ---------- */
+.hb-toolbar {
+  display: grid;
+  gap: var(--space-24);
+  min-width: 0;
+}
+.hb-alpha {
+  display: grid;
+  gap: var(--space-16);
+  min-width: 0;
+}
+.hb-alpha__label {
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+/* Phone: Buchstaben scrollen horizontal bis an den Rand (Figma: Zeile 958 px breit, läuft aus dem Frame).
+   Padding-Block 6 = Platz für den Fokusring, per negativem Margin ohne Layout-Versatz. */
+.hb-alpha__options {
+  display: flex;
+  gap: var(--space-4);
+  margin: calc(-1 * var(--space-6)) calc(-1 * var(--section-spacing-x-default));
+  padding: var(--space-6) var(--section-spacing-x-default);
+  list-style: none;
+  overflow-x: auto;
+  scroll-padding-inline: var(--section-spacing-x-default);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.hb-alpha__options::-webkit-scrollbar { display: none; }
+.hb-alpha__options > li { flex: none; }
+@media (min-width: 1024px) {
+  .hb-alpha__options {
+    flex-wrap: wrap;
+    overflow: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+}
+
+/* Buchstabe = Instanz der Core Component Chip (2301:85) mit fester Größe 33 × 35 */
+.chip.hb-letter {
+  --chip-min-h: 35px;
+  justify-content: center;
+  width: 33px;
+  padding: var(--space-8) 0;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+.chip.hb-letter:disabled { cursor: default; }
+
+.hb-toolbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+}
+.hb-toolbar__actions .tag { margin: 0; }
+/* reset-filter-link (in Figma angelegt, ausgeblendet): erscheint, sobald ein Filter gesetzt ist */
+.hb-reset {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s;
+}
+@media (hover: hover) {
+  .hb-reset:hover { color: var(--color-interactive); }
+}
+.hb-reset.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s linear var(--motion-fast);
+}
+
+/* ---------- results-list: Header + Zeilen (list-cell-haftbuch 2311:5) ----------
+   Phone: 2 Spalten (Name | Geburtsdatum + Icon), Gap 24.
+   Desktop: 12er-Raster wie Figma: Name 1–3, Geburtsdatum 4–5, Geburtsort 6–8, Haftzeitraum 9–11, Icon 12.
+   (Figma: Geburtsort 6/span 2 mit 150 px, Haftzeitraum 9/span 2 mit 192 px fest; hier eine Spalte mehr,
+   damit die Texte ab 1024 px nicht in das Icon laufen.) */
+.hb-table {
+  margin-top: var(--space-48);
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+.hb-table.is-updating { opacity: 0.3; } /* Crossfade bei Such- und Filterwechsel */
+
+.hb-head,
+.hb-row__summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-24);
+}
+.hb-head {
+  padding-bottom: var(--space-8);
+  border-bottom: var(--border-default) solid var(--color-border-default);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+}
+.hb-head__place,
+.hb-head__custody { display: none; }
+
+.hb-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hb-row {
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+
+/* Die ganze Zeile ist der Schalter (button mit aria-expanded). Padding 24 oben und unten wie Figma. */
+.hb-row__summary {
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: var(--space-24) 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--color-text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.hb-row__name {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  overflow-wrap: anywhere;
+}
+.hb-row__cell {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+}
+.hb-row__birth {
+  grid-column: 2;
+  grid-row: 1;
+  padding-right: calc(var(--size-icon-lg) + var(--space-24));
+}
+.hb-row__place,
+.hb-row__custody { display: none; }
+
+/* Plus / Minus: gestapelt, Plus dreht beim Öffnen in die Waagerechte und blendet aus */
+.hb-row__icon {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  display: grid;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  color: var(--color-icon-primary);
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+.hb-row__icon .icon {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--motion-base) var(--ease-out), opacity var(--motion-fast) var(--ease-out);
+}
+.hb-row__icon .icon--minus { opacity: 0; }
+.hb-row.is-open .hb-row__icon .icon--plus { opacity: 0; transform: rotate(90deg); }
+.hb-row.is-open .hb-row__icon .icon--minus { opacity: 1; }
+
+/* Fokusring außen wie überall (focus.css, entschieden 2026-09-29). Er braucht 6 px, der Seitenrand ist
+   mindestens 16. z-index hebt ihn über die Trennlinien der Nachbarzeilen. */
+.hb-row__summary:focus-visible {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Details (State=open) ----------
+   Auf- und Zuklappen über grid-template-rows 0fr ↔ 1fr (Muster wie die Detailfilter-Zeile in angebote-filter).
+   Zu = visibility: hidden (raus aus Tab-Reihenfolge und Accessibility Tree). overflow: hidden nur zu und
+   während der Bewegung (is-animating), damit der Fokusring des Buttons offen nicht beschnitten wird.
+   Der Abstand unter dem Panel (24 = Zellen-Padding) liegt innen, damit er mit zuklappt. */
+.hb-row__collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--motion-base) var(--ease-out),
+    visibility 0s linear var(--motion-base);
+}
+.hb-row__collapse-inner {
+  min-height: 0;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+.hb-row:not(.is-open) .hb-row__collapse-inner,
+.hb-row.is-animating .hb-row__collapse-inner { overflow: hidden; }
+.hb-row.is-open .hb-row__collapse {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--motion-base) var(--ease-out),
+    visibility 0s;
+}
+.hb-row.is-open .hb-row__collapse-inner {
+  opacity: 1;
+  transition-delay: calc(var(--motion-base) - var(--motion-fast));
+}
+
+/* Phone (Figma 2834:26159): Karte über beide Spalten, color/bg/card, Padding 16, Gap 32.
+   Abweichung von Figma (entschieden 2026-09-29): Geburtsort und Haftzeitraum stehen oben im Panel,
+   weil die Phone-Zeile sie nicht zeigt. Danilo zieht Figma nach. */
+.hb-row__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-32);
+  margin-bottom: var(--space-24);
+  padding: var(--space-16);
+  background-color: var(--color-bg-card);
+}
+.hb-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+}
+.hb-details__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+.hb-details dt,
+.hb-details dd { margin: 0; }
+
+/* ---------- Desktop ab lg ---------- */
+@media (min-width: 1024px) {
+  .hb-head,
+  .hb-row__summary {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-desktop-gutter);
+  }
+  .hb-head__name { grid-column: 1 / span 3; }
+  .hb-head__birth { grid-column: 4 / span 2; }
+  .hb-head__place { display: block; grid-column: 6 / span 3; }
+  .hb-head__custody { display: block; grid-column: 9 / span 3; }
+
+  .hb-row__name { grid-column: 1 / span 3; }
+  .hb-row__birth { grid-column: 4 / span 2; padding-right: 0; }
+  .hb-row__place { display: block; grid-column: 6 / span 3; grid-row: 1; }
+  .hb-row__custody { display: block; grid-column: 9 / span 3; grid-row: 1; }
+  .hb-row__icon { grid-column: 12; opacity: 0; }
+
+  /* Default: Divider (20 %). Hover und Open: Rahmen border/default (100 %), Icon sichtbar.
+     Tastaturfokus zeigt das Icon ebenfalls, damit erkennbar ist, dass die Zeile aufklappt. */
+  .hb-row.is-open { border-bottom-color: var(--color-border-default); }
+  .hb-row.is-open .hb-row__icon,
+  .hb-row__summary:focus-visible .hb-row__icon { opacity: 1; }
+
+  /* Desktop (Figma 2834:25872): Panel in Spalte 4–12, Padding 24 / 24 / 24 / 0.
+     Fläche color/surface/50 reicht 24 px (ein Gutter) nach links über die Spalte hinaus.
+     Das Panel übernimmt die Spalten der Zeile per subgrid (Figma: eigenes 9er-Raster). Ein eigenes Raster
+     wird durch das Padding rechts schmaler als die Zeile, die Werte standen dann versetzt unter „Geburtsort“.
+     Beim subgrid rückt das Padding nur die Inhalte der letzten Spalte ein (Button), die Spuren bleiben bündig. */
+  .hb-row__collapse-inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-desktop-gutter);
+  }
+  .hb-row__panel {
+    position: relative;
+    isolation: isolate;
+    grid-column: 4 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: start;
+    gap: var(--space-24) normal; /* column-gap normal = Gutter der Zeile; sonst erbt es 32 vom Phone-Gap und verschiebt die Spuren */
+    padding: var(--space-24) var(--space-24) var(--space-24) 0;
+    background: none;
+  }
+  .hb-row__panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 calc(-1 * var(--grid-desktop-gutter));
+    z-index: -1;
+    background-color: var(--color-bg-card);
+  }
+  /* Labels in Zeilenspalte 4–5 (unter „Geburtsdatum“), Werte ab Spalte 6 (bündig mit „Geburtsort“) bis
+     Spalte 9, lange Strafnormen brechen um. Die dl ist 6 Spalten + 5 Gutter breit, die Label-Spalte
+     2 Spalten + 1 Gutter = (Breite − 2 Gutter) / 3. Mindestens so breit wie „Verurteilungsdatum:“: nur
+     knapp über 1024 px reicht das nicht, dann rücken die Werte nach rechts statt ans Label zu stoßen. */
+  .hb-details {
+    grid-column: 1 / span 6;
+    display: grid;
+    grid-template-columns: minmax(max-content, calc((100% - 2 * var(--grid-desktop-gutter)) / 3)) minmax(0, 1fr);
+    gap: var(--space-16) var(--grid-desktop-gutter);
+  }
+  .hb-details__field { display: contents; }
+  .hb-details__field--phone { display: none; } /* Desktop: Geburtsort und Haftzeitraum stehen in der Zeile */
+  .hb-row__bio {
+    grid-column: 7 / -1;
+    justify-self: end;
+  }
+}
+@media (hover: hover) and (min-width: 1024px) {
+  .hb-row:hover { border-bottom-color: var(--color-border-default); }
+  .hb-row:hover .hb-row__icon { opacity: 1; }
+}
+
+.hb-empty {
+  margin: 0;
+  padding: var(--space-48) 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+.hb-empty[hidden] { display: none; }
+.hb-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-64);
+}
+.hb-more[hidden] { display: none; }
+
+/* ==========================================================================
+   Teaser-Timeline (Figma: teaser-timeline 2047:2053, image-count=4)
+   Phone: Stapel mit Gap 32 (Bild, Lead, Bildpaar, Bild, Zeitschichten).
+   Desktop: 12er-Raster, 2 Zeilen; links Bild + Zeitschichten, rechts Bildcollage.
+   ========================================================================== */
+.timeline {
+  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  background-color: var(--color-bg-module);
+  overflow: hidden;
+}
+.timeline__header {
+  padding-bottom: var(--space-24);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
+.timeline__heading {
+  display: grid;
+  gap: var(--space-16);
+}
+.timeline__heading h2 { margin: 0; }
+.timeline__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  margin-top: var(--space-48);
+}
+.timeline__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.timeline__img--primary,
+.timeline__img--secondary { aspect-ratio: 343 / 192; }
+.timeline__lead { margin: 0; }
+.timeline__left { display: contents; }
+.timeline__img--primary { order: 1; }
+.timeline__lead { order: 2; }
+.timeline__right {
+  order: 3;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-8);
+}
+.timeline__img--secondary { order: 4; }
+.timeline__periods { order: 5; }
+.timeline__img--quaternary {
+  order: -1;
+  flex: 0 0 calc(208 / 343 * 100%);
+  aspect-ratio: 208 / 277;
+}
+.timeline__img--tertiary {
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 127 / 170;
+}
+
+.timeline__periods {
+  display: grid;
+  gap: var(--space-16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.period-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  padding-bottom: var(--space-16);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.period-link__text {
+  display: grid;
+  flex: 1 1 auto;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.period-link__title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.period-link__years {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+.period-link .icon {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  transition: transform var(--motion-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .period-link:hover .period-link__title { color: var(--color-interactive); }
+  .period-link:hover .icon { transform: translateX(4px); }
+}
+
+@media (min-width: 1024px) {
+  .timeline__heading { width: calc((100% - 11 * var(--grid-desktop-gutter)) / 12 * 5 + 4 * var(--grid-desktop-gutter)); }
+  .timeline__content {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-desktop-gutter);
+    margin-top: var(--space-80);
+  }
+  .timeline__img--primary { grid-column: 1 / span 4; grid-row: 1; aspect-ratio: 437 / 245; }
+  .timeline__lead { grid-column: 8 / span 5; grid-row: 1; align-self: start; }
+  .timeline__left {
+    grid-column: 1 / span 6;
+    grid-row: 2;
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--grid-desktop-gutter);
+  }
+  .timeline__img--secondary { grid-column: 3 / span 4; grid-row: 1; aspect-ratio: 437 / 245; }
+  .timeline__periods { grid-column: 1 / span 4; grid-row: 2; }
+  /* Collage rechts: 668 × 582 in Figma, 6er-Raster, 2 gleich hohe Zeilen */
+  .timeline__right {
+    grid-column: 7 / span 6;
+    grid-row: 2;
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--grid-desktop-gutter);
+    aspect-ratio: 668 / 582;
+  }
+  .timeline__img--tertiary { grid-column: 1 / span 4; grid-row: 1 / span 2; height: 100%; aspect-ratio: auto; }
+  .timeline__img--quaternary { grid-column: 5 / span 2; grid-row: 1; height: 100%; aspect-ratio: auto; }
+}
+
+/* ==========================================================================
+   FAQ (Figma: faq-section 2165:2501, Kontext primary-900)
+   Item: Frage H5 + Plus/Minus, Antwort Body/M text/secondary, Gap 16, Divider unten mit 16 Abstand.
+   ========================================================================== */
+.faq {
+  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  background-color: var(--color-bg-module);
+  color: var(--color-text-primary);
+}
+.faq__grid { display: grid; gap: var(--space-48) var(--grid-gutter); }
+.faq__intro { display: grid; gap: var(--space-16); }
+.faq__intro h2 { margin: 0; }
+.faq__intro p:last-child {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+.faq__list { display: grid; gap: var(--space-16); margin: 0; padding: 0; }
+.faq-item {
+  padding-bottom: var(--space-16);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
+.faq-item__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  cursor: pointer;
+  list-style: none;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
+.faq-item__q::-webkit-details-marker { display: none; }
+.faq-item__q .icon { flex: none; width: var(--size-icon-lg); height: var(--size-icon-lg); }
+.faq-item__q .icon--minus { display: none; }
+.faq-item[open] .faq-item__q .icon--plus { display: none; }
+.faq-item[open] .faq-item__q .icon--minus { display: block; }
+.faq-item__a { margin: var(--space-16) 0 0; color: var(--color-text-secondary); }
+@media (min-width: 1024px) {
+  .faq__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
+  .faq__intro { grid-column: 1 / span 5; }
+  .faq__list { grid-column: 7 / span 6; }
+}
+
+/* ==========================================================================
+   Footer (Figma: Footer 1932:1864, Kontext primary-900)
+   Desktop: Divider, Logo + Social links, drei Linkspalten rechts (Gap 80), Divider, Copyright + Meta-Nav.
+   Phone: Logo, Links untereinander, Social, Divider, Meta-Nav, Copyright.
+   ========================================================================== */
+.site-footer {
+  padding: 0 var(--grid-margin) var(--space-32);
+  background-color: var(--color-bg-module);
+  color: var(--color-text-primary);
+}
+.site-footer__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-40);
+  padding: var(--space-40) 0;
+  border-top: var(--border-default) solid var(--color-divider-default);
+}
+.site-footer__brand { display: contents; }
+.site-footer__logo { order: 1; display: block; width: 203px; height: 62px; color: var(--color-text-primary); }
+.site-footer__cols { order: 2; display: grid; gap: var(--space-32) var(--space-80); }
+.site-footer__social { order: 3; }
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
+.site-footer__cols ul { display: grid; align-content: start; gap: var(--space-16); }
+.site-footer__cols a,
+.site-footer__legal a {
+  display: block; /* sonst trägt das li die Body-Zeilenhöhe und der Abstand wächst über Figma-Gap 16 */
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+.site-footer__social { display: flex; gap: var(--space-8); }
+.site-footer__social a { display: block; color: var(--color-text-primary); }
+.site-footer__social .icon-mask { display: block; }
+@media (hover: hover) {
+  .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+}
+.site-footer__bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-32);
+  padding-top: var(--space-16);
+  border-top: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-secondary);
+}
+.site-footer__bottom p {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+}
+.site-footer__legal { display: grid; gap: var(--space-16); }
+@media (min-width: 768px) {
+  .site-footer__cols { grid-template-columns: repeat(3, auto); justify-content: start; }
+}
+@media (min-width: 1024px) {
+  .site-footer__main { flex-direction: row; justify-content: space-between; padding-bottom: 0; }
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-80);
+    padding-bottom: var(--space-16);
+  }
+  .site-footer__cols { justify-content: end; }
+  .site-footer__bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-footer__legal { display: flex; gap: var(--space-32); }
+}
+
+/* ---------- Prototyp-Hinweisleiste (kein Design-System-Element) ---------- */
+.proto-bar {
+  position: fixed;
+  left: var(--space-16);
+  bottom: var(--space-16);
+  z-index: var(--z-sticky);
+  margin: 0;
+  padding: var(--space-8) var(--space-12);
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-0);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---------- Logo als Maske (eine SVG-Datei, Farbe über currentColor, auch im Footer auf primary-900) ---------- */
+.logo-mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-mask: url("./assets/img/logo.svg") left center / contain no-repeat;
+  mask: url("./assets/img/logo.svg") left center / contain no-repeat;
+}

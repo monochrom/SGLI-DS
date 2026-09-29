@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 – Input: Fokus nach Bedienart, Höhe
+
+- Neu `src/scripts/focus-modality.js`: setzt `<html data-focus-modality="keyboard|pointer">` (Tab → keyboard, pointerdown → pointer; normales Tippen ändert nichts). Einbinden auf jeder Seite mit Formularfeldern.
+- `input.css`, Fokus in zwei Stufen (entschieden mit Danilo): **Tastatur** und Fallback ohne JS = Doppelring **außen** um die Box wie bei Buttons und Chips (2 px `focus-inner` am Rahmen, darum 4 px `focus-outer`), die Innenfläche bleibt voll. **Maus/Touch** = kein Ring, Rahmen 2 px in `focus-outer` (1 px Rahmen + 1 px Inset-Schatten), Error bleibt rot. Grund: Browser setzen `:focus-visible` bei Textfeldern auch nach Klick, der Doppelring wirkte dort zu laut. WCAG 2.4.7 verlangt den deutlichen Indikator nur für die Tastatur.
+- **Figma nachziehen:** Input-Sets Focused / Focused Filled zeigen den Ring innen (z. B. `1658:6496`) → außen. Neue Variante für den Maus-Fokus (2-px-Rahmen) anlegen.
+- Nebenbefund behoben: Das `<input>`/`<select>` in der Box bekam zusätzlich den globalen `:focus-visible`-Ring aus `focus.css` (heller Innenrahmen um das Eingabefeld, aufgefallen im Prototyp „Haftbuch“). `.field__input:focus-visible` setzt ihn zurück, den Ring zeigt nur die Box.
+- Nebenbefund behoben: Die Box war 50 statt 48 px hoch, weil die Input-Paddings den 1-px-Rahmen nicht einrechneten. Paddings leer 13/14 (vorher 14/15), gefüllt 22/5 (vorher 23/6), Label-Top 5 innen = 6 von außen. Gilt für Text, Search, Date und Select. Textarea unverändert bis auf das um 1 px höhere schwebende Label.
+
 ## 2026-09-23 – Button: kein Hover auf Touch
 
 - `button.css`: `:hover` für Primary, Secondary und Icon liegt jetzt in `@media (hover: hover)`. Auf Touch blieb der Hover-Zustand nach dem Tippen kleben, bis woanders getippt wurde (gleiches Muster wie `filter-cell` im Prototyp). `.is-hover`-Vorschau bleibt überall aktiv.

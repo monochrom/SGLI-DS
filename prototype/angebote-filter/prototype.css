@@ -1,6 +1,6 @@
 /* SGLI Prototyp „Bildung“ – Modul-CSS
-   Gekapselt für den Prototypen. Baut auf den Foundations (../src/styles) und Core Components
-   (../src/components) auf, ändert dort nichts. Alle Werte aus Figma (Template „Bildung“, Node 2548:24966),
+   Gekapselt für den Prototypen. Baut auf den Foundations (../../src/styles) und Core Components
+   (../../src/components) auf, ändert dort nichts. Alle Werte aus Figma (Template „Bildung“, Node 2548:24966),
    Einheiten wie im Design System: Spacing px über Tokens, Schrift über Text-Style-Variablen.
    Mobile first: Phone = Default, Tablet ab md (768), Desktop ab lg (1024). */
 

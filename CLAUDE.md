@@ -21,6 +21,7 @@ Repo für das Design System der Gedenkstätte Lindenstraße (SGLI), Agentur Zum 
 | `dist/` | generiert, wird committed |
 | `src/styles/` | handgeschriebene Foundations (fonts, reset, base, context, cut-edges, grid, focus) |
 | `src/components/` | Core Components (HTML + CSS + README je Ordner) |
+| `src/scripts/` | kleine Foundation-Scripts (z. B. `focus-modality.js` für den Feld-Fokus) |
 | `docs/` | statischer Styleguide |
 
 ## Befehle
