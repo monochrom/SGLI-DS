@@ -19,7 +19,7 @@ Repo für das Design System der Gedenkstätte Lindenstraße (SGLI), Agentur Zum 
 | `scripts/lint-tokens.mjs` | Alias-Check, Naming, WCAG-Kontrast je Kontext |
 | `scripts/build-sprite.mjs` | `assets/icons/*.svg` → `dist/icons/sprite.svg` |
 | `dist/` | generiert, wird committed |
-| `src/styles/` | handgeschriebene Foundations (fonts, reset, base, context, cut-edges, grid, focus) |
+| `src/styles/` | handgeschriebene Foundations (motion, fonts, reset, base, context, cut-edges, grid, focus) |
 | `src/components/` | Core Components (HTML + CSS + README je Ordner) |
 | `src/scripts/` | kleine Foundation-Scripts (z. B. `focus-modality.js` für den Feld-Fokus) |
 | `docs/` | statischer Styleguide |

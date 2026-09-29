@@ -1,4 +1,4 @@
-# Prototyp – Shared: Menü-Overlay
+# Prototyp – Shared: Menü-Overlay, Suche, Sprachauswahl
 
 Ein Menü für alle Prototypen (`angebote-filter`, `haftbuch`). Über das Menü kommt man von einem Prototyp zum anderen.
 
@@ -12,6 +12,8 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 | `menu.js` | Baut das Markup (eine Quelle), öffnet und schließt den `<dialog>` |
 | `assets/menu-feature.jpg` | Bild aus Figma (Menu Feature Image) |
 | `assets/EasyLanguage.svg` | Icon Leichte Sprache (noch nicht im Sprite) |
+| `search.css` / `search.js` | Such-Overlay (Figma `search-overlay` 2872:4913). Baut den Dialog, öffnet über `[data-search-open]` (Lupe im Seitenkopf und im Menü-Kopf). Kopf nutzt die Klassen aus `menu.css`. Dummy: Absenden mit Begriff schließt nur, „Häufig gesucht“ = Links als Button/Secondary (in Craft gepflegt, ohne Zähler, keine Chips), Haftbuch und Bildung verlinkt. |
+| `language.js` | Baut die Sprachauswahl (Komponente `src/components/modal`, `type=language`) und hängt sie an `<body>`. Öffnet über jeden Button mit `data-modal-open="modal-language"` (Seitenkopf und Menü). Dummy: Deutsch vorausgewählt, jede Option schließt nur. Einbinden nach `../../src/components/modal/modal.js`. |
 
 ## Einbinden
 
@@ -22,7 +24,7 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 <script src="../shared/menu.js" data-current="haftbuch"></script>
 ```
 
-`data-current` = `haftbuch` oder `bildung`. Setzt `aria-current="page"` und das Quadrat vor dem Eintrag.
+`data-current` = `haftbuch` oder `bildung`. Setzt `aria-current="page"` und das Quadrat vor dem Eintrag (Phone 16 Abstand zum Label, ab lg 24). Die Linie bleibt dabei die normale, dunkel wird sie nur bei Hover/Fokus (Figma current / active).
 
 ## Verhalten
 
@@ -43,3 +45,11 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 6. **Tablet:** Figma hat keinen Tablet-Frame. Ab 768 stehen Liste und Bild nebeneinander (entschieden 2026-09-29), Abbinder bleibt bis 1023 wie Phone. Kopf wie der Seitenkopf: Icons ab 768, Öffnungszeit ab 1024 (entschieden 2026-09-29).
 7. **Kopf Bildung:** Der Seitenkopf im Prototyp „angebote-filter“ hatte zwei Icon-Buttons. Er ist jetzt vom Haftbuch übernommen (drei Icons mit Leichte Sprache), wie das Overlay (entschieden 2026-09-29).
 8. **Niedrige Desktop-Viewports:** Ist der Viewport niedriger als der Inhalt, scrollt das Menü. 1024 × 768 passt mit H3 ohne Scrollen.
+
+## Suche und Übergabe aus dem Menü
+
+- **Lupe im Seitenkopf:** Seite dunkelt ab, Fläche wächst von oben auf die Höhe der Suche, dann Kopf, Suchfeld, Links. Fokus sofort im Suchfeld.
+- **Lupe im Menü-Kopf (ab 768):** `SGLI.menu.handoff()` blendet den Menü-Inhalt aus (240 ms), Kopf und Fläche bleiben. Die Suche übernimmt deckungsgleich in voller Höhe, das Menü schließt ohne Animation darunter, die Fläche zieht sich auf die Suche zusammen (520 ms), dann blendet der Inhalt ein. Eine Ebene: „Schließen“ führt zur Seite, Fokus zurück zum Menü-Button.
+- **Schließen:** „Schließen“, Escape, Klick auf die abgedunkelte Seite. Inhalt aus → Fläche nach oben → Abdunkelung zuletzt (1060 ms).
+- **Phone (< 768):** Seitenkopf und Menü-Kopf haben keine Lupe, das Suchfeld steht direkt im Menü (wie Figma).
+

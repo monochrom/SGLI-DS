@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./prototype.css">
   <!-- Menü-Overlay, global für alle Prototypen -->
   <link rel="stylesheet" href="../shared/menu.css">
+  <link rel="stylesheet" href="../shared/search.css">
 </head>
 <body>
 
@@ -25,13 +26,13 @@
         <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
         <div class="site-nav__buttons">
           <div class="site-nav__icons">
-            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln">
+            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln" data-modal-open="modal-language">
               <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Translate"></use></svg>
             </button>
             <button class="btn btn--icon" type="button" aria-label="Leichte Sprache">
               <span class="icon icon-mask icon-mask--easy-language" aria-hidden="true"></span>
             </button>
-            <button class="btn btn--icon" type="button" aria-label="Suche öffnen">
+            <button class="btn btn--icon" type="button" aria-label="Suche öffnen" data-search-open>
               <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
             </button>
           </div>
@@ -85,13 +86,15 @@
       </div>
     </section>
 
-    <!-- ===== cut-edges + text-content-grid (Figma 2548:24994) ===== -->
-    <section class="cut-edges cut-edges--before cut-edges--after" data-context="primary-900" aria-labelledby="vermitteln-heading">
+    <!-- ===== cut-edges + text-content-grid (Figma 2522:59538 / Phone 2522:59561) ===== -->
+    <section class="cut-edges cut-edges--before cut-edges--after cut-edges--tilt" data-context="primary-900" aria-labelledby="vermitteln-heading">
       <div class="cut-edges__body text-content-grid">
         <div class="wrap">
           <header class="section-header--center">
-            <p class="module-label">Bildungsarbeit</p>
-            <h2 id="vermitteln-heading">Wie wir Geschichte vermitteln</h2>
+            <div class="section-header__head">
+              <p class="module-label">Bildungsarbeit</p>
+              <h2 id="vermitteln-heading">Wie wir Geschichte vermitteln</h2>
+            </div>
             <p class="section-header__intro">Die Bildungsarbeit der Gedenkstätte Lindenstraße orientiert sich an den Erfahrungen und Biografien der Menschen, die an diesem Ort verfolgt, inhaftiert oder von politischen Umbrüchen betroffen waren. Unsere Angebote fördern die aktive Auseinandersetzung mit Geschichte, Gegenwart und gesellschaftlicher Verantwortung.</p>
           </header>
 
@@ -113,22 +116,22 @@
           <div class="text-row text-row--3">
             <div>
               <h3>Entdecken, Forschen und Diskutieren</h3>
-              <p class="text-body-s">Die Formate sind handlungsorientiert: Die Besucher:innen lernen entdeckend, forschend und diskutierend den historischen Ort kennen. Methodische Vielfalt und kreative Präsentationsformen wecken das Interesse für die historischen Themen. Aktivierende Methoden stärken die Kompetenzentwicklung.</p>
+              <p>Die Formate sind handlungsorientiert: Die Besucher:innen lernen entdeckend, forschend und diskutierend den historischen Ort kennen. Methodische Vielfalt und kreative Präsentationsformen wecken das Interesse für die historischen Themen. Aktivierende Methoden stärken die Kompetenzentwicklung.</p>
             </div>
             <div>
               <h3>Multiperspektivisch und kontrovers</h3>
-              <p class="text-body-s">Die Besucher:innen werden durch multiperspektivische und kontroverse Darstellungen zur kritischen Auseinandersetzung mit der Geschichte angeregt.</p>
+              <p>Die Besucher:innen werden durch multiperspektivische und kontroverse Darstellungen zur kritischen Auseinandersetzung mit der Geschichte angeregt.</p>
             </div>
             <div>
               <h3>Gegenwartsbezug und Menschenrechtsbildung</h3>
-              <p class="text-body-s">Die Lebenswelt der Besucher:innen findet ebenso Berücksichtigung wie der Bezug zu aktuellen Themen und Fragestellungen. Dieser Gegenwarts- und Lebensweltbezug unterstützt die kritische Reflexion und verdeutlicht den Besucher:innen die Relevanz der Inhalte für die heutige Zeit und für sie selbst. Hierbei wird u. a. auf den Ansatz der Menschenrechtsbildung zurückgegriffen.</p>
+              <p>Die Lebenswelt der Besucher:innen findet ebenso Berücksichtigung wie der Bezug zu aktuellen Themen und Fragestellungen. Dieser Gegenwarts- und Lebensweltbezug unterstützt die kritische Reflexion und verdeutlicht den Besucher:innen die Relevanz der Inhalte für die heutige Zeit und für sie selbst. Hierbei wird u. a. auf den Ansatz der Menschenrechtsbildung zurückgegriffen.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== image-text-single (Figma 2548:25002) ===== -->
+    <!-- ===== image-text-single (Figma 2522:59546 / Phone 2522:59569) ===== -->
     <section class="image-text" data-context="surface-300" aria-labelledby="buchung-heading">
       <div class="wrap image-text__grid">
         <img class="image-text__img" src="./assets/img/image-text-single.jpg" alt="Eine Besuchergruppe im Innenhof der Gedenkstätte hört einer Führung zu" width="1200" height="900">
@@ -146,13 +149,13 @@
       </div>
     </section>
 
-    <!-- ===== contact-section (Figma 2548:25003) ===== -->
+    <!-- ===== contact-section (Figma 2522:59547 / Phone 2522:59570) ===== -->
     <section class="contact" data-context="surface-200" aria-labelledby="kontakt-heading">
       <div class="wrap contact__grid">
         <div class="contact__intro">
           <p class="module-label">Kontakt</p>
           <h2 id="kontakt-heading">Individuelle Beratung</h2>
-          <p>Gern beraten wir Sie bei der Auswahl eines passenden Bildungsangebots und unterstützen Sie bei der Planung Ihres Besuchs. Gemeinsam stellen wir ein Programm zusammen, das zu Ihrer Gruppe, Ihren Interessen und Ihrem zeitlichen Rahmen passt.</p>
+          <p class="contact__text">Gern beraten wir Sie bei der Auswahl eines passenden Bildungsangebots und unterstützen Sie bei der Planung Ihres Besuchs. Gemeinsam stellen wir ein Programm zusammen, das zu Ihrer Gruppe, Ihren Interessen und Ihrem zeitlichen Rahmen passt.</p>
         </div>
         <div class="contact__card">
           <p class="module-label">Ihre Ansprechpartnerin</p>
@@ -162,12 +165,12 @@
             Tel. 0331-971 89 005<br>
             <a href="mailto:email@gedenkstaette-lindenstrasse.de">email@gedenkstaette-lindenstrasse.de</a>
           </address>
-          <a class="btn btn--primary" href="#">Zum Kontaktformular</a>
+          <button class="btn btn--primary" type="button" data-offcanvas-open="offcanvas-kontakt" aria-haspopup="dialog">Zum Kontaktformular</button>
         </div>
       </div>
     </section>
 
-    <!-- ===== teaser-slider (Figma 2548:25004) ===== -->
+    <!-- ===== teaser-slider (Figma 2522:59548 / Phone 2522:59571) ===== -->
     <section class="teaser-slider" data-context="surface-100" aria-labelledby="projekte-heading" data-slider>
       <div class="wrap">
         <header class="section-header--split">
@@ -230,14 +233,14 @@
       </div>
     </section>
 
-    <!-- ===== faq-section (Figma 2548:25005) ===== -->
+    <!-- ===== faq-section (Figma 2522:59549 / Phone 2522:59572) ===== -->
     <section class="faq" data-context="surface-300" aria-labelledby="faq-heading">
       <div class="wrap faq__grid">
         <div class="faq__intro">
           <p class="module-label">Ihr Besuch</p>
           <h2 id="faq-heading">Gut zu wissen</h2>
-          <p>Sie haben weitere Fragen zu unseren Bildungsangeboten oder möchten einen Besuch planen? Unser Team unterstützt Sie gerne persönlich.</p>
-          <a class="btn btn--primary" href="#">Kontakt</a>
+          <p class="faq__text">Sie haben weitere Fragen zu unseren Bildungsangeboten oder möchten einen Besuch planen? Unser Team unterstützt Sie gerne persönlich.</p>
+          <button class="btn btn--primary" type="button" data-offcanvas-open="offcanvas-kontakt" aria-haspopup="dialog">Kontakt</button>
         </div>
         <div class="faq__list">
           <details class="faq-item" open>
@@ -279,7 +282,7 @@
       </div>
     </section>
 
-    <!-- ===== teaser-feature (Figma 2548:25006) ===== -->
+    <!-- ===== teaser-feature (Figma 2522:59550 / Phone 2522:59573) ===== -->
     <section class="teaser-feature" data-context="surface-300" aria-labelledby="stiftung-heading">
       <div class="wrap">
         <div class="feature-card" data-context="surface-100">
@@ -297,10 +300,17 @@
     </section>
   </main>
 
-  <!-- ===== footer (Figma 2548:25007) ===== -->
+  <!-- ===== footer (Figma 2522:59551 / Phone 2522:59574, Aufbau wie haftbuch) ===== -->
   <footer class="site-footer" data-context="primary-900">
-    <div class="site-footer__top">
-      <a class="site-footer__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+    <div class="site-footer__main">
+      <div class="site-footer__brand">
+        <a class="site-footer__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+        <ul class="site-footer__social" aria-label="Social Media">
+          <li><a href="#" aria-label="Instagram"><span class="icon icon-mask icon-mask--instagram" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="Facebook"><span class="icon icon-mask icon-mask--facebook" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="LinkedIn"><span class="icon icon-mask icon-mask--linkedin" aria-hidden="true"></span></a></li>
+        </ul>
+      </div>
       <nav class="site-footer__cols" aria-label="Footer">
         <ul>
           <li><a href="#">Besuch planen</a></li>
@@ -314,6 +324,7 @@
         </ul>
         <ul>
           <li><a href="#">Kontakt</a></li>
+          <li><a href="#">Newsletter</a></li>
           <li><a href="#">Presse</a></li>
         </ul>
       </nav>
@@ -339,7 +350,7 @@
           <p class="text-label-s offcanvas__kicker">Genauer filtern</p>
           <h2 class="text-h3 offcanvas__title" id="offcanvas-title" data-offcanvas-title tabindex="-1">Filter</h2>
         </div>
-        <button class="btn btn--icon" type="submit" value="close" data-offcanvas-close aria-label="Filter schließen">
+        <button class="btn btn--icon offcanvas__close" type="submit" value="close" data-offcanvas-close aria-label="Filter schließen">
           <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
         </button>
       </header>
@@ -355,11 +366,183 @@
     </form>
   </dialog>
 
-  <p class="proto-bar" aria-hidden="true">Prototyp · Stand 2026-09-22</p>
+  <!-- ===== Off-Canvas Kontakt (Figma: Forms 2746:24535, Kontakt 2746:26620 / 2753:30067,
+       Bestätigung 2747:29871 / 2746:28162). Komponenten off-canvas + form, gesteuert von off-canvas.js und form.js.
+       Ausgelöst von „Zum Kontaktformular“ (contact-section) und „Kontakt“ (faq-section). ===== -->
+  <dialog class="offcanvas" id="offcanvas-kontakt" aria-labelledby="offcanvas-kontakt-title" data-offcanvas-confirm="modal-discard">
+    <div class="offcanvas__view" data-offcanvas-view="form">
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <p class="text-label-s offcanvas__kicker">Kontakt</p>
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-kontakt-title" tabindex="-1">Schreiben Sie uns!</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Kontaktformular schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <form class="offcanvas__form" data-form novalidate action="#" method="post">
+        <div class="offcanvas__body">
+          <div class="form">
+            <section class="form__section" aria-labelledby="offcanvas-kontakt-kontaktdaten-title">
+              <h3 class="text-h6 form__title" id="offcanvas-kontakt-kontaktdaten-title">Ihre Kontaktdaten</h3>
+              <fieldset class="form__radios">
+                <legend class="sr-only">Anrede</legend>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="keine"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">keine Angabe</span></label>
+              </fieldset>
+              <div class="form__group">
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                      <label class="field__label" for="offcanvas-kontakt-vorname">Vorname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                      <label class="field__label" for="offcanvas-kontakt-nachname">Nachname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-email" name="email" type="email" placeholder=" " autocomplete="email" required>
+                      <label class="field__label" for="offcanvas-kontakt-email">E-Mail <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-telefon" name="telefon" type="tel" placeholder=" " autocomplete="tel">
+                      <label class="field__label" for="offcanvas-kontakt-telefon">Telefon</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-kontakt-institution" name="institution" type="text" placeholder=" " autocomplete="organization" required>
+                    <label class="field__label" for="offcanvas-kontakt-institution">Institution, Schule, ... <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-kontakt-adresse" name="adresse" type="text" placeholder=" " autocomplete="street-address" required>
+                    <label class="field__label" for="offcanvas-kontakt-adresse">Adresse <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-plz" name="plz" type="text" placeholder=" " autocomplete="postal-code" inputmode="numeric" required>
+                      <label class="field__label" for="offcanvas-kontakt-plz">PLZ <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-stadt" name="stadt" type="text" placeholder=" " autocomplete="address-level2" required>
+                      <label class="field__label" for="offcanvas-kontakt-stadt">Stadt <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="form__section" aria-labelledby="offcanvas-kontakt-nachricht-title">
+              <h3 class="text-h6 form__title" id="offcanvas-kontakt-nachricht-title">Ihre Nachricht</h3>
+              <div class="form__group">
+                <div class="field field--select">
+                  <div class="field__box">
+                    <select class="field__input" id="offcanvas-kontakt-anliegen" name="anliegen" required>
+                      <option value="">&nbsp;</option>
+                      <option>Bildungsangebot oder Gruppenbesuch</option>
+                      <option>Besuch und Führungen</option>
+                      <option>Recherche im Haftbuch</option>
+                      <option>Presse</option>
+                      <option>Sonstiges</option>
+                    </select>
+                    <label class="field__label" for="offcanvas-kontakt-anliegen">Ihr Anliegen <span aria-hidden="true">*</span></label>
+                    <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                  </div>
+                </div>
+                <div class="field field--textarea">
+                  <div class="field__box">
+                    <textarea class="field__input" id="offcanvas-kontakt-nachricht" name="nachricht" placeholder=" " rows="3" required></textarea>
+                    <label class="field__label" for="offcanvas-kontakt-nachricht">Ihre Nachricht an uns <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div class="form__note">
+              <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+              <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+            </div>
+            <div class="form__consent">
+              <label class="choice choice--caption"><input class="choice__input" id="offcanvas-kontakt-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Anfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Anfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+            </div>
+          </div>
+        </div>
+        <footer class="offcanvas__foot">
+          <button class="btn btn--primary" type="submit">Absenden</button>
+          <button class="btn btn--secondary" type="button" data-offcanvas-close>Abbrechen</button>
+        </footer>
+      </form>
+    </div>
+    <div class="offcanvas__view" data-offcanvas-view="success" hidden>
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-kontakt-success-title" tabindex="-1">Vielen Dank</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <div class="offcanvas__body">
+        <div class="offcanvas__success">
+          <svg class="icon offcanvas__success-icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-CheckCircle"></use></svg>
+          <div class="offcanvas__success-text" data-offcanvas-announce>
+            <h3 class="text-h6">Ihre Anfrage wurde erfolgreich gesendet.</h3>
+            <p class="text-body-m">Wir haben Ihre Nachricht erhalten und werden uns zeitnah bei Ihnen melden. Bei dringenden Anliegen erreichen Sie uns telefonisch unter 0331-971 89 005.</p>
+          </div>
+        </div>
+      </div>
+      <footer class="offcanvas__foot offcanvas__foot--center">
+        <button class="btn btn--primary" type="button" data-offcanvas-close>Schließen</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- Rückfrage vor dem Schließen mit Eingaben (Figma modal type=confirm, 2859:132) -->
+  <dialog class="modal modal--confirm" id="modal-discard" role="alertdialog" aria-labelledby="modal-discard-title" aria-describedby="modal-discard-text">
+    <div class="modal__close-row">
+      <button class="btn btn--icon modal__close" type="button" data-modal-close value="cancel" aria-label="Schließen">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
+      </button>
+    </div>
+    <div class="modal__content">
+      <div class="modal__text">
+        <div class="modal__head">
+          <h2 class="text-h3 modal__title" id="modal-discard-title">Eingaben verwerfen?</h2>
+        </div>
+        <p class="text-body-m modal__intro" id="modal-discard-text">Wenn Sie das Formular jetzt schließen, gehen Ihre Eingaben verloren.</p>
+      </div>
+      <div class="modal__actions">
+        <button class="btn btn--primary" type="button" data-modal-close value="cancel" autofocus>Weiter bearbeiten</button>
+        <button class="btn btn--secondary" type="button" data-modal-close value="discard">Verwerfen</button>
+      </div>
+    </div>
+  </dialog>
+
+  <p class="proto-bar" aria-hidden="true">Prototyp · Stand 2026-09-29</p>
 
   <script src="./data.js"></script>
   <script src="./filter.js"></script>
   <script src="../../src/scripts/focus-modality.js"></script>
   <script src="../shared/menu.js" data-current="bildung"></script>
+  <script src="../../src/components/modal/modal.js"></script>
+  <script src="../../src/components/form/form.js"></script>
+  <script src="../../src/components/off-canvas/off-canvas.js"></script>
+  <script src="../shared/language.js"></script>
+  <script src="../shared/search.js" data-current="bildung"></script>
 </body>
 </html>

@@ -3,22 +3,45 @@
    Geometrie aus Figma (Vector, Constraints SCALE, also proportional zur Breite):
      before  1440 × 280  Polygon (0,0) (1440,280) (0,280)      → Diagonale, Modulfarbe unter der Linie, links hoch
      after   1440 × 224  Polygon (0,0) (1152.5,224) (1440,0)   → asymmetrisches V, tiefster Punkt bei 80,03 % der Breite
-   Die Keile tragen color/bg/module des Kontexts, in dem sie stehen. Der Rest ist transparent,
-   dahinter liegt Page-Hintergrund oder das Nachbarmodul.
+   Die Keile tragen color/bg/module des Kontexts, in dem sie stehen. Die Restfläche neben dem Keil
+   trägt die Fläche des Nachbarmoduls, damit die Module ineinander übergehen:
+     before → Modul davor (--cut-before-bg), after → Modul danach (--cut-after-bg).
+   Die Nachbarn werden automatisch über ihr data-context erkannt (Geschwister, `+` bzw. `:has(+ …)`),
+   die Reihenfolge der Module ist also frei. Nachbar ohne data-context (surface-50) oder kein
+   Geschwister (z. B. letztes Modul vor dem Footer): Seitenhintergrund. Manuell überschreibbar mit
+   style="--cut-after-bg: var(--color-primary-900)".
 
    Markup:
      <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after">
        <div class="cut-edges__body section">…</div>
      </section>
-   Der Wrapper selbst ist transparent, die Fläche liegt auf .cut-edges__body. */
+   Die Fläche liegt auf .cut-edges__body, die Keile tragen Modul- und Nachbarfarbe. */
 
 .cut-edges {
   --cut-before-ratio: 1440 / 280;
   --cut-after-ratio: 1440 / 224;
   --cut-after-x: 80.03%;
+  --cut-before-bg: var(--color-bg-page);
+  --cut-after-bg: var(--color-bg-page);
+  /* Modulfarbe als Custom Property: wird hier aufgelöst und so an die Keile vererbt */
+  --cut-color: var(--color-bg-module);
   position: relative;
   background-color: transparent;
 }
+
+/* Nachbarflächen: gleiche Zuordnung Kontext → Primitive wie dist/css/contexts.css (color/bg/module) */
+[data-context="surface-100"] + .cut-edges { --cut-before-bg: var(--color-surface-100); }
+[data-context="surface-200"] + .cut-edges { --cut-before-bg: var(--color-surface-200); }
+[data-context="surface-300"] + .cut-edges { --cut-before-bg: var(--color-surface-300); }
+[data-context="surface-400"] + .cut-edges { --cut-before-bg: var(--color-surface-400); }
+[data-context="primary-900"] + .cut-edges { --cut-before-bg: var(--color-primary-900); }
+[data-context="secondary-400"] + .cut-edges { --cut-before-bg: var(--color-secondary-400); }
+.cut-edges:has(+ [data-context="surface-100"]) { --cut-after-bg: var(--color-surface-100); }
+.cut-edges:has(+ [data-context="surface-200"]) { --cut-after-bg: var(--color-surface-200); }
+.cut-edges:has(+ [data-context="surface-300"]) { --cut-after-bg: var(--color-surface-300); }
+.cut-edges:has(+ [data-context="surface-400"]) { --cut-after-bg: var(--color-surface-400); }
+.cut-edges:has(+ [data-context="primary-900"]) { --cut-after-bg: var(--color-primary-900); }
+.cut-edges:has(+ [data-context="secondary-400"]) { --cut-after-bg: var(--color-secondary-400); }
 
 .cut-edges__body {
   background-color: var(--color-bg-module);
@@ -29,18 +52,72 @@
   content: "";
   display: block;
   width: 100%;
-  background-color: var(--color-bg-module);
   pointer-events: none;
 }
 
+/* Keile als Verläufe mit harter Kante statt clip-path: So trägt derselbe Streifen Modulfarbe und
+   Nachbarfarbe, unabhängig von der Höhe des Moduls. Die Kante blendet über 1 px (Kantenglättung).
+   Bei Eckrichtungen (to top right …) läuft die 50-%-Linie genau durch die beiden anderen Ecken.
+   Keil und Fläche überlappen 1 px: Die Keilhöhe aus aspect-ratio ist meist gebrochen, an der
+   Kante blitzt sonst eine Haarlinie durch. */
 .cut-edges--before::before {
   aspect-ratio: var(--cut-before-ratio);
-  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  margin-bottom: -1px;
+  /* Diagonale links oben → rechts unten, Modulfarbe darunter */
+  background: linear-gradient(to top right,
+    var(--cut-color) calc(50% - 0.5px), var(--cut-before-bg) calc(50% + 0.5px));
 }
 
 .cut-edges--after::after {
   aspect-ratio: var(--cut-after-ratio);
-  clip-path: polygon(0 0, var(--cut-after-x) 100%, 100% 0);
+  margin-top: -1px;
+  /* asymmetrisches V, Modulfarbe darüber: links bis zum tiefsten Punkt (+1 px gegen Naht), rechts der Rest */
+  background:
+    linear-gradient(to bottom left,
+      var(--cut-color) calc(50% - 0.5px), var(--cut-after-bg) calc(50% + 0.5px))
+      left top / calc(var(--cut-after-x) + 1px) 100% no-repeat,
+    linear-gradient(to bottom right,
+      var(--cut-color) calc(50% - 0.5px), var(--cut-after-bg) calc(50% + 0.5px))
+      right top / calc(100% - var(--cut-after-x)) 100% no-repeat;
+}
+
+/* Kippen beim Scrollen (.cut-edges--tilt, nur der obere Keil): Die Diagonale dreht sich um ihren
+   tiefsten Punkt unten rechts in die Figma-Endlage (280/1440 ≈ 11°). Start bei --cut-tilt-start der
+   Keilhöhe (0.6 ≈ 6,7°). Der Keil bleibt ein Dreieck, der Streifen behält seine Höhe (kein Layoutsprung).
+   Umsetzung: Der Verlauf wird unten verankert und in der Höhe von start auf 100 % gezogen, darüber
+   liegt die Nachbarfläche. Die Drehung ist an den Scroll gekoppelt (Scroll-Driven Animation): von
+   „Oberkante 10 vh über dem unteren Rand“ bis „Oberkante 60 vh darüber“ (knapp über der Mitte),
+   rückwärts beim Hochscrollen.
+   Ohne Unterstützung (Firefox) oder bei reduzierter Bewegung: Endlage, wie ohne Modifier. */
+@property --cut-tilt {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+@keyframes cut-tilt {
+  from { --cut-tilt: var(--cut-tilt-start); }
+  to   { --cut-tilt: 1; }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cut-edges--tilt {
+      --cut-tilt-start: 0.6;
+      view-timeline: --cut-tilt block;
+    }
+
+    .cut-edges--tilt.cut-edges--before::before {
+      background:
+        linear-gradient(to top right,
+          var(--cut-color) calc(50% - 0.5px), var(--cut-before-bg) calc(50% + 0.5px))
+          left bottom / 100% calc(var(--cut-tilt) * 100%) no-repeat,
+        var(--cut-before-bg);
+      animation: cut-tilt var(--ease-scroll) both;
+      animation-timeline: --cut-tilt;
+      animation-range: cover 10vh cover 60vh;
+    }
+  }
 }
 
 /* Entschieden 2026-09-10: Keile belegen eigenen Platz (rechteckiger Container, Höhe = Shape-Höhe).
@@ -48,6 +125,11 @@
    Funktionalität hinter den Cut-Edges, siehe PLAN.md To-dos). */
 .cut-edges--overlap {
   z-index: 1;
+}
+/* Keile liegen über dem Nachbarmodul, die Restfläche bleibt durchsichtig (Selektor so stark wie die Nachbar-Regeln) */
+.cut-edges.cut-edges--overlap {
+  --cut-before-bg: transparent;
+  --cut-after-bg: transparent;
 }
 .cut-edges--overlap.cut-edges--before {
   margin-top: calc(-100% / (1440 / 280));

@@ -1,19 +1,10 @@
 /* SGLI Prototyp „Bildung“ – Modul-CSS
    Gekapselt für den Prototypen. Baut auf den Foundations (../../src/styles) und Core Components
-   (../../src/components) auf, ändert dort nichts. Alle Werte aus Figma (Template „Bildung“, Node 2548:24966),
+   (../../src/components) auf, ändert dort nichts. Alle Werte aus Figma (Template „Bildung“, Section 2522:59510: Desktop 2522:59511, Phone 2522:59552),
    Einheiten wie im Design System: Spacing px über Tokens, Schrift über Text-Style-Variablen.
    Mobile first: Phone = Default, Tablet ab md (768), Desktop ab lg (1024). */
 
-/* ---------- Motion (nur Prototyp, Kandidat für Tokens) ----------
-   fast: Farb- und Opazitätswechsel. base: Größenänderungen, kleine Slide-ins (Chip-Slots, Häkchen).
-   slow: Bewegung, die viel Layout verschiebt (Detailfilter-Zeile) oder den Viewport quert (Off-Canvas).
-   Reduced Motion wird global in src/styles/reset.css auf 0.01 ms gesetzt. */
-:root {
-  --motion-fast: 160ms;
-  --motion-base: 260ms;
-  --motion-slow: 480ms;
-  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
+/* Motion: --motion-* und --ease-* kommen aus src/styles/motion.css (Foundation). */
 
 /* ---------- Layout-Helfer (nur Prototyp) ---------- */
 .wrap {
@@ -487,143 +478,18 @@ body { background-color: var(--color-bg-page); }
   .edu-list__more { margin-top: var(--space-48); }
 }
 
-/* ---------- Off-Canvas (Figma: Off-Canvas 2613:31418) ----------
-   Filter-Panel Desktop 2710:23917 (rechts, 520 px, Padding 24, Gap 48, border-left divider),
-   Phone 2710:24111 (Bottom Sheet, max. 85 % Viewporthöhe, Gap 24, kein Panel-Padding).
-   Natives <dialog>: Top-Layer, Escape, Fokus-Trap und inerter Hintergrund kommen vom Browser.
-   Nur der Body scrollt, Header und Footer bleiben stehen. */
-
-/* Tokens der neuen Figma-Komponente filter-cell (Semantic: color/filter-cell/*), noch nicht in tokens/
-   exportiert. Prototyp-lokale Fallbacks, entfernen sobald dist/css/tokens.css sie liefert.
-   indicator-active: in Figma hartkodiert #CDDC39 (kein Token). Entscheidung 2026-09-22: accent/highlight. */
+/* ---------- Off-Canvas ----------
+   Panel, Motion und Scroll-Sperre kommen aus der Komponente src/components/off-canvas/ (seit 2026-09-29).
+   Hier nur die Filter-Inhalte (filter-cell). Tokens der Figma-Komponente filter-cell (Semantic:
+   color/filter-cell/*) sind noch nicht in tokens/ exportiert: lokale Fallbacks, entfernen sobald
+   dist/css/tokens.css sie liefert. indicator-active: in Figma hartkodiert #CDDC39 (kein Token),
+   Entscheidung 2026-09-22: accent/highlight. */
 .offcanvas {
   --color-filter-cell-bg-hover: var(--color-neutral-alpha-900-5);
   --color-filter-cell-bg-pressed: var(--color-neutral-alpha-900-10);
   --color-filter-cell-bg-active: var(--color-primary-900);
   --color-filter-cell-fg-active: var(--color-neutral-0);
   --color-filter-cell-indicator-active: var(--color-accent-highlight);
-  --offcanvas-duration: var(--motion-slow);
-
-  position: fixed;
-  inset: auto 0 0 0;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: none;
-  max-height: 85dvh;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background-color: var(--color-bg-card);
-  color: var(--color-text-primary);
-  overflow: hidden;
-  transform: translateY(100%);
-  transition:
-    transform var(--offcanvas-duration) var(--ease-out),
-    overlay var(--offcanvas-duration) ease allow-discrete,
-    display var(--offcanvas-duration) ease allow-discrete;
-}
-.offcanvas[open] {
-  display: flex;
-  flex-direction: column;
-  transform: translateY(0);
-}
-@starting-style {
-  .offcanvas[open] { transform: translateY(100%); }
-}
-.offcanvas::backdrop {
-  background-color: rgba(26, 25, 23, 0.4); /* Fallback für Browser ohne Custom Properties im ::backdrop */
-  background-color: var(--color-neutral-alpha-900-40);
-  opacity: 0;
-  transition:
-    opacity var(--offcanvas-duration) ease,
-    overlay var(--offcanvas-duration) ease allow-discrete,
-    display var(--offcanvas-duration) ease allow-discrete;
-}
-.offcanvas[open]::backdrop { opacity: 1; }
-@starting-style {
-  .offcanvas[open]::backdrop { opacity: 0; }
-}
-.offcanvas__form {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  min-height: 0;
-}
-.offcanvas__head {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-24);
-  margin-bottom: var(--space-24);
-  padding: var(--space-24) var(--space-16) var(--space-16);
-  border-bottom: var(--border-default) solid var(--color-divider-default);
-}
-.offcanvas__heading {
-  display: grid;
-  flex: 1 1 auto;
-  gap: var(--space-8);
-  min-width: 0;
-}
-.offcanvas__kicker {
-  margin: 0;
-  color: var(--color-text-secondary);
-}
-.offcanvas__title { margin: 0; }
-/* Der Titel bekommt beim Öffnen den Fokus (tabindex="-1"). Er ist nicht interaktiv, deshalb kein Ring:
-   der sichtbare Ort ist das aufgehende Panel selbst. */
-.offcanvas__title:focus,
-.offcanvas__title:focus-visible { outline: none; box-shadow: none; }
-.offcanvas__body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding-inline: var(--space-16);
-}
-.offcanvas__foot {
-  display: grid;
-  gap: var(--space-12);
-  padding: var(--space-24) var(--space-16);
-  border-top: var(--border-default) solid var(--color-divider-default);
-}
-/* Mobile: nur der Primary läuft über die volle Breite. Der Secondary (Textlink mit Unterstrich)
-   bleibt so breit wie sein Label, sonst zieht sich der Strich über das ganze Off-Canvas. */
-.offcanvas__foot .btn--primary { width: 100%; }
-.offcanvas__foot .btn--secondary { justify-self: center; }
-
-/* Hintergrund sperren, solange der Dialog offen ist. scrollbar-gutter verhindert den Layout-Sprung
-   mit klassischer Scrollbar. */
-html { scrollbar-gutter: stable; }
-body:has(.offcanvas[open]) { overflow: hidden; }
-
-@media (min-width: 1024px) {
-  .offcanvas {
-    inset: 0 0 0 auto;
-    width: 520px;
-    height: 100dvh;
-    max-height: none;
-    padding: var(--space-24);
-    border-left: var(--border-default) solid var(--color-divider-default);
-    transform: translateX(100%);
-  }
-  .offcanvas[open] { transform: translateX(0); }
-  @starting-style {
-    .offcanvas[open] { transform: translateX(100%); }
-  }
-  .offcanvas__head {
-    margin-bottom: var(--space-48);
-    padding: 0 0 var(--space-16);
-  }
-  .offcanvas__body { padding-inline: 0; }
-  .offcanvas__foot {
-    display: flex;
-    align-items: center;
-    gap: var(--space-16);
-    padding: var(--space-24) 0 0;
-  }
-  .offcanvas__foot .btn--primary { width: auto; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .offcanvas, .offcanvas::backdrop { transition: none; }
 }
 
 /* ---------- filter-cell (Figma: filter-cell 2646:40456, Selection Off/On × State) ----------
@@ -717,7 +583,7 @@ body:has(.offcanvas[open]) { overflow: hidden; }
 .filter-cell:has(.filter-cell__input:checked) .filter-cell__count { transition-delay: 40ms; }
 /* Figma: Focused = 4 px focus-outer als Rahmen der Zelle. Innerer Ring (focus-inner) ergänzt,
    sonst wäre der Ring im Zustand On (primary-900 auf primary-900) unsichtbar. */
-.filter-cell:has(.filter-cell__input:focus-visible) {
+:root:not([data-focus-modality="pointer"]) .filter-cell:has(.filter-cell__input:focus-visible) {
   z-index: 1;
   outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
   outline-offset: calc(-1 * var(--border-focus-outer));
@@ -729,44 +595,58 @@ body:has(.offcanvas[open]) { overflow: hidden; }
   pointer-events: none;
 }
 
-/* ---------- Text-Content-Grid (Figma: section-header, text-row, image-section) ---------- */
+/* ---------- Text-Content-Grid (Figma: text-content-grid 2522:59540 / Phone 2522:59563) ----------
+   section-header, text-row, image-section, text-row mit Gap 80. Padding y compact (Desktop 64).
+   Kopf: Label + H2 (Gap 16), Intro H6 darunter (Gap 24). Desktop 6 von 12 Spalten, mittig. */
 .text-content-grid {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  padding: var(--section-spacing-y-compact) var(--section-spacing-x-default);
+}
+.text-content-grid > .wrap {
+  display: grid;
+  gap: var(--space-80);
 }
 .section-header--center {
-  max-width: 660px;
-  margin-inline: auto;
-  text-align: center;
   display: grid;
-  gap: var(--space-16);
+  gap: var(--space-24);
+  text-align: center;
 }
-.section-header--center h2 { margin: 0; }
+.section-header__head { display: grid; gap: var(--space-16); }
+.section-header__head > * { margin: 0; }
 .section-header__intro {
   margin: 0;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-h6);
   line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+@media (min-width: 768px) {
+  .section-header--center { width: calc(200% / 3 - var(--grid-gutter) / 3); margin-inline: auto; } /* 8 von 12 */
+}
+@media (min-width: 1024px) {
+  .section-header--center { width: calc(50% - var(--grid-gutter) / 2); } /* 6 von 12 */
 }
 .text-row {
   display: grid;
-  gap: var(--space-32) var(--grid-gutter);
-  margin-top: var(--space-64);
+  gap: var(--space-40) var(--grid-gutter);
 }
 .text-row p { margin: 0 0 var(--space-24); }
 .text-row p:last-child { margin-bottom: 0; }
-.text-row h3 { margin: 0 0 var(--space-16); font-size: var(--font-size-h5); line-height: var(--line-height-h5); }
-.text-row--2 > * { grid-column: span 12; }
-.text-row--3 > * { grid-column: span 12; }
+.text-row h3 {
+  margin: 0 0 var(--space-16);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
 @media (min-width: 768px) {
-  .text-row { grid-template-columns: repeat(12, minmax(0, 1fr)); margin-top: var(--space-80); }
+  .text-row { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .text-row--2 > * { grid-column: span 6; }
   .text-row--3 > * { grid-column: span 4; }
 }
-.image-section { margin-top: var(--space-64); }
-@media (min-width: 768px) { .image-section { margin-top: var(--space-80); } }
+/* height: auto, sonst gewinnt das height-Attribut des img gegen aspect-ratio (gilt für alle Modulbilder) */
 .image-section__img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
@@ -774,85 +654,111 @@ body:has(.offcanvas[open]) { overflow: hidden; }
   margin: var(--space-8) 0 0;
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
   color: var(--color-text-secondary);
 }
-[data-context="primary-900"] .image-section__caption { color: var(--color-text-secondary); }
 
-/* ---------- Bild + Text (Figma: image-text-single) ---------- */
+/* ---------- Bild + Text (Figma: image-text-single 2522:59546 / Phone 2522:59569) ----------
+   Phone: Bild oben, Text darunter (Gap 40, Text ohne Innenabstand). Desktop: zwei gleiche Spalten,
+   Gap 24, Text vertikal mittig mit Padding 24. */
 .image-text {
   padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
 }
 .image-text__grid {
   display: grid;
-  gap: var(--space-24);
+  gap: var(--space-40);
   align-items: center;
 }
 .image-text__img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
-.image-text__body { padding: var(--space-24) 0 0; }
+.image-text__body .module-label { margin: 0; }
 .image-text__body h2 { margin: var(--space-16) 0 var(--space-24); }
 .image-text__lead {
   margin: 0 0 var(--space-24);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-h5);
   line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
 }
-.image-text__body h3 { margin: 0 0 var(--space-16); font-size: var(--font-size-h5); line-height: var(--line-height-h5); }
+.image-text__body h3 {
+  margin: 0 0 var(--space-16);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
 .image-text__body p { margin: 0 0 var(--space-24); }
+.image-text__body > :last-child { margin-bottom: 0; }
 @media (min-width: 1024px) {
-  .image-text__grid { grid-template-columns: 1fr 1fr; }
+  .image-text__grid { grid-template-columns: 1fr 1fr; gap: var(--space-24); }
   .image-text__body { padding: var(--space-24); }
 }
 
-/* ---------- Kontakt (Figma: contact-section) ---------- */
+/* ---------- Kontakt (Figma: contact-section 2522:59547 / Phone 2522:59570) ----------
+   Intro: Label + H2 (Gap 16), Text H6 (Gap 16). Karte bg/inset: Label, Name + Adresse (Gap 8),
+   Button mit Gap 48. Phone: gestapelt, Gap 48, Karte Padding 16. Desktop: zwei gleiche Spalten, Gap 64. */
 .contact {
   padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
 }
 .contact__grid {
   display: grid;
-  gap: var(--space-32) var(--grid-gutter);
+  gap: var(--space-48);
 }
-.contact__intro h2 { margin: var(--space-16) 0 var(--space-24); }
-.contact__intro p {
+.contact__intro .module-label { margin: 0; }
+.contact__intro h2 { margin: var(--space-16) 0; }
+.contact__text {
   margin: 0;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-h6);
   line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
 }
 .contact__card {
-  padding: var(--space-32);
+  padding: var(--space-16);
   background-color: var(--color-bg-inset);
 }
 .contact__card .module-label { margin: 0 0 var(--space-24); }
-.contact__name { margin: 0 0 var(--space-8); font-size: var(--font-size-h6); line-height: var(--line-height-h6); }
+.contact__name {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
 .contact__card address {
   font-style: normal;
-  margin: 0 0 var(--space-32);
+  margin: 0 0 var(--space-48);
+  overflow-wrap: anywhere;
+}
+.contact__card address a { color: inherit; } /* Figma: text/primary, unterstrichen */
+@media (hover: hover) {
+  .contact__card address a:hover { color: var(--color-interactive-hover); }
 }
 @media (min-width: 1024px) {
-  .contact__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
-  .contact__intro { grid-column: 1 / span 6; }
-  .contact__card { grid-column: 7 / span 6; }
+  .contact__grid { grid-template-columns: 1fr 1fr; gap: var(--space-64); align-items: start; }
+  .contact__card { padding: var(--space-32); }
 }
 
-/* ---------- Teaser-Slider (Figma: teaser-slider, teaser-card-static) ---------- */
+/* ---------- Teaser-Slider (Figma: teaser-slider 2522:59548 / Phone 2522:59571, teaser-card-static) ----------
+   Phone: Kopf gestapelt (Gap 24), Karten 260 breit mit Bild 321:241, Gap Kopf→Karten 48, keine Pfeile.
+   Desktop: Kopf 5 + 6 Spalten, Karten 321 mit Bild 321:428, Gap 80, Pfeile rechts mit Gap 64.
+   Die Spur trägt 6 px Innenabstand für den Fokusring, die Außenabstände ziehen ihn wieder ab. */
 .teaser-slider {
   padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
   overflow: hidden;
 }
 .section-header--split {
   display: grid;
-  gap: var(--space-16) var(--grid-gutter);
+  gap: var(--space-24) var(--grid-gutter);
   align-items: end;
   padding-bottom: var(--space-24);
   border-bottom: var(--border-default) solid var(--color-divider-default);
 }
+.section-header--split .module-label { margin: 0; }
 .section-header--split h2 { margin: var(--space-16) 0 0; }
-.section-header--split .section-header__intro { margin: 0; }
 @media (min-width: 1024px) {
   .section-header--split { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .section-header--split > :first-child { grid-column: 1 / span 5; }
@@ -861,105 +767,135 @@ body:has(.offcanvas[open]) { overflow: hidden; }
 .teaser-slider__track {
   display: flex;
   gap: var(--space-16);
-  margin: var(--space-48) calc(-1 * var(--section-spacing-x-default)) 0;
+  margin: calc(var(--space-48) - var(--space-6)) calc(-1 * var(--section-spacing-x-default)) 0;
   padding: var(--space-6) var(--section-spacing-x-default);
+  list-style: none;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--section-spacing-x-default); /* erste Karte bündig mit dem Kopf, nicht am Rand */
   scrollbar-width: none;
 }
 .teaser-slider__track::-webkit-scrollbar { display: none; }
-@media (min-width: 1024px) {
-  .teaser-slider__track { margin-top: var(--space-80); }
-}
 .teaser-card {
   flex: none;
-  width: min(321px, 80vw);
+  width: 260px;
   scroll-snap-align: start;
   display: grid;
+  align-content: start; /* sonst verteilt das Grid die Resthöhe der höchsten Karte auf die Zeilen */
   gap: var(--space-16);
 }
 .teaser-card__img {
   display: block;
   width: 100%;
-  aspect-ratio: 321 / 428;
+  height: auto;
+  aspect-ratio: 321 / 241;
   object-fit: cover;
 }
-.teaser-card h3 { margin: 0 0 var(--space-8); font-size: var(--font-size-h4); line-height: var(--line-height-h4); }
-.teaser-card p { margin: 0 0 var(--space-24); color: var(--color-text-secondary); }
+.teaser-card h3 {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+}
+.teaser-card p { margin: 0 0 var(--space-16); color: var(--color-text-secondary); }
 .teaser-slider__nav {
-  display: flex;
+  display: none;
   justify-content: flex-end;
   gap: var(--space-8);
-  margin-top: var(--space-48);
+  margin-top: calc(var(--space-64) - var(--space-6));
 }
-@media (min-width: 1024px) { .teaser-slider__nav { margin-top: var(--space-64); } }
+@media (min-width: 768px) {
+  .teaser-slider__nav { display: flex; }
+}
+@media (min-width: 1024px) {
+  .teaser-slider__track { margin-top: calc(var(--space-80) - var(--space-6)); }
+  .teaser-card { width: 321px; }
+  .teaser-card__img { aspect-ratio: 321 / 428; }
+  .teaser-card p { margin-bottom: var(--space-24); }
+}
 
-/* ---------- FAQ (Figma: faq-section, faq-item) ---------- */
+/* ---------- FAQ (Figma: faq-section 2522:59549 / Phone 2522:59572, Aufbau wie haftbuch) ----------
+   Intro: Label + H2 + Text (Gap 16), Button mit Gap 40. Liste Gap 16, Item: Frage H5 + Plus/Minus,
+   Antwort Body/M text/secondary (Gap 16), Divider unten mit 16 Abstand, kein Divider oben.
+   Padding unten 0: teaser-feature folgt in derselben Fläche und bringt den Abstand mit. */
 .faq {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  padding: var(--section-spacing-y-default) var(--section-spacing-x-default) 0;
 }
-.faq__grid { display: grid; gap: var(--space-32) var(--grid-gutter); }
-.faq__intro h2 { margin: var(--space-16) 0 var(--space-24); }
-.faq__intro p {
-  margin: 0 0 var(--space-32);
+.faq__grid { display: grid; gap: var(--space-48) var(--grid-gutter); }
+.faq__intro { display: grid; gap: var(--space-16); justify-items: start; }
+.faq__intro > * { margin: 0; }
+.faq__text {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-h6);
   line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
 }
-.faq__list { margin: 0; padding: 0; }
-.faq-item { border-bottom: var(--border-default) solid var(--color-divider-default); }
-.faq-item:first-child { border-top: var(--border-default) solid var(--color-divider-default); }
+.faq__intro .btn { margin-top: var(--space-24); } /* 16 Grid-Gap + 24 = Figma 40 */
+.faq__list { display: grid; gap: var(--space-16); margin: 0; padding: 0; }
+.faq-item {
+  padding-bottom: var(--space-16);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
 .faq-item__q {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-16);
-  padding: var(--space-16) 0;
   cursor: pointer;
   list-style: none;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-h5);
   line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
 }
 .faq-item__q::-webkit-details-marker { display: none; }
 .faq-item__q .icon { flex: none; width: var(--size-icon-lg); height: var(--size-icon-lg); }
 .faq-item__q .icon--minus { display: none; }
 .faq-item[open] .faq-item__q .icon--plus { display: none; }
 .faq-item[open] .faq-item__q .icon--minus { display: block; }
-.faq-item__a { margin: 0; padding: 0 0 var(--space-24); color: var(--color-text-secondary); }
+.faq-item__a { margin: var(--space-16) 0 0; color: var(--color-text-secondary); }
 @media (min-width: 1024px) {
   .faq__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
   .faq__intro { grid-column: 1 / span 5; }
   .faq__list { grid-column: 7 / span 6; }
-  .faq-item__q { padding: var(--space-20) 0; }
 }
 
-/* ---------- Teaser-Feature (Figma: teaser-feature) ---------- */
+/* ---------- Teaser-Feature (Figma: teaser-feature 2522:59550 / Phone 2522:59573) ----------
+   Phone: Bild oben über die volle Kartenbreite, Text darunter (Padding x 16, unten 32, Gap 24).
+   Desktop: Text links 397 breit, Bild rechts 16:9, unten bündig, Karte Padding 112/40.
+   Deko: ca. 71 % der Bildbreite, mittig auf dem Bild, leicht nach rechts versetzt, darf oben über
+   die Karte hinausragen (Phone). */
 .teaser-feature {
   padding: var(--section-spacing-y-default) var(--section-spacing-x-default) 0;
 }
 .feature-card {
-  position: relative;
   display: grid;
-  gap: var(--space-32);
-  padding: var(--space-48) var(--space-24);
+  gap: var(--space-24);
+  padding: 0 0 var(--space-32);
   background-color: var(--color-bg-inset);
-  overflow: hidden;
 }
-.feature-card__text h3 { margin: 0 0 var(--space-8); font-size: var(--font-size-h4); line-height: var(--line-height-h4); }
-.feature-card__text p { margin: 0 0 var(--space-32); color: var(--color-text-secondary); }
-.feature-card__media { position: relative; }
+.feature-card__text { padding-inline: var(--space-16); }
+.feature-card__text h3 {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+}
+.feature-card__text p { margin: 0 0 var(--space-24); color: var(--color-text-secondary); }
+.feature-card__media { position: relative; order: -1; }
 .feature-card__img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 .feature-card__deco {
   position: absolute;
-  left: 50%;
+  left: calc(50% + 2.8%);
   top: 50%;
-  width: 72%;
+  width: 71.4%;
+  height: auto;
   transform: translate(-50%, -50%);
   color: var(--color-neutral-0);
   pointer-events: none;
@@ -968,28 +904,49 @@ body:has(.offcanvas[open]) { overflow: hidden; }
   .feature-card {
     grid-template-columns: 397px minmax(0, 1fr);
     align-items: end;
-    gap: var(--space-24);
     padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
   }
+  .feature-card__text { padding-inline: 0; }
+  .feature-card__text p { margin-bottom: var(--space-32); }
+  .feature-card__media { order: 0; }
 }
 
-/* ---------- Footer (Figma: footer) ---------- */
+/* ---------- Footer (Figma: Footer 2522:59551 / Phone 2522:59574, Kontext primary-900) ----------
+   Phone (bis 1023): Divider, Logo 160 × 49 mit 32 oben/unten, Linkgruppen (Gap 16) mit 44er Zeilen,
+   Social-Zeile 44 (Icons Gap 24), 32 Luft, Divider, Meta-Links in 44er Zeilen, Copyright.
+   Desktop: Logo + Social links, drei Linkspalten rechts (Gap 80, Zeilen Gap 16), Divider, Copyright + Meta-Nav. */
+.icon-mask--instagram { --icon-mask: url("../shared/assets/InstagramLogo.svg"); }
+.icon-mask--facebook { --icon-mask: url("../shared/assets/FacebookLogo.svg"); }
+.icon-mask--linkedin { --icon-mask: url("../shared/assets/LinkedinLogo.svg"); }
 .site-footer {
-  padding: var(--space-40) var(--grid-margin) var(--space-32);
+  padding: 0 var(--grid-margin) var(--space-24);
+  background-color: var(--color-bg-module);
+  color: var(--color-text-primary);
+}
+.site-footer__main {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--space-32);
   border-top: var(--border-default) solid var(--color-divider-default);
 }
-.site-footer__top {
-  display: grid;
-  gap: var(--space-40);
+.site-footer__brand { display: contents; }
+.site-footer__logo {
+  order: 1;
+  display: block;
+  width: 160px;
+  height: 49px;
+  margin-block: var(--space-32);
+  color: var(--color-text-primary);
 }
-.site-footer__logo { width: 203px; height: 62px; color: var(--color-text-primary); }
-.site-footer__logo svg { display: block; width: 100%; height: 100%; }
-.site-footer__cols {
-  display: grid;
-  gap: var(--space-24) var(--space-40);
-}
-.site-footer ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-12); }
-.site-footer a {
+.site-footer__cols { order: 2; display: grid; gap: var(--space-16) var(--space-80); }
+.site-footer__social { order: 3; margin-top: var(--space-16); }
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
+.site-footer__cols ul { display: grid; align-content: start; }
+.site-footer__cols a,
+.site-footer__legal a {
+  display: flex;
+  align-items: center;
+  min-height: 44px; /* Touch-Ziel wie Figma */
   font-family: var(--font-family-mono);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-label-s);
@@ -997,30 +954,61 @@ body:has(.offcanvas[open]) { overflow: hidden; }
   letter-spacing: var(--letter-spacing-label-s);
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--color-text-primary);
+  color: inherit;
 }
+.site-footer__social { display: flex; gap: var(--space-24); }
+.site-footer__social a { display: flex; align-items: center; min-height: 44px; color: var(--color-text-primary); }
+.site-footer__social .icon-mask { display: block; }
 @media (hover: hover) {
-  .site-footer a:hover { text-decoration: underline; }
+  .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 }
 .site-footer__bottom {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-16) var(--space-32);
-  margin-top: var(--space-64);
-  padding-top: var(--space-16);
+  flex-direction: column-reverse;
+  gap: var(--space-24);
+  padding: var(--space-24) 0 var(--space-8);
   border-top: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-secondary);
+}
+.site-footer__bottom p {
+  margin: 0;
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
 }
-.site-footer ul.site-footer__legal { display: flex; flex-wrap: wrap; gap: var(--space-16) var(--space-32); }
-.site-footer__bottom p { margin: 0; }
+.site-footer__legal { display: grid; }
 @media (min-width: 768px) {
-  .site-footer__cols { grid-template-columns: repeat(3, auto); }
+  .site-footer__cols { grid-template-columns: repeat(3, auto); justify-content: start; }
 }
 @media (min-width: 1024px) {
-  .site-footer__top { grid-template-columns: 1fr auto; }
-  .site-footer__bottom { margin-top: var(--space-96); }
+  .site-footer { padding-bottom: var(--space-32); }
+  .site-footer__main {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--space-40);
+    padding: var(--space-40) 0 0;
+  }
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-80);
+    padding-bottom: var(--space-16);
+  }
+  .site-footer__logo { width: 203px; height: 62px; margin: 0; }
+  .site-footer__social { margin: 0; gap: var(--space-8); }
+  .site-footer__social a { min-height: 0; }
+  .site-footer__cols { justify-content: end; gap: 0 var(--space-80); }
+  .site-footer__cols ul { gap: var(--space-16); }
+  .site-footer__cols a,
+  .site-footer__legal a { min-height: 0; }
+  .site-footer__bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-16) 0 0;
+  }
+  .site-footer__legal { display: flex; gap: var(--space-32); }
 }
 
 /* ---------- Prototyp-Hinweisleiste (kein Design-System-Element) ---------- */

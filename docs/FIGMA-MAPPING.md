@@ -47,6 +47,19 @@ Figma-Name wird nur normalisiert: Slash → Punkt (Token) bzw. Bindestrich (CSS)
 | Seite Templates | `2522:55919` |
 | Icon-Frame (Phosphor-Set) | `1744:9209` |
 | cut-edges Component-Set | `2072:9560` |
+| modal Component-Set (confirm / language × Desktop / Phone) | `2859:132` |
+| Doku-Frame Modal (Foundations) | `2860:1449` |
+| search-overlay Component-Set (Desktop / Phone), Modules | `2872:4913` |
+| Doku-Frame Off-Canvas (Foundations) | `2613:31418` |
+| Off-Canvas Filter Desktop / Phone | `2710:23917` / `2710:24111` |
+| section-header Variante off-canvas | `2613:27966` |
+| Doku-Frame Forms (Foundations) | `2746:24535` |
+| Off-Canvas Kontakt Desktop / Phone | `2746:26620` / `2753:30067` |
+| Off-Canvas Anmeldung Desktop / Phone | `2746:26818` / `2753:30157` |
+| Off-Canvas Bestätigung Desktop / Phone | `2747:29871` / `2746:28162` |
+| Input-Sets (Text, Select, Search, Date, Textarea) | `1647:6622` |
+| Icon Clock / CheckCircle | `1583:1135` / `1583:1160` |
+| Doku-Frame Suche (Foundations) | `2873:1631` |
 | Collection Primitives | `VariableCollectionId:1177:2` |
 | Collection Semantic | `VariableCollectionId:1177:750` |
 | Collection Typography | `VariableCollectionId:1177:776` |

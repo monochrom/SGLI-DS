@@ -13,6 +13,7 @@
 
   const el = {
     form: document.querySelector('[data-hb-form]'),
+    heading: document.getElementById('hb-heading'),
     query: document.querySelector('[data-hb-query]'),
     period: document.querySelector('[data-hb-period]'),
     alpha: document.querySelector('[data-hb-alpha]'),
@@ -199,7 +200,13 @@
     el.query.value = '';
     el.period.value = '';
     update();
-    el.query.focus();
+    /* Der Button verschwindet, der Fokus braucht ein neues Ziel. Tastatur: ins Suchfeld (weiter tippen).
+       Maus/Touch: auf die Bereichsüberschrift, sonst öffnet das Suchfeld auf dem Phone die Tastatur. */
+    if (document.documentElement.getAttribute('data-focus-modality') === 'pointer') {
+      el.heading.focus({ preventScroll: true });
+    } else {
+      el.query.focus();
+    }
   });
 
   /* „Weitere Ergebnisse laden“: sofort anhängen, Fokus auf die erste neue Zeile */

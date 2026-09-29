@@ -42,7 +42,10 @@
     .focus-demo { display: flex; flex-wrap: wrap; gap: var(--space-16); }
     .focus-demo button, .focus-demo a, .focus-demo input { padding: var(--space-10) var(--space-16); border: var(--border-default) solid var(--color-border-default); border-radius: var(--radius-sm); background: var(--color-bg-card); }
     .cut-demo { display: grid; gap: 0; }
+    .cut-demo--tilt { padding-bottom: 60vh; } /* Platz, damit der Keil bis zur Bildschirmmitte scrollen kann */
+    .cut-tilt-control { display: inline-flex; align-items: center; gap: 12px; margin-block: 8px 24px; }
   </style>
+  <script src="../src/scripts/focus-modality.js"></script>
 </head>
 <body>
   <nav class="doc-nav" aria-label="Abschnitte">
@@ -134,11 +137,18 @@
 
     <section id="cut-edges" class="doc-section">
       <h2>Cut-Edges</h2>
-      <p>„Der Schnitt“: Keile in Modulfarbe oben (Diagonale) und unten (asymmetrisches V). Geometrie 1:1 aus Figma, proportional zur Breite.</p>
+      <p>„Der Schnitt“: Keile in Modulfarbe oben (Diagonale) und unten (asymmetrisches V). Geometrie 1:1 aus Figma, proportional zur Breite. Die Fläche neben dem Keil übernimmt automatisch die Farbe des Nachbarmoduls (davor/danach), damit die Module ineinander übergehen.</p>
       <div class="cut-demo">
         <section data-context="surface-300" class="cut-edges cut-edges--after"><div class="cut-edges__body section section--compact"><h3>surface-300, after</h3></div></section>
         <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after"><div class="cut-edges__body section section--compact"><h3>primary-900, before + after</h3><p>Fließtext auf invertiertem Kontext.</p></div></section>
         <section data-context="secondary-400" class="cut-edges cut-edges--before"><div class="cut-edges__body section section--compact"><h3>secondary-400, before</h3></div></section>
+      </div>
+      <h3>Kippen beim Scrollen</h3>
+      <p><code>.cut-edges--tilt</code> (nur mit <code>--before</code>, gedacht für den ersten Keil der Seite): Die Diagonale dreht sich beim Runterscrollen um ihren tiefsten Punkt unten rechts in die Endlage, von „Keil taucht unten auf“ bis „Oberkante auf Bildschirmmitte“. Start per <code>--cut-tilt-start</code> (Anteil der Keilhöhe, Standard 0.6 ≈ 6,7° statt 11°). Firefox und „Bewegung reduzieren“: Endlage. Zum Ansehen hochscrollen, bis der Keil unten verschwindet, dann langsam runter.</p>
+      <label class="cut-tilt-control">Start <input type="range" id="cut-tilt-start" min="0.3" max="0.9" step="0.05" value="0.6"> <output for="cut-tilt-start" id="cut-tilt-out">0.6</output></label>
+      <div class="cut-demo cut-demo--tilt">
+        <section data-context="surface-300" class="cut-edges cut-edges--after"><div class="cut-edges__body section section--compact"><h3>surface-300, after</h3></div></section>
+        <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after cut-edges--tilt" id="cut-tilt-demo"><div class="cut-edges__body section section--compact"><h3>primary-900, before + tilt</h3><p>Fließtext auf invertiertem Kontext.</p></div></section>
       </div>
     </section>
   </main>
@@ -250,6 +260,12 @@
       const root = document.getElementById('icon-grid');
       for (const n of icons) root.append(el('div', { class: 'cell' }, `<svg class="icon icon--lg" aria-hidden="true"><use href="../dist/icons/sprite.svg#icon-${n}"></use></svg><span>${n}</span>`));
     }
+
+    const tiltInput = document.getElementById('cut-tilt-start');
+    tiltInput.addEventListener('input', () => {
+      document.getElementById('cut-tilt-demo').style.setProperty('--cut-tilt-start', tiltInput.value);
+      document.getElementById('cut-tilt-out').value = tiltInput.value;
+    });
 
     main().catch(e => { document.querySelector('main').prepend(el('p', { class: 'fail' }, 'Konnte dist/ nicht laden. Bitte npm run build und npm run docs ausführen. ' + e)); });
   </script>

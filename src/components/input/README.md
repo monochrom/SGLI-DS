@@ -45,12 +45,18 @@ Select: natives `<select>`, erste Option `value=""` gilt als leer. Icon CaretDow
 
 Date: natives `type="date"`. Da Browser immer ein Datumsformat anzeigen, steht das Label bei `.field--date` immer oben. Für einen Custom-Datepicker später eigene Komponente.
 
+Uhrzeit: natives `type="time"` mit `.field--date` und Icon `Clock` (Figma: Input Date mit getauschtem Icon). In Formularen öffnet `form.js` den nativen Picker per Klick auf die Box (`showPicker()`).
+
+Textarea: Box 100 hoch, Padding 8 rundum. Label (leer und schwebend) 8 px unter der Außenkante, Wert ab 27 px (Figma `1658:6547`, Stand 2026-09-23).
+
+Platzhalter: `placeholder=" "` bleibt Standard. Ein echter Platzhaltertext erscheint nur im Fokus in `color/text/secondary` (Figma State Focused); ohne Fokus steht dort das Label.
+
 ## Tokens
 
 - Box: `border-default` in `color/border/default`, Padding-X `space-8`, Höhe 48 (Textarea min 100), Radius keiner
-- Label-M (Wert, Platzhalter), Label-S (schwebendes Label), Caption (Fehlertext)
+- Label-M (Wert, Platzhalter), Label-S (schwebendes Label), Caption (Fehlertext). Der Wert ist mindestens 16 px (Phone: 16 statt Label-M 15), sonst zoomt iOS beim Antippen. Zeilenhöhe bleibt die von Label-M
 - Farben: `color/text/primary`, `color/text/secondary`, `color/feedback/error`, `color/icon/primary`, Fokus `color/border/focus-inner|outer`
-- Icons 24 px (`size-icon-lg`): MagnifyingGlass, CalendarBlank, CaretDown, WarningCircle
+- Icons 24 px (`size-icon-lg`): MagnifyingGlass, CalendarBlank, Clock, CaretDown, WarningCircle
 
 ## Hinweise
 

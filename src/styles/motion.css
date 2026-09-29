@@ -1,0 +1,39 @@
+/* SGLI – Motion
+   Noch keine Figma-Variablen (Kandidaten für Tokens). Master der Ebenen-Werte ist das Menü-Overlay
+   (prototype/shared/menu.css, freigegeben 2026-09-29).
+
+   Regel: Bewegung zeigt, woran eine Ebene hängt.
+   - Randflächen (Off-Canvas, Menü, Suche) kommen von ihrem Rand: lange Wege, --ease-surface.
+   - Zentrierte Dialoge (Modal) reisen nicht: Einblenden + kurzer Fall von oben.
+   - Änderungen vor Ort (Chips, Zellen, Hover): nur Farbe und Größe, --motion-fast.
+   Reihenfolge für alle Ebenen: erst abdunkeln, dann Fläche, dann Inhalt. Schließen umgekehrt,
+   die Abdunkelung geht zuletzt.
+   Reduced Motion: reset.css setzt alle Dauern auf 0.01 ms, Ebenen verzichten zusätzlich auf Wege. */
+
+:root {
+  /* Änderungen vor Ort */
+  --motion-fast: 160ms;   /* Farbe, Opazität */
+  --motion-base: 260ms;   /* Größenänderungen, kleine Slide-ins */
+  --motion-slow: 480ms;   /* Bewegung, die viel Layout verschiebt */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Ebenen: Kurven */
+  --ease-surface: cubic-bezier(0.76, 0, 0.24, 1); /* weich rein und raus: Flächen */
+  --ease-content: cubic-bezier(0.22, 1, 0.36, 1); /* sanft auslaufend: Inhalte, Dialoge */
+  --ease-scroll: cubic-bezier(0.4, 0, 0.2, 1);    /* an den Scroll gekoppelt: weich rein, weich aus (Cut-Edge-Kippen) */
+
+  /* Abdunkelung */
+  --motion-dim: 320ms;
+
+  /* Randflächen (Off-Canvas, Menü, Suche) */
+  --motion-surface-delay: 240ms;     /* Fläche startet, wenn die Seite fast abgedunkelt ist */
+  --motion-surface-in: 520ms;
+  --motion-surface-out: 680ms;
+  --motion-surface-dim-delay: 580ms; /* Schließen: Abdunkelung startet kurz vor Ende der Fläche */
+
+  /* Zentrierte Dialoge (Modal) */
+  --motion-dialog-delay: 120ms;      /* Dialog startet, während die Seite abdunkelt */
+  --motion-dialog-in: 300ms;
+  --motion-dialog-out: 200ms;
+  --motion-dialog-offset: 16px;      /* kurzer Fall von oben */
+}

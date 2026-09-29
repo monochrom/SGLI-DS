@@ -5,13 +5,7 @@
    Mobile first: Phone = Default, Desktop-Layout ab lg (1024). Tablet (md) nutzt das Phone-Layout
    mit Tablet-Abständen, weil Figma für diese Seite keinen Tablet-Frame hat. */
 
-/* ---------- Motion (nur Prototyp, Kandidat für Tokens; Werte wie angebote-filter) ---------- */
-:root {
-  --motion-fast: 160ms;
-  --motion-base: 260ms;
-  --motion-slow: 480ms;
-  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
+/* Motion: --motion-* und --ease-* kommen aus src/styles/motion.css (Foundation). */
 
 /* ---------- Layout-Helfer (nur Prototyp) ---------- */
 .wrap {
@@ -559,9 +553,13 @@ body { background-color: var(--color-bg-page); }
 }
 .timeline__img--secondary { order: 4; }
 .timeline__periods { order: 5; }
+/* Bildpaar (Figma Phone teaser-images: 208 × 277 + Rest × 170, Gap 8, unten bündig).
+   min-width: 0, sonst hält das Bild seine natürliche Breite (1200 px, gedeckelt auf 100 %) als Minimum
+   und drückt das tertiäre Bild auf 0. */
 .timeline__img--quaternary {
   order: -1;
   flex: 0 0 calc(208 / 343 * 100%);
+  min-width: 0;
   aspect-ratio: 208 / 277;
 }
 .timeline__img--tertiary {
@@ -702,31 +700,40 @@ body { background-color: var(--color-bg-page); }
 }
 
 /* ==========================================================================
-   Footer (Figma: Footer 1932:1864, Kontext primary-900)
-   Desktop: Divider, Logo + Social links, drei Linkspalten rechts (Gap 80), Divider, Copyright + Meta-Nav.
-   Phone: Logo, Links untereinander, Social, Divider, Meta-Nav, Copyright.
+   Footer (Figma: Footer 1932:1864 / Phone 1932:1836, Kontext primary-900, wie angebote-filter)
+   Phone (bis 1023): Divider, Logo 160 × 49 mit 32 oben/unten, Linkgruppen (Gap 16) mit 44er Zeilen,
+   Social-Zeile 44 (Icons Gap 24), 32 Luft, Divider, Meta-Links in 44er Zeilen, Copyright.
+   Desktop: Logo + Social links, drei Linkspalten rechts (Gap 80, Zeilen Gap 16), Divider, Copyright + Meta-Nav.
    ========================================================================== */
 .site-footer {
-  padding: 0 var(--grid-margin) var(--space-32);
+  padding: 0 var(--grid-margin) var(--space-24);
   background-color: var(--color-bg-module);
   color: var(--color-text-primary);
 }
 .site-footer__main {
   display: flex;
   flex-direction: column;
-  gap: var(--space-40);
-  padding: var(--space-40) 0;
+  padding-bottom: var(--space-32);
   border-top: var(--border-default) solid var(--color-divider-default);
 }
 .site-footer__brand { display: contents; }
-.site-footer__logo { order: 1; display: block; width: 203px; height: 62px; color: var(--color-text-primary); }
-.site-footer__cols { order: 2; display: grid; gap: var(--space-32) var(--space-80); }
-.site-footer__social { order: 3; }
+.site-footer__logo {
+  order: 1;
+  display: block;
+  width: 160px;
+  height: 49px;
+  margin-block: var(--space-32);
+  color: var(--color-text-primary);
+}
+.site-footer__cols { order: 2; display: grid; gap: var(--space-16) var(--space-80); }
+.site-footer__social { order: 3; margin-top: var(--space-16); }
 .site-footer ul { margin: 0; padding: 0; list-style: none; }
-.site-footer__cols ul { display: grid; align-content: start; gap: var(--space-16); }
+.site-footer__cols ul { display: grid; align-content: start; }
 .site-footer__cols a,
 .site-footer__legal a {
-  display: block; /* sonst trägt das li die Body-Zeilenhöhe und der Abstand wächst über Figma-Gap 16 */
+  display: flex;
+  align-items: center;
+  min-height: 44px; /* Touch-Ziel wie Figma */
   font-family: var(--font-family-mono);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-label-s);
@@ -736,8 +743,8 @@ body { background-color: var(--color-bg-page); }
   text-decoration: none;
   color: inherit;
 }
-.site-footer__social { display: flex; gap: var(--space-8); }
-.site-footer__social a { display: block; color: var(--color-text-primary); }
+.site-footer__social { display: flex; gap: var(--space-24); }
+.site-footer__social a { display: flex; align-items: center; min-height: 44px; color: var(--color-text-primary); }
 .site-footer__social .icon-mask { display: block; }
 @media (hover: hover) {
   .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
@@ -745,8 +752,8 @@ body { background-color: var(--color-bg-page); }
 .site-footer__bottom {
   display: flex;
   flex-direction: column-reverse;
-  gap: var(--space-32);
-  padding-top: var(--space-16);
+  gap: var(--space-24);
+  padding: var(--space-24) 0 var(--space-8);
   border-top: var(--border-default) solid var(--color-divider-default);
   color: var(--color-text-secondary);
 }
@@ -756,12 +763,18 @@ body { background-color: var(--color-bg-page); }
   line-height: var(--line-height-caption);
   letter-spacing: var(--letter-spacing-caption);
 }
-.site-footer__legal { display: grid; gap: var(--space-16); }
+.site-footer__legal { display: grid; }
 @media (min-width: 768px) {
   .site-footer__cols { grid-template-columns: repeat(3, auto); justify-content: start; }
 }
 @media (min-width: 1024px) {
-  .site-footer__main { flex-direction: row; justify-content: space-between; padding-bottom: 0; }
+  .site-footer { padding-bottom: var(--space-32); }
+  .site-footer__main {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--space-40);
+    padding: var(--space-40) 0 0;
+  }
   .site-footer__brand {
     display: flex;
     flex-direction: column;
@@ -769,11 +782,18 @@ body { background-color: var(--color-bg-page); }
     gap: var(--space-80);
     padding-bottom: var(--space-16);
   }
-  .site-footer__cols { justify-content: end; }
+  .site-footer__logo { width: 203px; height: 62px; margin: 0; }
+  .site-footer__social { margin: 0; gap: var(--space-8); }
+  .site-footer__social a { min-height: 0; }
+  .site-footer__cols { justify-content: end; gap: 0 var(--space-80); }
+  .site-footer__cols ul { gap: var(--space-16); }
+  .site-footer__cols a,
+  .site-footer__legal a { min-height: 0; }
   .site-footer__bottom {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: var(--space-16) 0 0;
   }
   .site-footer__legal { display: flex; gap: var(--space-32); }
 }

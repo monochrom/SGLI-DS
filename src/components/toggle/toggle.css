@@ -64,7 +64,7 @@
 }
 
 /* Fokus: Doppelring um den Track */
-.toggle__input:focus-visible ~ .toggle__track {
+:root:not([data-focus-modality="pointer"]) .toggle__input:focus-visible ~ .toggle__track {
   outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
   outline-offset: var(--border-focus-inner);
   box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);

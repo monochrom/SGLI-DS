@@ -22,12 +22,12 @@
   --color-navigation-menu-border-pressed: var(--color-primary-700);
   --color-navigation-menu-indicator: var(--color-neutral-alpha-900-20);
 
-  /* Motion (nur Prototyp, Kandidat für Tokens) */
-  --menu-ease: cubic-bezier(0.76, 0, 0.24, 1);      /* weich rein und raus: Flächen */
-  --menu-ease-out: cubic-bezier(0.22, 1, 0.36, 1);  /* sanft auslaufend: Inhalte */
-  --menu-d-dim: 320ms;        /* Abdunkeln */
-  --menu-t-start: 240ms;      /* Fläche startet, wenn die Seite fast abgedunkelt ist */
-  --menu-t-panel: 520ms;      /* Fläche wächst */
+  /* Motion: Ebenen-Werte aus src/styles/motion.css (dort ist das Menü Master), Choreografie lokal */
+  --menu-ease: var(--ease-surface);         /* weich rein und raus: Flächen */
+  --menu-ease-out: var(--ease-content);     /* sanft auslaufend: Inhalte */
+  --menu-d-dim: var(--motion-dim);          /* Abdunkeln */
+  --menu-t-start: var(--motion-surface-delay); /* Fläche startet, wenn die Seite fast abgedunkelt ist */
+  --menu-t-panel: var(--motion-surface-in); /* Fläche wächst */
   --menu-t-items: calc(var(--menu-t-start) + 300ms); /* Start der Einträge */
   --menu-stagger: 55ms;       /* Abstand zwischen zwei Einträgen */
   --menu-d-item: 520ms;       /* Dauer je Eintrag */
@@ -38,7 +38,7 @@
   /* Schließen: Inhalt 0 → 280, Fläche 200 → 880, Abdunkelung 780 → 1140 (= CLOSE_MS in menu.js) */
   --menu-c-content: 280ms;
   --menu-c-panel-delay: 200ms;
-  --menu-c-panel: 680ms;
+  --menu-c-panel: var(--motion-surface-out);
   --menu-c-dim-delay: 780ms;
 
   position: fixed;
@@ -226,15 +226,17 @@ html.menu-lock { overflow: hidden; }
 /* base.css färbt a:hover in interactive-hover; in der Zelle bleibt die Schrift fg (Figma) */
 .nav-cell:hover { color: var(--color-navigation-menu-fg); }
 
-.nav-cell[aria-current="page"] { --line: var(--color-navigation-menu-border-hover); }
+/* Aktuelle Seite (Figma current / active): Quadrat, Linie bleibt die normale (dunkel erst bei Hover/Fokus).
+   Phone: 16 zwischen Quadrat und Label, ab lg wie alle Zeilen 24. */
+.nav-cell[aria-current="page"] { gap: var(--space-16); }
 .nav-cell[aria-current="page"] .nav-cell__indicator { display: block; }
 
-.nav-cell:focus-visible,
+:root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible,
 .nav-cell:active { --line: var(--color-navigation-menu-border-hover); }
 .nav-cell:active { --line: var(--color-navigation-menu-border-pressed); }
-.nav-cell:focus-visible .nav-cell__icon,
+:root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible .nav-cell__icon,
 .nav-cell:active .nav-cell__icon { opacity: 1; transform: none; }
-.nav-cell:focus-visible { padding-inline: var(--space-16); }
+:root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible { padding-inline: var(--space-16); }
 
 @media (hover: hover) {
   .nav-cell:hover:not(:active) { --line: var(--color-navigation-menu-border-hover); }
@@ -334,7 +336,8 @@ html.menu-lock { overflow: hidden; }
   .menu__nav { padding: 0; }
   /* Schrift bleibt H3 (Desktop 32), solange die Liste neben dem Bild schmal ist. H2 erst ab 2xl, s. u. */
   .nav-cell { padding-block: var(--space-24); }
-  .nav-cell:focus-visible { padding-inline: var(--space-24); }
+  .nav-cell[aria-current="page"] { gap: var(--space-24); }
+  :root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible { padding-inline: var(--space-24); }
 
   .menu__foot {
     display: grid;
@@ -429,3 +432,14 @@ html.menu-lock { overflow: hidden; }
   .menu { opacity: 0; }
   .menu.is-open { opacity: 1; }
 }
+
+/* ---------- Übergabe an die Suche (search.js über SGLI.menu.handoff) ----------
+   Inhalt und Abbinder blenden aus, Kopf und Fläche bleiben stehen. Danach schließt das Menü ohne Animation,
+   die Suche liegt zu dem Zeitpunkt schon deckungsgleich darüber. */
+.menu.is-handoff .menu__body,
+.menu.is-handoff .menu__foot {
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.menu.is-instant,
+.menu.is-instant * { transition: none !important; }

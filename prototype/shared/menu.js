@@ -18,6 +18,7 @@
   var current = script && script.getAttribute('data-current');
   var SPRITE = '../../dist/icons/sprite.svg';
   var CLOSE_MS = 1140; // = Ende der Abdunkelung beim Schließen (menu.css: --menu-c-dim-delay + --menu-d-dim)
+  var HANDOFF_MS = 240; // Übergabe an die Suche: Inhalt blendet aus (menu.css: .menu.is-handoff)
 
   var ITEMS = [
     { label: 'Besuch' },
@@ -62,9 +63,9 @@
             '<p class="menu__hours">' + hours + '</p>' +
             '<div class="menu__buttons">' +
               '<div class="menu__icons">' +
-                '<button class="btn btn--icon" type="button" aria-label="Sprache wechseln">' + icon('Translate') + '</button>' +
+                '<button class="btn btn--icon" type="button" aria-label="Sprache wechseln" data-modal-open="modal-language">' + icon('Translate') + '</button>' +
                 '<button class="btn btn--icon" type="button" aria-label="Leichte Sprache"><span class="menu__mask" aria-hidden="true"></span></button>' +
-                '<button class="btn btn--icon" type="button" aria-label="Suche öffnen">' + icon('MagnifyingGlass') + '</button>' +
+                '<button class="btn btn--icon" type="button" aria-label="Suche öffnen" data-search-open>' + icon('MagnifyingGlass') + '</button>' +
               '</div>' +
               '<button class="btn btn--primary menu__close" type="button" data-menu-close autofocus>Schließen</button>' +
             '</div>' +
@@ -85,7 +86,7 @@
               '</div>' +
             '</form>' +
             '<div class="menu__lang menu__reveal">' +
-              '<button class="btn btn--icon" type="button" aria-label="Sprache wechseln">' + icon('Translate') + '</button>' +
+              '<button class="btn btn--icon" type="button" aria-label="Sprache wechseln" data-modal-open="modal-language">' + icon('Translate') + '</button>' +
               '<button class="btn btn--icon" type="button" aria-label="Leichte Sprache"><span class="menu__mask" aria-hidden="true"></span></button>' +
             '</div>' +
           '</div>' +
@@ -124,6 +125,7 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   var trigger = null;
   var closeTimer = null;
+  var skipFocus = false;
 
   // Reihenfolge nur über die sichtbaren Einträge zählen (Phone: Utility + Liste, Desktop: nur Liste)
   function indexItems() {
@@ -167,11 +169,31 @@
     closeTimer = null;
     dialog.classList.remove('is-open');
     unlock();
+    dialog.classList.remove('is-handoff', 'is-instant');
     if (trigger) {
       trigger.setAttribute('aria-expanded', 'false');
-      trigger.focus();
+      if (!skipFocus) trigger.focus();
     }
+    skipFocus = false;
   });
+
+  /* Übergabe an eine andere Ebene mit gleichem Kopf (Suche): Inhalt blendet aus, Kopf und Fläche bleiben.
+     next(trigger) öffnet die neue Ebene darüber und darf eine Funktion zurückgeben, die nach dem sofortigen
+     Schließen des Menüs läuft. Der Fokus bleibt bei der neuen Ebene. */
+  function handoff(next) {
+    if (!dialog.open || closeTimer) { next(null); return; }
+    dialog.classList.add('is-handoff');
+    setTimeout(function () {
+      var after = next(trigger);
+      skipFocus = true;
+      dialog.classList.add('is-instant');
+      dialog.classList.remove('is-open');
+      dialog.close();
+      if (typeof after === 'function') after();
+    }, reduced.matches ? 0 : HANDOFF_MS);
+  }
+  window.SGLI = window.SGLI || {};
+  window.SGLI.menu = { handoff: handoff };
 
   // Escape: animiert schließen statt sofort (keydown abfangen, sonst schließt der Browser direkt)
   dialog.addEventListener('keydown', function (e) {

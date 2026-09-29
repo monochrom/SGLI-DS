@@ -15,6 +15,7 @@
     .doc-section iframe { width: 100%; height: 760px; border: var(--border-default) solid var(--color-divider-default); background: var(--color-bg-page); }
     .doc-links { display: flex; gap: var(--space-16); margin-bottom: var(--space-16); font-size: var(--font-size-body-s); }
   </style>
+  <script src="../src/scripts/focus-modality.js"></script>
 </head>
 <body>
   <nav class="doc-nav" aria-label="Komponenten">
@@ -26,6 +27,9 @@
       <li><a href="#checkbox">Checkbox &amp; Radio</a></li>
       <li><a href="#chip">Chip</a></li>
       <li><a href="#tag">Tag</a></li>
+      <li><a href="#modal">Modal</a></li>
+      <li><a href="#off-canvas">Off-Canvas</a></li>
+      <li><a href="#form">Form</a></li>
     </ul>
   </nav>
   <main class="container">
@@ -75,6 +79,27 @@
       <p>Statisches Highlight-Label. Figma tag (Modules).</p>
       <div class="doc-links"><a href="../src/components/tag/tag.html">Vorschau öffnen</a><a href="../src/components/tag/README.md">README</a></div>
       <iframe src="../src/components/tag/tag.html" title="Tag Vorschau" loading="lazy" style="height:560px"></iframe>
+    </section>
+
+    <section id="modal" class="doc-section">
+      <h2>Modal</h2>
+      <p>Zentrierter Dialog: Rückfrage (confirm) und Sprachauswahl (language). Figma modal (Components).</p>
+      <div class="doc-links"><a href="../src/components/modal/modal.html">Vorschau öffnen</a><a href="../src/components/modal/README.md">README</a></div>
+      <iframe src="../src/components/modal/modal.html" title="Modal Vorschau" loading="lazy" style="height:900px"></iframe>
+    </section>
+
+    <section id="off-canvas" class="doc-section">
+      <h2>Off-Canvas</h2>
+      <p>Panel für Filter und Formulare: Desktop rechts (520 px), Phone als Bottom Sheet. Kontakt, Anmeldung und Bestätigung mit Rückfrage vor dem Schließen. Figma Off-Canvas (Foundations), Forms.</p>
+      <div class="doc-links"><a href="../src/components/off-canvas/off-canvas.html">Vorschau öffnen</a><a href="../src/components/off-canvas/README.md">README</a></div>
+      <iframe src="../src/components/off-canvas/off-canvas.html" title="Off-Canvas Vorschau" loading="lazy" style="height:960px"></iframe>
+    </section>
+
+    <section id="form" class="doc-section">
+      <h2>Form</h2>
+      <p>Layout der Formulare: Abschnitte, Reihen, Toggle-Abschnitte, Pflichtfeld-Hinweis, Einwilligung, Validierung. Figma Forms (Foundations).</p>
+      <div class="doc-links"><a href="../src/components/form/form.html">Vorschau öffnen</a><a href="../src/components/form/README.md">README</a></div>
+      <iframe src="../src/components/form/form.html" title="Form Vorschau" loading="lazy" style="height:1600px"></iframe>
     </section>
   </main>
 </body>

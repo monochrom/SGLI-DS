@@ -214,14 +214,17 @@ Repo-Wurzel = dieses Verzeichnis `00_DesignSystem/`.
 │   │   ├── cut-edges.css         „Der Schnitt“ (clip-path / mask), before/after, 7 Farben
 │   │   ├── grid.css              12-Spalten-Container
 │   │   ├── focus.css             Fokusring inner 2px / outer 4px (WCAG 2.2)
+│   │   ├── motion.css            Zeiten und Kurven für Ebenen und Zustände (Menü = Master)
 │   │   └── index.css
 │   ├── components/               1:1 zu 💎 Components, je Ordner:
 │   │   │                         name.css · name.html (alle States) · README.md
 │   │   ├── button/               primary, secondary, icon
-│   │   ├── input-text/ · input-select/ · input-search/ · input-date/ · textarea/
-│   │   ├── toggle/ · checkbox/ · radio/
+│   │   ├── input/                Text, Select, Search, Date/Time, Textarea (ein CSS)
+│   │   ├── toggle/ · checkbox/   checkbox/ enthält auch Radio
 │   │   ├── chip/ · tag/
-│   │   └── icon/                 <svg><use href="sprite.svg#name"> Wrapper
+│   │   ├── modal/                confirm, language (Figma modal 2859:132)
+│   │   ├── off-canvas/           Panel für Filter und Formulare, Views, Bestätigung (Figma 2613:31418, Forms 2746:24535)
+│   │   └── form/                 Formular-Layout, Toggle-Abschnitte, Validierung (Figma Forms 2746:24535)
 │   ├── modules/                  1:1 zu 🗄️ Modules, gleiche Ordnerkonvention, nach Bedarf
 │   └── templates/
 │       └── bildungsangebote.html Prototyp (Phase C)
@@ -268,8 +271,8 @@ Regel: Figma-Name wird nur normalisiert (Slash → Punkt/Bindestrich, lowercase)
 | **0 Aufräumen** | erledigt 2026-09-10: Memory bereinigt, PLAN.md überarbeitet |
 | **1 Figma-Scan** | erledigt 2026-09-10: alle 4 Collections, 13 Text Styles, 3 Effect Styles, 2 Grid Styles gelesen; Tabellen aktualisiert |
 | **A Foundations** | **erledigt 2026-09-10:** git init, package.json, CLAUDE.md, README; `tokens/**/*.json` (DTCG) per Export-Script; `dist/css/*` + `dist/json/tokens.flat.json` per Style Dictionary; Lint mit Kontrast-Matrix; `src/styles/*` (fonts, reset, base, context, grid, section, focus, icon, cut-edges); Fonts self-hosted; 18 Icons als SVG + Sprite; `docs/index.html` Styleguide, `docs/FIGMA-MAPPING.md`, `docs/CHANGELOG.md`. Noch nicht committed. |
-| **B Core Components** | **erledigt 2026-09-10:** `src/components/{button,input,toggle,checkbox,chip,tag}/` je CSS + Vorschau-HTML + README; alle States aus Figma, alle 7 Kontexte in jeder Vorschau; `docs/components.html`. Offen: Danilos Sichtprüfung gegen Figma, dann Barrierefreiheits-Check. |
-| **C Prototyp Bildungsangebote** | nötige Module + eine HTML-Seite mit Dummy-Daten und Vanilla-JS-Filter, für den Kundentest |
+| **B Core Components** | **erledigt 2026-09-10:** `src/components/{button,input,toggle,checkbox,chip,tag}/` je CSS + Vorschau-HTML + README; alle States aus Figma, alle 7 Kontexte in jeder Vorschau; `docs/components.html`. Offen: Danilos Sichtprüfung gegen Figma, dann Barrierefreiheits-Check. **2026-09-29:** `modal/` (Rückfrage + Sprachauswahl) ergänzt, in beiden Prototypen über den Sprach-Button verdrahtet. **2026-09-29:** `off-canvas/` und `form/` (Kontakt, Anmeldung, Bestätigung, Rückfrage vor dem Schließen), Checkbox-Label Label-M, Textarea-Maße, Icons Clock und CheckCircle. |
+| **C Prototypen** | **gebaut:** `prototype/angebote-filter/` (Bildung, Filter-System, Off-Canvas, seit 2026-09-29 Kontaktformular im Off-Canvas), `prototype/haftbuch/`, gemeinsam `prototype/shared/` (Menü, Suche, Sprachauswahl). Annahmen und offene Punkte je README. |
 | **D Module / Docs / Übergabe** | nach Entscheidung über den Lieferumfang (nächste Woche) |
 
 ---
@@ -299,7 +302,21 @@ Vorschlag: In den Modes surface-200/300/400 und secondary-400 dunklere Aliase se
 - [ ] Danilo prüft Styleguide (`npm run docs` → http://localhost:4321/docs/ und /docs/components.html).
 - [ ] Commit über die GitHub-App (macht Danilo).
 - [x] Phase B Core Components: Button (Primary/Secondary/Icon), Inputs, Toggle, Checkbox, Radio, Chip, Tag.
-- [ ] Phase C Prototyp Bildungsangebote: wartet auf Danilos Template-Node-ID und das Cut-Edges-Briefing.
+- [x] Phase C Prototypen: angebote-filter, haftbuch, shared (siehe Abschnitt 5).
+- [ ] **Figma aufräumen, Forms** (Stand 2026-09-29, nur Danilo, Figma bleibt read-only):
+  1. Phone-Frames Kontakt/Anmeldung (`2753:30067`, `2753:30157`) aufs Filter-Muster: Panel-Padding 0, „Section Header / Phone“ (24 16 16), Body seitlich 16, Kopf → Body 24, Fuß 24 16 mit Gap 12. Previews danach neu ableiten.
+  2. Booking Phone Preview `2746:25516`: altes Panel `2746:25518` löschen.
+  3. Divider im Panel an `color/divider/default`, Panel-Hintergrund an `color/bg/card` binden.
+  4. Input Focused / Focused Filled: „Label Container“ mit Padding-Bottom 2 entfernen (1-px-Sprung).
+  5. Radio Disabled `1870:195`: Rahmen 1,5 → 1 px.
+  6. Checkbox: Property `Text = Label-M | Caption` statt Override an der Einwilligung.
+  7. Uhrzeit: Variante `Type = Date | Time` am Input Date oder so dokumentieren.
+  8. Success-Icon: Farbe an `color/feedback/success` binden (falls hart codiert).
+  9. Einwilligungstext Kontakt: „Buchungsanfrage“ → „Anfrage“? (im Code schon „Anfrage“).
+  10. Select/Datum im Error-State: WarningCircle oder Caret/Kalender?
+  11. Leere versteckte Frames im Forms-Frame (`2746:24717`–`24719`) füllen oder löschen.
+  12. section-header off-canvas `2613:27966`: Close-Button ohne Rahmen (wie Modal/Menü), Fläche rechts bündig mit dem Inhalt, X oben auf Höhe des Kickers (Code seit 2026-09-29).
+  13. Input: Wert auf dem Phone 16 statt 15 px (iOS zoomt unter 16 px, Code seit 2026-09-29).
 
 ## 8. Entschieden (nicht mehr offen)
 

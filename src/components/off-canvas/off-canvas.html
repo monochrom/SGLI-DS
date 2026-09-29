@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Off-Canvas – SGLI</title>
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="../index.css">
+  <link rel="stylesheet" href="../preview.css">
+  <style>
+    /* Nur Vorschau: statische Darstellung ohne <dialog>, damit Aufbau und Scrollen ohne Klick sichtbar sind */
+    .offcanvas.is-static { position: relative; inset: auto; display: flex; flex-direction: column; transform: none; width: min(520px, 100%); height: 720px; max-height: none; border: var(--border-default) solid var(--color-divider-default); }
+  </style>
+</head>
+<body>
+  <main class="preview">
+    <h1 class="text-h3">Off-Canvas</h1>
+    <p class="preview__meta">Figma: Off-Canvas (2613:31418), Forms (2746:24535). Buttons öffnen das echte Panel. Unter 1024 px Bottom Sheet von unten, ab 1024 px Panel rechts (520 px). Mit Eingaben fragt jeder Schließweg zuerst nach.</p>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Interaktiv</h2>
+      <div class="preview__row">
+        <button class="btn btn--primary" type="button" data-offcanvas-open="offcanvas-kontakt" aria-haspopup="dialog">Kontakt öffnen</button>
+        <button class="btn btn--primary" type="button" data-offcanvas-open="offcanvas-anmeldung" aria-haspopup="dialog">Anmeldung öffnen</button>
+        <button class="btn btn--secondary" type="button" data-success-demo aria-haspopup="dialog">Bestätigung ansehen</button>
+      </div>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Kontakt, statisch (Kopf und Fuß stehen, nur der Body scrollt)</h2>
+      <div class="offcanvas is-static" id="static-kontakt" aria-label="Kontakt (statische Vorschau)">
+        <div class="offcanvas__view" data-offcanvas-view="form">
+          <header class="offcanvas__head">
+            <div class="offcanvas__heading">
+              <p class="text-label-s offcanvas__kicker">Kontakt</p>
+              <h2 class="text-h3 offcanvas__title" id="static-kontakt-title" tabindex="-1">Schreiben Sie uns!</h2>
+            </div>
+            <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Kontaktformular schließen">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg>
+            </button>
+          </header>
+          <form class="offcanvas__form" data-form novalidate action="#" method="post">
+            <div class="offcanvas__body">
+              <div class="form">
+                <section class="form__section" aria-labelledby="static-kontakt-kontaktdaten-title">
+                  <h3 class="text-h6 form__title" id="static-kontakt-kontaktdaten-title">Ihre Kontaktdaten</h3>
+                  <fieldset class="form__radios">
+                    <legend class="sr-only">Anrede</legend>
+                    <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+                    <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+                    <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="keine"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">keine Angabe</span></label>
+                  </fieldset>
+                  <div class="form__group">
+                    <div class="form__row">
+                      <div class="field">
+                        <div class="field__box">
+                          <input class="field__input" id="static-kontakt-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                          <label class="field__label" for="static-kontakt-vorname">Vorname <span aria-hidden="true">*</span></label>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <div class="field__box">
+                          <input class="field__input" id="static-kontakt-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                          <label class="field__label" for="static-kontakt-nachname">Nachname <span aria-hidden="true">*</span></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__row">
+                      <div class="field">
+                        <div class="field__box">
+                          <input class="field__input" id="static-kontakt-email" name="email" type="email" placeholder=" " autocomplete="email" required>
+                          <label class="field__label" for="static-kontakt-email">E-Mail <span aria-hidden="true">*</span></label>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <div class="field__box">
+                          <input class="field__input" id="static-kontakt-telefon" name="telefon" type="tel" placeholder=" " autocomplete="tel">
+                          <label class="field__label" for="static-kontakt-telefon">Telefon</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="field__box">
+                        <input class="field__input" id="static-kontakt-institution" name="institution" type="text" placeholder=" " autocomplete="organization" required>
+                        <label class="field__label" for="static-kontakt-institution">Institution, Schule, ... <span aria-hidden="true">*</span></label>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="field__box">
+                        <input class="field__input" id="static-kontakt-adresse" name="adresse" type="text" placeholder=" " autocomplete="street-address" required>
+                        <label class="field__label" for="static-kontakt-adresse">Adresse <span aria-hidden="true">*</span></label>
+                      </div>
+                    </div>
+                    <div class="form__row">
+                      <div class="field">
+                        <div class="field__box">
+                          <input class="field__input" id="static-kontakt-plz" name="plz" type="text" placeholder=" " autocomplete="postal-code" inputmode="numeric" required>
+                          <label class="field__label" for="static-kontakt-plz">PLZ <span aria-hidden="true">*</span></label>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <div class="field__box">
+                          <input class="field__input" id="static-kontakt-stadt" name="stadt" type="text" placeholder=" " autocomplete="address-level2" required>
+                          <label class="field__label" for="static-kontakt-stadt">Stadt <span aria-hidden="true">*</span></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section class="form__section" aria-labelledby="static-kontakt-nachricht-title">
+                  <h3 class="text-h6 form__title" id="static-kontakt-nachricht-title">Ihre Nachricht</h3>
+                  <div class="form__group">
+                    <div class="field field--select">
+                      <div class="field__box">
+                        <select class="field__input" id="static-kontakt-anliegen" name="anliegen" required>
+                          <option value="">&nbsp;</option>
+                          <option>Bildungsangebot oder Gruppenbesuch</option>
+                          <option>Besuch und Führungen</option>
+                          <option>Recherche im Haftbuch</option>
+                          <option>Presse</option>
+                          <option>Sonstiges</option>
+                        </select>
+                        <label class="field__label" for="static-kontakt-anliegen">Ihr Anliegen <span aria-hidden="true">*</span></label>
+                        <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                      </div>
+                    </div>
+                    <div class="field field--textarea">
+                      <div class="field__box">
+                        <textarea class="field__input" id="static-kontakt-nachricht" name="nachricht" placeholder=" " rows="3" required></textarea>
+                        <label class="field__label" for="static-kontakt-nachricht">Ihre Nachricht an uns <span aria-hidden="true">*</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <div class="form__note">
+                  <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+                  <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+                </div>
+                <div class="form__consent">
+                  <label class="choice choice--caption"><input class="choice__input" id="static-kontakt-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Anfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Anfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+                </div>
+              </div>
+            </div>
+            <footer class="offcanvas__foot">
+              <button class="btn btn--primary" type="submit">Absenden</button>
+              <button class="btn btn--secondary" type="button" data-offcanvas-close>Abbrechen</button>
+            </footer>
+          </form>
+        </div>
+        <div class="offcanvas__view" data-offcanvas-view="success" hidden>
+          <header class="offcanvas__head">
+            <div class="offcanvas__heading">
+              <h2 class="text-h3 offcanvas__title" id="static-kontakt-success-title" tabindex="-1">Vielen Dank</h2>
+            </div>
+            <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Schließen">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg>
+            </button>
+          </header>
+          <div class="offcanvas__body">
+            <div class="offcanvas__success">
+              <svg class="icon offcanvas__success-icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CheckCircle"></use></svg>
+              <div class="offcanvas__success-text" data-offcanvas-announce>
+                <h3 class="text-h6">Ihre Anfrage wurde erfolgreich gesendet.</h3>
+                <p class="text-body-m">Wir haben Ihre Nachricht erhalten und werden uns zeitnah bei Ihnen melden. Bei dringenden Anliegen erreichen Sie uns telefonisch unter 0331-971 89 005.</p>
+              </div>
+            </div>
+          </div>
+          <footer class="offcanvas__foot offcanvas__foot--center">
+            <button class="btn btn--primary" type="button" data-offcanvas-close>Schließen</button>
+          </footer>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Kontakt (Figma 2746:26620 / 2753:30067), Bestätigung (2747:29871 / 2746:28162) -->
+  <dialog class="offcanvas" id="offcanvas-kontakt" aria-labelledby="offcanvas-kontakt-title" data-offcanvas-confirm="modal-discard">
+    <div class="offcanvas__view" data-offcanvas-view="form">
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <p class="text-label-s offcanvas__kicker">Kontakt</p>
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-kontakt-title" tabindex="-1">Schreiben Sie uns!</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Kontaktformular schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <form class="offcanvas__form" data-form novalidate action="#" method="post">
+        <div class="offcanvas__body">
+          <div class="form">
+            <section class="form__section" aria-labelledby="offcanvas-kontakt-kontaktdaten-title">
+              <h3 class="text-h6 form__title" id="offcanvas-kontakt-kontaktdaten-title">Ihre Kontaktdaten</h3>
+              <fieldset class="form__radios">
+                <legend class="sr-only">Anrede</legend>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="keine"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">keine Angabe</span></label>
+              </fieldset>
+              <div class="form__group">
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                      <label class="field__label" for="offcanvas-kontakt-vorname">Vorname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                      <label class="field__label" for="offcanvas-kontakt-nachname">Nachname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-email" name="email" type="email" placeholder=" " autocomplete="email" required>
+                      <label class="field__label" for="offcanvas-kontakt-email">E-Mail <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-telefon" name="telefon" type="tel" placeholder=" " autocomplete="tel">
+                      <label class="field__label" for="offcanvas-kontakt-telefon">Telefon</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-kontakt-institution" name="institution" type="text" placeholder=" " autocomplete="organization" required>
+                    <label class="field__label" for="offcanvas-kontakt-institution">Institution, Schule, ... <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-kontakt-adresse" name="adresse" type="text" placeholder=" " autocomplete="street-address" required>
+                    <label class="field__label" for="offcanvas-kontakt-adresse">Adresse <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-plz" name="plz" type="text" placeholder=" " autocomplete="postal-code" inputmode="numeric" required>
+                      <label class="field__label" for="offcanvas-kontakt-plz">PLZ <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-stadt" name="stadt" type="text" placeholder=" " autocomplete="address-level2" required>
+                      <label class="field__label" for="offcanvas-kontakt-stadt">Stadt <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="form__section" aria-labelledby="offcanvas-kontakt-nachricht-title">
+              <h3 class="text-h6 form__title" id="offcanvas-kontakt-nachricht-title">Ihre Nachricht</h3>
+              <div class="form__group">
+                <div class="field field--select">
+                  <div class="field__box">
+                    <select class="field__input" id="offcanvas-kontakt-anliegen" name="anliegen" required>
+                      <option value="">&nbsp;</option>
+                      <option>Bildungsangebot oder Gruppenbesuch</option>
+                      <option>Besuch und Führungen</option>
+                      <option>Recherche im Haftbuch</option>
+                      <option>Presse</option>
+                      <option>Sonstiges</option>
+                    </select>
+                    <label class="field__label" for="offcanvas-kontakt-anliegen">Ihr Anliegen <span aria-hidden="true">*</span></label>
+                    <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                  </div>
+                </div>
+                <div class="field field--textarea">
+                  <div class="field__box">
+                    <textarea class="field__input" id="offcanvas-kontakt-nachricht" name="nachricht" placeholder=" " rows="3" required></textarea>
+                    <label class="field__label" for="offcanvas-kontakt-nachricht">Ihre Nachricht an uns <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div class="form__note">
+              <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+              <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+            </div>
+            <div class="form__consent">
+              <label class="choice choice--caption"><input class="choice__input" id="offcanvas-kontakt-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Anfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Anfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+            </div>
+          </div>
+        </div>
+        <footer class="offcanvas__foot">
+          <button class="btn btn--primary" type="submit">Absenden</button>
+          <button class="btn btn--secondary" type="button" data-offcanvas-close>Abbrechen</button>
+        </footer>
+      </form>
+    </div>
+    <div class="offcanvas__view" data-offcanvas-view="success" hidden>
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-kontakt-success-title" tabindex="-1">Vielen Dank</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <div class="offcanvas__body">
+        <div class="offcanvas__success">
+          <svg class="icon offcanvas__success-icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CheckCircle"></use></svg>
+          <div class="offcanvas__success-text" data-offcanvas-announce>
+            <h3 class="text-h6">Ihre Anfrage wurde erfolgreich gesendet.</h3>
+            <p class="text-body-m">Wir haben Ihre Nachricht erhalten und werden uns zeitnah bei Ihnen melden. Bei dringenden Anliegen erreichen Sie uns telefonisch unter 0331-971 89 005.</p>
+          </div>
+        </div>
+      </div>
+      <footer class="offcanvas__foot offcanvas__foot--center">
+        <button class="btn btn--primary" type="button" data-offcanvas-close>Schließen</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- Anmeldung (Figma 2746:26818 / 2753:30157) -->
+  <dialog class="offcanvas" id="offcanvas-anmeldung" aria-labelledby="offcanvas-anmeldung-title" data-offcanvas-confirm="modal-discard">
+    <div class="offcanvas__view" data-offcanvas-view="form">
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <p class="text-label-s offcanvas__kicker">Anmeldung</p>
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-anmeldung-title" tabindex="-1">Anmeldung zu [Titel des Angebots]</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Anmeldung schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <form class="offcanvas__form" data-form novalidate action="#" method="post">
+        <div class="offcanvas__body">
+          <div class="form">
+            <section class="form__section" aria-labelledby="offcanvas-anmeldung-kontaktdaten-title">
+              <h3 class="text-h6 form__title" id="offcanvas-anmeldung-kontaktdaten-title">Ihre Kontaktdaten</h3>
+              <fieldset class="form__radios">
+                <legend class="sr-only">Anrede</legend>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="keine"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">keine Angabe</span></label>
+              </fieldset>
+              <div class="form__group">
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-anmeldung-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                      <label class="field__label" for="offcanvas-anmeldung-vorname">Vorname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-anmeldung-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                      <label class="field__label" for="offcanvas-anmeldung-nachname">Nachname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-anmeldung-email" name="email" type="email" placeholder=" " autocomplete="email" required>
+                      <label class="field__label" for="offcanvas-anmeldung-email">E-Mail <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-anmeldung-telefon" name="telefon" type="tel" placeholder=" " autocomplete="tel">
+                      <label class="field__label" for="offcanvas-anmeldung-telefon">Telefon</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-anmeldung-institution" name="institution" type="text" placeholder=" " autocomplete="organization" required>
+                    <label class="field__label" for="offcanvas-anmeldung-institution">Institution, Schule, ... <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-anmeldung-adresse" name="adresse" type="text" placeholder=" " autocomplete="street-address" required>
+                    <label class="field__label" for="offcanvas-anmeldung-adresse">Adresse <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-anmeldung-plz" name="plz" type="text" placeholder=" " autocomplete="postal-code" inputmode="numeric" required>
+                      <label class="field__label" for="offcanvas-anmeldung-plz">PLZ <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-anmeldung-stadt" name="stadt" type="text" placeholder=" " autocomplete="address-level2" required>
+                      <label class="field__label" for="offcanvas-anmeldung-stadt">Stadt <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="form__section form__section--toggle" aria-labelledby="offcanvas-anmeldung-gruppenbesuch-title">
+              <div class="form__toggle-row">
+                <h3 class="text-h6 form__title" id="offcanvas-anmeldung-gruppenbesuch-title">Gruppenbesuch</h3>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" role="switch" name="gruppenbesuch" value="ja" aria-labelledby="offcanvas-anmeldung-gruppenbesuch-title" aria-controls="offcanvas-anmeldung-gruppenbesuch-fields" data-form-toggle checked>
+                  <span class="toggle__track" aria-hidden="true"></span>
+                </label>
+              </div>
+              <div class="form__collapse is-open" id="offcanvas-anmeldung-gruppenbesuch-fields">
+                <div class="form__collapse-inner">
+                  <fieldset class="form__group">
+                    <legend class="sr-only">Gruppenbesuch</legend>
+                    <div class="field">
+                      <div class="field__box">
+                        <input class="field__input" id="offcanvas-anmeldung-teilnehmende" name="teilnehmende" type="number" placeholder=" " inputmode="numeric" min="1" required>
+                        <label class="field__label" for="offcanvas-anmeldung-teilnehmende">Teilnehmer:innenzahl <span aria-hidden="true">*</span></label>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="field__box">
+                        <input class="field__input" id="offcanvas-anmeldung-themen" name="themen" type="text" placeholder=" " required>
+                        <label class="field__label" for="offcanvas-anmeldung-themen">Gewünschte Themenschwerpunkte <span aria-hidden="true">*</span></label>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="field__box">
+                        <input class="field__input" id="offcanvas-anmeldung-vorkenntnisse" name="vorkenntnisse" type="text" placeholder=" " required>
+                        <label class="field__label" for="offcanvas-anmeldung-vorkenntnisse">Vorkenntnisse <span aria-hidden="true">*</span></label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </section>
+            <section class="form__section form__section--toggle" aria-labelledby="offcanvas-anmeldung-beduerfnisse-title">
+              <div class="form__toggle-row">
+                <h3 class="text-h6 form__title" id="offcanvas-anmeldung-beduerfnisse-title">Besondere Bedürfnisse</h3>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" role="switch" name="beduerfnisse" value="ja" aria-labelledby="offcanvas-anmeldung-beduerfnisse-title" aria-controls="offcanvas-anmeldung-beduerfnisse-fields" data-form-toggle checked>
+                  <span class="toggle__track" aria-hidden="true"></span>
+                </label>
+              </div>
+              <div class="form__collapse is-open" id="offcanvas-anmeldung-beduerfnisse-fields">
+                <div class="form__collapse-inner">
+                  <fieldset class="form__group">
+                    <legend class="sr-only">Besondere Bedürfnisse</legend>
+                    <div class="field field--select">
+                      <div class="field__box">
+                        <select class="field__input" id="offcanvas-anmeldung-einschraenkungen" name="einschraenkungen">
+                          <option value="">&nbsp;</option>
+                          <option>Gehbehinderung oder Rollstuhl</option>
+                          <option>Sehbehinderung</option>
+                          <option>Hörbehinderung</option>
+                          <option>Lernschwierigkeiten (Leichte Sprache)</option>
+                          <option>Sonstiges</option>
+                        </select>
+                        <label class="field__label" for="offcanvas-anmeldung-einschraenkungen">Einschränkungen</label>
+                        <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                      </div>
+                    </div>
+                    <div class="field field--select">
+                      <div class="field__box">
+                        <select class="field__input" id="offcanvas-anmeldung-sprache" name="sprache">
+                          <option value="">&nbsp;</option>
+                          <option>Deutsch</option>
+                          <option>Englisch</option>
+                          <option>Spanisch</option>
+                          <option>Leichte Sprache</option>
+                        </select>
+                        <label class="field__label" for="offcanvas-anmeldung-sprache">Sprache</label>
+                        <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </section>
+            <section class="form__section" aria-labelledby="offcanvas-anmeldung-wunschtermin-title">
+              <h3 class="text-h6 form__title" id="offcanvas-anmeldung-wunschtermin-title">Ihr Wunschtermin</h3>
+              <div class="form__row">
+                <div class="field field--date">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-anmeldung-datum" name="datum" type="date" placeholder=" " required>
+                    <label class="field__label" for="offcanvas-anmeldung-datum">Datum <span aria-hidden="true">*</span></label>
+                    <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CalendarBlank"></use></svg>
+                  </div>
+                </div>
+                <div class="field field--date">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-anmeldung-uhrzeit" name="uhrzeit" type="time" placeholder=" " required>
+                    <label class="field__label" for="offcanvas-anmeldung-uhrzeit">Uhrzeit <span aria-hidden="true">*</span></label>
+                    <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-Clock"></use></svg>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="form__section" aria-labelledby="offcanvas-anmeldung-alternativtermin-title">
+              <h3 class="text-h6 form__title" id="offcanvas-anmeldung-alternativtermin-title">Alternativtermin</h3>
+              <div class="form__row">
+                <div class="field field--date">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-anmeldung-alt-datum" name="alt-datum" type="date" placeholder=" ">
+                    <label class="field__label" for="offcanvas-anmeldung-alt-datum">Datum</label>
+                    <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CalendarBlank"></use></svg>
+                  </div>
+                </div>
+                <div class="field field--date">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-anmeldung-alt-uhrzeit" name="alt-uhrzeit" type="time" placeholder=" ">
+                    <label class="field__label" for="offcanvas-anmeldung-alt-uhrzeit">Uhrzeit</label>
+                    <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-Clock"></use></svg>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="form__section" aria-labelledby="offcanvas-anmeldung-anmerkung-title">
+              <h3 class="text-h6 form__title" id="offcanvas-anmeldung-anmerkung-title">Ihre Nachricht</h3>
+              <div class="field field--textarea">
+                <div class="field__box">
+                  <textarea class="field__input" id="offcanvas-anmeldung-anmerkung" name="anmerkung" placeholder=" " rows="3" required></textarea>
+                  <label class="field__label" for="offcanvas-anmeldung-anmerkung">Ihre Nachricht an uns <span aria-hidden="true">*</span></label>
+                </div>
+              </div>
+            </section>
+            <div class="form__note">
+              <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+              <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+            </div>
+            <div class="form__consent">
+              <label class="choice choice--caption"><input class="choice__input" id="offcanvas-anmeldung-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Buchungsanfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Buchungsanfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+            </div>
+          </div>
+        </div>
+        <footer class="offcanvas__foot">
+          <button class="btn btn--primary" type="submit">Absenden</button>
+          <button class="btn btn--secondary" type="button" data-offcanvas-close>Abbrechen</button>
+        </footer>
+      </form>
+    </div>
+    <div class="offcanvas__view" data-offcanvas-view="success" hidden>
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-anmeldung-success-title" tabindex="-1">Vielen Dank</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <div class="offcanvas__body">
+        <div class="offcanvas__success">
+          <svg class="icon offcanvas__success-icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CheckCircle"></use></svg>
+          <div class="offcanvas__success-text" data-offcanvas-announce>
+            <h3 class="text-h6">Ihre Anfrage wurde erfolgreich gesendet.</h3>
+            <p class="text-body-m">Wir haben Ihre Nachricht erhalten und werden uns zeitnah bei Ihnen melden. Bei dringenden Anliegen erreichen Sie uns telefonisch unter 0331-971 89 005.</p>
+          </div>
+        </div>
+      </div>
+      <footer class="offcanvas__foot offcanvas__foot--center">
+        <button class="btn btn--primary" type="button" data-offcanvas-close>Schließen</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- Rückfrage vor dem Schließen (Figma modal type=confirm, 2859:132) -->
+  <dialog class="modal modal--confirm" id="modal-discard" role="alertdialog" aria-labelledby="modal-discard-title" aria-describedby="modal-discard-text">
+    <div class="modal__close-row">
+      <button class="btn btn--icon modal__close" type="button" data-modal-close value="cancel" aria-label="Schließen">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-X"></use></svg>
+      </button>
+    </div>
+    <div class="modal__content">
+      <div class="modal__text">
+        <div class="modal__head">
+          <h2 class="text-h3 modal__title" id="modal-discard-title">Eingaben verwerfen?</h2>
+        </div>
+        <p class="text-body-m modal__intro" id="modal-discard-text">Wenn Sie das Formular jetzt schließen, gehen Ihre Eingaben verloren.</p>
+      </div>
+      <div class="modal__actions">
+        <button class="btn btn--primary" type="button" data-modal-close value="cancel" autofocus>Weiter bearbeiten</button>
+        <button class="btn btn--secondary" type="button" data-modal-close value="discard">Verwerfen</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="../../scripts/focus-modality.js"></script>
+  <script src="../modal/modal.js"></script>
+  <script src="../form/form.js"></script>
+  <script src="./off-canvas.js"></script>
+  <script>
+    // Vorschau: Bestätigung direkt zeigen, ohne das Formular auszufüllen
+    document.querySelector('[data-success-demo]').addEventListener('click', function (e) {
+      SGLI.offcanvas.open('offcanvas-kontakt', e.currentTarget);
+      SGLI.offcanvas.showView('offcanvas-kontakt', 'success');
+    });
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Prototyp „Bildung“ – Filter- und Tag-System
 
-Gekapselter Klick-Prototyp für die Abstimmung mit dem Kunden. Quelle: Figma „SGLI – Design“, Section **Bildung** (`2548:24966`) mit den Frames „Bildung - Filter Default / Zielgruppe / Detail“, „Bildung - Mobile“, „Regeln für Filter“ und „Dynamische Ausgabe von Tags“.
+Gekapselter Klick-Prototyp für die Abstimmung mit dem Kunden. Quelle: Figma „SGLI – Design“, Section **Bildung** (`2522:59510`, vorher `2548:24966`; Desktop `2522:59511`, Phone `2522:59552`) mit den Frames „Bildung - Filter Default / Zielgruppe / Detail“, „Bildung - Mobile“, „Regeln für Filter“ und „Dynamische Ausgabe von Tags“.
 
 Der Prototyp liegt **nur** in `prototype/angebote-filter/`. Er liest Tokens, Foundations und Core Components aus `../../src` und `../../dist`, ändert dort aber nichts.
 
@@ -19,10 +19,11 @@ Ein Server ist nötig, weil die Icons aus dem SVG-Sprite (`dist/icons/sprite.svg
 |---|---|
 | `KUNDENABSTIMMUNG-FILTER.md` | Checkliste für das Kundengespräch und optimierte Filterliste je Zielgruppe (Stand 2026-09-11, noch nicht im Prototyp umgesetzt) |
 | `SPEC-FILTER.md` | Spezifikation für den Developer: Datenmodell, URL-Zustand, Ampel, Chips, Off-Canvas, Tag-Slots, offene Punkte |
-| `index.html` | Template „Bildung“: navigation, hero-default, education-filter + list-item-education, text-content-grid (cut-edges, primary-900), image-text-single, contact-section, teaser-slider, faq-section, teaser-feature, footer, Off-Canvas als natives `<dialog>` |
-| `prototype.css` | Modul-CSS des Prototypen (BEM, nur Tokens, mobile first: Phone → md 768 → lg 1024), inkl. Off-Canvas und filter-cell |
+| `index.html` | Template „Bildung“: navigation, hero-default, education-filter + list-item-education, text-content-grid (cut-edges, primary-900), image-text-single, contact-section, teaser-slider, faq-section, teaser-feature, footer, Off-Canvas Filter und Kontakt als natives `<dialog>`, Rückfrage-Modal |
+| `prototype.css` | Modul-CSS des Prototypen (BEM, nur Tokens, mobile first: Phone → md 768 → lg 1024), inkl. filter-cell. Das Panel selbst kommt seit 2026-09-29 aus `src/components/off-canvas/` |
 | `filter.js` | Filter-Logik, Tag-Slots, Off-Canvas (`showModal`), „Weitere laden“, Slider-Pfeile (Vanilla JS) |
 | `data.js` | 47 Dummy-Angebote mit allen Filter-Attributen (erfunden, Titel an Figma angelehnt) |
+| `../shared/assets/` | Social-Icons Instagram, Facebook, LinkedIn für den Footer (Kopie aus `haftbuch/assets/icons`, als Maske mit `currentColor`) |
 | `assets/img/` | Logo (SVG, Farbe über `currentColor`) und Bilder aus Figma, verkleinert auf 1200 px |
 
 ## Umgesetzte Regeln
@@ -65,6 +66,14 @@ Das Attribut, nach dem gerade gefiltert wird, wird als Tag übersprungen, weil e
 - „Filter zurücksetzen“ erscheint, sobald ein Filter gesetzt ist. Zähler-Tag zeigt die Trefferzahl (`aria-live`).
 - Liste zeigt 10 Angebote, „Weitere Angebote laden“ holt die nächsten 10.
 
+**Kontaktformular im Off-Canvas** (2026-09-29)
+
+- „Zum Kontaktformular“ (contact-section) und „Kontakt“ (faq-section) öffnen das Kontakt-Panel (Figma Forms `2746:24535`, Kontakt `2746:26620` / `2753:30067`). Komponenten `off-canvas` und `form` aus `src/components/`, gesteuert von `off-canvas.js` und `form.js`.
+- Absenden ohne Netzwerk: Pflichtfelder werden geprüft (Fehler am Feld, Fokus aufs erste), danach zeigt dasselbe Panel die Bestätigung „Vielen Dank“. Das nächste Öffnen beginnt leer.
+- Mit Eingaben fragt jeder Schließweg (Close, Abbrechen, Escape, Backdrop) zuerst mit dem Modal „Eingaben verwerfen?“. Der Filter schließt weiter ohne Rückfrage.
+- Anmeldung und Bestätigung sind im Styleguide (`src/components/off-canvas/off-canvas.html`), im Prototyp nur Kontakt (entschieden 2026-09-23).
+- Seit 2026-09-29 gilt für Panel und Motion die Komponente: Kopftitel fest 24 px (wie Figma-Instanz Phone/off-canvas), Scroll-Sperre `html:has(dialog.offcanvas[open])`, Motion wie Menü (`motion.css`). Die Absätze oben zu 480 ms und `body:has(…)` sind damit überholt.
+
 **Motion** (2026-09-23)
 
 - Prototyp-lokale Werte in `prototype.css`: `--motion-fast` 160 ms (Farbe, Opazität), `--motion-base` 260 ms (Größe, Chip-Slots, Häkchen), `--motion-slow` 480 ms (Detailfilter-Zeile, Off-Canvas, Backdrop), `--ease-out`. Kandidaten für Tokens in Figma und `tokens/`. Reduced Motion greift global über `reset.css`.
@@ -88,6 +97,28 @@ Bestätigt am 2026-09-11: 1, 2, 3, 6. Entschieden: 4 (geteilter Chip), 5 (Lesart
 8. **filter-cell** (entschieden 2026-09-22): Einfachauswahl bleibt, obwohl der Indikator in Figma quadratisch ist (Checkbox-Optik). Der aktive Indikator ist in Figma hartkodiert #CDDC39 (kein Token); der Prototyp nutzt `color/accent/highlight`. Die Tokens `color/filter-cell/bg-hover|bg-pressed|bg-active|fg-active` gibt es in Figma (Semantic), aber noch nicht in `tokens/`; sie stehen als lokale Fallbacks in `prototype.css`. Fokusring: Figma zeigt nur den äußeren 4-px-Ring, der im Zustand On unsichtbar wäre (primary-900 auf primary-900); der Prototyp ergänzt den inneren Ring aus `focus.css`.
 9. **Hover nur bei `(hover: hover)`** (entschieden 2026-09-23): Im Prototyp umgesetzt. Offen für das Design System: `button.css`, `chip.css` und `base.css` (Links) nutzen noch `:hover` ohne Media Query. Empfehlung: dort genauso umstellen, die `.is-hover`-Klassen für den Styleguide bleiben davon unberührt.
 
+## Module unter der Liste: Abgleich mit Figma (2026-09-29)
+
+Abgeglichen mit Desktop `2522:59511` und Phone `2522:59552`. Behoben:
+
+- **Bilder** (image-section, image-text, teaser-card, teaser-feature): `height: auto`. Das `height`-Attribut am `img` schlug `aspect-ratio`, die Bilder waren dadurch hochkant (Bild + Text, Phone überall) bzw. zu hoch (Feature 675 statt 483).
+- **text-content-grid**: Padding y compact (Desktop 64 statt 112), alle Blöcke mit Gap 80, Kopf 6 von 12 Spalten (vorher 660 px), Label + H2 Gap 16, Intro Gap 24. Spalten-Texte der dritten Zeile Body/M statt Body/S, Phone Spalten-Gap 40.
+- **Bild + Text**: Bild 4:3, Phone Gap 40 und Text ohne Innenabstand.
+- **Kontakt**: Kicker „Kontakt“ wurde vom Intro-Selektor als H6 mitgestylt (größer, fett), jetzt eigene Klasse `.contact__text`. Zwei gleiche Spalten mit Gap 64 (vorher 12er-Raster), H2 → Text 16, Adresse → Button 48, Phone Karte Padding 16, Gap 48. E-Mail in text/primary statt Link-Farbe.
+- **Teaser-Slider**: erste Karte bündig mit dem Kopf (vorher sprang die Spur per Scroll-Snap an den Rand, dadurch war auch „Zurück“ nicht deaktiviert). Karten oben bündig (Grid verteilte die Resthöhe), Abstände 80/64 exakt. Phone: Karten 260 breit, Bild 321:241, Kopf Gap 24, keine Pfeile.
+- **FAQ** (Aufbau wie haftbuch): Kicker „Ihr Besuch“ wurde wie beim Kontakt mitgestylt (`.faq__text`). Kein Divider oben, Frage ohne eigenes Padding, Liste Gap 16, Antwort 16 unter der Frage, Button 40 unter dem Text, Padding unten 0 (teaser-feature folgt in derselben Fläche).
+- **Teaser-Feature**: Phone Bild oben über die volle Kartenbreite, Text darunter (x 16, unten 32), Deko darf oben über die Karte ragen. Deko auf beiden Breiten 71 % der Bildbreite, mittig, leicht nach rechts.
+- **Footer**: Aufbau aus Figma (wie haftbuch) mit Social-Icons und „Newsletter“, Divider innerhalb der Ränder statt randlos. Phone: Logo 160 × 49, Link- und Meta-Zeilen 44 hoch (Touch-Ziel), Social-Icons Gap 24, Meta-Links in text/secondary.
+- **Cut-Edges** (Foundation `src/styles/cut-edges.css`): Die Fläche neben dem unteren Keil ist jetzt das Beige von image-text (surface-300), oben die Fläche der Liste (surface-100), vorher Seitenhintergrund. Dazu 1 px Überlappung zwischen Keil und Fläche gegen die Haarlinie.
+
+## Offene Punkte an Figma (Bildung-Template, Stand 2026-09-29)
+
+1. image-text-single Desktop: Textspalte ist so hoch wie das Bild und schneidet ab (`overflow: clip`, Inhalt mittig). Kicker „Gruppen“ und das Ende von „Beratung und Kontakt“ sind dadurch unsichtbar. Der Prototyp zeigt den ganzen Text, die Sektion wird dadurch höher (827 statt 725).
+2. text-content-grid Phone: Padding y zeigt 112 (Desktop-Wert, Mode fehlt). Der Prototyp nutzt wie Desktop `section-spacing/y/compact` (Phone 32). text-row Phone ist 350 statt 343 breit.
+3. faq-section Phone: anderer Kicker und Titel („Fragen & Antworten“ / „Gut zu wissen vor Ihrem Besuch“), Intro-Text und Kontakt-Button fehlen, obwohl `Show Description=true`. Frage in H6 statt H5. Der Prototyp nutzt auf allen Breiten den Desktop-Inhalt.
+4. teaser-slider Phone: dritte Karte ist eine `teaser-card-box` („Für Hochschulen“, „BUTTON LABEL“), die auf Desktop fehlt. Der Prototyp zeigt nur Projektkarten.
+5. Button/Secondary hat eine 44-px-Trefffläche (hit-visual 34), die Core Component ist 34 hoch. Dadurch sind Slider- und Feature-Sektion im Prototyp 10 px niedriger.
+
 ## Offene Punkte an Figma (Off-Canvas-Doku `2613:31418`, Stand 2026-09-22)
 
 1. Frame „Spacing-Tokens“ (`2640:26526`) enthält nur den kopierten Text aus „Allgemein“ plus verschachtelte Geisterframes „Typo“ und „Komponenten“, keine Spacing-Werte. Vorschlag: Panel-Padding 24 (Desktop) / 0 (Phone), Header-Padding 24 16 16 (Phone), Gap Header→Body 48 / 24, filter-cell 16 / 8, Footer-Padding 24, Button-Gap 16 / 12.
@@ -104,4 +135,4 @@ Bestätigt am 2026-09-11: 1, 2, 3, 6. Entschieden: 4 (geteilter Chip), 5 (Lesart
 
 ## Nicht im Scope
 
-Menü, Suche, Sprachwechsel, Detailseiten der Angebote, Kontaktformular-, Buchungs- und Bestätigungs-Off-Canvas (in Figma dokumentiert, Panel-Grundgerüst ist dafür vorbereitet), Cut-Edges-Feinschliff (offenes Briefing, siehe `PLAN.md`).
+Detailseiten der Angebote, Buchungs-Off-Canvas (Anmeldung, nur im Styleguide), echtes Absenden der Formulare, Cut-Edges-Feinschliff (offenes Briefing, siehe `PLAN.md`).

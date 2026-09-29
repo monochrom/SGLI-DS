@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./haftbuch.css">
   <!-- Menü-Overlay, global für alle Prototypen -->
   <link rel="stylesheet" href="../shared/menu.css">
+  <link rel="stylesheet" href="../shared/search.css">
 </head>
 <body>
 
@@ -25,13 +26,13 @@
         <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
         <div class="site-nav__buttons">
           <div class="site-nav__icons">
-            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln">
+            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln" data-modal-open="modal-language">
               <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Translate"></use></svg>
             </button>
             <button class="btn btn--icon" type="button" aria-label="Leichte Sprache">
               <span class="icon icon-mask icon-mask--easy-language" aria-hidden="true"></span>
             </button>
-            <button class="btn btn--icon" type="button" aria-label="Suche öffnen">
+            <button class="btn btn--icon" type="button" aria-label="Suche öffnen" data-search-open>
               <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
             </button>
           </div>
@@ -54,7 +55,7 @@
     <!-- ===== haftbuch-list (Figma 2473:10373, Zeilen: list-cell-haftbuch 2311:5) ===== -->
     <section class="hb" data-context="surface-100" id="recherche" aria-labelledby="hb-heading">
       <div class="wrap">
-        <h2 class="sr-only" id="hb-heading">Haftbuch durchsuchen</h2>
+        <h2 class="sr-only" id="hb-heading" tabindex="-1">Haftbuch durchsuchen</h2>
 
         <!-- search-section: Input Search (1658:6517) + Input Select (1658:6475) -->
         <form class="hb-search" role="search" data-hb-form>
@@ -238,5 +239,8 @@
   <script src="./data.js"></script>
   <script src="./haftbuch.js"></script>
   <script src="../shared/menu.js" data-current="haftbuch"></script>
+  <script src="../../src/components/modal/modal.js"></script>
+  <script src="../shared/language.js"></script>
+  <script src="../shared/search.js" data-current="haftbuch"></script>
 </body>
 </html>

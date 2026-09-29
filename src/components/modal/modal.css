@@ -1,0 +1,236 @@
+/* SGLI – Modal
+   Figma: modal (2859:132) auf 💎 Components, Doku „Modal“ (2860:1449) auf 🎨 Foundations.
+   Props: type = confirm | language · Breakpoint = Desktop | Phone · Show Kicker
+   Zentrierter Dialog über allem (auch über Off-Canvas und Menü), natives <dialog> + showModal().
+   Aufbau: Close-Button oben rechts (ohne Rahmen, wie im Menü), darunter zentriert Kicker + Titel,
+   dann Inhalt: Intro + Button-Gruppe (confirm) oder Sprachliste (language).
+   Phone = Default (Breite Viewport − 32, Padding 16, Buttons untereinander), Desktop ab lg (1024) wie
+   Button-Größe und Off-Canvas: Padding 24, Inhalt seitlich 24 eingerückt, Buttons nebeneinander.
+   Motion (src/styles/motion.css, Familie „zentrierter Dialog“): Seite dunkelt ab, der Dialog fällt 16 px
+   von oben und blendet ein. Schließen umgekehrt, die Abdunkelung geht zuletzt. Reist nicht über den Bildschirm,
+   weil er an keinem Rand hängt (egal ob aus dem Kopf oder unten im Off-Canvas ausgelöst). */
+
+.modal {
+  /* filter-cell-Farben (Figma Semantic color/filter-cell/*) sind noch nicht in tokens/ exportiert.
+     Lokale Fallbacks wie im Prototyp; entfernen, sobald dist/css/tokens.css sie liefert. */
+  --color-filter-cell-bg-hover: var(--color-neutral-alpha-900-5);
+  --color-filter-cell-bg-pressed: var(--color-neutral-alpha-900-10);
+  --color-filter-cell-bg-active: var(--color-primary-900);
+  --color-filter-cell-fg-active: var(--color-neutral-0);
+  --color-filter-cell-indicator-active: var(--color-accent-highlight);
+  --modal-pad: var(--space-16);
+
+  box-sizing: border-box;
+  width: min(520px, 100% - 2 * var(--space-16));
+  max-width: none;
+  max-height: calc(100dvh - 2 * var(--space-16));
+  margin: auto;
+  padding: var(--modal-pad);
+  border: 0;
+  border-radius: var(--radius-none);
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--motion-dialog-offset)));
+  /* Schließen: Dialog 200 ms, bleibt im Top-Layer, bis die Abdunkelung weg ist (120 + 320 = 440 ms) */
+  transition:
+    opacity var(--motion-dialog-out) var(--ease-content),
+    transform var(--motion-dialog-out) var(--ease-content),
+    overlay calc(var(--motion-dialog-delay) + var(--motion-dim)) linear allow-discrete,
+    display calc(var(--motion-dialog-delay) + var(--motion-dim)) linear allow-discrete;
+}
+.modal[open] {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transform: none;
+  /* Öffnen: Dialog startet nach 120 ms, während die Seite abdunkelt */
+  transition:
+    opacity var(--motion-dialog-in) var(--ease-content) var(--motion-dialog-delay),
+    transform var(--motion-dialog-in) var(--ease-content) var(--motion-dialog-delay),
+    overlay 0s allow-discrete,
+    display 0s allow-discrete;
+}
+@starting-style {
+  .modal[open] { opacity: 0; transform: translateY(calc(-1 * var(--motion-dialog-offset))); }
+}
+.modal::backdrop {
+  background-color: rgba(26, 25, 23, 0.4); /* Fallback für Browser ohne Custom Properties im ::backdrop */
+  background-color: var(--color-neutral-alpha-900-40);
+  opacity: 0;
+  /* ::backdrop erbt Custom Properties erst in neueren Browsern, daher Fallback-Werte */
+  transition:
+    opacity var(--motion-dim, 320ms) ease var(--motion-dialog-delay, 120ms),
+    overlay 440ms linear allow-discrete,
+    display 440ms linear allow-discrete;
+}
+.modal[open]::backdrop {
+  opacity: 1;
+  transition:
+    opacity var(--motion-dim, 320ms) ease,
+    overlay 0s allow-discrete,
+    display 0s allow-discrete;
+}
+@starting-style {
+  .modal[open]::backdrop { opacity: 0; }
+}
+
+/* Hintergrund sperren, solange ein Modal offen ist (Klasse setzt modal.js, gleicht die Scrollbar aus) */
+html.modal-lock { overflow: hidden; }
+
+/* Close-Zeile: Button/Icon rechts, Rahmen ausgeblendet (Figma-Override wie im Menü-Kopf) */
+.modal__close-row {
+  display: flex;
+  flex: none;
+  justify-content: flex-end;
+}
+.modal__close { border-color: transparent; }
+
+/* Inhalt: scrollt allein, wenn der Viewport zu niedrig ist. Close-Zeile bleibt stehen.
+   Phone: seitlich so viel Luft wie der Fokusring breit ist (per negativem Margin ausgeglichen),
+   sonst schneidet der Scroll-Container den Außenring der vollbreiten Buttons ab. */
+.modal__content {
+  --modal-ring: calc(var(--border-focus-outer) + var(--border-focus-inner));
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-24);
+  min-height: 0;
+  overflow-y: auto;
+  margin-inline: calc(-1 * var(--modal-ring));
+  padding: 0 var(--modal-ring) var(--space-8);
+  text-align: center;
+}
+/* Figma: content-Gap 40 bei confirm (Phone + Desktop), 24 bei language Phone, 40 bei language Desktop (s. u.) */
+.modal--confirm .modal__content { gap: var(--space-40); }
+
+.modal__text {
+  display: grid;
+  gap: var(--space-16);
+  width: 100%;
+}
+.modal__head {
+  display: grid;
+  gap: var(--space-8);
+  width: 100%;
+}
+.modal__kicker {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+/* Figma: Heading/H3 im Typography-Modus Phone (24 px) auf allen Breakpoints, wie der Off-Canvas-Kopf.
+   Die Token --font-size-h3 wächst ab md; hier bewusst fest auf den Phone-Wert. */
+.modal__title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.modal__intro {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+/* Button-Gruppe: Phone untereinander, Primary volle Breite, Secondary zentriert (Unterstrich nur so breit wie das Label) */
+.modal__actions {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-12);
+  width: 100%;
+}
+.modal__actions .btn--primary { width: 100%; }
+
+/* Sprachliste: Optik der filter-cell (Figma 2646:40456), hier als Links.
+   Aktuelle Sprache = Selection On (aria-current). Fokusring innen, weil .modal__content scrollen kann
+   und einen Außenring abschneiden würde (Ausnahme wie beim filter-cell im Off-Canvas). */
+.modal__list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--border-default) solid var(--color-divider-default);
+  text-align: left;
+}
+.modal__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  padding: var(--space-16) var(--space-12);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.modal__option-main {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
+}
+.modal__indicator {
+  flex: none;
+  box-sizing: border-box;
+  width: 12px;
+  height: 12px;
+  border: var(--border-default) solid var(--color-border-default);
+}
+.modal__option-label {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+}
+.modal__option-code {
+  flex: none;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+  color: var(--color-text-secondary);
+}
+@media (hover: hover) {
+  .modal__option:hover { background-color: var(--color-filter-cell-bg-hover); }
+}
+.modal__option:active { background-color: var(--color-filter-cell-bg-pressed); }
+.modal__option[aria-current="true"] {
+  background-color: var(--color-filter-cell-bg-active);
+  color: var(--color-filter-cell-fg-active);
+}
+.modal__option[aria-current="true"] .modal__option-code { color: var(--color-filter-cell-fg-active); }
+.modal__option[aria-current="true"] .modal__indicator {
+  border-color: var(--color-filter-cell-indicator-active);
+  background-color: var(--color-filter-cell-indicator-active);
+}
+.modal__option:focus-visible {
+  z-index: 1;
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: calc(-1 * var(--border-focus-outer));
+  box-shadow: inset 0 0 0 calc(var(--border-focus-outer) + var(--border-focus-inner)) var(--color-border-focus-inner);
+}
+
+@media (min-width: 1024px) {
+  .modal { --modal-pad: var(--space-24); }
+  .modal__content {
+    gap: var(--space-40);
+    margin-inline: 0;
+    padding: 0 var(--space-24) var(--space-24);
+  }
+  .modal__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-16);
+  }
+  .modal__actions .btn--primary { width: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal, .modal[open] { transform: none; }
+  @starting-style {
+    .modal[open] { transform: none; }
+  }
+}
