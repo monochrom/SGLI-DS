@@ -47,7 +47,8 @@ body { background-color: var(--color-bg-page); }
 .icon-mask--linkedin { --icon-mask: url("./assets/icons/LinkedinLogo.svg"); }
 
 /* ---------- Navigation (Figma: navigation 1926:1842) ----------
-   Phone: nur Logo + Menü. Desktop: Öffnungszeit, drei Icon-Buttons (Sprache, Leichte Sprache, Suche), Menü. */
+   Phone: nur Logo + Menü. Ab Tablet: drei Icon-Buttons (Sprache, Leichte Sprache, Suche) + Menü.
+   Ab Desktop zusätzlich die Öffnungszeit. Sie wandert zuerst ins Menü, die Icons sind wichtiger. */
 .site-nav {
   padding: var(--space-16) var(--grid-margin);
   background-color: var(--color-bg-page);
@@ -100,11 +101,13 @@ body { background-color: var(--color-bg-page); }
 }
 /* Figma (navigation 2834:26222): Icon-Buttons 45 × 45 ohne Rahmen. Die Core Component btn--icon hat einen. */
 .site-nav__icons .btn--icon { border-color: transparent; }
+@media (min-width: 768px) {
+  .site-nav__icons { display: flex; }
+}
 @media (min-width: 1024px) {
   .site-nav { padding: var(--space-24) var(--grid-margin) var(--space-32); }
   .site-nav__logo { width: 203px; height: 62px; }
-  .site-nav__hours,
-  .site-nav__icons { display: flex; }
+  .site-nav__hours { display: flex; }
 }
 
 /* ---------- Hero (Figma: hero-default 2352:7024) ---------- */

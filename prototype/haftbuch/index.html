@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="../../src/components/index.css">
   <!-- Prototyp-Module -->
   <link rel="stylesheet" href="./haftbuch.css">
+  <!-- Menü-Overlay, global für alle Prototypen -->
+  <link rel="stylesheet" href="../shared/menu.css">
 </head>
 <body>
 
@@ -33,7 +35,7 @@
               <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
             </button>
           </div>
-          <button class="btn btn--primary" type="button">Menü</button>
+          <button class="btn btn--primary" type="button" data-menu-open>Menü</button>
         </div>
       </div>
     </div>
@@ -235,5 +237,6 @@
   <script src="../../src/scripts/focus-modality.js"></script>
   <script src="./data.js"></script>
   <script src="./haftbuch.js"></script>
+  <script src="../shared/menu.js" data-current="haftbuch"></script>
 </body>
 </html>

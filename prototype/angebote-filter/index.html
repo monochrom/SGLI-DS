@@ -10,25 +10,32 @@
   <link rel="stylesheet" href="../../src/components/index.css">
   <!-- Prototyp-Module -->
   <link rel="stylesheet" href="./prototype.css">
+  <!-- Menü-Overlay, global für alle Prototypen -->
+  <link rel="stylesheet" href="../shared/menu.css">
 </head>
 <body>
 
   <a class="sr-only" href="#angebote">Zu den Bildungsangeboten springen</a>
 
-  <!-- ===== navigation (Figma 2548:24968) ===== -->
+  <!-- ===== navigation (Figma 2548:24968, Aufbau übernommen aus haftbuch) ===== -->
   <header class="site-nav">
     <div class="site-nav__inner">
       <a class="site-nav__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
       <div class="site-nav__actions">
         <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
         <div class="site-nav__buttons">
-          <button class="btn btn--icon site-nav__translate" type="button" aria-label="Sprache wechseln">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Translate"></use></svg>
-          </button>
-          <button class="btn btn--icon" type="button" aria-label="Suche öffnen">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
-          </button>
-          <button class="btn btn--primary" type="button">Menü</button>
+          <div class="site-nav__icons">
+            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Translate"></use></svg>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Leichte Sprache">
+              <span class="icon icon-mask icon-mask--easy-language" aria-hidden="true"></span>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Suche öffnen">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+            </button>
+          </div>
+          <button class="btn btn--primary" type="button" data-menu-open>Menü</button>
         </div>
       </div>
     </div>
@@ -352,5 +359,7 @@
 
   <script src="./data.js"></script>
   <script src="./filter.js"></script>
+  <script src="../../src/scripts/focus-modality.js"></script>
+  <script src="../shared/menu.js" data-current="bildung"></script>
 </body>
 </html>
