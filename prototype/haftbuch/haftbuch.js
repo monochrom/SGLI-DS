@@ -216,6 +216,14 @@
     if (first) first.querySelector('.hb-row__summary').focus();
   });
 
+  /* Suchbegriff von der Startseite (teaser-search, ?q=…): ins Feld übernehmen und zur Liste springen */
+  const initialQuery = new URLSearchParams(window.location.search).get('q');
+  if (initialQuery && initialQuery.trim()) {
+    state.query = initialQuery.trim();
+    el.query.value = state.query;
+    el.heading.scrollIntoView({ block: 'start' });
+  }
+
   /* Start ohne Crossfade */
   updateLetters();
   results = entries.filter((e) => matches(e));

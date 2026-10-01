@@ -22,7 +22,7 @@
   <!-- ===== navigation (Figma 2834:26222 / Phone 2834:26229) ===== -->
   <header class="site-nav">
     <div class="site-nav__inner">
-      <a class="site-nav__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+      <a class="site-nav__logo" href="../startseite/" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
       <div class="site-nav__actions">
         <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
         <div class="site-nav__buttons">
@@ -124,11 +124,11 @@
         </header>
 
         <div class="timeline__content">
-          <img class="timeline__img timeline__img--primary" src="./assets/img/timeline-boykott-1933.jpg" alt="SA-Männer vor einem Geschäft mit Boykottschildern, 1933" width="1200" height="853">
+          <img class="timeline__img timeline__img--primary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-boykott-1933.jpg" alt="SA-Männer vor einem Geschäft mit Boykottschildern, 1933" width="1200" height="853">
           <p class="timeline__lead text-h5">Nationalsozialismus, sowjetische Besatzung, SED-Diktatur und Friedliche Revolution prägten die Lindenstraße auf unterschiedliche Weise. Entdecken Sie die historischen Zusammenhänge hinter den Schicksalen der Haftbücher.</p>
 
           <div class="timeline__left">
-            <img class="timeline__img timeline__img--secondary" src="./assets/img/timeline-panzer-1953.jpg" alt="Sowjetischer Panzer und Menschen auf der Straße am 17. Juni 1953" width="1200" height="798">
+            <img class="timeline__img timeline__img--secondary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-panzer-1953.jpg" alt="Sowjetischer Panzer und Menschen auf der Straße am 17. Juni 1953" width="1200" height="798">
             <ul class="timeline__periods">
               <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">NS-Diktatur</span><span class="period-link__years">1933 — 1945</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
               <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">Sowjetische Besatzung</span><span class="period-link__years">1945 — 1952</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
@@ -138,8 +138,8 @@
           </div>
 
           <div class="timeline__right">
-            <img class="timeline__img timeline__img--tertiary" src="./assets/img/timeline-mauerfall-1989.jpg" alt="Menschen auf der Mauer vor dem Brandenburger Tor, November 1989" width="1200" height="676">
-            <img class="timeline__img timeline__img--quaternary" src="./assets/img/timeline-honecker.jpg" alt="Erich Honecker mit Blumenstrauß in einer Menschenmenge" width="1200" height="675">
+            <img class="timeline__img timeline__img--tertiary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-mauerfall-1989.jpg" alt="Menschen auf der Mauer vor dem Brandenburger Tor, November 1989" width="1200" height="676">
+            <img class="timeline__img timeline__img--quaternary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-honecker.jpg" alt="Erich Honecker mit Blumenstrauß in einer Menschenmenge" width="1200" height="675">
           </div>
         </div>
       </div>
@@ -198,7 +198,7 @@
   <footer class="site-footer" data-context="primary-900">
     <div class="site-footer__main">
       <div class="site-footer__brand">
-        <a class="site-footer__logo" href="#" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+        <a class="site-footer__logo" href="../startseite/" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
         <ul class="site-footer__social" aria-label="Social Media">
           <li><a href="#" aria-label="Instagram"><span class="icon icon-mask icon-mask--instagram" aria-hidden="true"></span></a></li>
           <li><a href="#" aria-label="Facebook"><span class="icon icon-mask icon-mask--facebook" aria-hidden="true"></span></a></li>
@@ -243,6 +243,7 @@
   <script src="../../src/components/modal/modal.js"></script>
   <script src="../shared/language.js"></script>
   <script src="../shared/header.js"></script>
+  <script src="../shared/scroll-motion.js"></script>
   <script src="../shared/faq.js"></script>
   <script src="../shared/search.js" data-current="haftbuch"></script>
 </body>

@@ -87,11 +87,7 @@
   color: var(--color-text-secondary);
 }
 .form__note > * { margin: 0; }
-.form__note a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
+/* Links im Hinweis: Textfarbe + Unterstrich aus base.css (Regel „Links“) */
 
 /* Einwilligung: Checkbox mit Caption-Label (.choice--caption), volle Breite */
 .form__consent .choice { display: flex; }

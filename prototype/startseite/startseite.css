@@ -1,0 +1,938 @@
+/* SGLI Prototyp „Startseite“ – Modul-CSS
+   Gekapselt für den Prototypen. Baut auf den Foundations (../../src/styles) und Core Components
+   (../../src/components) auf, ändert dort nichts. Werte aus Figma (Section Startseite 2522:59485:
+   Desktop 2522:59486, Phone 2522:59498). Mobile first: Phone = Default, Tablet ab md (768), Desktop ab lg (1024).
+
+   Herkunft der Blöcke:
+   - Navigation, Section-Header, Teaser-Slider, Teaser-Feature, Footer, Logo, Hinweisleiste:
+     unverändert aus ../angebote-filter/prototype.css (dort am 2026-09-29 gegen Figma abgeglichen).
+   - Teaser-Timeline: unverändert aus ../haftbuch/haftbuch.css.
+   - Neu für die Startseite: hero-home, teaser-grid, teaser-stacked, teaser-event-list, teaser-search,
+     image-fullwidth, Ergänzungen am Slider (Aktionszeile) und die Bewegungen aus dem alten Prototyp
+     (Hover-Zoom hier, Scroll-Kopplung in ../shared/scroll-motion.js). */
+
+/* Motion: --motion-* und --ease-* kommen aus src/styles/motion.css (Foundation). */
+
+/* ---------- Layout-Helfer (nur Prototyp) ---------- */
+.wrap {
+  width: 100%;
+  max-width: calc(var(--container-max) - 2 * var(--grid-desktop-margin)); /* 1360 wie Figma */
+  margin-inline: auto;
+}
+.module-label {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+.text-secondary { color: var(--color-text-secondary); }
+.stack-8 > * + * { margin-top: var(--space-8); }
+.stack-16 > * + * { margin-top: var(--space-16); }
+.stack-24 > * + * { margin-top: var(--space-24); }
+body { background-color: var(--color-bg-page); }
+
+/* Icon, das (noch) nicht im Sprite ist: als Maske, Farbe über currentColor (wie haftbuch) */
+.icon-mask {
+  display: inline-block;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  background-color: currentColor;
+  -webkit-mask: var(--icon-mask) center / contain no-repeat;
+  mask: var(--icon-mask) center / contain no-repeat;
+}
+.icon-mask--easy-language { --icon-mask: url("../shared/assets/EasyLanguage.svg"); }
+
+/* ---------- Navigation (Figma: navigation 1926:1842, übernommen aus haftbuch) ----------
+   Phone: nur Logo + Menü. Ab Tablet: drei Icon-Buttons (Sprache, Leichte Sprache, Suche) + Menü.
+   Ab Desktop zusätzlich die Öffnungszeit. Sie wandert zuerst ins Menü, die Icons sind wichtiger. */
+.site-nav {
+  padding: var(--space-16) var(--grid-margin);
+  background-color: var(--color-bg-page);
+}
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+.site-nav__logo {
+  display: block;
+  width: 131px;
+  height: 40px;
+  color: var(--color-text-primary);
+}
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-48);
+}
+.site-nav__hours {
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.site-nav__hours::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-secondary-500);
+}
+.site-nav__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+}
+.site-nav__icons {
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+}
+/* Figma (navigation 2834:26222): Icon-Buttons 45 × 45 ohne Rahmen. Die Core Component btn--icon hat einen. */
+.site-nav__icons .btn--icon { border-color: transparent; }
+@media (min-width: 768px) {
+  .site-nav__icons { display: flex; }
+}
+@media (min-width: 1024px) {
+  .site-nav { padding: var(--space-24) var(--grid-margin) var(--space-32); }
+  .site-nav__logo { width: 203px; height: 62px; }
+  .site-nav__hours { display: flex; }
+}
+
+/* ---------- Teaser-Slider (Figma: teaser-slider 2522:59495 / Phone 2522:59507, teaser-card-static) ----------
+   Phone: Kopf gestapelt (Gap 24), Karten 260 breit mit Bild 321:241, Gap Kopf→Karten 48, keine Pfeile.
+   Desktop: Kopf 5 + 6 Spalten, Karten 321 mit Bild 321:428, Gap 80, Aktionszeile mit Gap 64:
+   Übersichts-Button links, Pfeile rechts (Startseite; im Prototyp Bildung nur Pfeile).
+   teaser-card-static ist dieselbe Karte wie im teaser-grid: Breite und Einrasten nur im Slider.
+   Die Spur trägt 6 px Innenabstand für den Fokusring, die Außenabstände ziehen ihn wieder ab. */
+.teaser-slider {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+  overflow: hidden;
+}
+.section-header--split {
+  display: grid;
+  gap: var(--space-24) var(--grid-gutter);
+  align-items: end;
+  padding-bottom: var(--space-24);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
+.section-header--split .module-label { margin: 0; }
+.section-header--split h2 { margin: var(--space-16) 0 0; }
+@media (min-width: 1024px) {
+  .section-header--split { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .section-header--split > :first-child { grid-column: 1 / span 5; }
+  .section-header--split > :last-child { grid-column: 7 / span 6; }
+}
+.teaser-slider__track {
+  display: flex;
+  gap: var(--space-16);
+  margin: calc(var(--space-48) - var(--space-6)) calc(-1 * var(--section-spacing-x-default)) 0;
+  padding: var(--space-6) var(--section-spacing-x-default);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--section-spacing-x-default); /* erste Karte bündig mit dem Kopf, nicht am Rand */
+  scrollbar-width: none;
+}
+.teaser-slider__track::-webkit-scrollbar { display: none; }
+.teaser-slider .teaser-card {
+  flex: none;
+  width: 260px;
+  scroll-snap-align: start;
+}
+.teaser-card {
+  display: grid;
+  align-content: start; /* sonst verteilt das Grid die Resthöhe der höchsten Karte auf die Zeilen */
+  gap: var(--space-16);
+}
+.teaser-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 321 / 241;
+  object-fit: cover;
+}
+.teaser-card h3 {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+}
+.teaser-card p { margin: 0 0 var(--space-16); color: var(--color-text-secondary); }
+.teaser-slider__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  margin-top: calc(var(--space-48) - var(--space-6));
+}
+.teaser-slider__more { display: none; } /* Figma Phone: „Zur Übersicht“, Desktop: „… der Angebote“ */
+.teaser-slider__nav {
+  display: none;
+  gap: var(--space-8);
+}
+@media (min-width: 768px) {
+  .teaser-slider__nav { display: flex; }
+  .teaser-slider__more { display: inline; }
+}
+@media (min-width: 1024px) {
+  .teaser-slider__track { margin-top: calc(var(--space-80) - var(--space-6)); }
+  .teaser-slider .teaser-card { width: 321px; }
+  .teaser-slider__actions { margin-top: calc(var(--space-64) - var(--space-6)); }
+  .teaser-card__img { aspect-ratio: 321 / 428; }
+  .teaser-card p { margin-bottom: var(--space-24); }
+}
+
+/* ==========================================================================
+   Teaser-Timeline (Figma: teaser-timeline 2047:2053, image-count=4)
+   Phone: Stapel mit Gap 32 (Bild, Lead, Bildpaar, Bild, Zeitschichten).
+   Desktop: 12er-Raster, 2 Zeilen; links Bild + Zeitschichten, rechts Bildcollage.
+   ========================================================================== */
+.timeline {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+  background-color: var(--color-bg-module);
+  overflow: hidden;
+}
+.timeline__header {
+  padding-bottom: var(--space-24);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
+.timeline__heading {
+  display: grid;
+  gap: var(--space-16);
+}
+.timeline__heading h2 { margin: 0; }
+.timeline__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  margin-top: var(--space-48);
+}
+.timeline__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.timeline__img--primary,
+.timeline__img--secondary { aspect-ratio: 343 / 192; }
+.timeline__lead { margin: 0; }
+.timeline__left { display: contents; }
+.timeline__img--primary { order: 1; }
+.timeline__lead { order: 2; }
+.timeline__right {
+  order: 3;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-8);
+}
+.timeline__img--secondary { order: 4; }
+.timeline__periods { order: 5; }
+/* Bildpaar (Figma Phone teaser-images: 208 × 277 + Rest × 170, Gap 8, unten bündig).
+   min-width: 0, sonst hält das Bild seine natürliche Breite (1200 px, gedeckelt auf 100 %) als Minimum
+   und drückt das tertiäre Bild auf 0. */
+.timeline__img--quaternary {
+  order: -1;
+  flex: 0 0 calc(208 / 343 * 100%);
+  min-width: 0;
+  aspect-ratio: 208 / 277;
+}
+.timeline__img--tertiary {
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 127 / 170;
+}
+
+.timeline__periods {
+  display: grid;
+  gap: var(--space-16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.period-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  padding-bottom: var(--space-16);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.period-link__text {
+  display: grid;
+  flex: 1 1 auto;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.period-link__title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.period-link__years {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+.period-link .icon {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  transition: transform var(--motion-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .period-link:hover .period-link__title { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“: kein Farbwechsel */
+  .period-link:hover .icon { transform: translateX(4px); }
+}
+
+@media (min-width: 1024px) {
+  .timeline__heading { width: calc((100% - 11 * var(--grid-desktop-gutter)) / 12 * 5 + 4 * var(--grid-desktop-gutter)); }
+  .timeline__content {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-desktop-gutter);
+    margin-top: var(--space-80);
+  }
+  .timeline__img--primary { grid-column: 1 / span 4; grid-row: 1; aspect-ratio: 437 / 245; }
+  .timeline__lead { grid-column: 8 / span 5; grid-row: 1; align-self: start; }
+  .timeline__left {
+    grid-column: 1 / span 6;
+    grid-row: 2;
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--grid-desktop-gutter);
+  }
+  .timeline__img--secondary { grid-column: 3 / span 4; grid-row: 1; aspect-ratio: 437 / 245; }
+  .timeline__periods { grid-column: 1 / span 4; grid-row: 2; }
+  /* Collage rechts: 668 × 582 in Figma, 6er-Raster, 2 gleich hohe Zeilen */
+  .timeline__right {
+    grid-column: 7 / span 6;
+    grid-row: 2;
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--grid-desktop-gutter);
+    aspect-ratio: 668 / 582;
+  }
+  .timeline__img--tertiary { grid-column: 1 / span 4; grid-row: 1 / span 2; height: 100%; aspect-ratio: auto; }
+  .timeline__img--quaternary { grid-column: 5 / span 2; grid-row: 1; height: 100%; aspect-ratio: auto; }
+}
+
+/* Bewegung (../shared/scroll-motion.js, data-motion="drift", entschieden 2026-10-01, Richtwerte):
+   Die Bildrahmen starten nach unten versetzt und steigen beim Reinscrollen unterschiedlich schnell in
+   ihre Lage, die Collage baut sich auf. Nur der Rahmen bewegt sich, der Bildinhalt bleibt unverändert.
+   Versatz je Breakpoint so gewählt, dass sich nichts überlappt (Abstände Phone 32, Desktop 24). */
+.timeline__img--primary { --drift-y: 16px; }
+.timeline__img--secondary { --drift-y: 8px; }
+.timeline__img--tertiary { --drift-y: 24px; }
+.timeline__img--quaternary { --drift-y: 12px; }
+@media (min-width: 1024px) {
+  .timeline__img--primary { --drift-y: 32px; }
+  .timeline__img--secondary { --drift-y: 16px; }
+  .timeline__img--tertiary { --drift-y: 80px; }
+  .timeline__img--quaternary { --drift-y: 40px; }
+}
+
+/* ---------- Teaser-Feature (Figma: teaser-feature 2522:59496 / Phone 2522:59508; Bildung 2522:59550) ----------
+   Phone: Bild oben über die volle Kartenbreite, Text darunter (Padding x 16, unten 32, Gap 24).
+   Desktop: Text links 397 breit, Bild rechts 16:9, unten bündig, Karte Padding 112/40.
+   Deko: ca. 71 % der Bildbreite, mittig auf dem Bild, leicht nach rechts versetzt, darf oben über
+   die Karte hinausragen (Phone). */
+.teaser-feature {
+  padding: var(--section-pt) var(--section-px) 0; /* unten 0: Moduldesign, die Karte schließt ab */
+}
+.feature-card {
+  display: grid;
+  gap: var(--space-24);
+  padding: 0 0 var(--space-32);
+  background-color: var(--color-bg-inset);
+}
+.feature-card__text { padding-inline: var(--space-16); }
+.feature-card__text h3 {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+}
+.feature-card__text p { margin: 0 0 var(--space-24); color: var(--color-text-secondary); }
+.feature-card__media { position: relative; order: -1; }
+.feature-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.feature-card__deco {
+  position: absolute;
+  left: calc(50% + 2.8%);
+  top: 50%;
+  width: 71.4%;
+  height: auto;
+  translate: -50% -50%; /* einzelne Property: scroll-motion.js setzt scale dazu (Drehpunkt Mitte) */
+  transform-origin: 50% 50%;
+  color: var(--color-neutral-0);
+  pointer-events: none;
+}
+@media (min-width: 1024px) {
+  .feature-card {
+    grid-template-columns: 397px minmax(0, 1fr);
+    align-items: end;
+    padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  }
+  .feature-card__text { padding-inline: 0; }
+  .feature-card__text p { margin-bottom: var(--space-32); }
+  .feature-card__media { order: 0; }
+}
+
+/* ---------- Footer (Figma: Footer 2522:59551 / Phone 2522:59574, Kontext primary-900) ----------
+   Phone (bis 1023): Divider, Logo 160 × 49 mit 32 oben/unten, Linkgruppen (Gap 16) mit 44er Zeilen,
+   Social-Zeile 44 (Icons Gap 24), 32 Luft, Divider, Meta-Links in 44er Zeilen, Copyright.
+   Desktop: Logo + Social links, drei Linkspalten rechts (Gap 80, Zeilen Gap 16), Divider, Copyright + Meta-Nav. */
+.icon-mask--instagram { --icon-mask: url("../shared/assets/InstagramLogo.svg"); }
+.icon-mask--facebook { --icon-mask: url("../shared/assets/FacebookLogo.svg"); }
+.icon-mask--linkedin { --icon-mask: url("../shared/assets/LinkedinLogo.svg"); }
+.site-footer {
+  padding: 0 var(--grid-margin) var(--space-24);
+  background-color: var(--color-bg-module);
+  color: var(--color-text-primary);
+}
+.site-footer__main {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--space-32);
+  border-top: var(--border-default) solid var(--color-divider-default);
+}
+.site-footer__brand { display: contents; }
+.site-footer__logo {
+  order: 1;
+  display: block;
+  width: 160px;
+  height: 49px;
+  margin-block: var(--space-32);
+  color: var(--color-text-primary);
+}
+.site-footer__cols { order: 2; display: grid; gap: var(--space-16) var(--space-80); }
+.site-footer__social { order: 3; margin-top: var(--space-16); }
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
+.site-footer__cols ul { display: grid; align-content: start; }
+.site-footer__cols a,
+.site-footer__legal a {
+  display: flex;
+  align-items: center;
+  min-height: 44px; /* Touch-Ziel wie Figma */
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+.site-footer__social { display: flex; gap: var(--space-24); }
+.site-footer__social a { display: flex; align-items: center; min-height: 44px; color: var(--color-text-primary); }
+.site-footer__social .icon-mask { display: block; }
+@media (hover: hover) {
+  .site-footer a:hover { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“ */
+}
+.site-footer__bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-24);
+  padding: var(--space-24) 0 var(--space-8);
+  border-top: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-secondary);
+}
+.site-footer__bottom p {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+}
+.site-footer__legal { display: grid; }
+@media (min-width: 768px) {
+  .site-footer__cols { grid-template-columns: repeat(3, auto); justify-content: start; }
+}
+@media (min-width: 1024px) {
+  .site-footer { padding-bottom: var(--space-32); }
+  .site-footer__main {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--space-40);
+    padding: var(--space-40) 0 0;
+  }
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-80);
+    padding-bottom: var(--space-16);
+  }
+  .site-footer__logo { width: 203px; height: 62px; margin: 0; }
+  .site-footer__social { margin: 0; gap: var(--space-8); }
+  .site-footer__social a { min-height: 0; }
+  .site-footer__cols { justify-content: end; gap: 0 var(--space-80); }
+  .site-footer__cols ul { gap: var(--space-16); }
+  .site-footer__cols a,
+  .site-footer__legal a { min-height: 0; }
+  .site-footer__bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-16) 0 0;
+  }
+  .site-footer__legal { display: flex; gap: var(--space-32); }
+}
+
+/* ---------- Prototyp-Hinweisleiste (kein Design-System-Element) ---------- */
+.proto-bar {
+  position: fixed;
+  left: var(--space-16);
+  bottom: var(--space-16);
+  z-index: var(--z-sticky);
+  padding: var(--space-8) var(--space-12);
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-0);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---------- Logo als Maske (eine SVG-Datei, Farbe über currentColor, auch im Footer auf primary-900) ---------- */
+.logo-mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-mask: url("./assets/img/logo.svg") left center / contain no-repeat;
+  mask: url("./assets/img/logo.svg") left center / contain no-repeat;
+}
+
+/* ==========================================================================
+   Neu für die Startseite
+   ========================================================================== */
+
+/* Intro im Section-Header (Figma Heading/H6, wie Prototyp Bildung) */
+.section-header__intro {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+
+/* ---------- Hero Startseite (Figma: hero-home 2522:59488 / Phone 2522:59500) ----------
+   Phone: Titel H1 + Unterzeile H3 (Gap 16), Text H6, Buttons gestapelt (Primary volle Breite), Gap 24;
+   Bild 343 : 344 mit Schnitt unten links (Transparenz im Bild), Inhalt → Bild 48.
+   Ab Tablet: Bild 16 : 9 (1360 × 765), Text 553 breit rechtsbündig, Buttons nebeneinander.
+   Desktop: Titel → Text 112, Inhalt → Bild 80.
+   Grundriss-Linie (ground-plan-outline) liegt hinter dem Inhalt, 8 px weiß. Phone: 255 % der Breite,
+   links −91,7 %, 118 px von oben (Figma-Constraints links/rechts). Ab Tablet wie Figma an Ober- und
+   Unterkante des Heros gebunden (0,33 % / 0,31 %), Breite aus dem Seitenverhältnis, mittig +5 px.
+   Der Hero schneidet nur seitlich ab (overflow-x: clip): Die Linie ist breiter als der Viewport, darf
+   unten aber über den Rand laufen (Phone: Spitze ragt je nach Texthöhe ins nächste Modul, gleiche Farbe).
+   Bewegung (scroll-motion.js, Drehpunkt oben Mitte): Linie 75 → 100 %, Bild 60 → 100 %. */
+.hero-home {
+  position: relative;
+  overflow-x: clip; /* nur seitlich: clip lässt overflow-y visible zu (hidden würde auto erzwingen) */
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.hero-home__plan {
+  position: absolute;
+  top: 118px;
+  left: -91.73%;
+  width: 254.93%;
+  aspect-ratio: 1480 / 1520;
+  color: var(--color-neutral-0);
+  pointer-events: none;
+  transform-origin: 50% 0;
+}
+.hero-home__plan svg {
+  position: absolute;
+  left: -0.32%; /* Figma: Vektor ragt um die halbe Linienstärke über den Rahmen */
+  top: -0.3%;
+  width: 100.63%;
+  height: 100.58%;
+  overflow: visible;
+}
+.hero-home__grid {
+  position: relative;
+  display: grid;
+  gap: var(--space-48);
+}
+.hero-home__content { display: grid; gap: var(--space-24); }
+.hero-home__titles { display: grid; gap: var(--space-16); }
+.hero-home__title { margin: 0; }
+.hero-home__sub {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--letter-spacing-h3);
+}
+.hero-home__desc { display: grid; gap: var(--space-24); }
+.hero-home__lead {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+.hero-home__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-24);
+}
+.hero-home__actions .btn--primary { align-self: stretch; }
+.hero-home__media { transform-origin: 50% 0; }
+.hero-home__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (min-width: 768px) {
+  .hero-home__plan {
+    top: 0.33%;
+    bottom: 0.31%;
+    left: calc(50% + 5px);
+    width: auto; /* Höhe aus top/bottom, Breite aus aspect-ratio (wie Figma) */
+    translate: -50% 0; /* einzelne Property: scroll-motion.js setzt scale dazu */
+  }
+  .hero-home__content { gap: var(--space-48); }
+  .hero-home__desc { justify-self: end; width: min(553px, 100%); }
+  .hero-home__actions { flex-direction: row; align-items: center; }
+  .hero-home__actions .btn--primary { align-self: auto; }
+}
+@media (min-width: 1024px) {
+  .hero-home__grid { gap: var(--space-80); }
+  .hero-home__content { gap: var(--space-112); }
+}
+
+/* ---------- Teaser-Grid (Figma: teaser-grid 2522:59489 / Phone 2522:59501, teaser-card-static) ----------
+   Phone: Karten untereinander (Gap 40), Bild 321 : 241. Ab Tablet drei Spalten (Gap 24), Bild 321 : 428.
+   Kopf → Karten: Phone 48, Desktop 80. Karte wie im Slider (Bild, 16, Titel H4, 8, Text, Button). */
+.teaser-grid {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.teaser-grid__list {
+  display: grid;
+  gap: var(--space-40);
+  margin: var(--space-48) 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .teaser-grid__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--grid-gutter); }
+  .teaser-grid .teaser-card__img { aspect-ratio: 321 / 428; }
+}
+@media (min-width: 1024px) {
+  .teaser-grid__list { margin-top: var(--space-80); }
+}
+
+/* ---------- Teaser-Stacked (Figma: teaser-stacked 2522:59490 / Phone 2522:59502, mit Cut-Edges) ----------
+   Phone: Bild oben (343 : 240), Inhalt darunter (Gap 24), Blöcke Gap 40. Titel H5, Text Body/M.
+   Desktop: Inhalt links (unten bündig), Bild rechts 899 : 505 (66,1 %), Gap 32. Titel H4.
+   Tag (Laufzeit) optional. Abstände oben/unten compact über .cut-edges (section.css, Regel 4). */
+.teaser-stacked {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.teaser-stacked__list {
+  display: grid;
+  gap: var(--space-40);
+  margin: var(--space-48) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.teaser-block {
+  display: grid;
+  gap: var(--space-24);
+}
+.teaser-block__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 343 / 240;
+  object-fit: cover;
+}
+.teaser-block__body {
+  display: grid;
+  align-content: end;
+  justify-items: start;
+  gap: var(--space-16);
+}
+.teaser-block__info {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-16);
+}
+.teaser-block__title-date { display: grid; gap: var(--space-8); }
+.teaser-block__title {
+  margin: 0;
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
+.teaser-block__date {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+}
+.teaser-block__text { margin: 0; color: var(--color-text-secondary); }
+@media (min-width: 1024px) {
+  .teaser-stacked__list { margin-top: var(--space-80); }
+  .teaser-block {
+    grid-template-columns: minmax(0, 1fr) 66.1%;
+    gap: var(--space-32);
+  }
+  .teaser-block__media { order: 1; }
+  .teaser-block__img { aspect-ratio: 899 / 505; }
+  .teaser-block__body { gap: var(--space-24); }
+  .teaser-block__title {
+    font-size: var(--font-size-h4);
+    line-height: var(--line-height-h4);
+    letter-spacing: var(--letter-spacing-h4);
+  }
+}
+
+/* ---------- Teaser-Event-List (Figma: teaser-event-list 2522:59491 / Phone 2522:59503) ----------
+   Phone: Bildpaar (208 × 277 + Rest im Format 436 : 582, Gap 8, unten bündig), darunter Liste (Gap 24),
+   Karten Gap 8, Button „Alle Veranstaltungen“ mit Gap 40.
+   Karte teaser-card-inline: Fläche surface-50, Padding 16, min. 112 hoch. Phone gestapelt (Gap 48),
+   ab Tablet Text links und Button rechts unten (Gap 24). Meta: Ort (Caption), Datumszeile (Tag + Label-S),
+   Ort → Datum Phone 16, Desktop 40.
+   Desktop: Bilder Spalte 1–6 mit 112 Versatz oben (großes Bild + 208 × 277, Gap 24), Liste Spalte 8–12,
+   Button rechtsbündig. */
+.teaser-events {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.teaser-events__content {
+  display: grid;
+  gap: var(--space-24);
+  margin-top: var(--space-48);
+}
+.teaser-events__images {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-8);
+}
+.teaser-events__img {
+  display: block;
+  min-width: 0;
+  height: auto;
+  object-fit: cover;
+}
+.teaser-events__img--a {
+  flex: 0 0 calc(208 / 343 * 100%);
+  aspect-ratio: 208 / 277;
+  object-position: 93% 50%; /* Ausschnitt wie Figma (Person mit Foto) */
+}
+.teaser-events__img--b {
+  flex: 1 1 0;
+  aspect-ratio: 436 / 582;
+}
+.teaser-events__side {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-40);
+}
+.teaser-events__list {
+  display: grid;
+  gap: var(--space-8);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.event-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-48);
+  min-height: 112px;
+  padding: var(--space-16);
+  background-color: var(--color-surface-50); /* Figma: color/surface/50 fest, unabhängig von der Modulfarbe */
+  color: var(--color-text-primary);
+}
+.event-card__body { display: grid; gap: var(--space-4); width: 100%; }
+.event-card__title {
+  margin: 0;
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
+.event-card__meta { display: grid; gap: var(--space-16); }
+.event-card__place {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+}
+.event-card__date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+}
+.event-card__time {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+@media (min-width: 768px) {
+  .event-card { flex-direction: row; align-items: flex-end; gap: var(--space-24); }
+  .event-card__body { flex: 1 1 auto; min-width: 0; }
+  .event-card .btn { flex: none; }
+}
+@media (min-width: 1024px) {
+  .teaser-events__content {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    align-items: start;
+    margin-top: var(--space-80);
+  }
+  .teaser-events__images {
+    grid-column: 1 / span 6;
+    gap: var(--space-24);
+    padding-top: var(--space-112);
+  }
+  .teaser-events__img--a { flex: 1 1 0; aspect-ratio: 436 / 582; }
+  .teaser-events__img--b { flex: 0 0 calc(208 / 668 * 100%); aspect-ratio: 208 / 277; }
+  .teaser-events__side { grid-column: 8 / span 5; justify-items: end; }
+  .event-card__meta { gap: var(--space-40); }
+}
+
+/* ---------- Teaser-Search (Figma: teaser-search 2522:59492 / Phone 2522:59504) ----------
+   Phone: Kopf (Label + H2, Gap 16), Text H6 + Suchfeld (Gap 40), Kopf → Text 48, darunter Collage 343 : 336.
+   Desktop: Collage Spalte 1–7 (783 : 971), Inhalt Spalte 8–12 mit Padding 40, vertikal mittig
+   (Figma: 198 von oben, siehe README).
+   Collage: vier gleiche Flächen (Polygon aus Figma, prozentual, auf beiden Breakpoints dasselbe):
+   oben das Dokument (Bild), darunter surface-400, -300, -200, jeweils schräg nach rechts unten versetzt.
+   Fotos darüber: Porträt (beide), Arbeitsbuch (nur Desktop), Entlassung (beide, andere Lage).
+   Bewegung (scroll-motion.js): Die drei Flächen starten deckungsgleich unter dem Dokument und fächern auf. */
+.teaser-search {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+  overflow: clip;
+}
+.teaser-search__layout {
+  display: grid;
+  gap: var(--space-80);
+}
+.teaser-search__content { display: grid; gap: var(--space-48); }
+.teaser-search__head { display: grid; gap: var(--space-16); max-width: 439px; }
+.teaser-search__head > * { margin: 0; }
+.teaser-search__body { display: grid; gap: var(--space-40); max-width: 552px; }
+.teaser-search__lead {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+.collage {
+  position: relative;
+  order: 1; /* Phone: Collage unter dem Text */
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 343 / 336;
+}
+.collage__shape {
+  position: absolute;
+  width: 93.22%;
+  height: 83.33%;
+  clip-path: polygon(0 87.33%, 17.39% 90.72%, 69.18% 100%, 93.35% 81.68%, 100% 47.43%, 82.48% 44.29%, 88.75% 13.05%, 20.72% 0);
+}
+.collage__shape--1 { left: 0; top: 6.55%; clip-path: none; }
+.collage__shape--1 img { display: block; width: 100%; height: 100%; }
+.collage__shape--2 { left: 2.71%; top: 10.12%; background-color: var(--color-surface-400); }
+.collage__shape--3 { left: 5.08%; top: 13.39%; background-color: var(--color-surface-300); }
+.collage__shape--4 { left: 7.46%; top: 16.67%; background-color: var(--color-surface-200); }
+.collage__img {
+  position: absolute;
+  display: block;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.collage__img--portrait { left: 41.11%; top: 0; width: 39.36%; }
+.collage__img--arbeitsbuch { display: none; }
+.collage__img--entlassung { left: 12.24%; top: 60.71%; width: 24.78%; }
+@media (min-width: 1024px) {
+  .teaser-search__layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    align-items: center;
+  }
+  .collage { order: 0; grid-column: 1 / span 7; max-width: none; aspect-ratio: 783 / 971; }
+  .teaser-search__content { grid-column: 8 / span 5; gap: var(--space-40); padding: var(--space-40); }
+  .collage__shape { width: 92.21%; height: 75.59%; }
+  .collage__shape--1 { left: 0; top: 15.04%; }
+  .collage__shape--2 { left: 2.81%; top: 18.13%; }
+  .collage__shape--3 { left: 5.49%; top: 21.22%; }
+  .collage__shape--4 { left: 7.54%; top: 24.41%; }
+  .collage__img--portrait { left: 58.88%; width: 41.12%; }
+  .collage__img--arbeitsbuch { display: block; left: 0; top: 32.34%; width: 26.44%; }
+  .collage__img--entlassung { left: 29.5%; top: 78.68%; width: 26.44%; }
+}
+
+/* ---------- Image-Fullwidth (Figma: image-fullwidth 2522:59494 / Phone 2522:59506) ----------
+   Randlos (section--bleed), 16 : 9 (1440 × 810 / 375 × 211).
+   Bewegung (scroll-motion.js): Bild 112 % groß, schwenkt beim Scrollen um ±40 px. */
+.image-full__frame { overflow: hidden; }
+.image-full__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* ---------- Hover-Zoom (aus dem alten Prototyp) ----------
+   Teaser-Bilder zoomen beim Hover über die Karte auf 110 %, 0,4 s ease-out (Werte 1:1).
+   Ausnahme von „Zustände nur Farbe“ (Motion-Regel), entschieden 2026-10-01. Nur mit echtem Hover
+   (Maus, Trackpad), auf Touch bliebe der Zoom nach dem Tippen stehen. Reduced Motion: kein Zoom. */
+.teaser-card__media,
+.teaser-block__media { overflow: hidden; }
+.teaser-card__img--right { object-position: 85% 50%; } /* Ausschnitt wie Figma (Für Schulen) */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .teaser-card__img,
+  .teaser-block__img { transition: transform 0.4s ease-out; }
+  .teaser-card:hover .teaser-card__img,
+  .teaser-block:hover .teaser-block__img { transform: scale(1.1); }
+}
+
+/* ---------- Bewegungen, die an den Scroll gekoppelt sind (../shared/scroll-motion.js) ----------
+   Das Script schreibt scale/translate pro Frame. will-change hält die Ebenen auf der GPU. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion="scale"],
+  [data-fan-layer],
+  [data-motion="pan"] img { will-change: transform; }
+}

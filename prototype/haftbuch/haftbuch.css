@@ -235,14 +235,14 @@ body { background-color: var(--color-bg-page); }
   line-height: var(--line-height-label-s);
   letter-spacing: var(--letter-spacing-label-s);
   text-transform: uppercase;
-  text-decoration: underline;
+  text-decoration: underline var(--link-underline); /* Regel „Links“ */
   text-underline-offset: 0.2em;
   color: var(--color-text-primary);
   cursor: pointer;
   transition: opacity var(--motion-fast) var(--ease-out), visibility 0s;
 }
 @media (hover: hover) {
-  .hb-reset:hover { color: var(--color-interactive); }
+  .hb-reset:hover { text-decoration-thickness: var(--link-underline-hover); } /* Regel „Links“ */
 }
 .hb-reset.is-hidden {
   opacity: 0;
@@ -612,7 +612,7 @@ body { background-color: var(--color-bg-page); }
   transition: transform var(--motion-base) var(--ease-out);
 }
 @media (hover: hover) {
-  .period-link:hover .period-link__title { color: var(--color-interactive); }
+  .period-link:hover .period-link__title { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“: kein Farbwechsel */
   .period-link:hover .icon { transform: translateX(4px); }
 }
 
@@ -649,6 +649,21 @@ body { background-color: var(--color-bg-page); }
   }
   .timeline__img--tertiary { grid-column: 1 / span 4; grid-row: 1 / span 2; height: 100%; aspect-ratio: auto; }
   .timeline__img--quaternary { grid-column: 5 / span 2; grid-row: 1; height: 100%; aspect-ratio: auto; }
+}
+
+/* Bewegung (../shared/scroll-motion.js, data-motion="drift", entschieden 2026-10-01, Richtwerte):
+   Die Bildrahmen starten nach unten versetzt und steigen beim Reinscrollen unterschiedlich schnell in
+   ihre Lage, die Collage baut sich auf. Nur der Rahmen bewegt sich, der Bildinhalt bleibt unverändert.
+   Versatz je Breakpoint so gewählt, dass sich nichts überlappt (Abstände Phone 32, Desktop 24). */
+.timeline__img--primary { --drift-y: 16px; }
+.timeline__img--secondary { --drift-y: 8px; }
+.timeline__img--tertiary { --drift-y: 24px; }
+.timeline__img--quaternary { --drift-y: 12px; }
+@media (min-width: 1024px) {
+  .timeline__img--primary { --drift-y: 32px; }
+  .timeline__img--secondary { --drift-y: 16px; }
+  .timeline__img--tertiary { --drift-y: 80px; }
+  .timeline__img--quaternary { --drift-y: 40px; }
 }
 
 /* ==========================================================================
@@ -750,7 +765,7 @@ body { background-color: var(--color-bg-page); }
 .site-footer__social a { display: flex; align-items: center; min-height: 44px; color: var(--color-text-primary); }
 .site-footer__social .icon-mask { display: block; }
 @media (hover: hover) {
-  .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .site-footer a:hover { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“ */
 }
 .site-footer__bottom {
   display: flex;

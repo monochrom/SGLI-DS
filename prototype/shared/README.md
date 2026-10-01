@@ -16,6 +16,7 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 | `header.js` / `header.css` | Seitenkopf nicht fixiert: scrollt heraus, gleitet beim Hochscrollen von oben herein, ganz oben wieder im Seitenfluss. Platzhalter hält die Höhe. Fokus im ausgeblendeten Kopf blendet ihn ein. Figma-Doku „Seitenkopf“ `2929:2012`. |
 | `slider.js` | Slider (`[data-slider]`): Pfeil um eine Karte, Ende ist Ende (Pfeil deaktiviert, Fokus springt auf den anderen Pfeil), Tab schiebt die fokussierte Karte ins Bild, Pfeiltasten links/rechts springen von Karte zu Karte. Phone ohne Pfeile (CSS). Figma-Doku „Slider“ `2930:2449`. |
 | `faq.js` | FAQ (`details.faq-item`): Höhe klappt weich auf und zu, Antwort blendet ein, mehrere Fragen gleichzeitig offen. Natives `<details>` bleibt. `.is-closing` tauscht das Icon sofort (Regel im CSS der Prototypen). Figma-Doku „FAQ“ `2930:2730`. |
+| `scroll-motion.js` | Scroll-gekoppelte Bewegungen aus dem alten Prototyp (Parameter 1:1): wachsen (`data-motion="scale"`, Bezug Seite oder Element), Bild-Schwenk (`pan`), Auffächern (`fan`). Werte als `data-motion-*` am Element. Reduced Motion: Endlage. Genutzt auf der Startseite, Details in `../startseite/README.md`. |
 | `language.js` | Baut die Sprachauswahl (Komponente `src/components/modal`, `type=language`) und hängt sie an `<body>`. Öffnet über jeden Button mit `data-modal-open="modal-language"` (Seitenkopf und Menü). Dummy: Deutsch vorausgewählt, jede Option schließt nur. Einbinden nach `../../src/components/modal/modal.js`. |
 
 ## Einbinden

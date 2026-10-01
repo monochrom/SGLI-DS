@@ -267,10 +267,9 @@ html.menu-lock { overflow: hidden; }
   align-items: center;
   min-height: var(--size-touch-min, 44px); /* Figma Phone: Link-Höhe 44 */
   color: inherit;
-  text-decoration: underline;
+  text-decoration-line: underline; /* nur die Linie: Dicke und Hover kommen aus base.css (Regel „Links“) */
   text-underline-offset: 0.2em;
 }
-.menu__links a:hover { color: inherit; }
 .menu__address { margin: 0; font-style: normal; }
 .menu__foot-group { display: flex; flex-direction: column; }
 

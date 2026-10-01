@@ -318,13 +318,13 @@ body { background-color: var(--color-bg-page); }
   line-height: var(--line-height-label-s);
   letter-spacing: var(--letter-spacing-label-s);
   text-transform: uppercase;
-  text-decoration: underline;
+  text-decoration: underline var(--link-underline); /* Regel „Links“ */
   text-underline-offset: 0.2em;
   color: var(--color-text-primary);
   cursor: pointer;
 }
 @media (hover: hover) {
-  .edu-filter__reset:hover { color: var(--color-interactive); }
+  .edu-filter__reset:hover { text-decoration-thickness: var(--link-underline-hover); } /* Regel „Links“ */
 }
 .edu-filter__reset {
   transition: opacity var(--motion-fast) var(--ease-out), visibility 0s;
@@ -358,7 +358,7 @@ body { background-color: var(--color-bg-page); }
   text-decoration: none;
 }
 @media (hover: hover) {
-  .edu-item:hover .edu-item__title { color: var(--color-interactive); }
+  .edu-item:hover .edu-item__title { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“: kein Farbwechsel */
 }
 .edu-item__head {
   display: flex;
@@ -724,9 +724,8 @@ body { background-color: var(--color-bg-page); }
   margin: 0 0 var(--space-48);
   overflow-wrap: anywhere;
 }
-.contact__card address a { color: inherit; } /* Figma: text/primary, unterstrichen */
+/* Links in der Adresse: Textfarbe + Unterstrich aus base.css (Regel „Links“) */
 @media (hover: hover) {
-  .contact__card address a:hover { color: var(--color-interactive-hover); }
 }
 @media (min-width: 1024px) {
   .contact__grid { grid-template-columns: 1fr 1fr; gap: var(--space-64); align-items: start; }
@@ -954,7 +953,7 @@ body { background-color: var(--color-bg-page); }
 .site-footer__social a { display: flex; align-items: center; min-height: 44px; color: var(--color-text-primary); }
 .site-footer__social .icon-mask { display: block; }
 @media (hover: hover) {
-  .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .site-footer a:hover { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“ */
 }
 .site-footer__bottom {
   display: flex;

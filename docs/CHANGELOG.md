@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-01 – Prototyp Startseite
+
+- Neu: `prototype/startseite/` nach Figma „Startseite“ `2522:59485` (Desktop `2522:59486`, Phone `2522:59498`), responsiv mit Tablet-Zwischenstufe. Neun Module: hero-home, teaser-grid, teaser-stacked (Cut-Edges), teaser-event-list, teaser-search, teaser-timeline, image-fullwidth, teaser-slider, teaser-feature. `prototype/index.html` leitet auf die Startseite weiter.
+- Bewegungen aus dem alten Prototyp (sgli-prototype.netlify.app) mit den Parametern 1:1 in `prototype/shared/scroll-motion.js`: Hero-Grundriss und Hero-Bild wachsen mit dem Scrollen, Haftbuch-Collage fächert auf, Vollbild-Foto schwenkt, Ornament „Die Stiftung“ wächst. Dazu Hover-Zoom der Teaser-Bilder (110 %, 0,4 s), als Ausnahme von „Zustände nur Farbe“ (Danilo, 2026-10-01). Reduced Motion: Endlage.
+- Logos in Seitenkopf, Menü (`shared/menu.js`) und Footer von haftbuch und angebote-filter verlinken auf die Startseite. `haftbuch/haftbuch.js` übernimmt einen Suchbegriff aus `?q=` (Suchfeld der Startseite).
+- Fix: Grundriss-Linie im Hero wurde beim Scrollen unten angeschnitten (an der Breite bemessen, Hero niedriger als in Figma, `overflow: clip`). Jetzt ab 768 an Ober-/Unterkante gebunden wie Figma, Hero schneidet nur seitlich ab.
+- teaser-timeline: Bildrahmen steigen beim Scrollen unterschiedlich schnell in ihre Lage (neuer Typ `drift` in `scroll-motion.js`), Startseite und Haftbuch.
+- Figma (Freigabe Danilo): Doku „Motion“ `2932:2974` um „Bewegung der Module“ erweitert (Richtwerte für Größe und Strecke, optionale Module, Module ohne Bewegung). Regel „Dokumentarische Bilder bewegen sich nicht“ in der Grundregel, Hover-Zoom als Ausnahme bei „Vor Ort“, „Bewegung reduzieren“ ergänzt.
+- Links neu geregelt (Danilo): Links haben immer die Textfarbe ihrer Umgebung und sind unterstrichen, keine eigene Linkfarbe mehr (`color/interactive` war auf manchen Modulfarben nicht lesbar). Hover nur mit Maus: Unterstrich wird kräftiger (1 → 2 px), nie ein Farbwechsel. Klickbare Titel (Zeitschichten, Bildungs-Ergebnisse) und Footer-Links bekommen beim Hover einen dünnen Unterstrich (1 px) statt einer Farbe. Code: `src/styles/base.css` (`--link-underline`, `--link-underline-hover`, `--link-underline-offset`), `form.css`, Prototypen und `shared/menu.css` angepasst. Damit ist auch der Fehler behoben, dass Buttons als Links (`<a class="btn btn--primary">`) beim Hover ihr Label verloren (`a:hover` überschrieb die Button-Farbe). Geprüft: alle 108 Buttons in den drei Prototypen ≥ 4,5:1 beim Hover.
+- Figma (Freigabe Danilo): neuer Doku-Frame „Links“ `2980:3005` auf 🎨 Foundations unter „Fokus“: Grundregel, Zustände, Beispiele auf surface-100, secondary-400 und primary-900 (an Semantic-Variablen und Modes gebunden, keine Variablen geändert).
+- Annahmen und offene Figma-Punkte in `prototype/startseite/README.md`.
+
 ## 2026-09-30 – Doku Bilder und Lightbox in Figma
 
 - Figma (Freigabe Danilo): Doku-Frame „Bilder“ `2950:2917` auf 🎨 Foundations, nur Aufbau und Verhalten: Craft-Felder je Bild (Alternativtext, Bildunterschrift, Infotext) und je Modul (Schalter „Lightbox“), Bildunterschrift im Modul, Auslöser im Modul, Lightbox-Previews Desktop/Phone mit Backdrop, Aufbau, Verhalten, Bewegung.

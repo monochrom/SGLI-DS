@@ -58,7 +58,7 @@
       '<div class="menu__panel">' +
         // Kopf: wie .site-nav der Seiten (Figma Site Header im Overlay)
         '<header class="menu__head">' +
-          '<a class="menu__logo" href="#" data-menu-dummy aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>' +
+          '<a class="menu__logo" href="../startseite/" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>' +
           '<div class="menu__actions">' +
             '<p class="menu__hours">' + hours + '</p>' +
             '<div class="menu__buttons">' +

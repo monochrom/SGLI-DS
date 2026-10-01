@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Startseite – Prototyp – SGLI</title>
+  <meta name="robots" content="noindex">
+  <!-- Design System (read-only eingebunden): Tokens, Foundations, Core Components -->
+  <link rel="stylesheet" href="../../src/styles/index.css">
+  <link rel="stylesheet" href="../../src/components/index.css">
+  <!-- Prototyp-Module -->
+  <link rel="stylesheet" href="./startseite.css">
+  <!-- Menü-Overlay, global für alle Prototypen -->
+  <link rel="stylesheet" href="../shared/menu.css">
+  <link rel="stylesheet" href="../shared/search.css">
+  <link rel="stylesheet" href="../shared/header.css">
+</head>
+<body>
+
+  <a class="sr-only" href="#inhalt">Zum Inhalt springen</a>
+
+  <!-- ===== navigation (Figma 2522:59487 / Phone 2522:59499, Aufbau wie haftbuch) ===== -->
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a class="site-nav__logo" href="./" aria-current="page" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+      <div class="site-nav__actions">
+        <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
+        <div class="site-nav__buttons">
+          <div class="site-nav__icons">
+            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln" data-modal-open="modal-language">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Translate"></use></svg>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Leichte Sprache">
+              <span class="icon icon-mask icon-mask--easy-language" aria-hidden="true"></span>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Suche öffnen" data-search-open>
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+            </button>
+          </div>
+          <button class="btn btn--primary" type="button" data-menu-open>Menü</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="inhalt">
+    <!-- ===== hero-home (Figma 2522:59488 / Phone 2522:59500)
+         Bewegung aus dem alten Prototyp: Grundriss wächst 75 → 100 % über 0,9 Viewporthöhen,
+         Bild wächst 60 → 100 % über 1,15 Viewporthöhen, beide gekoppelt an den Seiten-Scroll. ===== -->
+    <section class="hero-home section--hero-home" data-context="surface-100" aria-labelledby="hero-heading">
+      <div class="hero-home__plan" aria-hidden="true" data-motion="scale" data-motion-from="0.75" data-motion-range="0.9">
+        <svg viewBox="0 0 1505.19 1545.06" preserveAspectRatio="none" focusable="false"><path d="M4.81109 1336.04L262.761 1388.01L1036.99 1540.79L1400.49 1259.39L1500.5 733.218L1237.01 685.034L1331.25 205.118L308.063 4.67128L4.81109 1336.04Z" fill="none" stroke="currentColor" stroke-width="8" vector-effect="non-scaling-stroke"/></svg>
+      </div>
+      <div class="wrap hero-home__grid">
+        <div class="hero-home__content">
+          <div class="hero-home__titles">
+            <h1 class="hero-home__title" id="hero-heading">Verfolgung. Widerstand. Freiheit.</h1>
+            <p class="hero-home__sub">Ein Ort — viele Geschichten.</p>
+          </div>
+          <div class="hero-home__desc">
+            <p class="hero-home__lead">Die Gedenkstätte Lindenstraße ist ein ehemaliger Haft- und Gerichtsort im Zentrum Potsdams. Sie erinnert an politische Verfolgung im Nationalsozialismus, unter sowjetischer Besatzung und in der SED-Diktatur – sowie an die Friedliche Revolution von 1989/90.</p>
+            <div class="hero-home__actions">
+              <a class="btn btn--primary" href="#">Jetzt Besuch planen</a>
+              <a class="btn btn--secondary" href="#ausstellungen">Zu den Ausstellungen</a>
+            </div>
+          </div>
+        </div>
+        <div class="hero-home__media" data-motion="scale" data-motion-from="0.6" data-motion-range="1.15">
+          <picture>
+            <source media="(min-width: 768px)" srcset="./assets/img/hero.webp" width="2400" height="1350">
+            <img class="hero-home__img" src="./assets/img/hero-phone.webp" width="686" height="688" alt="Eingang der Gedenkstätte Lindenstraße 54/55: Torbogen mit Balkon, links und rechts Backsteinfassaden mit vergitterten Fenstern">
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-grid (Figma 2522:59489 / Phone 2522:59501) ===== -->
+    <section class="teaser-grid" data-context="surface-100" aria-labelledby="spuren-heading">
+      <div class="wrap">
+        <header class="section-header--split">
+          <div>
+            <p class="module-label">Gedenkstätte Lindenstraße erleben</p>
+            <h2 id="spuren-heading">Spuren entdecken</h2>
+          </div>
+          <p class="section-header__intro">Historische Räume, persönliche Geschichten und digitale Quellen eröffnen vielfältige Zugänge zur Geschichte der Lindenstraße.</p>
+        </header>
+        <ul class="teaser-grid__list">
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img" src="./assets/img/spuren-besuch.jpg" alt="" width="1200" height="799"></div>
+            <div>
+              <h3>Besuch planen</h3>
+              <p>Alle wichtigen Informationen für Ihren Besuch auf einen Blick – von den Öffnungszeiten über Führungen bis hin zu Hinweisen zur Anreise und Barrierefreiheit.</p>
+              <a class="btn btn--secondary" href="#">Informationen ansehen</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img" src="./assets/img/spuren-gruppen.jpg" alt="" width="1200" height="800"></div>
+            <div>
+              <h3>Gruppen</h3>
+              <p>Entdecken Sie Angebote für Gruppen und bereiten Sie Ihren Besuch in der Gedenkstätte Lindenstraße gezielt vor.</p>
+              <a class="btn btn--secondary" href="#">Mehr zu Gruppenbesuchen</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img" src="./assets/img/spuren-recherche.jpg" alt="" width="832" height="1110"></div>
+            <div>
+              <h3>Recherche</h3>
+              <p>Ein digitaler Erinnerungsraum mit Biografien, historischen Quellen und Einblicken in die Geschichte des Haftorts Lindenstraße 54/55.</p>
+              <a class="btn btn--secondary" href="../haftbuch/">Zum Erinnerungsraum</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== cut-edges + teaser-stacked (Figma 2522:59490 / Phone 2522:59502) ===== -->
+    <section class="cut-edges cut-edges--before cut-edges--after cut-edges--tilt" data-context="surface-300" id="ausstellungen" aria-labelledby="ausstellungen-heading">
+      <div class="cut-edges__body teaser-stacked">
+        <div class="wrap">
+          <header class="section-header--split">
+            <div>
+              <p class="module-label">Ausstellungen</p>
+              <h2 id="ausstellungen-heading">Menschen, Ereignisse und Umbrüche</h2>
+            </div>
+            <p class="section-header__intro">Entdecken Sie unsere aktuellen Dauer- und Sonderausstellungen und erfahren Sie, wie politische Veränderungen das Leben an der Lindenstraße geprägt haben.</p>
+          </header>
+          <ul class="teaser-stacked__list">
+            <li class="teaser-block">
+              <div class="teaser-block__media"><img class="teaser-block__img" src="./assets/img/ausstellung-sonder.jpg" alt="" width="1800" height="1200"></div>
+              <div class="teaser-block__body">
+                <div class="teaser-block__info">
+                  <span class="tag">26. September 2025 — 12. Juli 2026</span>
+                  <div class="teaser-block__title-date">
+                    <h3 class="teaser-block__title">Das graue Elend von Potsdam.<br>Sowjetischer Haft- und Tribunalort Lindenstraße 1945–1952.</h3>
+                    <p class="teaser-block__date">26. September 2025 — 12. Juli 2026</p>
+                  </div>
+                  <p class="teaser-block__text">Nach 1945 nutzte der sowjetische Geheimdienst die Lindenstraße als Gefängnis und Tribunalort. Neue Forschungen, Dokumente und 26 Biografien erzählen von Verfolgung und Haft – und nehmen erstmals auch das Geheimdienstpersonal in den Blick.</p>
+                </div>
+                <a class="btn btn--secondary" href="#">Zur Ausstellung</a>
+              </div>
+            </li>
+            <li class="teaser-block">
+              <div class="teaser-block__media"><img class="teaser-block__img" src="./assets/img/ausstellung-dauer.jpg" alt="" width="1800" height="1198"></div>
+              <div class="teaser-block__body">
+                <div class="teaser-block__info">
+                  <div class="teaser-block__title-date">
+                    <h3 class="teaser-block__title">Die Dauerausstellung —<br>den historische Ort erleben.</h3>
+                    <p class="teaser-block__date">26. September 2025 — 12. Juli 2026</p>
+                  </div>
+                  <p class="teaser-block__text">Die Begegnung mit ehemaligen Inhaftierten ermöglicht einen unmittelbaren Einblick in persönliche Erfahrungen von Verfolgung und Haft.</p>
+                </div>
+                <a class="btn btn--secondary" href="#">Mehr erfahren</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-event-list (Figma 2522:59491 / Phone 2522:59503) ===== -->
+    <section class="teaser-events" data-context="secondary-400" aria-labelledby="veranstaltungen-heading">
+      <div class="wrap">
+        <header class="section-header--split">
+          <div>
+            <p class="module-label">Veranstaltungen</p>
+            <h2 id="veranstaltungen-heading">Geschichte im Gespräch</h2>
+          </div>
+          <p class="section-header__intro">Zeitzeugengespräche, Vorträge und Diskussionen bringen historische Erfahrungen, neue Forschung und aktuelle Fragen zusammen.</p>
+        </header>
+        <div class="teaser-events__content">
+          <div class="teaser-events__images">
+            <img class="teaser-events__img teaser-events__img--a" src="./assets/img/veranstaltung-fuehrung.jpg" alt="Eine Guide zeigt bei einer Führung ein historisches Foto" width="1400" height="932">
+            <img class="teaser-events__img teaser-events__img--b" src="./assets/img/veranstaltung-gruppe.jpg" alt="Jugendliche hören einem Zeitzeugen im Treppenhaus zu" width="1000" height="667">
+          </div>
+          <div class="teaser-events__side">
+            <ul class="teaser-events__list">
+              <li class="event-card">
+                <div class="event-card__body">
+                  <h3 class="event-card__title">Eröffnung der Sonderausstellung</h3>
+                  <div class="event-card__meta">
+                    <p class="event-card__place">Gedenkstätte Lindenstraße, Hauptgebäude</p>
+                    <p class="event-card__date"><span class="tag">Heute</span><span class="event-card__time">20.06.2026 — 15:00 Uhr</span></p>
+                  </div>
+                </div>
+                <a class="btn btn--secondary" href="#">Details ansehen</a>
+              </li>
+              <li class="event-card">
+                <div class="event-card__body">
+                  <h3 class="event-card__title">Eröffnung der Sonderausstellung</h3>
+                  <div class="event-card__meta">
+                    <p class="event-card__place">Gedenkstätte Lindenstraße, Hauptgebäude</p>
+                    <p class="event-card__date"><span class="event-card__time">20.06.2026 — 15:00 Uhr</span></p>
+                  </div>
+                </div>
+                <a class="btn btn--secondary" href="#">Details ansehen</a>
+              </li>
+              <li class="event-card">
+                <div class="event-card__body">
+                  <h3 class="event-card__title">Eröffnung der Sonderausstellung</h3>
+                  <div class="event-card__meta">
+                    <p class="event-card__place">Gedenkstätte Lindenstraße, Hauptgebäude</p>
+                    <p class="event-card__date"><span class="event-card__time">20.06.2026 — 15:00 Uhr</span></p>
+                  </div>
+                </div>
+                <a class="btn btn--secondary" href="#">Details ansehen</a>
+              </li>
+            </ul>
+            <a class="btn btn--primary" href="#">Alle Veranstaltungen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-search (Figma 2522:59492 / Phone 2522:59504)
+         Bewegung aus dem alten Prototyp: Die Ebenen 2–4 liegen zuerst deckungsgleich unter dem
+         Dokument und fächern beim Reinscrollen zu ihrer Position auf. ===== -->
+    <section class="teaser-search" data-context="surface-100" aria-labelledby="haftbuch-heading">
+      <div class="wrap teaser-search__layout">
+        <div class="collage" aria-hidden="true" data-motion="fan">
+          <span class="collage__shape collage__shape--4" data-fan-layer></span>
+          <span class="collage__shape collage__shape--3" data-fan-layer></span>
+          <span class="collage__shape collage__shape--2" data-fan-layer></span>
+          <picture class="collage__shape collage__shape--1" data-fan-anchor>
+            <source media="(min-width: 1024px)" srcset="./assets/img/collage-document.webp" width="1444" height="1468">
+            <img src="./assets/img/collage-document-phone.webp" width="640" height="560" alt="">
+          </picture>
+          <img class="collage__img collage__img--portrait" src="./assets/img/collage-portrait.jpg" width="800" height="515" alt="">
+          <img class="collage__img collage__img--arbeitsbuch" src="./assets/img/collage-arbeitsbuch.jpg" width="600" height="520" alt="">
+          <img class="collage__img collage__img--entlassung" src="./assets/img/collage-entlassung.jpg" width="600" height="990" alt="">
+        </div>
+        <div class="teaser-search__content">
+          <div class="teaser-search__head">
+            <p class="module-label">Haftbücher &amp; Schicksale</p>
+            <h2 id="haftbuch-heading">Zugang zu Biografien und Schicksalen</h2>
+          </div>
+          <div class="teaser-search__body">
+            <p class="teaser-search__lead">Die digitalen Haftbücher ermöglichen den Zugang zu ausgewählten Biografien und Schicksalen aus verschiedenen Zeitschichten der Lindenstraße.</p>
+            <form class="teaser-search__form" action="../haftbuch/" method="get" role="search">
+              <div class="field">
+                <div class="field__box">
+                  <input class="field__input" id="haftbuch-q" name="q" type="search" placeholder=" " autocomplete="off">
+                  <label class="field__label" for="haftbuch-q">1.240 Einträge durchsuchen …</label>
+                  <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-timeline, image-count=4 (Figma 2522:59493 / Phone 2522:59505, Aufbau wie haftbuch) ===== -->
+    <section class="timeline" data-context="surface-200" aria-labelledby="timeline-heading">
+      <div class="wrap">
+        <header class="timeline__header">
+          <div class="timeline__heading">
+            <p class="module-label">Zeitschichten</p>
+            <h2 id="timeline-heading">Historische Zusammenhänge verstehen</h2>
+          </div>
+        </header>
+
+        <div class="timeline__content">
+          <img class="timeline__img timeline__img--primary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-boykott-1933.jpg" alt="SA-Männer vor einem Geschäft mit Boykottschildern, 1933" width="1200" height="853">
+          <p class="timeline__lead text-h5">Vier Zeitschichten strukturieren die Geschichte der Lindenstraße: Nationalsozialismus, sowjetische Besatzungszeit, SED-Diktatur und Friedliche Revolution. Sie erklären die jeweiligen politischen und gesellschaftlichen Zusammenhänge und bilden den Kontext für Ausstellungen, Biografien und weitere Inhalte.</p>
+
+          <div class="timeline__left">
+            <img class="timeline__img timeline__img--secondary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-panzer-1953.jpg" alt="Sowjetischer Panzer und Menschen auf der Straße am 17. Juni 1953" width="1200" height="798">
+            <ul class="timeline__periods">
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">NS-Diktatur</span><span class="period-link__years">1933 — 1945</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">Sowjetische Besatzung</span><span class="period-link__years">1945 — 1952</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">SED-Diktatur</span><span class="period-link__years">1952 — 1989</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+              <li><a class="period-link" href="#"><span class="period-link__text"><span class="period-link__title">Friedliche Revolution</span><span class="period-link__years">1989/90</span></span><svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg></a></li>
+            </ul>
+          </div>
+
+          <div class="timeline__right">
+            <img class="timeline__img timeline__img--tertiary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-mauerfall-1989.jpg" alt="Menschen auf der Mauer vor dem Brandenburger Tor, November 1989" width="1200" height="676">
+            <img class="timeline__img timeline__img--quaternary" data-motion="drift" data-motion-range="0.8" src="./assets/img/timeline-honecker.jpg" alt="Erich Honecker mit Blumenstrauß in einer Menschenmenge" width="1200" height="675">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== image-fullwidth (Figma 2522:59494 / Phone 2522:59506)
+         Bewegung aus dem alten Prototyp: Bild 112 %, schwenkt beim Scrollen von −40 px nach +40 px. ===== -->
+    <section class="image-full section--bleed" data-context="surface-100" aria-label="Bild">
+      <div class="image-full__frame" data-motion="pan" data-motion-zoom="1.12" data-motion-distance="40">
+        <img class="image-full__img" src="./assets/img/fullwidth.jpg" width="2000" height="1333" alt="Besucherinnen und Besucher mit Audioguides vor einer Zellentür im Gefängnisflur">
+      </div>
+    </section>
+
+    <!-- ===== teaser-slider (Figma 2522:59495 / Phone 2522:59507) ===== -->
+    <section class="teaser-slider" data-context="primary-900" aria-labelledby="bildung-heading" data-slider>
+      <div class="wrap">
+        <header class="section-header--split">
+          <div>
+            <p class="module-label">Bildungsangebote</p>
+            <h2 id="bildung-heading">Geschichte verstehen und einordnen</h2>
+          </div>
+          <p class="section-header__intro">Unsere Bildungsangebote schaffen Zugänge zur Geschichte des Ortes und fördern die kritische Auseinandersetzung mit Diktatur, Verfolgung, Demokratie und Menschenrechten.</p>
+        </header>
+        <ul class="teaser-slider__track" data-slider-track aria-label="Bildungsangebote">
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img teaser-card__img--right" src="./assets/img/bildung-schulen.jpg" alt="" width="1000" height="667"></div>
+            <div>
+              <h3>Für Schulen</h3>
+              <p>Den historischen Ort entdecken und seine Geschichte einordnen.</p>
+              <a class="btn btn--secondary" href="../angebote-filter/">Mehr erfahren</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img" src="./assets/img/bildung-weiterbildung.jpg" alt="" width="1000" height="666"></div>
+            <div>
+              <h3>Aus- und Weiterbildung</h3>
+              <p>Persönliche Erfahrungen eröffnen unmittelbare Zugänge zur Geschichte.</p>
+              <a class="btn btn--secondary" href="../angebote-filter/">Mehr erfahren</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img" src="./assets/img/bildung-hochschulen.jpg" alt="" width="1000" height="667"></div>
+            <div>
+              <h3>Für Hochschulen</h3>
+              <p>Quellen erforschen, Zusammenhänge diskutieren und eigene Perspektiven entwickeln.</p>
+              <a class="btn btn--secondary" href="../angebote-filter/">Mehr erfahren</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img" src="./assets/img/bildung-erwachsene.jpg" alt="" width="1000" height="667"></div>
+            <div>
+              <h3>Erwachsenenbildung</h3>
+              <p>Formate für Schulklassen, Gruppen und unterschiedliche Lernbedürfnisse.</p>
+              <a class="btn btn--secondary" href="../angebote-filter/">Mehr erfahren</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <div class="teaser-card__media"><img class="teaser-card__img" src="./assets/img/bildung-inklusion.jpg" alt="" width="1000" height="666"></div>
+            <div>
+              <h3>Inklusion</h3>
+              <p>Formate für Schulklassen, Gruppen und unterschiedliche Lernbedürfnisse.</p>
+              <a class="btn btn--secondary" href="../angebote-filter/">Mehr erfahren</a>
+            </div>
+          </li>
+        </ul>
+        <div class="teaser-slider__actions">
+          <a class="btn btn--primary" href="../angebote-filter/">Zur Übersicht<span class="teaser-slider__more"> der Angebote</span></a>
+          <div class="teaser-slider__nav">
+            <button class="btn btn--icon" type="button" data-slider-prev aria-label="Vorherige Angebote">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowLeft"></use></svg>
+            </button>
+            <button class="btn btn--icon" type="button" data-slider-next aria-label="Weitere Angebote">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-feature (Figma 2522:59496 / Phone 2522:59508)
+         Bewegung aus dem alten Prototyp: Ornament wächst 75 → 100 %, sobald es ins Bild kommt
+         (über 0,6 Viewporthöhen, Drehpunkt Mitte). ===== -->
+    <section class="teaser-feature" data-context="surface-100" aria-labelledby="stiftung-heading">
+      <div class="wrap">
+        <div class="feature-card">
+          <div class="feature-card__text">
+            <h3 id="stiftung-heading">Die Stiftung</h3>
+            <p>Die Stiftung Gedenkstätte Lindenstraße bewahrt, erforscht und vermittelt die Geschichte des historischen Ortes. Erfahren Sie mehr über ihre Aufgaben, Projekte und die Menschen, die diese Arbeit ermöglichen.</p>
+            <a class="btn btn--secondary" href="#">Mehr erfahren</a>
+          </div>
+          <div class="feature-card__media">
+            <img class="feature-card__img" src="./assets/img/feature.jpg" alt="Innenhof der Gedenkstätte Lindenstraße mit Backsteingebäuden und offenen Toren" width="1600" height="1066">
+            <svg class="feature-card__deco" viewBox="0 0 622.513 634.924" aria-hidden="true" focusable="false" data-motion="scale" data-motion-ref="self" data-motion-from="0.75" data-motion-range="0.6"><path d="M4.83068 551.338L111.439 572.545L428.914 630.668L577.069 515.993L617.831 301.566L510.438 281.93L548.849 86.3543L131.82 4.66798L4.83068 551.338Z" fill="none" stroke="currentColor" stroke-width="8"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== footer (Figma 2522:59497 / Phone 2522:59509, Aufbau wie haftbuch) ===== -->
+  <footer class="site-footer" data-context="primary-900">
+    <div class="site-footer__main">
+      <div class="site-footer__brand">
+        <a class="site-footer__logo" href="./" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+        <ul class="site-footer__social" aria-label="Social Media">
+          <li><a href="#" aria-label="Instagram"><span class="icon icon-mask icon-mask--instagram" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="Facebook"><span class="icon icon-mask icon-mask--facebook" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="LinkedIn"><span class="icon icon-mask icon-mask--linkedin" aria-hidden="true"></span></a></li>
+        </ul>
+      </div>
+      <nav class="site-footer__cols" aria-label="Footer">
+        <ul>
+          <li><a href="#">Besuch planen</a></li>
+          <li><a href="#ausstellungen">Ausstellungen</a></li>
+          <li><a href="#">Veranstaltungen</a></li>
+        </ul>
+        <ul>
+          <li><a href="../haftbuch/">Haftbücher &amp; Schicksale</a></li>
+          <li><a href="../angebote-filter/">Bildung</a></li>
+          <li><a href="#">Die Stiftung</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Kontakt</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Stiftung Gedenkstätte Lindenstraße</p>
+      <ul class="site-footer__legal">
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Cookies</a></li>
+        <li><a href="#">Digitale Barrierefreiheit</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <p class="proto-bar" aria-hidden="true">Prototyp · Stand 2026-10-01</p>
+
+  <script src="../../src/scripts/focus-modality.js"></script>
+  <script src="../shared/menu.js"></script>
+  <script src="../../src/components/modal/modal.js"></script>
+  <script src="../shared/language.js"></script>
+  <script src="../shared/header.js"></script>
+  <script src="../shared/slider.js"></script>
+  <script src="../shared/search.js"></script>
+  <script src="../shared/scroll-motion.js"></script>
+</body>
+</html>
