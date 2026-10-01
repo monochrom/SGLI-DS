@@ -41,8 +41,18 @@
     .bp-table td:nth-child(2) { font-family: var(--font-family-mono); }
     .focus-demo { display: flex; flex-wrap: wrap; gap: var(--space-16); }
     .focus-demo button, .focus-demo a, .focus-demo input { padding: var(--space-10) var(--space-16); border: var(--border-default) solid var(--color-border-default); border-radius: var(--radius-sm); background: var(--color-bg-card); }
+    .ss-demo { margin-top: var(--space-16); border: 1px solid var(--color-border-default); }
+    .ss-demo > * + * { box-shadow: inset 0 1px 0 #d63384; } /* Modulgrenze */
+    .ss-box { display: grid; gap: 4px; padding: var(--space-16); border: 1px dashed currentColor; font-size: var(--font-size-caption); background: color-mix(in srgb, currentColor 6%, transparent); }
+    .ss-box b { font-weight: var(--font-weight-semibold); }
+    .ss-box output { font-family: var(--font-family-mono); opacity: .8; }
+    .ss-img { min-height: 160px; background: var(--color-neutral-400); color: var(--color-neutral-900); border-style: none; }
+    .ss-back { display: inline-block; margin-bottom: var(--space-40); font-size: var(--font-size-caption); } /* Beispiel, fester Abstand setzt das Hero-Modul */
     .cut-demo { display: grid; gap: 0; }
+    .cut-demo--tilt { padding-bottom: 60vh; } /* Platz, damit der Keil bis in die Endlage scrollen kann */
+    .cut-tilt-control { display: inline-flex; align-items: center; gap: 12px; margin-block: 8px 24px; }
   </style>
+  <script src="../src/scripts/focus-modality.js"></script>
 </head>
 <body>
   <nav class="doc-nav" aria-label="Abschnitte">
@@ -53,6 +63,7 @@
       <li><a href="#typography">Typografie</a></li>
       <li><a href="#spacing">Spacing</a></li>
       <li><a href="#layout">Layout &amp; Breakpoints</a></li>
+      <li><a href="#section-spacing">Section-Spacing</a></li>
       <li><a href="#focus">Fokus</a></li>
       <li><a href="#icons">Icons</a></li>
       <li><a href="#cut-edges">Cut-Edges</a></li>
@@ -112,6 +123,40 @@
       </div>
     </section>
 
+    <section id="section-spacing" class="doc-section">
+      <h2>Section-Spacing</h2>
+      <p>Abstand eines Moduls oben, unten und seitlich (<code>src/styles/section.css</code>, Figma-Doku „Section-Spacing“). Jedes Modul ist ein direktes Kind von <code>&lt;main&gt;</code> oder <code>.modules</code> und trägt <code>data-context</code> (auch surface-50). Die Regeln setzen <code>--section-pt</code>, <code>--section-pb</code>, <code>--section-px</code> am Modul, das Modul liest sie über <code>.section</code> oder <code>padding: var(--section-pt) var(--section-px) var(--section-pb)</code>.</p>
+      <ol>
+        <li>Standard: oben, unten, seitlich Standard.</li>
+        <li>Gleiche Farbe hintereinander: das folgende Modul oben ohne (auch nach Hero nur Text und Hero „Presse“).</li>
+        <li>Textfolge <code>.section--text</code>: unten kompakt, oben ohne über Regel 2.</li>
+        <li>Cut-Edges <code>.cut-edges</code>: oben und unten kompakt.</li>
+        <li>Randlos <code>.section--bleed</code>: rundum ohne.</li>
+        <li>Hero: <code>.section--hero-home</code> und <code>.section--hero-text</code> oben Standard, <code>.section--hero-media</code> oben ohne, mit Zurück-Button (<code>.hero-back</code>) oben ohne.</li>
+        <li>Ausnahme zu 2: nach <code>.section--hero-home</code>, <code>.section--hero-media</code> und randlosen Modulen bleibt das folgende Modul oben Standard.</li>
+      </ol>
+      <p>Die Boxen zeigen die berechneten Abstände live (Fenster schmaler ziehen: Phone-Werte).</p>
+      <h3>Beispiel 1: Hero nur Text, Textfolge, Randlos, Cut-Edges</h3>
+      <div class="modules ss-demo">
+        <section data-context="surface-100" class="section section--hero-text"><div class="ss-box"><b>Hero nur Text</b><output></output></div></section>
+        <section data-context="surface-100" class="section"><div class="ss-box"><b>Modul gleiche Farbe nach dem Hero (Regel 2)</b><output></output></div></section>
+        <section data-context="surface-300" class="section"><div class="ss-box"><b>Andere Farbe (Regel 1)</b><output></output></div></section>
+        <section data-context="surface-50" class="section section--text"><div class="ss-box"><b>Textfolge, erster Block</b><output></output></div></section>
+        <section data-context="surface-50" class="section section--text"><div class="ss-box"><b>Textfolge, weiterer Block</b><output></output></div></section>
+        <section data-context="surface-50" class="section section--bleed"><div class="ss-box ss-img"><b>Randlos</b><output></output></div></section>
+        <section data-context="surface-50" class="section"><div class="ss-box"><b>Gleiche Farbe nach Randlos (Regel 7: oben Standard)</b><output></output></div></section>
+        <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after"><div class="cut-edges__body section"><div class="ss-box"><b>Modul mit Cut-Edges</b><output></output></div></div></section>
+        <section data-context="surface-300" class="section"><div class="ss-box"><b>Modul danach</b><output></output></div></section>
+      </div>
+      <h3>Beispiel 2: Hero mit Bild, Hero mit Zurück-Button, Cut-Edges als letztes Modul</h3>
+      <div class="modules ss-demo">
+        <section data-context="surface-100" class="section section--hero-media"><div class="ss-box ss-img"><b>Hero mit Bild</b><output></output></div></section>
+        <section data-context="surface-100" class="section"><div class="ss-box"><b>Gleiche Farbe nach Hero mit Bild (Regel 7)</b><output></output></div></section>
+        <section data-context="surface-200" class="section section--hero-text"><a class="hero-back ss-back" href="#section-spacing">← Zurück</a><div class="ss-box"><b>Hero nur Text mit Zurück-Button</b><output></output></div></section>
+        <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after"><div class="cut-edges__body section"><div class="ss-box"><b>Cut-Edges als letztes Modul: kein Keil unten</b><output></output></div></div></section>
+      </div>
+    </section>
+
     <section id="focus" class="doc-section">
       <h2>Fokus</h2>
       <p>Doppelter Ring: innen 2 px, außen 4 px. Mit Tab durch die Elemente gehen. Unten der invertierte Kontext.</p>
@@ -134,11 +179,19 @@
 
     <section id="cut-edges" class="doc-section">
       <h2>Cut-Edges</h2>
-      <p>„Der Schnitt“: Keile in Modulfarbe oben (Diagonale) und unten (asymmetrisches V). Geometrie 1:1 aus Figma, proportional zur Breite.</p>
+      <p>„Der Schnitt“: Keile in Modulfarbe oben (Diagonale) und unten (asymmetrisches V). Geometrie 1:1 aus Figma, proportional zur Breite. Die Fläche neben dem Keil übernimmt automatisch die Farbe des Nachbarmoduls (davor/danach), damit die Module ineinander übergehen.</p>
       <div class="cut-demo">
-        <section data-context="surface-300" class="cut-edges cut-edges--after"><div class="cut-edges__body section section--compact"><h3>surface-300, after</h3></div></section>
-        <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after"><div class="cut-edges__body section section--compact"><h3>primary-900, before + after</h3><p>Fließtext auf invertiertem Kontext.</p></div></section>
-        <section data-context="secondary-400" class="cut-edges cut-edges--before"><div class="cut-edges__body section section--compact"><h3>secondary-400, before</h3></div></section>
+        <section data-context="surface-300" class="cut-edges cut-edges--after"><div class="cut-edges__body section"><h3>surface-300, after</h3></div></section>
+        <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after"><div class="cut-edges__body section"><h3>primary-900, before + after</h3><p>Fließtext auf invertiertem Kontext.</p></div></section>
+        <section data-context="secondary-400" class="cut-edges cut-edges--before"><div class="cut-edges__body section"><h3>secondary-400, before</h3></div></section>
+      </div>
+      <h3>Kippen beim Scrollen</h3>
+      <p><code>.cut-edges--tilt</code> (nur mit <code>--before</code>, am Modul mit Cut-Edges): Die Diagonale dreht sich um die linke obere Ecke, das rechte Ende fällt in die Endlage. An die Scroll-Position gekoppelt und linear, also mit festem Verhältnis zum Scrollen (Parallax): Die Kante bewegt sich um <code>--cut-tilt-factor</code> der Scrollstrecke (Standard 0.25), rückwärts beim Hochscrollen. Beginn, wenn die Oberkante des Moduls <code>--cut-tilt-offset</code> (30vh) über dem unteren Rand liegt. Start per <code>--cut-tilt-start</code> (Anteil der Keilhöhe, Standard 0.6 ≈ 6,7° statt 11°). Firefox und „Bewegung reduzieren“: Endlage.</p>
+      <label class="cut-tilt-control">Start <input type="range" id="cut-tilt-start" min="0.3" max="0.9" step="0.05" value="0.6"> <output for="cut-tilt-start" id="cut-tilt-out">0.6</output></label>
+      <label class="cut-tilt-control">Parallax-Faktor <input type="range" id="cut-tilt-factor" min="0.1" max="0.6" step="0.05" value="0.25"> <output for="cut-tilt-factor" id="cut-tilt-factor-out">0.25</output></label>
+      <div class="cut-demo cut-demo--tilt">
+        <section data-context="surface-300" class="cut-edges cut-edges--after"><div class="cut-edges__body section"><h3>surface-300, after</h3></div></section>
+        <section data-context="primary-900" class="cut-edges cut-edges--before cut-edges--after cut-edges--tilt" id="cut-tilt-demo"><div class="cut-edges__body section"><h3>primary-900, before + tilt</h3><p>Fließtext auf invertiertem Kontext.</p></div></section>
       </div>
     </section>
   </main>
@@ -250,6 +303,27 @@
       const root = document.getElementById('icon-grid');
       for (const n of icons) root.append(el('div', { class: 'cell' }, `<svg class="icon icon--lg" aria-hidden="true"><use href="../dist/icons/sprite.svg#icon-${n}"></use></svg><span>${n}</span>`));
     }
+
+    function ssValues() {
+      for (const o of document.querySelectorAll('.ss-demo output')) {
+        const pad = o.closest('.section');
+        const cs = getComputedStyle(pad);
+        o.value = `oben ${parseFloat(cs.paddingTop)} · unten ${parseFloat(cs.paddingBottom)} · seitlich ${parseFloat(cs.paddingLeft)}`;
+      }
+    }
+    ssValues();
+    addEventListener('resize', ssValues);
+
+    const tiltInput = document.getElementById('cut-tilt-start');
+    tiltInput.addEventListener('input', () => {
+      document.getElementById('cut-tilt-demo').style.setProperty('--cut-tilt-start', tiltInput.value);
+      document.getElementById('cut-tilt-out').value = tiltInput.value;
+    });
+    const factorInput = document.getElementById('cut-tilt-factor');
+    factorInput.addEventListener('input', () => {
+      document.getElementById('cut-tilt-demo').style.setProperty('--cut-tilt-factor', factorInput.value);
+      document.getElementById('cut-tilt-factor-out').value = factorInput.value;
+    });
 
     main().catch(e => { document.querySelector('main').prepend(el('p', { class: 'fail' }, 'Konnte dist/ nicht laden. Bitte npm run build und npm run docs ausführen. ' + e)); });
   </script>

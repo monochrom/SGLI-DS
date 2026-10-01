@@ -1,6 +1,6 @@
 # Spezifikation Filter- und Tag-System „Bildung“
 
-Stand 2026-09-11. Abgeleitet aus Figma „SGLI – Design“, Section Bildung (`2548:24966`), Boards „Regeln für Filter“ und „Dynamische Ausgabe von Tags“, plus den Entscheidungen vom 2026-09-11. Referenzimplementierung: `prototype/filter.js` und `prototype/data.js`. Zielsystem Craft CMS, die Regeln sind aber CMS-neutral formuliert.
+Abgeleitet aus Figma „SGLI – Design“, Section Bildung (`2522:59510`), Boards „Regeln für Filter“ und „Dynamische Ausgabe von Tags“. Referenzimplementierung: `prototype/angebote-filter/filter.js` und `prototype/angebote-filter/data.js`. Zielsystem Craft CMS, die Regeln sind aber CMS-neutral formuliert.
 
 ---
 
@@ -79,15 +79,15 @@ Bezugsgröße ist **Pool**, nicht Treffer. Damit blendet ein gesetzter Detailfil
 | Bedingung | Zeile „Genauer filtern“ |
 |---|---|
 | keine Zielgruppe gesetzt | nicht anzeigen (Figma „Filter Default“) |
-| Pool < 9 | nicht anzeigen |
-| 9 ≤ Pool ≤ 20 | Thema, Dauer |
-| Pool > 20 | Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache |
+| Pool 1 bis 3 | nicht anzeigen |
+| Pool 4 bis 8 | Thema, Dauer |
+| Pool ab 9 | Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache |
 
 Reihenfolge der Chips wie in der letzten Zeile. Ein **gesetzter** Detailfilter bleibt immer sichtbar, auch wenn die Ampel ihn gerade nicht anbieten würde (kann nur nach Datenänderung zwischen zwei Requests vorkommen).
 
-Die Schwellen 9 und 20 gehören in eine Konfiguration (Craft: `config/sgli.php` oder ein Global Set), nicht in Templates.
+Die Schwellen 4 und 9 gehören in eine Konfiguration (Craft: `config/sgli.php` oder ein Global Set), nicht in Templates.
 
-Empfehlung: Klassenstufe und Förderbedarf nur anbieten, wenn sie für die Zielgruppe sinnvoll sind (Klassenstufe → Schulen, Förderbedarf → Inklusion). Ist in Figma nicht festgelegt und im Prototyp nicht umgesetzt. Entscheidung offen.
+Empfehlung: Klassenstufe und Förderbedarf nur anbieten, wenn sie für die Zielgruppe sinnvoll sind (Klassenstufe → Schulen, Förderbedarf → Inklusion). Ist in Figma nicht festgelegt und im Prototyp nicht umgesetzt.
 
 ---
 
@@ -110,19 +110,39 @@ Phone (unter 1024 px): Chip-Zeilen scrollen horizontal, kein Umbruch, Label steh
 
 ## 6. Off-Canvas
 
-- Öffnet von rechts, Breite 480 px, auf Phone volle Breite. Hintergrund `color/bg/card`. `role="dialog"`, `aria-modal`, Fokus auf Schließen-Button, Escape und Backdrop schließen, Fokus kehrt zum auslösenden Chip zurück.
-- Kopf: Label „Genauer filtern“, Titel = Filtername, Schließen (Button/Icon X).
-- Inhalt: Radio-Liste der Optionen (Core Component Radio). Optional Trefferzahl je Option in Klammern: Anzahl der Angebote, die alle **anderen** gesetzten Filter erfüllen und diese Option. Optionen mit 0 Treffern deaktiviert. Kostet eine Count-Query je Option, verzichtbar.
-- Fuß: Primary „N Angebote anzeigen“ (schließt), Secondary „Auswahl löschen“ (nur wenn ein Wert gesetzt ist).
-- Auswahl wirkt sofort (Liste dahinter aktualisiert sich). Ohne JS: Formular mit Submit, das die URL setzt.
+Figma: Doku „Off-Canvas“ (`2613:31418`), Filter-Panel Desktop `2710:23917`, Phone `2710:24111`, Komponente filter-cell `2646:40456`. Umsetzung im Design System: `src/components/off-canvas/`.
 
-Der Inhalt des Off-Canvas ist in Figma noch nicht gestaltet. Die Radio-Liste ist ein Platzhalter.
+**Aufbau**: Backdrop (`neutral/alpha/900-40`), Panel (`color/bg/card`), section-header (Variante Phone/off-canvas: Kicker „Genauer filtern“ Label-S, Titel = Filtername H3, Close Button/Icon 45 px), scrollender Content-Bereich, sticky Action-Bereich.
+
+| | Desktop (ab lg 1024) | Phone |
+|---|---|---|
+| Panel | rechts, 520 px, volle Höhe, Padding 24, Divider links | unten verankert, volle Breite, max. 85 % Viewporthöhe, kein Panel-Padding |
+| Kopf | Padding 0 0 16, Abstand zum Body 48 | Padding 24 16 16, Abstand zum Body 24 |
+| Body | Padding 0, scrollt allein | Padding-inline 16, scrollt allein |
+| Fuß | Divider oben, Padding-top 24, Buttons nebeneinander (Gap 16), Size Desktop | Divider oben, Padding 24 16, Buttons gestapelt in voller Breite (Gap 12), Size Mobile |
+
+**filter-cell** (eine Zeile je Option, 52 px): Padding 16/8, Gap 24, Divider unten. Links Indikator 12 × 12 (1 px `border/default`) und Label (Label-M), Gap 12. Rechts Trefferzahl (Caption, `text/secondary`). States: hover `filter-cell/bg-hover`, pressed `filter-cell/bg-pressed`, on `filter-cell/bg-active` + `filter-cell/fg-active` + Indikator gefüllt (`filter-cell/status`), focused 4 px `border/focus-outer` (plus innerer Ring), disabled Opacity 40 %. Einfachauswahl: `<input type="radio">` je Zeile, `name` je Filter, Fieldset mit Legend = Filtername.
+
+**Verhalten**
+
+- Natives `<dialog>` mit `showModal()`. Damit: Top-Layer, Escape, Fokus-Trap, Hintergrund inert. Zusätzlich Scroll-Lock (`html:has(dialog.offcanvas[open])`) und `scrollbar-gutter: stable`.
+- Schließen über Close-Button, Escape, Backdrop-Klick und „N Angebote anzeigen“. Alle Wege laufen über das `close`-Event des Dialogs; dort Fokus zurück zum auslösenden Chip (über den Filterschlüssel suchen, der Chip wird beim Rendern ersetzt).
+- Fokus beim Öffnen auf den Titel (`h2` mit `tabindex="-1"`, kein Fokusring, da nicht interaktiv). Nicht auf die erste Option: Safari und Firefox setzen bei programmatischem `focus()` `:focus-visible`, auf Touch erschiene der Ring auf der Zelle. Tab führt vom Titel zum Close-Button und weiter zu den Optionen.
+- Hover-Zustände nur in `@media (hover: hover)`. Auf Touch bleibt `:hover` nach dem Tippen kleben, eine abgewählte Zelle sähe sonst aus wie gehovert.
+- Trefferzahl je Option: Anzahl der Angebote, die alle **anderen** gesetzten Filter erfüllen und diese Option. Optionen mit 0 Treffern deaktiviert. Kostet eine Count-Query je Option.
+- Auswahl wirkt sofort (Liste dahinter aktualisiert sich). Bei Auswahl nur Zahlen, `disabled` und Button-Labels aktualisieren, die Optionsliste nicht neu bauen (Fokus bliebe sonst nicht auf dem Radio).
+- Gewählte Option per erneutem Klick abwählbar. Radios kennen das nativ nicht: `change` setzt eine neue Option; `click`, Leertaste und Enter auf der bereits gewählten Option entfernen den Wert. Enter im Optionsbereich mit `preventDefault`, sonst schließt die implizite Formular-Submission den Dialog.
+- „Auswahl löschen“ immer sichtbar, ohne gesetzten Wert `disabled`; Klick entfernt den Wert, Dialog bleibt offen.
+- Bewegung wie das Menü (`src/styles/motion.css`), Phone von unten, Desktop von rechts; bei `prefers-reduced-motion` ohne Bewegung.
+- Ohne JS: Formular mit Submit, das die URL setzt.
+
+**Tokens**: `color/filter-cell/bg-hover|bg-pressed|bg-active|fg-active|count-active|status` (Semantic, in `tokens/semantic/color.json`).
 
 ---
 
 ## 7. Tags in der Liste (3 Slots)
 
-Slot 3 ist immer `dauerText`, rechtsbündig. Slot 1 und 2 hängen vom **Filterschritt** ab (Lesart B). Ein Attribut, nach dem gerade gefiltert wird, wird übersprungen, weil es bei allen Treffern gleich wäre.
+Slot 3 ist immer `dauerText`, rechtsbündig. Slot 1 und 2 hängen vom **Filterschritt** ab, nicht von der Ampelstufe. Ein Attribut, nach dem gerade gefiltert wird, wird übersprungen, weil es bei allen Treffern gleich wäre.
 
 | Filterschritt | Slot 1 | Slot 2 |
 |---|---|---|
@@ -177,12 +197,3 @@ slots.push(dauerText)
 - Caching: Ergebnisseiten sind über die URL eindeutig, also normal cachebar. Bei Änderungen an Angeboten invalidieren.
 - Redaktionsleitfaden: Felder aus Abschnitt 1 vollständig pflegen. Fehlende Werte lassen Tag-Slots leer und können Filter aus der Ampel entfernen.
 
----
-
-## 10. Offene Punkte
-
-1. Klassenstufe und Förderbedarf nur für passende Zielgruppen anbieten (Abschnitt 4)?
-2. `typ` und `format` zu einem Feld zusammenlegen?
-3. Dauer als Kategorie pflegen oder aus Minuten ableiten?
-4. Trefferzahlen im Off-Canvas gewünscht?
-5. Gestaltung des Off-Canvas-Inhalts in Figma.

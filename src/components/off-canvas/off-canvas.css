@@ -1,0 +1,213 @@
+/* SGLI – Off-Canvas
+   Figma: Doku „Off-Canvas“ (2613:31418), Filter-Panel Desktop 2710:23917 / Phone 2710:24111,
+          Doku „Forms“ (2746:24535): Kontakt 2746:26620 / 2753:30067, Anmeldung 2746:26818 / 2753:30157,
+          Bestätigung 2747:29871 / 2746:28162.
+   Ein Panel für Filter, Kontakt, Anmeldung und Bestätigung. Natives <dialog> + showModal():
+   Top-Layer, Escape, Fokus-Trap und inerter Hintergrund kommen vom Browser.
+
+   Phone = Default: Bottom Sheet, max. 85 % Viewporthöhe, kein Panel-Padding, Kopf 24/16/16, Body 16 seitlich,
+   Abstand Kopf → Body 24, Fuß 24/16 mit Buttons untereinander (Primary volle Breite, Gap 12).
+   Desktop ab lg (1024): rechts, 520 breit, volle Höhe, Divider links, Padding 24, Abstand Kopf → Body 48,
+   Fuß mit Buttons nebeneinander (Gap 16).
+   Nur der Body scrollt, Kopf und Fuß bleiben stehen.
+
+   Motion (src/styles/motion.css, Familie „Randfläche“ wie Menü): erst abdunkeln, dann fährt die Fläche
+   von ihrem Rand herein (Phone unten, Desktop rechts). Schließen umgekehrt, die Abdunkelung geht zuletzt.
+
+   Markup: siehe README.md. Steuerung: off-canvas.js (Formulare, Rückfrage, Bestätigung) oder eigenes Script
+   (Filter im Prototyp). */
+
+.offcanvas {
+  position: fixed;
+  inset: auto 0 0 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  max-height: 85dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  transform: translateY(100%);
+  /* Schließen: Fläche fährt sofort raus (680 ms), der Dialog bleibt im Top-Layer,
+     bis die Abdunkelung weg ist (580 + 320 = 900 ms). */
+  transition:
+    transform var(--motion-surface-out) var(--ease-surface),
+    overlay calc(var(--motion-surface-dim-delay) + var(--motion-dim)) linear allow-discrete,
+    display calc(var(--motion-surface-dim-delay) + var(--motion-dim)) linear allow-discrete;
+}
+.offcanvas[open] {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+  /* Öffnen: erst abdunkeln, die Fläche startet nach 240 ms */
+  transition:
+    transform var(--motion-surface-in) var(--ease-surface) var(--motion-surface-delay),
+    overlay 0s allow-discrete,
+    display 0s allow-discrete;
+}
+@starting-style {
+  .offcanvas[open] { transform: translateY(100%); }
+}
+.offcanvas::backdrop {
+  background-color: rgba(26, 25, 23, 0.4); /* Fallback für Browser ohne Custom Properties im ::backdrop */
+  background-color: var(--color-neutral-alpha-900-40);
+  opacity: 0;
+  /* ::backdrop erbt Custom Properties erst in neueren Browsern, daher Fallback-Werte */
+  transition:
+    opacity var(--motion-dim, 320ms) ease var(--motion-surface-dim-delay, 580ms),
+    overlay 900ms linear allow-discrete,
+    display 900ms linear allow-discrete;
+}
+.offcanvas[open]::backdrop {
+  opacity: 1;
+  transition:
+    opacity var(--motion-dim, 320ms) ease,
+    overlay 0s allow-discrete,
+    display 0s allow-discrete;
+}
+@starting-style {
+  .offcanvas[open]::backdrop { opacity: 0; }
+}
+
+/* Hintergrund sperren, solange ein Off-Canvas offen ist. scrollbar-gutter hält den Platz der
+   klassischen Scrollbar frei, damit die Seite dahinter nicht springt. */
+html:has(dialog.offcanvas[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+/* Inhalt: ein <form> (Filter) oder mehrere Views (Formular → Bestätigung), je Kopf, Body, Fuß */
+.offcanvas__form,
+.offcanvas__view {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.offcanvas__view[hidden] { display: none; }
+
+/* Kopf = section-header (Variante Phone/off-canvas, Figma 2613:27966) */
+.offcanvas__head {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  gap: var(--space-24);
+  margin-bottom: var(--space-24);
+  padding: var(--space-24) var(--space-16) var(--space-16);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
+.offcanvas__heading {
+  display: grid;
+  flex: 1 1 auto;
+  gap: var(--space-8);
+  min-width: 0;
+}
+.offcanvas__kicker {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+/* Figma: Heading/H3 im Typography-Modus Phone (24 px) auf allen Breakpoints, wie im Modal */
+.offcanvas__title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+/* Der Titel bekommt beim Öffnen den Fokus (tabindex="-1"). Er ist nicht interaktiv, deshalb kein Ring:
+   der sichtbare Ort ist das aufgehende Panel selbst. */
+.offcanvas__title:focus,
+.offcanvas__title:focus-visible { outline: none; box-shadow: none; }
+
+/* Close: Button/Icon ohne Rahmen wie im Modal und im Menü-Kopf (Abweichung: Figma zeigt hier den Rahmen).
+   Rechts: die ganze Fläche (auch Hover/Pressed) schließt bündig mit Trennlinie und Inhalt ab.
+   Oben: das X sitzt auf der Oberkante des Kopfs (Kicker, ohne Kicker Titel), die Fläche ragt dafür um ihren
+   Innenabstand nach oben in das Padding. margin-bottom hebt den Einfluss auf die Kopfhöhe auf (Trennlinie bleibt
+   stehen). Bleibt im Fluss statt absolut, damit lange Titel nie unter das X laufen. */
+.offcanvas__close {
+  border-color: transparent;
+  margin-top: calc((var(--size-icon-lg) - var(--btn-size)) / 2);
+  margin-bottom: calc(-1 * var(--btn-size));
+}
+
+/* Body: scrollt allein. Unten so viel Luft wie der Fokusring breit ist, damit der Ring des letzten
+   Elements nicht abgeschnitten wird. scroll-padding hält fokussierte Felder beim Tabben vom Rand weg. */
+.offcanvas__body {
+  --offcanvas-ring: calc(var(--border-focus-outer) + var(--border-focus-inner));
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--space-16) var(--offcanvas-ring);
+  scroll-padding-block: var(--space-24);
+}
+
+.offcanvas__foot {
+  display: grid;
+  flex: none;
+  gap: var(--space-12);
+  padding: var(--space-24) var(--space-16);
+  border-top: var(--border-default) solid var(--color-divider-default);
+}
+/* Phone: nur der Primary läuft über die volle Breite. Der Secondary (Textlink mit Unterstrich)
+   bleibt so breit wie sein Label, sonst zieht sich der Strich über das ganze Off-Canvas. */
+.offcanvas__foot .btn--primary { width: 100%; }
+.offcanvas__foot .btn--secondary { justify-self: center; }
+
+/* ---------- Bestätigung (Figma 2747:29871 / 2746:28162) ----------
+   CheckCircle 48 in feedback/success, darunter H6 + Body-M (text/secondary), Gap 12 (Desktop 16 zum Icon). */
+.offcanvas__success {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-12);
+}
+.offcanvas__success-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-feedback-success);
+}
+.offcanvas__success-text {
+  display: grid;
+  gap: var(--space-12);
+}
+.offcanvas__success-text > * { margin: 0; }
+.offcanvas__success-text > p { color: var(--color-text-secondary); }
+
+@media (min-width: 1024px) {
+  .offcanvas {
+    inset: 0 0 0 auto;
+    width: 520px;
+    height: 100dvh;
+    max-height: none;
+    padding: var(--space-24);
+    border-left: var(--border-default) solid var(--color-divider-default);
+    transform: translateX(100%);
+  }
+  .offcanvas[open] { transform: translateX(0); }
+  @starting-style {
+    .offcanvas[open] { transform: translateX(100%); }
+  }
+  .offcanvas__head {
+    margin-bottom: var(--space-48);
+    padding: 0 0 var(--space-16);
+  }
+  /* Body ohne eigenes Padding. Damit Fokusringe außen (6 px) im Scroll-Container sichtbar bleiben,
+     läuft er um die Ringbreite über den Rand und gleicht das innen wieder aus. */
+  .offcanvas__body {
+    margin-inline: calc(-1 * var(--offcanvas-ring));
+    padding-inline: var(--offcanvas-ring);
+  }
+  .offcanvas__foot {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    padding: var(--space-24) 0 0;
+  }
+  .offcanvas__foot .btn--primary { width: auto; }
+  .offcanvas__foot--center { justify-content: center; }
+  .offcanvas__success { gap: var(--space-16); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offcanvas, .offcanvas::backdrop { transition: none; }
+}

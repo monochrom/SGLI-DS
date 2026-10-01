@@ -1,0 +1,97 @@
+/* SGLI – Form (Layout für Formulare)
+   Figma: Doku „Forms“ (2746:24535): Kontakt 2746:26620, Anmeldung 2746:26818. Felder sind die Core Components
+   input, checkbox (Checkbox + Radio) und toggle; dieses CSS regelt nur, wie sie zueinander stehen.
+   Spacing ist unabhängig vom Panel, auf allen Breakpoints gleich:
+   Abschnitte 32 · Überschrift (H6) → Felder 24 · Felder untereinander 24 · zwei Felder in einer Reihe Gap 16
+   · Anrede-Radios Gap 8 · Pflichtfeld-Hinweis Gap 8 · Feld → Fehlermeldung 4 (aus input.css).
+   Reihen stehen nebeneinander, sobald das Formular mindestens 440 px breit ist (Container Query),
+   also im Desktop-Panel (472) und im Tablet-Sheet, auf Phone untereinander. */
+
+.form {
+  display: grid;
+  gap: var(--space-32);
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.form__section {
+  display: grid;
+  gap: var(--space-24);
+  min-width: 0;
+}
+.form__title { margin: 0; }
+
+.form__group {
+  display: grid;
+  gap: var(--space-24);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Zwei kurze Felder nebeneinander (Vorname + Nachname, PLZ + Stadt, Datum + Uhrzeit) */
+.form__row {
+  display: grid;
+  gap: var(--space-24);
+  min-width: 0;
+}
+@container (min-width: 440px) {
+  .form__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-16);
+  }
+}
+
+/* Radios in einer Zeile, auf schmalen Breiten umbrechend (Anrede) */
+.form__radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* ---------- Optionaler Abschnitt mit Toggle (Gruppenbesuch, Besondere Bedürfnisse) ----------
+   Überschrift links, Toggle rechts. Die Felder klappen darunter auf (Höhe 0fr ↔ 1fr, --motion-base),
+   der Abstand 24 steckt im aufklappenden Teil, damit zu nichts übrig bleibt. */
+.form__section--toggle { gap: 0; }
+.form__toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-24);
+}
+.form__collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--motion-base) var(--ease-out);
+}
+.form__collapse.is-open { grid-template-rows: 1fr; }
+.form__collapse-inner { min-height: 0; }
+.form__collapse:not(.is-open) .form__collapse-inner,
+.form__collapse.is-animating .form__collapse-inner { overflow: hidden; }
+.form__collapse .form__group { padding-top: var(--space-24); }
+
+/* ---------- Pflichtfeld-Hinweis und Datenschutz ---------- */
+.form__note {
+  display: grid;
+  gap: var(--space-8);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+  color: var(--color-text-secondary);
+}
+.form__note > * { margin: 0; }
+/* Links im Hinweis: Textfarbe + Unterstrich aus base.css (Regel „Links“) */
+
+/* Einwilligung: Checkbox mit Caption-Label (.choice--caption), volle Breite */
+.form__consent .choice { display: flex; }
+
+@media (prefers-reduced-motion: reduce) {
+  .form__collapse { transition: none; }
+}

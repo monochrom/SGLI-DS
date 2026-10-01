@@ -1,7 +1,8 @@
 /* SGLI Design System – Foundations
-   Reihenfolge: Tokens (generiert) → Fonts → Reset → Base → Kontexte → Layout → Fokus → Icons → Cut-Edges */
+   Reihenfolge: Tokens (generiert) → Motion → Fonts → Reset → Base → Kontexte → Layout → Fokus → Icons → Cut-Edges */
 
 @import "../../dist/css/index.css";
+@import "./motion.css";
 
 @import "./fonts.css";
 @import "./reset.css";

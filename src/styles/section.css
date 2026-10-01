@@ -1,17 +1,93 @@
 /* SGLI – Section Spacing
    Figma Layout-Collection: section-spacing/y/{default,compact,none}, section-spacing/x/{default,none}.
-   Werte wechseln per Breakpoint in dist/css/layout.css. */
+   Werte wechseln per Breakpoint in dist/css/layout.css. Regeln: Figma-Doku „Section-Spacing“ (2909:1850).
+
+   Mechanik
+   Jedes Modul hat drei Custom Properties: --section-pt (oben), --section-pb (unten), --section-px (seitlich).
+   Standard kommt von :root, die Regeln unten setzen sie am Modul. Das Modul liest sie nur aus:
+     .section                         → macht das automatisch
+     eigenes Modul-CSS                → padding: var(--section-pt) var(--section-px) var(--section-pb);
+   Ein Modul ist ein direktes Kind von <main> (oder eines Containers .modules) und trägt immer
+   data-context, auch surface-50. Nur so erkennt Regel 2 die gleiche Farbe.
+
+   Regeln (Reihenfolge = Vorrang, spätere gewinnen)
+   1. Standard: oben, unten und seitlich Standard.
+   2. Gleiche Farbe hintereinander: Das folgende Modul hat oben keinen Abstand, der Abstand kommt vom
+      Modul davor. Gilt auch nach einem Hero nur mit Text und nach dem Hero „Presse“.
+   7. Ausnahme zu 2: Nach dem Hero der Startseite und nach Heros mit Bild behält das folgende Modul
+      oben Standard, auch in derselben Farbe. Ebenso nach randlosen Modulen (sie haben unten keinen
+      Abstand, der sich verdoppeln könnte).
+   3. Textfolge (.section--text): unten kompakt. Oben ohne ergibt sich aus Regel 2, der erste Block
+      der Folge hat oben Standard.
+   5. Randlos (.section--bleed): rundum ohne.
+   4. Modul mit Cut-Edges (.cut-edges): oben und unten kompakt, die Keile bringen selbst Luft mit.
+   6. Hero: Startseite (.section--hero-home) und nur Text (.section--hero-text, auch „Presse“) oben
+      Standard; mit Bild (.section--hero-media) oben ohne; mit eingeblendetem Zurück-Button
+      (.hero-back im Modul) oben ohne. Den festen Abstand Zurück → Headline setzt das Hero-Modul
+      selbst (je Hero verschieden, Figma hero-default 80/40, hero-press 48/40). */
+
+/* Regel 1: Standard */
+:root {
+  --section-pt: var(--section-spacing-y-default);
+  --section-pb: var(--section-spacing-y-default);
+  --section-px: var(--section-spacing-x-default);
+}
 
 .section {
-  padding-block: var(--section-spacing-y-default);
-  padding-inline: var(--section-spacing-x-default);
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
 }
+
+/* Regel 2: Gleiche Farbe hintereinander → oben ohne. Specificity 0 (:where), damit jede
+   Modul-Regel darunter gewinnt. */
+:where(main, .modules) > :where([data-context="surface-50"] + [data-context="surface-50"],
+                                [data-context="surface-100"] + [data-context="surface-100"],
+                                [data-context="surface-200"] + [data-context="surface-200"],
+                                [data-context="surface-300"] + [data-context="surface-300"],
+                                [data-context="surface-400"] + [data-context="surface-400"],
+                                [data-context="primary-900"] + [data-context="primary-900"],
+                                [data-context="secondary-400"] + [data-context="secondary-400"]) {
+  --section-pt: var(--section-spacing-y-none);
+}
+
+/* Regel 7: Ausnahme nach Startseiten-Hero und Hero mit Bild. Ebenso nach Modulen ohne Abstand unten
+   (Randlos, flush-y): Dort gibt es keinen Abstand, der sich verdoppeln könnte. */
+:is(.section--hero-home, .section--hero-media, .section--bleed, .section--flush-y) + * {
+  --section-pt: var(--section-spacing-y-default);
+}
+
+/* Stufen als Modifier (am Modul oder am .section-Element) */
 .section--compact {
-  padding-block: var(--section-spacing-y-compact);
+  --section-pt: var(--section-spacing-y-compact);
+  --section-pb: var(--section-spacing-y-compact);
 }
 .section--flush-y {
-  padding-block: var(--section-spacing-y-none);
+  --section-pt: var(--section-spacing-y-none);
+  --section-pb: var(--section-spacing-y-none);
 }
 .section--flush-x {
-  padding-inline: var(--section-spacing-x-none);
+  --section-px: var(--section-spacing-x-none);
+}
+
+/* Regel 3: Textfolge */
+.section--text {
+  --section-pb: var(--section-spacing-y-compact);
+}
+
+/* Regel 5: Randlos */
+.section--bleed {
+  --section-pt: var(--section-spacing-y-none);
+  --section-pb: var(--section-spacing-y-none);
+  --section-px: var(--section-spacing-x-none);
+}
+
+/* Regel 4: Modul mit Cut-Edges (Keile siehe cut-edges.css) */
+.cut-edges {
+  --section-pt: var(--section-spacing-y-compact);
+  --section-pb: var(--section-spacing-y-compact);
+}
+
+/* Regel 6: Hero */
+.section--hero-media,
+.section--hero-text:has(.hero-back) {
+  --section-pt: var(--section-spacing-y-none);
 }

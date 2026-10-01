@@ -10,7 +10,7 @@
 //   typography  → tokens/typography/{font,phone,tablet,desktop,line-height,letter-spacing,text-styles}.json
 //   layout      → tokens/layout/{phone,tablet,desktop}.json
 //
-// Regeln (siehe PLAN.md):
+// Regeln:
 // - Figma-Namen werden nur normalisiert (Slash → Punkt, lowercase, Leerzeichen → Bindestrich), nie umbenannt.
 // - Line-Height und Letter-Spacing kommen aus den TEXT STYLES (Master), in Prozent.
 //   Letter-Spacing in PIXELS ungleich 0 wird als Prozent aus der gebundenen Variable gelesen (H1: −2 → −2 %).

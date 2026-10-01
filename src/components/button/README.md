@@ -15,7 +15,7 @@ Figma: `Button/Primary` (1604:84), `Button/Secondary` (1604:5083), `Button/Icon`
 | Figma State | HTML/CSS |
 |---|---|
 | Default | – |
-| Hover | `:hover` (Vorschau: `.is-hover`) |
+| Hover | `:hover`, nur innerhalb `@media (hover: hover)`, also nicht auf Touch (Vorschau: `.is-hover`) |
 | Pressed | `:active` (Vorschau: `.is-active`) |
 | Focused | `:focus-visible`, global aus `src/styles/focus.css`: innen 2 px `border/focus-inner`, außen 4 px `border/focus-outer` |
 | Disabled | `disabled` bzw. `aria-disabled="true"`, Opacity 40 % wie in Figma |

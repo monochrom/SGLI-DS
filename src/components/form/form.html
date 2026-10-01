@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form – SGLI</title>
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="../index.css">
+  <link rel="stylesheet" href="../preview.css">
+  <style>
+    /* Nur Vorschau: Formulare in Panelbreite (Desktop 472), außerhalb des Off-Canvas */
+    .form-demo { max-width: 472px; }
+    .form-demo__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-16); margin-top: var(--space-32); }
+    .form-demo__foot .preview__meta { margin: 0; }
+    .preview__contexts > [data-context] .form { width: 100%; max-width: 472px; }
+  </style>
+</head>
+<body>
+  <main class="preview">
+    <h1 class="text-h3">Form</h1>
+    <p class="preview__meta">Figma: Forms (2746:24535). Layout der Formulare ohne Panel. Reihen stehen ab 440 px Formularbreite nebeneinander. „Absenden“ prüft die Pflichtfelder.</p>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Fehler (beim Laden geprüft)</h2>
+      <form class="form-demo" data-form novalidate action="#" aria-label="Fehlerbeispiel">
+        <div class="form">
+          <section class="form__section" aria-labelledby="err-daten-title">
+            <h3 class="text-h6 form__title" id="err-daten-title">Ihre Kontaktdaten</h3>
+            <div class="form__group">
+              <div class="form__row">
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="err-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                    <label class="field__label" for="err-vorname">Vorname <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="err-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                    <label class="field__label" for="err-nachname">Nachname <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field__box">
+                  <input class="field__input" id="err-email" name="email" type="email" placeholder=" " autocomplete="email" value="name@" required>
+                  <label class="field__label" for="err-email">E-Mail <span aria-hidden="true">*</span></label>
+                </div>
+              </div>
+              <div class="field field--select">
+                <div class="field__box">
+                  <select class="field__input" id="err-anliegen" name="anliegen" required>
+                    <option value="">&nbsp;</option>
+                    <option>Bildungsangebot oder Gruppenbesuch</option>
+                    <option>Besuch und Führungen</option>
+                    <option>Recherche im Haftbuch</option>
+                    <option>Presse</option>
+                    <option>Sonstiges</option>
+                  </select>
+                  <label class="field__label" for="err-anliegen">Ihr Anliegen <span aria-hidden="true">*</span></label>
+                  <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="form__note">
+            <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+            <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+          </div>
+          <div class="form__consent">
+            <label class="choice choice--caption"><input class="choice__input" id="err-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Anfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Anfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+          </div>
+        </div>
+        <div class="form-demo__foot">
+          <button class="btn btn--primary" type="submit">Absenden</button>
+          <p class="preview__meta" data-demo-result aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Kontakt</h2>
+      <form class="form-demo" data-form novalidate action="#" aria-label="Kontakt">
+        <div class="form">
+          <section class="form__section" aria-labelledby="fk-kontaktdaten-title">
+            <h3 class="text-h6 form__title" id="fk-kontaktdaten-title">Ihre Kontaktdaten</h3>
+            <fieldset class="form__radios">
+              <legend class="sr-only">Anrede</legend>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="keine"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">keine Angabe</span></label>
+            </fieldset>
+            <div class="form__group">
+              <div class="form__row">
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fk-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                    <label class="field__label" for="fk-vorname">Vorname <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fk-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                    <label class="field__label" for="fk-nachname">Nachname <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fk-email" name="email" type="email" placeholder=" " autocomplete="email" required>
+                    <label class="field__label" for="fk-email">E-Mail <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fk-telefon" name="telefon" type="tel" placeholder=" " autocomplete="tel">
+                    <label class="field__label" for="fk-telefon">Telefon</label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field__box">
+                  <input class="field__input" id="fk-institution" name="institution" type="text" placeholder=" " autocomplete="organization" required>
+                  <label class="field__label" for="fk-institution">Institution, Schule, ... <span aria-hidden="true">*</span></label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field__box">
+                  <input class="field__input" id="fk-adresse" name="adresse" type="text" placeholder=" " autocomplete="street-address" required>
+                  <label class="field__label" for="fk-adresse">Adresse <span aria-hidden="true">*</span></label>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fk-plz" name="plz" type="text" placeholder=" " autocomplete="postal-code" inputmode="numeric" required>
+                    <label class="field__label" for="fk-plz">PLZ <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fk-stadt" name="stadt" type="text" placeholder=" " autocomplete="address-level2" required>
+                    <label class="field__label" for="fk-stadt">Stadt <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="form__section" aria-labelledby="fk-nachricht-title">
+            <h3 class="text-h6 form__title" id="fk-nachricht-title">Ihre Nachricht</h3>
+            <div class="form__group">
+              <div class="field field--select">
+                <div class="field__box">
+                  <select class="field__input" id="fk-anliegen" name="anliegen" required>
+                    <option value="">&nbsp;</option>
+                    <option>Bildungsangebot oder Gruppenbesuch</option>
+                    <option>Besuch und Führungen</option>
+                    <option>Recherche im Haftbuch</option>
+                    <option>Presse</option>
+                    <option>Sonstiges</option>
+                  </select>
+                  <label class="field__label" for="fk-anliegen">Ihr Anliegen <span aria-hidden="true">*</span></label>
+                  <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                </div>
+              </div>
+              <div class="field field--textarea">
+                <div class="field__box">
+                  <textarea class="field__input" id="fk-nachricht" name="nachricht" placeholder=" " rows="3" required></textarea>
+                  <label class="field__label" for="fk-nachricht">Ihre Nachricht an uns <span aria-hidden="true">*</span></label>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="form__note">
+            <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+            <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+          </div>
+          <div class="form__consent">
+            <label class="choice choice--caption"><input class="choice__input" id="fk-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Anfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Anfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+          </div>
+        </div>
+        <div class="form-demo__foot">
+          <button class="btn btn--primary" type="submit">Absenden</button>
+          <p class="preview__meta" data-demo-result aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">Anmeldung (Toggle-Abschnitte)</h2>
+      <form class="form-demo" data-form novalidate action="#" aria-label="Anmeldung">
+        <div class="form">
+          <section class="form__section" aria-labelledby="fa-kontaktdaten-title">
+            <h3 class="text-h6 form__title" id="fa-kontaktdaten-title">Ihre Kontaktdaten</h3>
+            <fieldset class="form__radios">
+              <legend class="sr-only">Anrede</legend>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="keine"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">keine Angabe</span></label>
+            </fieldset>
+            <div class="form__group">
+              <div class="form__row">
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fa-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                    <label class="field__label" for="fa-vorname">Vorname <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fa-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                    <label class="field__label" for="fa-nachname">Nachname <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fa-email" name="email" type="email" placeholder=" " autocomplete="email" required>
+                    <label class="field__label" for="fa-email">E-Mail <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fa-telefon" name="telefon" type="tel" placeholder=" " autocomplete="tel">
+                    <label class="field__label" for="fa-telefon">Telefon</label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field__box">
+                  <input class="field__input" id="fa-institution" name="institution" type="text" placeholder=" " autocomplete="organization" required>
+                  <label class="field__label" for="fa-institution">Institution, Schule, ... <span aria-hidden="true">*</span></label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field__box">
+                  <input class="field__input" id="fa-adresse" name="adresse" type="text" placeholder=" " autocomplete="street-address" required>
+                  <label class="field__label" for="fa-adresse">Adresse <span aria-hidden="true">*</span></label>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fa-plz" name="plz" type="text" placeholder=" " autocomplete="postal-code" inputmode="numeric" required>
+                    <label class="field__label" for="fa-plz">PLZ <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="fa-stadt" name="stadt" type="text" placeholder=" " autocomplete="address-level2" required>
+                    <label class="field__label" for="fa-stadt">Stadt <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="form__section form__section--toggle" aria-labelledby="fa-gruppenbesuch-title">
+            <div class="form__toggle-row">
+              <h3 class="text-h6 form__title" id="fa-gruppenbesuch-title">Gruppenbesuch</h3>
+              <label class="toggle">
+                <input class="toggle__input" type="checkbox" role="switch" name="gruppenbesuch" value="ja" aria-labelledby="fa-gruppenbesuch-title" aria-controls="fa-gruppenbesuch-fields" data-form-toggle checked>
+                <span class="toggle__track" aria-hidden="true"></span>
+              </label>
+            </div>
+            <div class="form__collapse is-open" id="fa-gruppenbesuch-fields">
+              <div class="form__collapse-inner">
+                <fieldset class="form__group">
+                  <legend class="sr-only">Gruppenbesuch</legend>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="fa-teilnehmende" name="teilnehmende" type="number" placeholder=" " inputmode="numeric" min="1" required>
+                      <label class="field__label" for="fa-teilnehmende">Teilnehmer:innenzahl <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="fa-themen" name="themen" type="text" placeholder=" " required>
+                      <label class="field__label" for="fa-themen">Gewünschte Themenschwerpunkte <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="fa-vorkenntnisse" name="vorkenntnisse" type="text" placeholder=" " required>
+                      <label class="field__label" for="fa-vorkenntnisse">Vorkenntnisse <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </section>
+          <section class="form__section form__section--toggle" aria-labelledby="fa-beduerfnisse-title">
+            <div class="form__toggle-row">
+              <h3 class="text-h6 form__title" id="fa-beduerfnisse-title">Besondere Bedürfnisse</h3>
+              <label class="toggle">
+                <input class="toggle__input" type="checkbox" role="switch" name="beduerfnisse" value="ja" aria-labelledby="fa-beduerfnisse-title" aria-controls="fa-beduerfnisse-fields" data-form-toggle checked>
+                <span class="toggle__track" aria-hidden="true"></span>
+              </label>
+            </div>
+            <div class="form__collapse is-open" id="fa-beduerfnisse-fields">
+              <div class="form__collapse-inner">
+                <fieldset class="form__group">
+                  <legend class="sr-only">Besondere Bedürfnisse</legend>
+                  <div class="field field--select">
+                    <div class="field__box">
+                      <select class="field__input" id="fa-einschraenkungen" name="einschraenkungen">
+                        <option value="">&nbsp;</option>
+                        <option>Gehbehinderung oder Rollstuhl</option>
+                        <option>Sehbehinderung</option>
+                        <option>Hörbehinderung</option>
+                        <option>Lernschwierigkeiten (Leichte Sprache)</option>
+                        <option>Sonstiges</option>
+                      </select>
+                      <label class="field__label" for="fa-einschraenkungen">Einschränkungen</label>
+                      <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                    </div>
+                  </div>
+                  <div class="field field--select">
+                    <div class="field__box">
+                      <select class="field__input" id="fa-sprache" name="sprache">
+                        <option value="">&nbsp;</option>
+                        <option>Deutsch</option>
+                        <option>Englisch</option>
+                        <option>Spanisch</option>
+                        <option>Leichte Sprache</option>
+                      </select>
+                      <label class="field__label" for="fa-sprache">Sprache</label>
+                      <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </section>
+          <section class="form__section" aria-labelledby="fa-wunschtermin-title">
+            <h3 class="text-h6 form__title" id="fa-wunschtermin-title">Ihr Wunschtermin</h3>
+            <div class="form__row">
+              <div class="field field--date">
+                <div class="field__box">
+                  <input class="field__input" id="fa-datum" name="datum" type="date" placeholder=" " required>
+                  <label class="field__label" for="fa-datum">Datum <span aria-hidden="true">*</span></label>
+                  <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CalendarBlank"></use></svg>
+                </div>
+              </div>
+              <div class="field field--date">
+                <div class="field__box">
+                  <input class="field__input" id="fa-uhrzeit" name="uhrzeit" type="time" placeholder=" " required>
+                  <label class="field__label" for="fa-uhrzeit">Uhrzeit <span aria-hidden="true">*</span></label>
+                  <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-Clock"></use></svg>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="form__section" aria-labelledby="fa-alternativtermin-title">
+            <h3 class="text-h6 form__title" id="fa-alternativtermin-title">Alternativtermin</h3>
+            <div class="form__row">
+              <div class="field field--date">
+                <div class="field__box">
+                  <input class="field__input" id="fa-alt-datum" name="alt-datum" type="date" placeholder=" ">
+                  <label class="field__label" for="fa-alt-datum">Datum</label>
+                  <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-CalendarBlank"></use></svg>
+                </div>
+              </div>
+              <div class="field field--date">
+                <div class="field__box">
+                  <input class="field__input" id="fa-alt-uhrzeit" name="alt-uhrzeit" type="time" placeholder=" ">
+                  <label class="field__label" for="fa-alt-uhrzeit">Uhrzeit</label>
+                  <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../../dist/icons/sprite.svg#icon-Clock"></use></svg>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="form__section" aria-labelledby="fa-anmerkung-title">
+            <h3 class="text-h6 form__title" id="fa-anmerkung-title">Ihre Nachricht</h3>
+            <div class="field field--textarea">
+              <div class="field__box">
+                <textarea class="field__input" id="fa-anmerkung" name="anmerkung" placeholder=" " rows="3" required></textarea>
+                <label class="field__label" for="fa-anmerkung">Ihre Nachricht an uns <span aria-hidden="true">*</span></label>
+              </div>
+            </div>
+          </section>
+          <div class="form__note">
+            <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+            <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+          </div>
+          <div class="form__consent">
+            <label class="choice choice--caption"><input class="choice__input" id="fa-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Buchungsanfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Buchungsanfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+          </div>
+        </div>
+        <div class="form-demo__foot">
+          <button class="btn btn--primary" type="submit">Absenden</button>
+          <p class="preview__meta" data-demo-result aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="preview__block">
+      <h2 class="text-label-s">In allen Kontexten</h2>
+      <div class="preview__contexts" data-preview-contexts>
+        <template>
+          <div class="form">
+            <section class="form__section form__section--toggle" data-ctx-labelledby="ctx-gruppe-title">
+              <div class="form__toggle-row">
+                <p class="text-h6 form__title" data-ctx-id="ctx-gruppe-title">Gruppenbesuch</p>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" role="switch" name="gruppe" value="ja" data-ctx-labelledby="ctx-gruppe-title" data-ctx-controls="ctx-gruppe-fields" data-form-toggle checked>
+                  <span class="toggle__track" aria-hidden="true"></span>
+                </label>
+              </div>
+              <div class="form__collapse is-open" data-ctx-id="ctx-gruppe-fields">
+                <div class="form__collapse-inner">
+                  <fieldset class="form__group">
+                    <legend class="sr-only">Gruppenbesuch</legend>
+                    <div class="field">
+                      <div class="field__box">
+                        <input class="field__input" data-ctx-id="ctx-anzahl" name="anzahl" type="text" placeholder=" " required>
+                        <label class="field__label" data-ctx-for="ctx-anzahl">Teilnehmer:innenzahl <span aria-hidden="true">*</span></label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </section>
+            <fieldset class="form__radios">
+              <legend class="sr-only">Anrede</legend>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="ctx-anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+              <label class="choice choice--radio"><input class="choice__input" type="radio" name="ctx-anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+            </fieldset>
+            <div class="form__note">
+              <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+              <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+            </div>
+            <div class="form__consent">
+              <label class="choice choice--caption"><input class="choice__input" data-ctx-id="ctx-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Anfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Anfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+  </main>
+
+  <script src="../preview.js"></script>
+  <script src="../../scripts/focus-modality.js"></script>
+  <script src="./form.js"></script>
+  <script>
+    // Vorschau: Erfolg anzeigen statt senden, Fehlerbeispiel direkt prüfen
+    document.addEventListener('sgli:form-success', function (e) {
+      var out = e.target.querySelector('[data-demo-result]');
+      if (out) out.textContent = 'Gültig. Im Off-Canvas folgt jetzt die Bestätigung.';
+    });
+    SGLI.form.validate(document.querySelector('form[aria-label="Fehlerbeispiel"]'));
+  </script>
+</body>
+</html>

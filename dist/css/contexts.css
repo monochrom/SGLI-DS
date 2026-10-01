@@ -11,17 +11,25 @@
 [data-context="surface-200"] {
   --color-bg-inset: var(--color-surface-300);
   --color-bg-module: var(--color-surface-200);
+  --color-toggle-track-off: var(--color-neutral-500);
 }
 
 /* Figma Semantic-Mode surface-300 */
 [data-context="surface-300"] {
   --color-bg-module: var(--color-surface-300);
+  --color-interactive-secondary: var(--color-secondary-700);
+  --color-interactive-secondary-hover: var(--color-secondary-800);
+  --color-toggle-track-off: var(--color-neutral-500);
 }
 
 /* Figma Semantic-Mode surface-400 */
 [data-context="surface-400"] {
   --color-text-secondary: var(--color-neutral-700);
   --color-bg-module: var(--color-surface-400);
+  --color-interactive-secondary: var(--color-secondary-700);
+  --color-interactive-secondary-hover: var(--color-secondary-800);
+  --color-feedback-error: var(--color-neutral-900);
+  --color-toggle-track-off: var(--color-neutral-500);
 }
 
 /* Figma Semantic-Mode primary-900 */
@@ -71,6 +79,15 @@
   --color-chip-badge-bg-active: var(--color-neutral-alpha-900-20);
   --color-chip-badge-fg: var(--color-neutral-0);
   --color-chip-badge-fg-active: var(--color-primary-900);
+  --color-filter-cell-bg-hover: var(--color-neutral-alpha-0-5);
+  --color-filter-cell-bg-pressed: var(--color-neutral-alpha-0-10);
+  --color-filter-cell-bg-active: var(--color-neutral-0);
+  --color-filter-cell-fg-active: var(--color-primary-900);
+  --color-filter-cell-count-active: var(--color-primary-900);
+  --color-navigation-menu-fg: var(--color-neutral-0);
+  --color-navigation-menu-border: var(--color-neutral-alpha-0-40);
+  --color-navigation-menu-border-hover: var(--color-neutral-0);
+  --color-navigation-menu-border-pressed: var(--color-secondary-200);
 }
 
 /* Figma Semantic-Mode secondary-400 */
@@ -78,4 +95,8 @@
   --color-text-secondary: var(--color-neutral-700);
   --color-bg-inset: var(--color-neutral-100);
   --color-bg-module: var(--color-secondary-400);
+  --color-interactive-secondary: var(--color-secondary-900);
+  --color-interactive-secondary-hover: var(--color-neutral-900);
+  --color-feedback-error: var(--color-neutral-900);
+  --color-toggle-track-off: var(--color-neutral-700);
 }

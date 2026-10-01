@@ -9,6 +9,12 @@
         "$type": "color",
         "$value": "{color.surface.200}"
       }
+    },
+    "toggle": {
+      "track-off": {
+        "$type": "color",
+        "$value": "{color.neutral.500}"
+      }
     }
   }
 }

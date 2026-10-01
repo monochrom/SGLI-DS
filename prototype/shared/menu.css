@@ -1,0 +1,439 @@
+/* SGLI Prototyp – Menü-Overlay (global für alle Prototypen)
+   Figma: Navigation / Menu Overlay (2802:62629), Desktop 2802:62628 / Phone 2802:62627,
+   Zeile navigation-cell-menu (2834:27277, 7 Status × Desktop/Phone).
+   Baut auf den Foundations (../../src/styles) und Core Components (../../src/components) auf, ändert dort nichts.
+   Markup erzeugt menu.js (eine Quelle für alle Seiten).
+   Mobile first: Phone-Layout bis 767, Liste + Bild ab md (768), Desktop-Kopf und -Abbinder ab lg (1024).
+   Figma hat für das Menü keinen Tablet-Frame.
+
+   Öffnen (Choreografie, alle Zeiten unten als Custom Properties):
+   0. Seite dunkelt ab (wie beim Off-Canvas)
+   1. Fläche wächst von oben (clip-path), noch leer
+   2. Einträge blenden nacheinander von oben nach unten ein, die Trennlinie zieht dabei von links nach rechts
+   3. Bild öffnet sich von links nach rechts (ab Tablet)
+   4. Abbinder (Footer) blendet ein
+   Schließen (umgekehrt): Inhalt und Bild blenden aus, die Fläche fährt nach oben zu, zuletzt geht die Abdunkelung weg. */
+
+/* ---------- Farben: Tokens color/navigation-menu/* (seit 2026-09-30 in tokens/) ---------- */
+.menu {
+
+  /* Motion: Ebenen-Werte aus src/styles/motion.css (dort ist das Menü Master), Choreografie lokal */
+  --menu-ease: var(--ease-surface);         /* weich rein und raus: Flächen */
+  --menu-ease-out: var(--ease-content);     /* sanft auslaufend: Inhalte */
+  --menu-d-dim: var(--motion-dim);          /* Abdunkeln */
+  --menu-t-start: var(--motion-surface-delay); /* Fläche startet, wenn die Seite fast abgedunkelt ist */
+  --menu-t-panel: var(--motion-surface-in); /* Fläche wächst */
+  --menu-t-items: calc(var(--menu-t-start) + 300ms); /* Start der Einträge */
+  --menu-stagger: 55ms;       /* Abstand zwischen zwei Einträgen */
+  --menu-d-item: 520ms;       /* Dauer je Eintrag */
+  --menu-d-media: 900ms;      /* Bild öffnet sich */
+  --menu-footer-after: 180ms; /* Footer nach dem letzten Eintrag (Phone) bzw. nach Bildstart (Desktop, s. u.) */
+  --menu-n: 6;                /* Anzahl sichtbarer Einträge, setzt menu.js */
+  --menu-t-after-items: calc(var(--menu-t-items) + var(--menu-n) * var(--menu-stagger));
+  /* Schließen: Inhalt 0 → 280, Fläche 200 → 880, Abdunkelung 780 → 1140 (= CLOSE_MS in menu.js) */
+  --menu-c-content: 280ms;
+  --menu-c-panel-delay: 200ms;
+  --menu-c-panel: var(--motion-surface-out);
+  --menu-c-dim-delay: 780ms;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 1400);
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-navigation-menu-fg);
+  overflow: hidden;
+}
+.menu::backdrop { background: transparent; }
+
+/* Seite hinter dem Menü nicht scrollen (menu.js setzt die Klasse und gleicht die Scrollbar-Breite aus) */
+html.menu-lock { overflow: hidden; }
+
+/* ---------- Abdunkelung (eigene Ebene statt ::backdrop, damit sie die Zeiten oben nutzen kann) ---------- */
+.menu__scrim {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-neutral-alpha-900-40); /* wie Off-Canvas */
+  opacity: 0;
+  transition: opacity var(--menu-d-dim) ease var(--menu-c-dim-delay);
+}
+.menu.is-open .menu__scrim {
+  opacity: 1;
+  transition: opacity var(--menu-d-dim) ease 0ms;
+}
+
+/* ---------- Fläche ---------- */
+.menu__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background-color: var(--color-bg-module); /* Figma: surface-50 (#fffdf9), heller als die Seite */
+  clip-path: inset(0 0 100% 0);
+  /* Schließen: fährt nach oben zu, während der Inhalt ausblendet */
+  transition: clip-path var(--menu-c-panel) var(--menu-ease) var(--menu-c-panel-delay);
+}
+.menu.is-open .menu__panel {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path var(--menu-t-panel) var(--menu-ease) var(--menu-t-start);
+}
+
+/* ---------- Kopf: deckungsgleich mit .site-nav der Seiten, damit „Schließen“ genau auf „Menü“ liegt ---------- */
+.menu__head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-16) var(--grid-margin);
+}
+.menu__logo {
+  display: block;
+  width: 131px;
+  height: 40px;
+  color: var(--color-text-primary);
+}
+.menu__actions,
+.menu__buttons,
+.menu__icons {
+  display: flex;
+  align-items: center;
+}
+.menu__actions { gap: var(--space-48); }
+.menu__buttons { gap: var(--space-24); }
+.menu__icons { display: none; gap: var(--space-8); }
+.menu__icons .btn--icon { border-color: transparent; } /* Figma: Icon-Buttons im Kopf ohne Rahmen */
+
+.menu__hours {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-primary);
+}
+.menu__hours::before {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-secondary-500);
+}
+.menu__head .menu__hours { display: none; }
+
+/* Icon aus Figma, das (noch) nicht im Sprite ist: als Maske, Farbe über currentColor */
+.menu__mask {
+  display: inline-block;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  background-color: currentColor;
+  -webkit-mask: url("./assets/EasyLanguage.svg") center / contain no-repeat;
+  mask: url("./assets/EasyLanguage.svg") center / contain no-repeat;
+}
+
+/* ---------- Inhalt ---------- */
+.menu__body {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
+/* Phone: Öffnungszeit, Suche, Sprache. Tablet: nur Öffnungszeit (Icons im Kopf). Desktop: alles im Kopf. */
+.menu__utility {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  padding: var(--space-24) var(--grid-margin) 0;
+}
+.menu__search { margin: 0; }
+.menu__lang { display: flex; gap: var(--space-8); }
+
+.menu__nav { padding: var(--space-40) var(--grid-margin) var(--space-48); }
+.menu__list { margin: 0; padding: 0; list-style: none; }
+
+.menu__media { display: none; }
+
+/* ---------- navigation-cell-menu ----------
+   Default: Linie 20 %, Pfeil unsichtbar. Hover: Linie dunkel, Pfeil blendet ein und wächst (16 → 24).
+   Pressed: Linie primary-700. Current: Quadrat 16 vorne, Linie dunkel. Focus: Doppelring außen, Innenabstand 24 wie Figma. */
+.nav-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  padding: var(--space-16) 0;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--letter-spacing-h3);
+  color: var(--color-navigation-menu-fg);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  --line: var(--color-navigation-menu-border);
+  transition: padding var(--motion-base, 260ms) var(--menu-ease-out);
+}
+/* Trennlinie als Pseudo-Element: kann beim Öffnen von links nach rechts ziehen */
+.nav-cell::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--border-default);
+  background-color: var(--line);
+  transform-origin: left center;
+  transition: background-color var(--motion-fast, 160ms) var(--menu-ease-out);
+}
+.nav-cell__indicator {
+  display: none;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-navigation-menu-indicator);
+}
+.nav-cell__label { flex: 1 1 auto; min-width: 0; }
+.nav-cell__icon {
+  flex: none;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  opacity: 0;
+  transform: translateX(-6px) scale(0.667); /* 16 px wie Figma Default */
+  transition:
+    opacity 240ms var(--menu-ease-out),
+    transform 360ms var(--menu-ease-out);
+}
+.nav-cell__icon svg { display: block; width: 100%; height: 100%; }
+
+/* base.css färbt a:hover in interactive-hover; in der Zelle bleibt die Schrift fg (Figma) */
+.nav-cell:hover { color: var(--color-navigation-menu-fg); }
+
+/* Aktuelle Seite (Figma current / active): Quadrat, Linie bleibt die normale (dunkel erst bei Hover/Fokus).
+   Phone: 16 zwischen Quadrat und Label, ab lg wie alle Zeilen 24. */
+.nav-cell[aria-current="page"] { gap: var(--space-16); }
+.nav-cell[aria-current="page"] .nav-cell__indicator { display: block; }
+
+:root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible,
+.nav-cell:active { --line: var(--color-navigation-menu-border-hover); }
+.nav-cell:active { --line: var(--color-navigation-menu-border-pressed); }
+:root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible .nav-cell__icon,
+.nav-cell:active .nav-cell__icon { opacity: 1; transform: none; }
+:root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible { padding-inline: var(--space-16); }
+
+@media (hover: hover) {
+  .nav-cell:hover:not(:active) { --line: var(--color-navigation-menu-border-hover); }
+  .nav-cell:hover .nav-cell__icon { opacity: 1; transform: none; }
+}
+
+/* ---------- Abbinder ---------- */
+.menu__foot {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-24);
+  padding: var(--space-32) var(--grid-margin) var(--space-40);
+  border-top: var(--border-default) solid var(--color-divider-default);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+.menu__links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-20);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu__links a {
+  display: flex;
+  align-items: center;
+  min-height: var(--size-touch-min, 44px); /* Figma Phone: Link-Höhe 44 */
+  color: inherit;
+  text-decoration-line: underline; /* nur die Linie: Dicke und Hover kommen aus base.css (Regel „Links“) */
+  text-underline-offset: 0.2em;
+}
+.menu__address { margin: 0; font-style: normal; }
+.menu__foot-group { display: flex; flex-direction: column; }
+
+/* ---------- Ab Tablet (md 768): Liste + Bild ----------
+   Figma hat keinen Tablet-Frame. Liste und Bild stehen ab 768 nebeneinander.
+   Kopf: Icon-Buttons ab md (wie der Seitenkopf), Öffnungszeit erst ab lg. Abbinder bleibt bis lg wie Phone.
+   Tablet: Öffnungszeit steht über der Liste, das Bild läuft über die volle Höhe. */
+@media (min-width: 768px) {
+  .menu {
+    --menu-footer-after: 560ms; /* Footer kommt, während das Bild aufgeht */
+  }
+  .menu__body {
+    display: grid;
+    /* Figma 1440: Liste 628, Gap 64, Bild 668. Beide Spalten wachsen und schrumpfen im selben Verhältnis,
+       damit das Bild nicht zu schmal wird. Die Zellen dürfen umbrechen. */
+    grid-template-columns: minmax(0, 628fr) minmax(0, 668fr);
+    grid-template-rows: auto 1fr;
+    column-gap: var(--space-32);
+    padding: var(--space-24) var(--grid-margin) var(--space-40);
+  }
+  .menu__utility { grid-column: 1; grid-row: 1; padding: 0; }
+  /* Icons stehen ab Tablet im Kopf (wie im Seitenkopf), im Panel bleibt nur die Öffnungszeit */
+  .menu__icons { display: flex; }
+  .menu__search,
+  .menu__lang { display: none; }
+  .menu__nav { grid-column: 1; grid-row: 2; align-self: end; padding: var(--space-40) 0 0; }
+
+  .menu__media {
+    position: relative;
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: stretch;
+    min-height: 320px;
+    margin: 0;
+    overflow: hidden;
+  }
+  .menu__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ---------- Desktop (lg 1024) ---------- */
+@media (min-width: 1024px) {
+  .menu__head { padding: var(--space-24) var(--grid-margin) var(--space-32); }
+  .menu__logo { width: 203px; height: 62px; }
+  .menu__head .menu__hours { display: flex; }
+  .menu__utility { display: none; }
+
+  .menu__body {
+    column-gap: var(--space-64);
+    padding: 0 var(--grid-margin);
+  }
+  .menu__nav { padding: 0; }
+  /* Schrift bleibt H3 (Desktop 32), solange die Liste neben dem Bild schmal ist. H2 erst ab 2xl, s. u. */
+  .nav-cell { padding-block: var(--space-24); }
+  .nav-cell[aria-current="page"] { gap: var(--space-24); }
+  :root:not([data-focus-modality="pointer"]) .nav-cell:focus-visible { padding-inline: var(--space-24); }
+
+  .menu__foot {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-24);
+    padding: var(--space-40) var(--grid-margin);
+    border-top: 0;
+  }
+  .menu__foot-group { display: contents; }
+  .menu__links { column-gap: var(--space-24); }
+  .menu__links a { min-height: 0; }
+  .menu__links--legal { justify-content: flex-end; }
+  .menu__address { grid-column: 2; grid-row: 1; text-align: center; }
+}
+
+/* Ab 2xl (1440, Figma-Desktop-Frame): Menüpunkte in H2 */
+@media (min-width: 1440px) {
+  .nav-cell {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+    letter-spacing: var(--letter-spacing-h2);
+  }
+}
+
+/* ==========================================================================
+   Choreografie
+   Geschlossen (= Ausgangszustand und Schließen): alles unsichtbar, kurze Ausblendung ohne Staffelung.
+   .is-open: gestaffelt einblenden. Die Transition-Werte des Zielzustands gelten, deshalb stehen
+   die Öffnen-Delays nur unter .is-open.
+   ========================================================================== */
+.menu__head > *,
+.menu__reveal,
+.menu__foot {
+  opacity: 0;
+  transition: opacity var(--menu-c-content) ease, transform var(--menu-c-content) ease;
+}
+.menu__reveal { transform: translateY(-10px); }
+.menu__reveal .nav-cell::after {
+  transform: scaleX(0);
+  transition: transform var(--menu-c-content) ease, background-color var(--motion-fast, 160ms) var(--menu-ease-out);
+}
+.menu__media {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 420ms var(--menu-ease);
+}
+.menu__media img {
+  transform: scale(1.12);
+  transform-origin: left center;
+  transition: transform 420ms var(--menu-ease);
+}
+
+/* Öffnen */
+.menu.is-open .menu__head > * {
+  opacity: 1;
+  transition: opacity 240ms var(--menu-ease-out) calc(var(--menu-t-start) + 120ms);
+}
+.menu.is-open .menu__reveal {
+  --menu-delay: calc(var(--menu-t-items) + var(--i, 0) * var(--menu-stagger));
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--menu-d-item) var(--menu-ease-out) var(--menu-delay),
+    transform var(--menu-d-item) var(--menu-ease-out) var(--menu-delay);
+}
+.menu.is-open .menu__reveal .nav-cell::after {
+  transform: none;
+  transition:
+    transform 700ms var(--menu-ease) calc(var(--menu-delay) + 60ms),
+    background-color var(--motion-fast, 160ms) var(--menu-ease-out) 0ms;
+}
+.menu.is-open .menu__media {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path var(--menu-d-media) var(--menu-ease) var(--menu-t-after-items);
+}
+.menu.is-open .menu__media img {
+  transform: none;
+  transition: transform calc(var(--menu-d-media) + 500ms) var(--menu-ease-out) var(--menu-t-after-items);
+}
+.menu.is-open .menu__foot {
+  opacity: 1;
+  transition: opacity 420ms var(--menu-ease-out) calc(var(--menu-t-after-items) + var(--menu-footer-after));
+}
+
+/* Reduzierte Bewegung: reset.css setzt die Dauer global auf 0.01 ms, die Staffel-Delays müssen zusätzlich weg.
+   Übrig bleibt ein kurzes, ruhiges Ein- und Ausblenden der ganzen Fläche. */
+@media (prefers-reduced-motion: reduce) {
+  .menu *,
+  .menu *::after { transition-delay: 0s !important; }
+  .menu__panel,
+  .menu.is-open .menu__panel { clip-path: none; }
+  .menu { opacity: 0; }
+  .menu.is-open { opacity: 1; }
+}
+
+/* ---------- Übergabe an die Suche (search.js über SGLI.menu.handoff) ----------
+   Inhalt und Abbinder blenden aus, Kopf und Fläche bleiben stehen. Danach schließt das Menü ohne Animation,
+   die Suche liegt zu dem Zeitpunkt schon deckungsgleich darüber. */
+.menu.is-handoff .menu__body,
+.menu.is-handoff .menu__foot {
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.menu.is-instant,
+.menu.is-instant * { transition: none !important; }

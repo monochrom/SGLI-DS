@@ -2,7 +2,8 @@
    Figma: Checkbox (1859:171) States Unchecked | Checked | Focused Off | Focused On | Error | Disabled
           Radio (1859:182)    States Unselected | Selected | Focused Off | Focused On | Error | Disabled
    Box 16 × 16, 1 px border/default innen; gewählt: Fläche text/primary mit Check-Icon 16 (Checkbox)
-   bzw. Punkt 6 px (Radio, Radius full). Label Caption in text/primary, Gap 8.
+   bzw. Punkt 6 px (Radio, Radius full). Label Label-M in text/primary, Gap 8 (Figma, Stand 2026-09-23).
+   Einwilligungstexte in Formularen: .choice--caption (Caption, mehrzeilig, Box an der ersten Zeile).
    Error: Rahmen und Label feedback/error, Fehlertext Caption mit Gap 4. Disabled Opacity 40 %.
    Fokus: Doppelring um die ganze Zeile (Box + Label), wie in Figma.
 
@@ -15,19 +16,27 @@
      <span class="choice__box" aria-hidden="true"></span>
      <span class="choice__label">Label</span>
    </label>
-   Radio: type="radio" und Klasse .choice--radio. */
+   Radio: type="radio" und Klasse .choice--radio. Langer Einwilligungstext: Klasse .choice--caption. */
 
 .choice {
   --choice-size: 16px;
   position: relative;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-8);
   cursor: pointer;
   color: var(--color-text-primary);
   font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+}
+/* Einwilligung und andere lange Texte: Caption (Figma: Override am Checkbox-Label in Forms) */
+.choice--caption {
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
 }
 
 .choice__input {
@@ -46,6 +55,8 @@
   width: var(--choice-size);
   height: var(--choice-size);
   box-sizing: border-box;
+  /* Box mittig zur ersten Textzeile, ein- wie mehrzeilig (Figma: items-start) */
+  margin-top: calc((1lh - var(--choice-size)) / 2);
   border: var(--border-default) solid var(--color-border-default);
   background-color: transparent;
   transition: background-color 120ms ease, border-color 120ms ease;
@@ -80,7 +91,7 @@
 }
 
 /* Fokus: Ring um die ganze Zeile */
-.choice:has(.choice__input:focus-visible) {
+:root:not([data-focus-modality="pointer"]) .choice:has(.choice__input:focus-visible) {
   outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
   outline-offset: var(--border-focus-inner);
   box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);

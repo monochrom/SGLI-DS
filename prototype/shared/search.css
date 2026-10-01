@@ -1,0 +1,212 @@
+/* SGLI Prototyp – Such-Overlay (global für alle Prototypen)
+   Figma: search-overlay (2872:4913, Modules), Doku „Suche“ (2873:1631, Foundations).
+   Braucht menu.css: der Kopf nutzt dieselben Klassen wie das Menü (.menu__head …), damit er beim Wechsel
+   Menü → Suche pixelgenau stehen bleibt. Markup erzeugt search.js.
+
+   Aufbau: Fläche von oben über die volle Breite, so hoch wie der Inhalt. Kopf wie Menü (Schließen statt Menü),
+   Suchfeld wie der Kopf der Ergebnisseite (Figma search 2316:9141), darunter redaktionelle Links (Button/Secondary).
+
+   Motion (src/styles/motion.css, Familie „Randfläche“, wie das Menü):
+   Öffnen:    Seite dunkelt ab → Fläche wächst von oben (clip-path) → Kopf, Suchfeld, Links blenden ein.
+   Schließen: Inhalt blendet aus → Fläche fährt nach oben zu → Abdunkelung zuletzt (gesamt 1060 ms = CLOSE_MS).
+   Aus dem Menü (.is-from-menu → .is-open.is-handoff): Fläche steht in voller Höhe, Kopf sichtbar,
+   die Fläche zieht sich auf die Höhe der Suche zusammen, dann blendet der Inhalt ein. */
+
+.search {
+  --search-h: 100%;                 /* Höhe des Inhalts, setzt search.js */
+  --search-c-content: 240ms;        /* Schließen: Inhalt blendet aus */
+  --search-c-surface-delay: 160ms;  /* Schließen: Fläche startet */
+  --search-c-dim-delay: 740ms;      /* Schließen: Abdunkelung startet (160 + 680 − 100) */
+  --search-t-body: calc(var(--motion-surface-delay) + 300ms); /* Öffnen: Start Suchfeld und Links */
+  --search-stagger: 55ms;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 1400);
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  overflow: hidden;
+}
+.search::backdrop { background: transparent; }
+
+/* Seite hinter der Suche nicht scrollen (search.js setzt die Klasse und gleicht die Scrollbar aus) */
+html.search-lock { overflow: hidden; }
+
+/* ---------- Ebenen: Abdunkelung, Fläche, Inhalt ---------- */
+.search__scrim {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-neutral-alpha-900-40);
+  opacity: 0;
+  transition: opacity var(--motion-dim) ease var(--search-c-dim-delay);
+}
+.search__surface {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-bg-module); /* wie Menü-Fläche (Figma: bg/card in surface-50) */
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+  transition: clip-path var(--motion-surface-out) var(--ease-surface) var(--search-c-surface-delay);
+}
+.search__content {
+  position: relative;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---------- Kopf (Klassen aus menu.css) ---------- */
+.search .menu__head > * {
+  opacity: 0;
+  transition: opacity var(--search-c-content) ease;
+}
+
+/* ---------- Suchfeld (wie Kopf der Ergebnisseite) ---------- */
+.search__body {
+  display: grid;
+  gap: var(--space-32);
+  padding: var(--space-24) var(--grid-margin) var(--space-40);
+}
+.search__body > * {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity var(--search-c-content) ease, transform var(--search-c-content) ease;
+}
+.search__form {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+  padding-bottom: var(--space-16);
+  border-bottom: var(--border-default) solid var(--color-border-default);
+  transition: box-shadow var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
+}
+.search__kicker {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+.search__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+.search__field {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-16);
+  min-width: 0;
+}
+.search__field .icon {
+  flex: none;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+}
+.search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--letter-spacing-h3);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.search__input::placeholder { color: var(--color-text-secondary); opacity: 1; }
+.search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/* Fokus: Unterstrich wird 2 px in focus-outer (alle Bedienarten). Tastatur und Fallback ohne JS:
+   zusätzlich Doppelring außen um Lupe + Eingabe (wie Formularfelder, siehe input.css). */
+.search__input:focus-visible { outline: none; box-shadow: none; }
+.search__form:focus-within {
+  border-bottom-color: var(--color-border-focus-outer);
+  box-shadow: 0 1px 0 var(--color-border-focus-outer);
+}
+:root:not([data-focus-modality="pointer"]) .search__field:has(.search__input:focus-visible) {
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: var(--border-focus-inner);
+  box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
+}
+
+/* ---------- Häufig gesucht: redaktionelle Links (Craft) als Button/Secondary ----------
+   Keine Chips: die bedeuten im System „filtern“ (Zustand an/aus), hier geht es zu einer Seite.
+   Figma: Abstand 24 zwischen den Links, Trefferfläche 44 → Zeilenabstand im Code 10 (Button ist 34 hoch). */
+.search__links {
+  display: grid;
+  gap: var(--space-16);
+}
+.search__links-title {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+.search__link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10) var(--space-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Desktop (lg 1024) ---------- */
+@media (min-width: 1024px) {
+  .search__body { padding: var(--space-48) var(--grid-margin) var(--space-64); }
+  .search__form {
+    gap: var(--space-16);
+    max-width: 668px; /* Figma: wie Ergebnisseite */
+    padding-bottom: var(--space-8);
+  }
+}
+
+/* ==========================================================================
+   Choreografie. Geschlossen = Ausgangszustand und Schließen, .is-open = Öffnen.
+   ========================================================================== */
+.search.is-open .search__scrim {
+  opacity: 1;
+  transition: opacity var(--motion-dim) ease 0ms;
+}
+.search.is-open .search__surface {
+  clip-path: inset(0 0 calc(100% - var(--search-h)) 0);
+  transition: clip-path var(--motion-surface-in) var(--ease-surface) var(--motion-surface-delay);
+}
+.search.is-open .menu__head > * {
+  opacity: 1;
+  transition: opacity 240ms var(--ease-content) calc(var(--motion-surface-delay) + 120ms);
+}
+.search.is-open .search__body > * {
+  --search-delay: calc(var(--search-t-body) + var(--i, 0) * var(--search-stagger));
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 520ms var(--ease-content) var(--search-delay),
+    transform 520ms var(--ease-content) var(--search-delay);
+}
+
+/* Übergabe aus dem Menü: Startzustand = Menü (Fläche voll, Kopf sichtbar, Seite abgedunkelt) */
+.search.is-from-menu .search__scrim { opacity: 1; transition: none; }
+.search.is-from-menu .search__surface { clip-path: inset(0 0 0 0); transition: none; }
+.search.is-from-menu .menu__head > * { opacity: 1; transition: none; }
+/* … dann zieht sich die Fläche ohne Verzögerung zusammen, der Inhalt folgt */
+.search.is-handoff { --search-t-body: 240ms; }
+.search.is-handoff .search__surface {
+  transition: clip-path var(--motion-surface-in) var(--ease-surface) 0ms;
+}
+.search.is-handoff .menu__head > * { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .search__body > * { transform: none; }
+}

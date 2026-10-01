@@ -1,5 +1,5 @@
 /* SGLI – Grid & Container
-   Figma Grid Styles: Desktop 12 / 24 / 40, Phone 12 / 8 / 16. Tablet 12 / 16 / 24 (Repo-Entscheidung).
+   Figma Grid Styles: Desktop 12 / 24 / 40, Phone 12 / 8 / 16. Tablet 12 / 16 / 24 (nur im Repo).
    Mobile first. Breakpoints: md 768 (Tablet), lg 1024 (Desktop), siehe dist/css/layout.css. */
 
 :root {

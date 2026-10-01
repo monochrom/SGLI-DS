@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bildung – Prototyp Filter-System – SGLI</title>
+  <meta name="robots" content="noindex">
+  <!-- Design System (read-only eingebunden): Tokens, Foundations, Core Components -->
+  <link rel="stylesheet" href="../../src/styles/index.css">
+  <link rel="stylesheet" href="../../src/components/index.css">
+  <!-- Prototyp-Module -->
+  <link rel="stylesheet" href="./prototype.css">
+  <!-- Menü-Overlay, global für alle Prototypen -->
+  <link rel="stylesheet" href="../shared/menu.css">
+  <link rel="stylesheet" href="../shared/search.css">
+  <link rel="stylesheet" href="../shared/header.css">
+</head>
+<body>
+
+  <a class="sr-only" href="#angebote">Zu den Bildungsangeboten springen</a>
+
+  <!-- ===== navigation (Figma 2548:24968, Aufbau übernommen aus haftbuch) ===== -->
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a class="site-nav__logo" href="../startseite/" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+      <div class="site-nav__actions">
+        <p class="site-nav__hours">Heute geöffnet von 10-18:00 Uhr</p>
+        <div class="site-nav__buttons">
+          <div class="site-nav__icons">
+            <button class="btn btn--icon" type="button" aria-label="Sprache wechseln" data-modal-open="modal-language">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Translate"></use></svg>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Leichte Sprache">
+              <span class="icon icon-mask icon-mask--easy-language" aria-hidden="true"></span>
+            </button>
+            <button class="btn btn--icon" type="button" aria-label="Suche öffnen" data-search-open>
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-MagnifyingGlass"></use></svg>
+            </button>
+          </div>
+          <button class="btn btn--primary" type="button" data-menu-open>Menü</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== hero-default (Figma 2548:24974) ===== -->
+    <section class="hero-default section--hero-text" data-context="surface-100">
+      <div class="hero-default__text">
+        <p class="module-label">Bildung</p>
+        <h1 class="hero-default__title">Lernen am<br>historischen Ort</h1>
+        <p class="hero-default__intro">Historische Quellen, persönliche Schicksale und gesellschaftliche Fragen eröffnen neue Perspektiven auf Geschichte und Gegenwart.</p>
+      </div>
+    </section>
+
+    <!-- ===== education-filter + list-item-education (Figma 2548:24978, 2548:25016) ===== -->
+    <section class="edu-filter-section" data-context="surface-100" id="angebote" aria-labelledby="angebote-heading">
+      <div class="wrap">
+        <h2 class="sr-only" id="angebote-heading">Bildungsangebote filtern</h2>
+
+        <div class="edu-filter">
+          <div class="edu-filter__content">
+            <div class="edu-filter__row">
+              <p class="edu-filter__label module-label" id="label-zielgruppe">Angebote für</p>
+              <ul class="edu-filter__chips" data-filter-category aria-labelledby="label-zielgruppe"></ul>
+            </div>
+            <div class="edu-filter__collapse" data-filter-detail-row>
+              <div class="edu-filter__collapse-inner">
+                <div class="edu-filter__row">
+                  <p class="edu-filter__label module-label" id="label-detail">Genauer filtern</p>
+                  <ul class="edu-filter__chips" data-filter-detail aria-labelledby="label-detail"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="edu-filter__actions">
+            <p class="tag" data-filter-count aria-live="polite">47 Angebote</p>
+            <button class="edu-filter__reset is-hidden" type="button" data-filter-reset>Filter zurücksetzen</button>
+          </div>
+        </div>
+
+        <ul class="edu-list" data-edu-list aria-label="Bildungsangebote"></ul>
+        <p class="edu-list__empty" data-edu-empty hidden>Für diese Auswahl gibt es derzeit kein Angebot. Bitte einen Filter entfernen oder alle zurücksetzen.</p>
+        <div class="edu-list__more" data-edu-more-wrap hidden>
+          <button class="btn btn--primary" type="button" data-edu-more>Weitere Angebote laden</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== cut-edges + text-content-grid (Figma 2522:59538 / Phone 2522:59561) ===== -->
+    <section class="cut-edges cut-edges--before cut-edges--after cut-edges--tilt" data-context="primary-900" aria-labelledby="vermitteln-heading">
+      <div class="cut-edges__body text-content-grid">
+        <div class="wrap">
+          <header class="section-header--center">
+            <div class="section-header__head">
+              <p class="module-label">Bildungsarbeit</p>
+              <h2 id="vermitteln-heading">Wie wir Geschichte vermitteln</h2>
+            </div>
+            <p class="section-header__intro">Die Bildungsarbeit der Gedenkstätte Lindenstraße orientiert sich an den Erfahrungen und Biografien der Menschen, die an diesem Ort verfolgt, inhaftiert oder von politischen Umbrüchen betroffen waren. Unsere Angebote fördern die aktive Auseinandersetzung mit Geschichte, Gegenwart und gesellschaftlicher Verantwortung.</p>
+          </header>
+
+          <div class="text-row text-row--2">
+            <div>
+              <p>Die Stiftung Gedenkstätte Lindenstraße bietet ein vielfältiges Bildungs- und Vermittlungsprogramm für Interessierte aller Altersgruppen an. Ein zentraler Ansatzpunkt der Bildungsarbeit sind die Biografien der Menschen, die aus politischen oder rassistischen Gründen im Nationalsozialismus verfolgt oder in der Sowjetischen Besatzungszeit und in der DDR in der Lindenstraße inhaftiert waren. Dieser biografische Ansatz ermöglicht einen niedrigschwelligen, empathischen Zugang und findet sich in allen Vermittlungsformaten wieder.</p>
+            </div>
+            <div>
+              <p>Das Spektrum an Formaten reicht von Führungen, Zeitzeug:innengesprächen, Workshops bis hin zu digitalen Spurensuchen. Besucher:innenorientierung ist eine wichtige Prämisse unserer Bildungsarbeit.</p>
+              <p>Alle Workshops sind modular angelegt und je nach Interessen und Vorkenntnissen flexibel kombinierbar. Gern beraten wir Sie und stellen Ihnen ein individuelles Programm für Ihren Besuch zusammen!</p>
+            </div>
+          </div>
+
+          <figure class="image-section">
+            <img class="image-section__img" src="./assets/img/image-section.jpg" alt="Zwei Besucher mit Audioguides betrachten eine Zellentür in der Gedenkstätte" width="1200" height="800">
+            <figcaption class="image-section__caption">Bildunterschrift</figcaption>
+          </figure>
+
+          <div class="text-row text-row--3">
+            <div>
+              <h3>Entdecken, Forschen und Diskutieren</h3>
+              <p>Die Formate sind handlungsorientiert: Die Besucher:innen lernen entdeckend, forschend und diskutierend den historischen Ort kennen. Methodische Vielfalt und kreative Präsentationsformen wecken das Interesse für die historischen Themen. Aktivierende Methoden stärken die Kompetenzentwicklung.</p>
+            </div>
+            <div>
+              <h3>Multiperspektivisch und kontrovers</h3>
+              <p>Die Besucher:innen werden durch multiperspektivische und kontroverse Darstellungen zur kritischen Auseinandersetzung mit der Geschichte angeregt.</p>
+            </div>
+            <div>
+              <h3>Gegenwartsbezug und Menschenrechtsbildung</h3>
+              <p>Die Lebenswelt der Besucher:innen findet ebenso Berücksichtigung wie der Bezug zu aktuellen Themen und Fragestellungen. Dieser Gegenwarts- und Lebensweltbezug unterstützt die kritische Reflexion und verdeutlicht den Besucher:innen die Relevanz der Inhalte für die heutige Zeit und für sie selbst. Hierbei wird u. a. auf den Ansatz der Menschenrechtsbildung zurückgegriffen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== image-text-single (Figma 2522:59546 / Phone 2522:59569) ===== -->
+    <section class="image-text" data-context="surface-300" aria-labelledby="buchung-heading">
+      <div class="wrap image-text__grid">
+        <img class="image-text__img" src="./assets/img/image-text-single.jpg" alt="Eine Besuchergruppe im Innenhof der Gedenkstätte hört einer Führung zu" width="1200" height="900">
+        <div class="image-text__body">
+          <p class="module-label">Gruppen</p>
+          <h2 id="buchung-heading">Buchung &amp; Organisation</h2>
+          <p class="image-text__lead">Sie möchten ein Bildungsangebot buchen oder haben Fragen zur Planung? Hier finden Sie die wichtigsten Informationen zur Organisation Ihres Besuchs.</p>
+          <h3>Individuelle Terminvereinbarung</h3>
+          <p>Bildungsangebote finden nach vorheriger Anmeldung statt. Gemeinsam mit Ihnen stimmen wir Termin, Umfang und Inhalte passend zu Ihrer Gruppe ab.</p>
+          <h3>Flexible Angebotsgestaltung</h3>
+          <p>Viele Angebote sind modular aufgebaut und können je nach Altersgruppe, Vorwissen und zeitlichem Rahmen angepasst werden.</p>
+          <h3>Beratung und Kontakt</h3>
+          <p>Gern beraten wir Sie bei der Auswahl eines geeigneten Angebots und unterstützen Sie bei der Planung Ihres Besuchs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== contact-section (Figma 2522:59547 / Phone 2522:59570) ===== -->
+    <section class="contact" data-context="surface-200" aria-labelledby="kontakt-heading">
+      <div class="wrap contact__grid">
+        <div class="contact__intro">
+          <p class="module-label">Kontakt</p>
+          <h2 id="kontakt-heading">Individuelle Beratung</h2>
+          <p class="contact__text">Gern beraten wir Sie bei der Auswahl eines passenden Bildungsangebots und unterstützen Sie bei der Planung Ihres Besuchs. Gemeinsam stellen wir ein Programm zusammen, das zu Ihrer Gruppe, Ihren Interessen und Ihrem zeitlichen Rahmen passt.</p>
+        </div>
+        <div class="contact__card">
+          <p class="module-label">Ihre Ansprechpartnerin</p>
+          <p class="contact__name"><strong>Anja Lehmann</strong></p>
+          <address>
+            Stiftung Gedenkstätte Lindenstraße<br>
+            Tel. 0331-971 89 005<br>
+            <a href="mailto:email@gedenkstaette-lindenstrasse.de">email@gedenkstaette-lindenstrasse.de</a>
+          </address>
+          <button class="btn btn--primary" type="button" data-offcanvas-open="offcanvas-kontakt" aria-haspopup="dialog">Zum Kontaktformular</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-slider (Figma 2522:59548 / Phone 2522:59571) ===== -->
+    <section class="teaser-slider" data-context="surface-100" aria-labelledby="projekte-heading" data-slider>
+      <div class="wrap">
+        <header class="section-header--split">
+          <div>
+            <p class="module-label">Projektarbeit</p>
+            <h2 id="projekte-heading">Aktuelle Projekte</h2>
+          </div>
+          <p class="section-header__intro">Über die Bildungsangebote hinaus entwickelt die Stiftung Gedenkstätte Lindenstraße Projekte, die neue Zugänge zur Geschichte eröffnen und unterschiedliche Zielgruppen ansprechen.</p>
+        </header>
+        <ul class="teaser-slider__track" data-slider-track aria-label="Projekte">
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-1.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur</h3>
+              <p>Das neue, vom Bund geförderte Bildungsprojekt „Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur“ der Stiftung Gedenkstätte …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-2.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Graphic Novel UNVERGESSEN</h3>
+              <p>Mit der Graphic Novel „UNVERGESSEN. Geschichten nationalsozialistischer Verfolgung aus Potsdam“ sucht die Gedenkstätte Lindenstraße nach …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-3.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Graphic Novel „Grenzlinien“</h3>
+              <p>Anlässlich des 60. Jahrestags des Mauerbaus gab die Stiftung Gedenkstätte Lindenstraße die Graphic Novel „Grenzlinien“ heraus. Darin …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-4.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur</h3>
+              <p>Das neue, vom Bund geförderte Bildungsprojekt „Wir Anderen. Gesellschaftliche Vielfalt in der SED-Diktatur“ der Stiftung Gedenkstätte …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+          <li class="teaser-card">
+            <img class="teaser-card__img" src="./assets/img/project-2.jpg" alt="" width="321" height="428">
+            <div>
+              <h3>Graphic Novel UNVERGESSEN</h3>
+              <p>Mit der Graphic Novel „UNVERGESSEN. Geschichten nationalsozialistischer Verfolgung aus Potsdam“ sucht die Gedenkstätte Lindenstraße nach …</p>
+              <a class="btn btn--secondary" href="#">Zum Projekt</a>
+            </div>
+          </li>
+        </ul>
+        <div class="teaser-slider__nav">
+          <button class="btn btn--icon" type="button" data-slider-prev aria-label="Vorherige Projekte">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowLeft"></use></svg>
+          </button>
+          <button class="btn btn--icon" type="button" data-slider-next aria-label="Weitere Projekte">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-ArrowRight"></use></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== faq-section (Figma 2522:59549 / Phone 2522:59572) ===== -->
+    <section class="faq" data-context="surface-300" aria-labelledby="faq-heading">
+      <div class="wrap faq__grid">
+        <div class="faq__intro">
+          <p class="module-label">Ihr Besuch</p>
+          <h2 id="faq-heading">Gut zu wissen</h2>
+          <p class="faq__text">Sie haben weitere Fragen zu unseren Bildungsangeboten oder möchten einen Besuch planen? Unser Team unterstützt Sie gerne persönlich.</p>
+          <button class="btn btn--primary" type="button" data-offcanvas-open="offcanvas-kontakt" aria-haspopup="dialog">Kontakt</button>
+        </div>
+        <div class="faq__list">
+          <details class="faq-item" open>
+            <summary class="faq-item__q">Was erwartet mich in der Dauerausstellung?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Die Dauerausstellung führt durch die Geschichte der Lindenstraße und ihrer unterschiedlichen Nutzungen im 20. Jahrhundert. Im Mittelpunkt stehen die Menschen, die während der NS-Diktatur, der sowjetischen Besatzungszeit und der SED-Diktatur verfolgt, inhaftiert oder verurteilt wurden – sowie die Ereignisse der Friedlichen Revolution 1989/90.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Wie lange dauert ein Besuch der Ausstellungen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Für die Dauerausstellung sollten Sie etwa 90 Minuten einplanen. Mit Führung oder Sonderausstellung entsprechend mehr.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Gibt es neben der Dauerausstellung auch Sonderausstellungen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Ja, wechselnde Sonderausstellungen vertiefen einzelne Themen und Biografien. Aktuelle Informationen finden Sie unter Ausstellungen.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Kann ich die Ausstellungen mit einem Audioguide besuchen?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Ein Audioguide steht in Deutsch und Englisch kostenfrei an der Kasse zur Verfügung.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__q">Warum ist die Lindenstraße ein besonderer Ausstellungsort?
+              <svg class="icon icon--plus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Plus"></use></svg>
+              <svg class="icon icon--minus" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-Minus"></use></svg>
+            </summary>
+            <p class="faq-item__a">Das Gebäude wurde in drei politischen Systemen als Gefängnis genutzt und 1989 von der Bürgerbewegung besetzt. Die Ausstellung findet am authentischen Ort statt.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== teaser-feature (Figma 2522:59550 / Phone 2522:59573) ===== -->
+    <section class="teaser-feature" data-context="surface-300" aria-labelledby="stiftung-heading">
+      <div class="wrap">
+        <div class="feature-card" data-context="surface-100">
+          <div class="feature-card__text">
+            <h3 id="stiftung-heading">Die Stiftung hinter dem Lernort</h3>
+            <p>Die Stiftung Gedenkstätte Lindenstraße bewahrt, erforscht und vermittelt die Geschichte des historischen Ortes. Erfahren Sie mehr über ihre Aufgaben, Projekte und die Menschen, die diese Arbeit ermöglichen.</p>
+            <a class="btn btn--secondary" href="#">Mehr erfahren</a>
+          </div>
+          <div class="feature-card__media">
+            <img class="feature-card__img" src="./assets/img/feature.jpg" alt="Innenhof der Gedenkstätte Lindenstraße mit Backsteingebäuden und offenem Tor" width="1200" height="675">
+            <svg class="feature-card__deco" viewBox="0 0 622.513 634.924" aria-hidden="true" focusable="false"><path d="M4.83068 551.338L111.439 572.545L428.914 630.668L577.069 515.993L617.831 301.566L510.438 281.93L548.849 86.3543L131.82 4.66798L4.83068 551.338Z" fill="none" stroke="currentColor" stroke-width="8"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== footer (Figma 2522:59551 / Phone 2522:59574, Aufbau wie haftbuch) ===== -->
+  <footer class="site-footer" data-context="primary-900">
+    <div class="site-footer__main">
+      <div class="site-footer__brand">
+        <a class="site-footer__logo" href="../startseite/" aria-label="Stiftung Gedenkstätte Lindenstraße – Startseite"><span class="logo-mark"></span></a>
+        <ul class="site-footer__social" aria-label="Social Media">
+          <li><a href="#" aria-label="Instagram"><span class="icon icon-mask icon-mask--instagram" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="Facebook"><span class="icon icon-mask icon-mask--facebook" aria-hidden="true"></span></a></li>
+          <li><a href="#" aria-label="LinkedIn"><span class="icon icon-mask icon-mask--linkedin" aria-hidden="true"></span></a></li>
+        </ul>
+      </div>
+      <nav class="site-footer__cols" aria-label="Footer">
+        <ul>
+          <li><a href="#">Besuch planen</a></li>
+          <li><a href="#">Ausstellungen</a></li>
+          <li><a href="#">Veranstaltungen</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Haftbücher &amp; Schicksale</a></li>
+          <li><a href="#">Bildung</a></li>
+          <li><a href="#">Die Stiftung</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Kontakt</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Stiftung Gedenkstätte Lindenstraße</p>
+      <ul class="site-footer__legal">
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Cookies</a></li>
+        <li><a href="#">Digitale Barrierefreiheit</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ===== Off-Canvas Detailfilter (Figma: Off-Canvas 2613:31418, Filter-Panel 2710:23917 / 2710:24111)
+       Natives <dialog>: showModal() liefert Top-Layer, Escape, Fokus-Trap und inerten Hintergrund.
+       Desktop: Panel rechts 520 px. Phone: Bottom Sheet, max. 85 % Viewporthöhe. ===== -->
+  <dialog class="offcanvas" data-offcanvas aria-labelledby="offcanvas-title">
+    <form class="offcanvas__form" method="dialog">
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <p class="text-label-s offcanvas__kicker">Genauer filtern</p>
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-title" data-offcanvas-title tabindex="-1">Filter</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="submit" value="close" data-offcanvas-close aria-label="Filter schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <div class="offcanvas__body">
+        <fieldset class="filter-cells" data-offcanvas-options>
+          <legend class="sr-only" data-offcanvas-legend>Filter</legend>
+        </fieldset>
+      </div>
+      <footer class="offcanvas__foot">
+        <button class="btn btn--primary" type="submit" value="apply" data-offcanvas-apply>Angebote anzeigen</button>
+        <button class="btn btn--secondary" type="button" data-offcanvas-clear disabled>Auswahl löschen</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- ===== Off-Canvas Kontakt (Figma: Forms 2746:24535, Kontakt 2746:26620 / 2753:30067,
+       Bestätigung 2747:29871 / 2746:28162). Komponenten off-canvas + form, gesteuert von off-canvas.js und form.js.
+       Ausgelöst von „Zum Kontaktformular“ (contact-section) und „Kontakt“ (faq-section). ===== -->
+  <dialog class="offcanvas" id="offcanvas-kontakt" aria-labelledby="offcanvas-kontakt-title" data-offcanvas-confirm="modal-discard">
+    <div class="offcanvas__view" data-offcanvas-view="form">
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <p class="text-label-s offcanvas__kicker">Kontakt</p>
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-kontakt-title" tabindex="-1">Schreiben Sie uns!</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Kontaktformular schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <form class="offcanvas__form" data-form novalidate action="#" method="post">
+        <div class="offcanvas__body">
+          <div class="form">
+            <section class="form__section" aria-labelledby="offcanvas-kontakt-kontaktdaten-title">
+              <h3 class="text-h6 form__title" id="offcanvas-kontakt-kontaktdaten-title">Ihre Kontaktdaten</h3>
+              <fieldset class="form__radios">
+                <legend class="sr-only">Anrede</legend>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="frau"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Frau</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="herr"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Herr</span></label>
+                <label class="choice choice--radio"><input class="choice__input" type="radio" name="anrede" value="keine"><span class="choice__box" aria-hidden="true"></span><span class="choice__label">keine Angabe</span></label>
+              </fieldset>
+              <div class="form__group">
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-vorname" name="vorname" type="text" placeholder=" " autocomplete="given-name" required>
+                      <label class="field__label" for="offcanvas-kontakt-vorname">Vorname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-nachname" name="nachname" type="text" placeholder=" " autocomplete="family-name" required>
+                      <label class="field__label" for="offcanvas-kontakt-nachname">Nachname <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-email" name="email" type="email" placeholder=" " autocomplete="email" required>
+                      <label class="field__label" for="offcanvas-kontakt-email">E-Mail <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-telefon" name="telefon" type="tel" placeholder=" " autocomplete="tel">
+                      <label class="field__label" for="offcanvas-kontakt-telefon">Telefon</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-kontakt-institution" name="institution" type="text" placeholder=" " autocomplete="organization" required>
+                    <label class="field__label" for="offcanvas-kontakt-institution">Institution, Schule, ... <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field__box">
+                    <input class="field__input" id="offcanvas-kontakt-adresse" name="adresse" type="text" placeholder=" " autocomplete="street-address" required>
+                    <label class="field__label" for="offcanvas-kontakt-adresse">Adresse <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-plz" name="plz" type="text" placeholder=" " autocomplete="postal-code" inputmode="numeric" required>
+                      <label class="field__label" for="offcanvas-kontakt-plz">PLZ <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="field__box">
+                      <input class="field__input" id="offcanvas-kontakt-stadt" name="stadt" type="text" placeholder=" " autocomplete="address-level2" required>
+                      <label class="field__label" for="offcanvas-kontakt-stadt">Stadt <span aria-hidden="true">*</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="form__section" aria-labelledby="offcanvas-kontakt-nachricht-title">
+              <h3 class="text-h6 form__title" id="offcanvas-kontakt-nachricht-title">Ihre Nachricht</h3>
+              <div class="form__group">
+                <div class="field field--select">
+                  <div class="field__box">
+                    <select class="field__input" id="offcanvas-kontakt-anliegen" name="anliegen" required>
+                      <option value="">&nbsp;</option>
+                      <option>Bildungsangebot oder Gruppenbesuch</option>
+                      <option>Besuch und Führungen</option>
+                      <option>Recherche im Haftbuch</option>
+                      <option>Presse</option>
+                      <option>Sonstiges</option>
+                    </select>
+                    <label class="field__label" for="offcanvas-kontakt-anliegen">Ihr Anliegen <span aria-hidden="true">*</span></label>
+                    <svg class="icon field__icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-CaretDown"></use></svg>
+                  </div>
+                </div>
+                <div class="field field--textarea">
+                  <div class="field__box">
+                    <textarea class="field__input" id="offcanvas-kontakt-nachricht" name="nachricht" placeholder=" " rows="3" required></textarea>
+                    <label class="field__label" for="offcanvas-kontakt-nachricht">Ihre Nachricht an uns <span aria-hidden="true">*</span></label>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div class="form__note">
+              <p><span aria-hidden="true">*</span> Pflichtfelder</p>
+              <p>Die von Ihnen übermittelten Daten werden gemäß unserer <a href="#">Datenschutzerklärung</a> gespeichert und verarbeitet. Hierfür ist Ihre Zustimmung erforderlich.</p>
+            </div>
+            <div class="form__consent">
+              <label class="choice choice--caption"><input class="choice__input" id="offcanvas-kontakt-einwilligung" type="checkbox" name="einwilligung" value="ja" required><span class="choice__box" aria-hidden="true"></span><span class="choice__label">Hiermit erteile ich meine Einwilligung, dass die Stiftung Gedenkstätte Lindenstraße meine oben aufgelisteten Daten dazu verwenden darf, meine Anfrage zu bearbeiten, zu speichern und mich im Zusammenhang mit der Anfrage zu kontaktieren. Meine hierfür erteilte Einwilligung kann ich jederzeit widerrufen.</span></label>
+            </div>
+          </div>
+        </div>
+        <footer class="offcanvas__foot">
+          <button class="btn btn--primary" type="submit">Absenden</button>
+          <button class="btn btn--secondary" type="button" data-offcanvas-close>Abbrechen</button>
+        </footer>
+      </form>
+    </div>
+    <div class="offcanvas__view" data-offcanvas-view="success" hidden>
+      <header class="offcanvas__head">
+        <div class="offcanvas__heading">
+          <h2 class="text-h3 offcanvas__title" id="offcanvas-kontakt-success-title" tabindex="-1">Vielen Dank</h2>
+        </div>
+        <button class="btn btn--icon offcanvas__close" type="button" data-offcanvas-close aria-label="Schließen">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
+        </button>
+      </header>
+      <div class="offcanvas__body">
+        <div class="offcanvas__success">
+          <svg class="icon offcanvas__success-icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-CheckCircle"></use></svg>
+          <div class="offcanvas__success-text" data-offcanvas-announce>
+            <h3 class="text-h6">Ihre Anfrage wurde erfolgreich gesendet.</h3>
+            <p class="text-body-m">Wir haben Ihre Nachricht erhalten und werden uns zeitnah bei Ihnen melden. Bei dringenden Anliegen erreichen Sie uns telefonisch unter 0331-971 89 005.</p>
+          </div>
+        </div>
+      </div>
+      <footer class="offcanvas__foot offcanvas__foot--center">
+        <button class="btn btn--primary" type="button" data-offcanvas-close>Schließen</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- Rückfrage vor dem Schließen mit Eingaben (Figma modal type=confirm, 2859:132) -->
+  <dialog class="modal modal--confirm" id="modal-discard" role="alertdialog" aria-labelledby="modal-discard-title" aria-describedby="modal-discard-text">
+    <div class="modal__close-row">
+      <button class="btn btn--icon modal__close" type="button" data-modal-close value="cancel" aria-label="Schließen">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="../../dist/icons/sprite.svg#icon-X"></use></svg>
+      </button>
+    </div>
+    <div class="modal__content">
+      <div class="modal__text">
+        <div class="modal__head">
+          <h2 class="text-h3 modal__title" id="modal-discard-title">Eingaben verwerfen?</h2>
+        </div>
+        <p class="text-body-m modal__intro" id="modal-discard-text">Wenn Sie das Formular jetzt schließen, gehen Ihre Eingaben verloren.</p>
+      </div>
+      <div class="modal__actions">
+        <button class="btn btn--primary" type="button" data-modal-close value="cancel" autofocus>Weiter bearbeiten</button>
+        <button class="btn btn--secondary" type="button" data-modal-close value="discard">Verwerfen</button>
+      </div>
+    </div>
+  </dialog>
+
+  <p class="proto-bar" aria-hidden="true">Prototyp · Stand 2026-09-29</p>
+
+  <script src="./data.js"></script>
+  <script src="./filter.js"></script>
+  <script src="../../src/scripts/focus-modality.js"></script>
+  <script src="../shared/menu.js" data-current="bildung"></script>
+  <script src="../../src/components/modal/modal.js"></script>
+  <script src="../../src/components/form/form.js"></script>
+  <script src="../../src/components/off-canvas/off-canvas.js"></script>
+  <script src="../shared/language.js"></script>
+  <script src="../shared/header.js"></script>
+  <script src="../shared/slider.js"></script>
+  <script src="../shared/faq.js"></script>
+  <script src="../shared/search.js" data-current="bildung"></script>
+</body>
+</html>

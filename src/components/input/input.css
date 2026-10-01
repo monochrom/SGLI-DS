@@ -17,12 +17,14 @@
      </div>
      <p class="field__error" id="name-error">Fehlermeldung</p>
    </div>
-   placeholder=" " (Leerzeichen) ist Pflicht, damit :placeholder-shown den Leerzustand erkennt. */
+   placeholder=" " (Leerzeichen) ist Pflicht, damit :placeholder-shown den Leerzustand erkennt.
+   Ein echter Platzhalter (z. B. placeholder="TT.MM.JJJJ") erscheint erst im Fokus, wie in Figma.
+   Uhrzeit: type="time" mit .field--date und Icon Clock. */
 
 .field {
   --field-height: 48px;
   --field-pad-x: var(--space-8);
-  --field-label-top: 6px;
+  --field-label-top: 5px; /* innerhalb des 1-px-Rahmens = 6 px von außen wie Figma */
   display: block;
   color: var(--color-text-primary);
 }
@@ -44,14 +46,17 @@
   width: 100%;
   min-width: 0;
   margin: 0;
-  padding: 14px 0 15px; /* 19 px Zeile mittig in 48 */
+  padding: 13px 0 14px; /* 19 px Zeile mittig in 48 (Box border-box: 1 + 13 + 19 + 14 + 1) */
   border: 0;
   border-radius: 0;
   background: transparent;
   font-family: var(--font-family-sans);
   font-weight: var(--font-weight-regular);
-  font-size: var(--font-size-label-m);
-  line-height: var(--line-height-label-m);
+  /* Mindestens 16 px: iOS zoomt beim Antippen in jedes Feld mit kleinerer Schrift. Label-M ist auf dem Phone
+     15 px (ab md 16 px). Zoom per Viewport (maximum-scale) abzuschalten wäre kein Weg, das sperrt auf Android
+     auch das Pinch-Zoom (WCAG 1.4.4). Zeilenhöhe bleibt die von Label-M, das Feld bleibt 48 px hoch. */
+  font-size: max(1rem, var(--font-size-label-m));
+  line-height: calc(var(--font-size-label-m) * var(--line-height-label-m));
   letter-spacing: var(--letter-spacing-label-m);
   color: var(--color-text-primary);
   outline: none;
@@ -109,15 +114,37 @@
 .field__input:not(:placeholder-shown),
 .field--floated .field__input,
 .field--date .field__input {
-  padding-top: 23px; /* 6 + 13 + 4 */
-  padding-bottom: 6px;
+  padding-top: 22px; /* 5 + 13 + 4, plus 1 px Rahmen = 6 + 13 + 4 von außen */
+  padding-bottom: 5px;
 }
 
-/* ---------- Fokusring (Figma: innen 2 / außen 4 um die Box) ---------- */
+/* ---------- Fokus: zwei Stufen je nach Bedienart ----------
+   Tastatur (und Fallback ohne JS): Doppelring AUSSEN um die Box wie bei Buttons und Chips (focus.css):
+   2 focus-inner direkt am Rahmen, darum 4 focus-outer. Das Feld behält seine volle Innenfläche.
+   Abweichung: Figma (Focused, z. B. 1658:6496) zeigt den Ring innen.
+   Maus/Touch: ruhiger Zustand ohne Ring, Rahmen 2 px in focus-outer (1 px Rahmen + 1 px Inset-Schatten,
+   nichts verschiebt sich). Das Label oben und der Cursor zeigen den Fokus zusätzlich.
+   Die Bedienart setzt src/scripts/focus-modality.js als data-focus-modality auf <html>. */
 .field__box:focus-within {
   outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
   outline-offset: var(--border-focus-inner);
   box-shadow: 0 0 0 var(--border-focus-inner) var(--color-border-focus-inner);
+}
+[data-focus-modality="pointer"] .field__box:focus-within {
+  outline: none;
+  border-color: var(--color-border-focus-outer);
+  box-shadow: inset 0 0 0 var(--border-default) var(--color-border-focus-outer);
+}
+[data-focus-modality="pointer"] .field--error .field__box:focus-within {
+  border-color: var(--color-feedback-error);
+  box-shadow: inset 0 0 0 var(--border-default) var(--color-feedback-error);
+}
+/* Das Eingabeelement selbst trägt keinen Ring: den zeigt die Box. Ohne diese Regel greift der globale
+   :focus-visible-Ring (focus.css) zusätzlich am <input>/<select>, Browser setzen ihn bei Textfeldern
+   auch nach Mausklick. */
+.field__input:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 /* ---------- Icon rechts (Search, Date, Select, Error) ---------- */
@@ -152,8 +179,8 @@
   text-transform: none;
 }
 .field--select .field__input:has(option[value=""]:checked):not(:focus) {
-  padding-top: 14px;
-  padding-bottom: 15px;
+  padding-top: 13px;
+  padding-bottom: 14px;
 }
 .field--select .field__input:not(:has(option[value=""]:checked)) ~ .field__label,
 .field--select .field__input:focus ~ .field__label {
@@ -168,38 +195,46 @@
 }
 .field--select .field__input:not(:has(option[value=""]:checked)),
 .field--select .field__input:focus {
-  padding-top: 23px;
-  padding-bottom: 6px;
+  padding-top: 22px;
+  padding-bottom: 5px;
 }
 .field--select option {
   color: var(--color-neutral-900);
   background: var(--color-neutral-0);
 }
 
-/* ---------- Textarea ---------- */
+/* ---------- Textarea ----------
+   Figma Textarea (1658:6547): Box 100 hoch, Padding 8 rundum. Label (leer Label-M, schwebend Label-S)
+   steht 8 px unter der Außenkante, der Wert beginnt bei 27. Innerhalb des 1-px-Rahmens: 7 bzw. 1 + 8 + 18. */
+.field--textarea {
+  --field-label-top: 7px;
+}
 .field--textarea .field__box {
   align-items: flex-start;
   min-height: 100px;
-  padding-top: var(--space-4);
-  padding-bottom: var(--space-4);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
 }
 .field--textarea .field__input {
-  min-height: calc(100px - 2 * var(--space-4) - 2 * var(--border-default));
-  padding: 11px 0 var(--space-4);
+  min-height: calc(100px - 2 * var(--space-8) - 2 * var(--border-default));
+  padding: 0;
   resize: vertical;
 }
 .field--textarea .field__label {
-  top: 15px;
-  transform: none;
-}
-.field--textarea .field__box:focus-within .field__label,
-.field--textarea .field__input:not(:placeholder-shown) ~ .field__label {
   top: var(--field-label-top);
+  transform: none;
 }
 .field--textarea .field__box:focus-within .field__input,
 .field--textarea .field__input:not(:placeholder-shown) {
-  padding-top: 23px;
-  padding-bottom: var(--space-4);
+  padding-top: 18px;
+  padding-bottom: 0;
+}
+
+/* ---------- Platzhalter (Figma: Focused zeigt Platzhaltertext in text/secondary) ----------
+   Nur bei echtem Platzhalter sichtbar, placeholder=" " bleibt unsichtbar. Leer und ohne Fokus
+   übernimmt weiter das Label die Rolle des Platzhalters. */
+.field__box:focus-within .field__input::placeholder {
+  color: var(--color-text-secondary);
 }
 
 /* ---------- Error ---------- */

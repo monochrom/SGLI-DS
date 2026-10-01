@@ -43,13 +43,27 @@ blockquote {
   letter-spacing: var(--letter-spacing-quote);
 }
 
-a {
-  color: var(--color-interactive);
-  text-underline-offset: 0.15em;
-  text-decoration-thickness: from-font;
+/* Links (Figma-Doku „Links“ auf 🎨 Foundations):
+   - immer in der Textfarbe der Umgebung und unterstrichen. Keine eigene Linkfarbe: Auf den
+     7 Modulfarben ist keine einzelne Farbe überall lesbar (z. B. primary-900 auf primary-900).
+   - Hover (nur mit Maus): der Unterstrich wird kräftiger, die Farbe bleibt.
+   - Klickbare Titel und Navigationslinks ohne Unterstrich (Listen, Karten, Footer) zeigen beim
+     Hover einen dünnen Unterstrich (--link-underline, 1 px). Kein Farbwechsel beim Hover, nirgends.
+   - Tastaturfokus: Ring aus focus.css.
+   Buttons als Links (.btn) setzen text-decoration: none und ihre eigene Farbe, die Regel greift dort nicht. */
+:root {
+  --link-underline: 1px;
+  --link-underline-hover: 2px;
+  --link-underline-offset: 0.15em;
 }
-a:hover {
-  color: var(--color-interactive-hover);
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--link-underline);
+  text-underline-offset: var(--link-underline-offset);
+}
+@media (hover: hover) {
+  a:hover { text-decoration-thickness: var(--link-underline-hover); }
 }
 
 hr {

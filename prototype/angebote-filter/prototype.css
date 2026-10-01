@@ -1,0 +1,1032 @@
+/* SGLI Prototyp „Bildung“ – Modul-CSS
+   Gekapselt für den Prototypen. Baut auf den Foundations (../../src/styles) und Core Components
+   (../../src/components) auf, ändert dort nichts. Alle Werte aus Figma (Template „Bildung“, Section 2522:59510: Desktop 2522:59511, Phone 2522:59552),
+   Einheiten wie im Design System: Spacing px über Tokens, Schrift über Text-Style-Variablen.
+   Mobile first: Phone = Default, Tablet ab md (768), Desktop ab lg (1024). */
+
+/* Motion: --motion-* und --ease-* kommen aus src/styles/motion.css (Foundation). */
+
+/* ---------- Layout-Helfer (nur Prototyp) ---------- */
+.wrap {
+  width: 100%;
+  max-width: calc(var(--container-max) - 2 * var(--grid-desktop-margin)); /* 1360 wie Figma */
+  margin-inline: auto;
+}
+.module-label {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+.text-secondary { color: var(--color-text-secondary); }
+.stack-8 > * + * { margin-top: var(--space-8); }
+.stack-16 > * + * { margin-top: var(--space-16); }
+.stack-24 > * + * { margin-top: var(--space-24); }
+body { background-color: var(--color-bg-page); }
+
+/* Icon, das (noch) nicht im Sprite ist: als Maske, Farbe über currentColor (wie haftbuch) */
+.icon-mask {
+  display: inline-block;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  background-color: currentColor;
+  -webkit-mask: var(--icon-mask) center / contain no-repeat;
+  mask: var(--icon-mask) center / contain no-repeat;
+}
+.icon-mask--easy-language { --icon-mask: url("../shared/assets/EasyLanguage.svg"); }
+
+/* ---------- Navigation (Figma: navigation 1926:1842, übernommen aus haftbuch) ----------
+   Phone: nur Logo + Menü. Ab Tablet: drei Icon-Buttons (Sprache, Leichte Sprache, Suche) + Menü.
+   Ab Desktop zusätzlich die Öffnungszeit. Sie wandert zuerst ins Menü, die Icons sind wichtiger. */
+.site-nav {
+  padding: var(--space-16) var(--grid-margin);
+  background-color: var(--color-bg-page);
+}
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+.site-nav__logo {
+  display: block;
+  width: 131px;
+  height: 40px;
+  color: var(--color-text-primary);
+}
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-48);
+}
+.site-nav__hours {
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.site-nav__hours::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-secondary-500);
+}
+.site-nav__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+}
+.site-nav__icons {
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+}
+/* Figma (navigation 2834:26222): Icon-Buttons 45 × 45 ohne Rahmen. Die Core Component btn--icon hat einen. */
+.site-nav__icons .btn--icon { border-color: transparent; }
+@media (min-width: 768px) {
+  .site-nav__icons { display: flex; }
+}
+@media (min-width: 1024px) {
+  .site-nav { padding: var(--space-24) var(--grid-margin) var(--space-32); }
+  .site-nav__logo { width: 203px; height: 62px; }
+  .site-nav__hours { display: flex; }
+}
+
+/* ---------- Hero (Figma: hero-default) ---------- */
+.hero-default {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+  text-align: center;
+}
+.hero-default__text {
+  max-width: 660px;
+  margin-inline: auto;
+  display: grid;
+  gap: var(--space-16);
+}
+.hero-default__title { margin: 0; }
+.hero-default__intro {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+
+/* ---------- Bildungs-Filter (Figma: education-filter, filter) ---------- */
+.edu-filter-section {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.edu-filter {
+  display: grid;
+  gap: var(--space-16);
+}
+@media (min-width: 1024px) {
+  .edu-filter { gap: var(--space-24); }
+}
+
+.edu-filter__content {
+  --edu-filter-gap: var(--space-12);
+  display: grid;
+  padding: var(--space-16) 0;
+  border-top: 2px solid var(--color-border-default);
+  border-bottom: 2px solid var(--color-border-default);
+}
+@media (min-width: 1024px) {
+  .edu-filter__content { --edu-filter-gap: var(--space-16); padding: var(--space-24) 0; }
+}
+
+.edu-filter__row {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* Detailfilter-Zeile klappt mit der Zielgruppe (Ampel) auf und zu: Höhe über grid-template-rows
+   0fr ↔ 1fr (--motion-slow), der Inhalt blendet in der zweiten Hälfte ein bzw. zuerst aus.
+   Der Abstand zur Zielgruppen-Zeile (--edu-filter-gap) liegt als padding-top auf der inneren __row,
+   nicht als gap auf __content: ein Grid-Gap bleibt auch bei 0fr-Track stehen und ein negativer
+   margin-top verschiebt das Item nur, verkleinert den Track aber nicht. So wird der Abstand mit dem
+   Inhalt weggeclippt und animiert mit auf.
+   Zu = visibility: hidden (raus aus Tab-Reihenfolge und Accessibility Tree), kein display: none,
+   sonst kann nichts animieren. overflow: hidden nur zu und während der Bewegung (is-animating,
+   JS entfernt die Klasse nach transitionend), damit der Fokusring der Chips offen nicht beschnitten wird. */
+.edu-filter__collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--motion-slow) var(--ease-out),
+    visibility 0s linear var(--motion-slow);
+}
+.edu-filter__collapse-inner > .edu-filter__row {
+  padding-top: var(--edu-filter-gap);
+}
+.edu-filter__collapse-inner {
+  min-height: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+.edu-filter__collapse:not(.is-open) .edu-filter__collapse-inner,
+.edu-filter__collapse.is-animating .edu-filter__collapse-inner { overflow: hidden; }
+.edu-filter__collapse.is-open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--motion-slow) var(--ease-out),
+    visibility 0s;
+}
+.edu-filter__collapse.is-open .edu-filter__collapse-inner {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--motion-slow) - var(--motion-base));
+}
+.edu-filter__label {
+  margin: 0;
+}
+/* Chips: Phone scrollt horizontal (Figma: keine Umbrüche), Desktop bricht um */
+.edu-filter__chips {
+  position: relative; /* Absolut positionierte Screenreader-Texte bleiben innerhalb der Scrollfläche. */
+  display: flex;
+  gap: var(--space-8);
+  margin: 0;
+  padding: var(--space-6) var(--section-spacing-x-default);
+  margin-inline: calc(-1 * var(--section-spacing-x-default));
+  margin-block: calc(-1 * var(--space-6)); /* Platz für den Fokusring, ohne Layout-Versatz */
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.edu-filter__chips::-webkit-scrollbar { display: none; }
+.edu-filter__chips > li { flex: none; }
+@media (min-width: 1024px) {
+  .edu-filter__row {
+    grid-template-columns: 144px minmax(0, 1fr);
+  }
+  .edu-filter__chips {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding-inline: 0;
+    margin-inline: 0;
+  }
+}
+
+/* Chip-Erweiterungen für den Filter: weichere Zustandswechsel als die Core Component (120 ms) */
+.edu-filter .chip {
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    padding var(--motion-base) var(--ease-out);
+}
+.edu-filter .chip__badge {
+  white-space: nowrap;
+  transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.chip[aria-pressed="true"] .chip__icon { color: var(--color-chip-fg-active); }
+
+/* Slots im Chip (Badge, Icon, X-Button): wachsen von 0fr auf 1fr, dazu Fade. Der negative
+   margin-left hebt den Chip-Gap (6) auf, solange der Slot geschlossen ist. Geschlossene Slots sind
+   visibility: hidden, damit Screenreader den alten Badge-Text nicht mitlesen. */
+.chip__slot {
+  display: grid;
+  grid-template-columns: 0fr;
+  margin-left: calc(-1 * var(--space-6));
+  transition:
+    grid-template-columns var(--motion-base) var(--ease-out),
+    margin-left var(--motion-base) var(--ease-out);
+}
+.chip__slot-inner {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    visibility 0s linear var(--motion-base);
+}
+.chip__slot.is-open {
+  grid-template-columns: 1fr;
+  margin-left: 0;
+}
+.chip__slot.is-open .chip__slot-inner {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--motion-fast) var(--ease-out) calc(var(--motion-base) - var(--motion-fast)),
+    visibility 0s;
+}
+
+/* Geteilter Chip (Detailfilter): links Label + Badge (öffnet das Off-Canvas erneut), rechts das X
+   (entfernt den Wert). Maße wie der Chip aus Figma: Padding 12 außen, Gap 6 zwischen Badge und X.
+   Inaktiv ist das X eingeklappt und der Chip sieht aus wie ein einfacher Chip mit Caret. */
+.chip-split {
+  display: inline-flex;
+  align-items: stretch;
+}
+.chip-split .chip__slot--remove {
+  margin-left: 0;
+  align-items: stretch;
+}
+.chip-split .chip__slot--remove .chip__slot-inner { align-items: stretch; }
+.chip-split.is-active .chip--split-main {
+  padding-right: 0;
+}
+.chip--split-remove {
+  padding-left: var(--space-6);
+}
+@media (hover: hover) {
+  .chip-split .chip:hover .chip__label,
+  .chip-split .chip:hover .chip__badge {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+}
+.chip-split .chip:focus-visible {
+  position: relative;
+  z-index: 1; /* Fokusring liegt über dem Nachbar-Button */
+}
+
+.edu-filter__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+}
+.edu-filter__reset {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  text-decoration: underline var(--link-underline); /* Regel „Links“ */
+  text-underline-offset: 0.2em;
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .edu-filter__reset:hover { text-decoration-thickness: var(--link-underline-hover); } /* Regel „Links“ */
+}
+.edu-filter__reset {
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s;
+}
+.edu-filter__reset.is-hidden {
+  opacity: 0;
+  visibility: hidden; /* nimmt den Button auch aus Tab-Reihenfolge und Accessibility Tree */
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s linear var(--motion-fast);
+}
+
+/* ---------- Ergebnisliste (Figma: list-item-education) ---------- */
+.edu-list {
+  display: grid;
+  gap: var(--space-24);
+  margin: var(--space-32) 0 0;
+  padding: 0;
+  list-style: none;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+.edu-list.is-updating { opacity: 0.3; } /* Crossfade beim Filterwechsel, Neuaufbau nach --motion-fast */
+@media (min-width: 1024px) {
+  .edu-list { margin-top: var(--space-48); }
+}
+
+.edu-item {
+  display: grid;
+  gap: var(--space-16);
+  padding-bottom: var(--space-24);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+  color: inherit;
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .edu-item:hover .edu-item__title { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“: kein Farbwechsel */
+}
+.edu-item__head {
+  display: flex;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+.edu-item__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  gap: var(--space-8);
+}
+.edu-item__type { margin: 0; }
+.edu-item__title {
+  margin: 0;
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+  transition: color 120ms ease;
+}
+.edu-item__desc {
+  margin: 0;
+  font-size: var(--font-size-body-s);
+  line-height: var(--line-height-body-s);
+  color: var(--color-text-secondary);
+}
+.edu-item__caret {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  color: var(--color-icon-primary);
+}
+.edu-item__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-8) var(--space-16);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+.edu-item__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.edu-item__tag { white-space: nowrap; }
+.edu-item__more { color: var(--color-text-secondary); margin-left: var(--space-6); }
+.edu-item__sep { width: 13px; text-align: center; }
+.edu-item__duration { white-space: nowrap; text-align: right; }
+
+@media (min-width: 1024px) {
+  .edu-item {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-desktop-gutter);
+    align-items: start;
+  }
+  .edu-item__head { grid-column: 1 / span 7; padding-top: var(--space-8); }
+  .edu-item__head .edu-item__caret { display: none; }
+  .edu-item__side {
+    grid-column: 9 / span 4;
+    display: flex;
+    align-items: center;
+    gap: var(--space-40);
+  }
+  .edu-item__meta { flex: 1 1 auto; min-width: 0; }
+  .edu-item__side .edu-item__caret { display: block; }
+}
+.edu-item__side .edu-item__caret { display: none; }
+
+.edu-list__empty {
+  padding: var(--space-48) 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+.edu-list__empty[hidden] { display: none; }
+.edu-list__more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-32);
+}
+@media (min-width: 1024px) {
+  .edu-list__more { margin-top: var(--space-64); }
+}
+.edu-list__more[hidden] { display: none; }
+
+/* Phone: Filter und Scrollflächen über die volle Breite; die Inhalte tragen ihr Padding selbst.
+   Figma: Bildung – Mobile, 2548:25008 (Default) / 2789:41880 (Detailfilter).
+   Tablet und Desktop behalten ihre bisherigen Abstände. */
+@media (max-width: 767px) {
+  .edu-filter-section { padding-inline: var(--section-spacing-x-none); }
+
+  .edu-filter,
+  .edu-filter__content,
+  .edu-filter__row,
+  .edu-filter__collapse { grid-template-columns: minmax(0, 1fr); }
+  .edu-filter__collapse-inner { min-width: 0; }
+
+  .edu-filter__content {
+    --edu-filter-gap: var(--space-20);
+    padding-block: var(--space-20);
+  }
+  .edu-filter__row { gap: var(--space-12); }
+  .edu-filter__label,
+  .edu-filter__actions,
+  .edu-list,
+  .edu-list__empty,
+  .edu-list__more { padding-inline: var(--section-spacing-x-default); }
+
+  .edu-filter__chips {
+    margin-inline: 0;
+    scroll-padding-inline: var(--section-spacing-x-default);
+  }
+
+  .edu-list,
+  .edu-list__more { margin-top: var(--space-48); }
+}
+
+/* ---------- Off-Canvas ----------
+   Panel, Motion und Scroll-Sperre kommen aus der Komponente src/components/off-canvas/ (seit 2026-09-29).
+   Hier nur die Filter-Inhalte (filter-cell). Farben aus den Tokens color/filter-cell/* (seit 2026-09-30
+   in tokens/). Marker der gewählten Zeile = color/filter-cell/status (accent/highlight, vorher lokal). */
+
+/* ---------- filter-cell (Figma: filter-cell 2646:40456, Selection Off/On × State) ----------
+   Zeile 52 px: Padding 16/12, Gap 24, Divider unten. Links Indikator 12 × 12 + Label-M (Gap 12),
+   rechts Trefferzahl als Caption. Einfachauswahl (Radio) trotz quadratischem Indikator, siehe README. */
+.filter-cells {
+  display: grid;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.filter-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  padding: var(--space-16) var(--space-12);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.filter-cell__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.filter-cell__main {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
+}
+.filter-cell__indicator {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: var(--border-default) solid var(--color-border-default);
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+/* Beim Anwählen rastet der Indikator kurz ein (kleiner Überschwinger), beim Abwählen nur Fade */
+@keyframes filter-cell-check {
+  0% { transform: scale(0.6); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.filter-cell__label {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label-m);
+  line-height: var(--line-height-label-m);
+  letter-spacing: var(--letter-spacing-label-m);
+  overflow-wrap: anywhere;
+}
+.filter-cell__count {
+  flex: none;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+  color: var(--color-text-secondary);
+  transition: color var(--motion-fast) var(--ease-out);
+}
+/* Hover nur auf Geräten mit echtem Hover (Maus, Trackpad). Auf Touch bleibt :hover nach dem Tippen
+   am Element kleben, bis woanders getippt wird; die Zelle sähe nach dem Abwählen aus wie gehovert. */
+@media (hover: hover) {
+  .filter-cell:hover { background-color: var(--color-filter-cell-bg-hover); }
+}
+.filter-cell:active { background-color: var(--color-filter-cell-bg-pressed); }
+.filter-cell:has(.filter-cell__input:checked) {
+  background-color: var(--color-filter-cell-bg-active);
+  color: var(--color-filter-cell-fg-active);
+}
+.filter-cell:has(.filter-cell__input:checked) .filter-cell__count { color: var(--color-filter-cell-count-active); }
+.filter-cell:has(.filter-cell__input:checked) .filter-cell__indicator {
+  border-color: var(--color-filter-cell-status);
+  background-color: var(--color-filter-cell-status);
+  animation: filter-cell-check var(--motion-base) var(--ease-out);
+}
+.filter-cell:has(.filter-cell__input:checked) .filter-cell__count { transition-delay: 40ms; }
+/* Figma: Focused = 4 px focus-outer als Rahmen der Zelle. Innerer Ring (focus-inner) ergänzt,
+   sonst wäre der Ring im Zustand On (primary-900 auf primary-900) unsichtbar. */
+:root:not([data-focus-modality="pointer"]) .filter-cell:has(.filter-cell__input:focus-visible) {
+  z-index: 1;
+  outline: var(--border-focus-outer) solid var(--color-border-focus-outer);
+  outline-offset: calc(-1 * var(--border-focus-outer));
+  box-shadow: inset 0 0 0 calc(var(--border-focus-outer) + var(--border-focus-inner)) var(--color-border-focus-inner);
+}
+.filter-cell:has(.filter-cell__input:disabled) {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ---------- Text-Content-Grid (Figma: text-content-grid 2522:59540 / Phone 2522:59563) ----------
+   section-header, text-row, image-section, text-row mit Gap 80. Padding y compact (Desktop 64).
+   Kopf: Label + H2 (Gap 16), Intro H6 darunter (Gap 24). Desktop 6 von 12 Spalten, mittig. */
+.text-content-grid {
+  padding: var(--section-pt) var(--section-px) var(--section-pb); /* compact kommt von .cut-edges (Regel 4) */
+}
+.text-content-grid > .wrap {
+  display: grid;
+  gap: var(--space-80);
+}
+.section-header--center {
+  display: grid;
+  gap: var(--space-24);
+  text-align: center;
+}
+.section-header__head { display: grid; gap: var(--space-16); }
+.section-header__head > * { margin: 0; }
+.section-header__intro {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+@media (min-width: 768px) {
+  .section-header--center { width: calc(200% / 3 - var(--grid-gutter) / 3); margin-inline: auto; } /* 8 von 12 */
+}
+@media (min-width: 1024px) {
+  .section-header--center { width: calc(50% - var(--grid-gutter) / 2); } /* 6 von 12 */
+}
+.text-row {
+  display: grid;
+  gap: var(--space-40) var(--grid-gutter);
+}
+.text-row p { margin: 0 0 var(--space-24); }
+.text-row p:last-child { margin-bottom: 0; }
+.text-row h3 {
+  margin: 0 0 var(--space-16);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
+@media (min-width: 768px) {
+  .text-row { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .text-row--2 > * { grid-column: span 6; }
+  .text-row--3 > * { grid-column: span 4; }
+}
+/* height: auto, sonst gewinnt das height-Attribut des img gegen aspect-ratio (gilt für alle Modulbilder) */
+.image-section__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.image-section__caption {
+  margin: var(--space-8) 0 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Bild + Text (Figma: image-text-single 2522:59546 / Phone 2522:59569) ----------
+   Phone: Bild oben, Text darunter (Gap 40, Text ohne Innenabstand). Desktop: zwei gleiche Spalten,
+   Gap 24, Text vertikal mittig mit Padding 24. */
+.image-text {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.image-text__grid {
+  display: grid;
+  gap: var(--space-40);
+  align-items: center;
+}
+.image-text__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.image-text__body .module-label { margin: 0; }
+.image-text__body h2 { margin: var(--space-16) 0 var(--space-24); }
+.image-text__lead {
+  margin: 0 0 var(--space-24);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
+.image-text__body h3 {
+  margin: 0 0 var(--space-16);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
+.image-text__body p { margin: 0 0 var(--space-24); }
+.image-text__body > :last-child { margin-bottom: 0; }
+@media (min-width: 1024px) {
+  .image-text__grid { grid-template-columns: 1fr 1fr; gap: var(--space-24); }
+  .image-text__body { padding: var(--space-24); }
+}
+
+/* ---------- Kontakt (Figma: contact-section 2522:59547 / Phone 2522:59570) ----------
+   Intro: Label + H2 (Gap 16), Text H6 (Gap 16). Karte bg/inset: Label, Name + Adresse (Gap 8),
+   Button mit Gap 48. Phone: gestapelt, Gap 48, Karte Padding 16. Desktop: zwei gleiche Spalten, Gap 64. */
+.contact {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.contact__grid {
+  display: grid;
+  gap: var(--space-48);
+}
+.contact__intro .module-label { margin: 0; }
+.contact__intro h2 { margin: var(--space-16) 0; }
+.contact__text {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+.contact__card {
+  padding: var(--space-16);
+  background-color: var(--color-bg-inset);
+}
+.contact__card .module-label { margin: 0 0 var(--space-24); }
+.contact__name {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+.contact__card address {
+  font-style: normal;
+  margin: 0 0 var(--space-48);
+  overflow-wrap: anywhere;
+}
+/* Links in der Adresse: Textfarbe + Unterstrich aus base.css (Regel „Links“) */
+@media (hover: hover) {
+}
+@media (min-width: 1024px) {
+  .contact__grid { grid-template-columns: 1fr 1fr; gap: var(--space-64); align-items: start; }
+  .contact__card { padding: var(--space-32); }
+}
+
+/* ---------- Teaser-Slider (Figma: teaser-slider 2522:59548 / Phone 2522:59571, teaser-card-static) ----------
+   Phone: Kopf gestapelt (Gap 24), Karten 260 breit mit Bild 321:241, Gap Kopf→Karten 48, keine Pfeile.
+   Desktop: Kopf 5 + 6 Spalten, Karten 321 mit Bild 321:428, Gap 80, Pfeile rechts mit Gap 64.
+   Die Spur trägt 6 px Innenabstand für den Fokusring, die Außenabstände ziehen ihn wieder ab. */
+.teaser-slider {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+  overflow: hidden;
+}
+.section-header--split {
+  display: grid;
+  gap: var(--space-24) var(--grid-gutter);
+  align-items: end;
+  padding-bottom: var(--space-24);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
+.section-header--split .module-label { margin: 0; }
+.section-header--split h2 { margin: var(--space-16) 0 0; }
+@media (min-width: 1024px) {
+  .section-header--split { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .section-header--split > :first-child { grid-column: 1 / span 5; }
+  .section-header--split > :last-child { grid-column: 7 / span 6; }
+}
+.teaser-slider__track {
+  display: flex;
+  gap: var(--space-16);
+  margin: calc(var(--space-48) - var(--space-6)) calc(-1 * var(--section-spacing-x-default)) 0;
+  padding: var(--space-6) var(--section-spacing-x-default);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--section-spacing-x-default); /* erste Karte bündig mit dem Kopf, nicht am Rand */
+  scrollbar-width: none;
+}
+.teaser-slider__track::-webkit-scrollbar { display: none; }
+.teaser-card {
+  flex: none;
+  width: 260px;
+  scroll-snap-align: start;
+  display: grid;
+  align-content: start; /* sonst verteilt das Grid die Resthöhe der höchsten Karte auf die Zeilen */
+  gap: var(--space-16);
+}
+.teaser-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 321 / 241;
+  object-fit: cover;
+}
+.teaser-card h3 {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+}
+.teaser-card p { margin: 0 0 var(--space-16); color: var(--color-text-secondary); }
+.teaser-slider__nav {
+  display: none;
+  justify-content: flex-end;
+  gap: var(--space-8);
+  margin-top: calc(var(--space-64) - var(--space-6));
+}
+@media (min-width: 768px) {
+  .teaser-slider__nav { display: flex; }
+}
+@media (min-width: 1024px) {
+  .teaser-slider__track { margin-top: calc(var(--space-80) - var(--space-6)); }
+  .teaser-card { width: 321px; }
+  .teaser-card__img { aspect-ratio: 321 / 428; }
+  .teaser-card p { margin-bottom: var(--space-24); }
+}
+
+/* ---------- FAQ (Figma: faq-section 2522:59549 / Phone 2522:59572, Aufbau wie haftbuch) ----------
+   Intro: Label + H2 + Text (Gap 16), Button mit Gap 40. Liste Gap 16, Item: Frage H5 + Plus/Minus,
+   Antwort Body/M text/secondary (Gap 16), Divider unten mit 16 Abstand, kein Divider oben.
+   Abstände über section.css: teaser-feature folgt in derselben Fläche und hat oben keinen Abstand (Regel 2). */
+.faq {
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
+}
+.faq__grid { display: grid; gap: var(--space-48) var(--grid-gutter); }
+.faq__intro { display: grid; gap: var(--space-16); justify-items: start; }
+.faq__intro > * { margin: 0; }
+.faq__text {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--letter-spacing-h6);
+}
+.faq__intro .btn { margin-top: var(--space-24); } /* 16 Grid-Gap + 24 = Figma 40 */
+.faq__list { display: grid; gap: var(--space-16); margin: 0; padding: 0; }
+.faq-item {
+  padding-bottom: var(--space-16);
+  border-bottom: var(--border-default) solid var(--color-divider-default);
+}
+.faq-item__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  cursor: pointer;
+  list-style: none;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--letter-spacing-h5);
+}
+.faq-item__q::-webkit-details-marker { display: none; }
+.faq-item__q .icon { flex: none; width: var(--size-icon-lg); height: var(--size-icon-lg); }
+.faq-item__q .icon--minus { display: none; }
+.faq-item[open] .faq-item__q .icon--plus { display: none; }
+.faq-item[open] .faq-item__q .icon--minus { display: block; }
+/* Zuklappen läuft animiert (../shared/faq.js), [open] bleibt bis zum Ende: Icon sofort tauschen */
+.faq-item.is-closing .faq-item__q .icon--plus { display: block; }
+.faq-item.is-closing .faq-item__q .icon--minus { display: none; }
+.faq-item__a { margin: var(--space-16) 0 0; color: var(--color-text-secondary); }
+@media (min-width: 1024px) {
+  .faq__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
+  .faq__intro { grid-column: 1 / span 5; }
+  .faq__list { grid-column: 7 / span 6; }
+}
+
+/* ---------- Teaser-Feature (Figma: teaser-feature 2522:59550 / Phone 2522:59573) ----------
+   Phone: Bild oben über die volle Kartenbreite, Text darunter (Padding x 16, unten 32, Gap 24).
+   Desktop: Text links 397 breit, Bild rechts 16:9, unten bündig, Karte Padding 112/40.
+   Deko: ca. 71 % der Bildbreite, mittig auf dem Bild, leicht nach rechts versetzt, darf oben über
+   die Karte hinausragen (Phone). */
+.teaser-feature {
+  padding: var(--section-pt) var(--section-px) 0; /* unten 0: Moduldesign, die Karte schließt ab */
+}
+.feature-card {
+  display: grid;
+  gap: var(--space-24);
+  padding: 0 0 var(--space-32);
+  background-color: var(--color-bg-inset);
+}
+.feature-card__text { padding-inline: var(--space-16); }
+.feature-card__text h3 {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: var(--letter-spacing-h4);
+}
+.feature-card__text p { margin: 0 0 var(--space-24); color: var(--color-text-secondary); }
+.feature-card__media { position: relative; order: -1; }
+.feature-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.feature-card__deco {
+  position: absolute;
+  left: calc(50% + 2.8%);
+  top: 50%;
+  width: 71.4%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  color: var(--color-neutral-0);
+  pointer-events: none;
+}
+@media (min-width: 1024px) {
+  .feature-card {
+    grid-template-columns: 397px minmax(0, 1fr);
+    align-items: end;
+    padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  }
+  .feature-card__text { padding-inline: 0; }
+  .feature-card__text p { margin-bottom: var(--space-32); }
+  .feature-card__media { order: 0; }
+}
+
+/* ---------- Footer (Figma: Footer 2522:59551 / Phone 2522:59574, Kontext primary-900) ----------
+   Phone (bis 1023): Divider, Logo 160 × 49 mit 32 oben/unten, Linkgruppen (Gap 16) mit 44er Zeilen,
+   Social-Zeile 44 (Icons Gap 24), 32 Luft, Divider, Meta-Links in 44er Zeilen, Copyright.
+   Desktop: Logo + Social links, drei Linkspalten rechts (Gap 80, Zeilen Gap 16), Divider, Copyright + Meta-Nav. */
+.icon-mask--instagram { --icon-mask: url("../shared/assets/InstagramLogo.svg"); }
+.icon-mask--facebook { --icon-mask: url("../shared/assets/FacebookLogo.svg"); }
+.icon-mask--linkedin { --icon-mask: url("../shared/assets/LinkedinLogo.svg"); }
+.site-footer {
+  padding: 0 var(--grid-margin) var(--space-24);
+  background-color: var(--color-bg-module);
+  color: var(--color-text-primary);
+}
+.site-footer__main {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--space-32);
+  border-top: var(--border-default) solid var(--color-divider-default);
+}
+.site-footer__brand { display: contents; }
+.site-footer__logo {
+  order: 1;
+  display: block;
+  width: 160px;
+  height: 49px;
+  margin-block: var(--space-32);
+  color: var(--color-text-primary);
+}
+.site-footer__cols { order: 2; display: grid; gap: var(--space-16) var(--space-80); }
+.site-footer__social { order: 3; margin-top: var(--space-16); }
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
+.site-footer__cols ul { display: grid; align-content: start; }
+.site-footer__cols a,
+.site-footer__legal a {
+  display: flex;
+  align-items: center;
+  min-height: 44px; /* Touch-Ziel wie Figma */
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-label-s);
+  line-height: var(--line-height-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+.site-footer__social { display: flex; gap: var(--space-24); }
+.site-footer__social a { display: flex; align-items: center; min-height: 44px; color: var(--color-text-primary); }
+.site-footer__social .icon-mask { display: block; }
+@media (hover: hover) {
+  .site-footer a:hover { text-decoration: underline var(--link-underline); text-underline-offset: var(--link-underline-offset); } /* Regel „Links“ */
+}
+.site-footer__bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-24);
+  padding: var(--space-24) 0 var(--space-8);
+  border-top: var(--border-default) solid var(--color-divider-default);
+  color: var(--color-text-secondary);
+}
+.site-footer__bottom p {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+}
+.site-footer__legal { display: grid; }
+@media (min-width: 768px) {
+  .site-footer__cols { grid-template-columns: repeat(3, auto); justify-content: start; }
+}
+@media (min-width: 1024px) {
+  .site-footer { padding-bottom: var(--space-32); }
+  .site-footer__main {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--space-40);
+    padding: var(--space-40) 0 0;
+  }
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-80);
+    padding-bottom: var(--space-16);
+  }
+  .site-footer__logo { width: 203px; height: 62px; margin: 0; }
+  .site-footer__social { margin: 0; gap: var(--space-8); }
+  .site-footer__social a { min-height: 0; }
+  .site-footer__cols { justify-content: end; gap: 0 var(--space-80); }
+  .site-footer__cols ul { gap: var(--space-16); }
+  .site-footer__cols a,
+  .site-footer__legal a { min-height: 0; }
+  .site-footer__bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-16) 0 0;
+  }
+  .site-footer__legal { display: flex; gap: var(--space-32); }
+}
+
+/* ---------- Prototyp-Hinweisleiste (kein Design-System-Element) ---------- */
+.proto-bar {
+  position: fixed;
+  left: var(--space-16);
+  bottom: var(--space-16);
+  z-index: var(--z-sticky);
+  padding: var(--space-8) var(--space-12);
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-0);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-label-s);
+  letter-spacing: var(--letter-spacing-label-s);
+  text-transform: uppercase;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---------- Logo als Maske (eine SVG-Datei, Farbe über currentColor, auch im Footer auf primary-900) ---------- */
+.logo-mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-mask: url("./assets/img/logo.svg") left center / contain no-repeat;
+  mask: url("./assets/img/logo.svg") left center / contain no-repeat;
+}
