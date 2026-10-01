@@ -15,6 +15,26 @@
         "$type": "color",
         "$value": "{color.secondary.400}"
       }
+    },
+    "toggle": {
+      "track-off": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      }
+    },
+    "interactive-secondary": {
+      "$type": "color",
+      "$value": "{color.secondary.900}"
+    },
+    "interactive-secondary-hover": {
+      "$type": "color",
+      "$value": "{color.neutral.900}"
+    },
+    "feedback": {
+      "error": {
+        "$type": "color",
+        "$value": "{color.neutral.900}"
+      }
     }
   }
 }

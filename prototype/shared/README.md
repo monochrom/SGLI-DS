@@ -13,6 +13,9 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 | `assets/menu-feature.jpg` | Bild aus Figma (Menu Feature Image) |
 | `assets/EasyLanguage.svg` | Icon Leichte Sprache (noch nicht im Sprite) |
 | `search.css` / `search.js` | Such-Overlay (Figma `search-overlay` 2872:4913). Baut den Dialog, öffnet über `[data-search-open]` (Lupe im Seitenkopf und im Menü-Kopf). Kopf nutzt die Klassen aus `menu.css`. Dummy: Absenden mit Begriff schließt nur, „Häufig gesucht“ = Links als Button/Secondary (in Craft gepflegt, ohne Zähler, keine Chips), Haftbuch und Bildung verlinkt. |
+| `header.js` / `header.css` | Seitenkopf nicht fixiert: scrollt heraus, gleitet beim Hochscrollen von oben herein, ganz oben wieder im Seitenfluss. Platzhalter hält die Höhe. Fokus im ausgeblendeten Kopf blendet ihn ein. Figma-Doku „Seitenkopf“ `2929:2012`. |
+| `slider.js` | Slider (`[data-slider]`): Pfeil um eine Karte, Ende ist Ende (Pfeil deaktiviert, Fokus springt auf den anderen Pfeil), Tab schiebt die fokussierte Karte ins Bild, Pfeiltasten links/rechts springen von Karte zu Karte. Phone ohne Pfeile (CSS). Figma-Doku „Slider“ `2930:2449`. |
+| `faq.js` | FAQ (`details.faq-item`): Höhe klappt weich auf und zu, Antwort blendet ein, mehrere Fragen gleichzeitig offen. Natives `<details>` bleibt. `.is-closing` tauscht das Icon sofort (Regel im CSS der Prototypen). Figma-Doku „FAQ“ `2930:2730`. |
 | `language.js` | Baut die Sprachauswahl (Komponente `src/components/modal`, `type=language`) und hängt sie an `<body>`. Öffnet über jeden Button mit `data-modal-open="modal-language"` (Seitenkopf und Menü). Dummy: Deutsch vorausgewählt, jede Option schließt nur. Einbinden nach `../../src/components/modal/modal.js`. |
 
 ## Einbinden
@@ -41,7 +44,7 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 2. **Kopf Phone:** Overlay-Logo 140 × 43 und Kopfhöhe 72 in Figma, Seitenkopf 131 × 40. Im Code wie der Seitenkopf, damit „Schließen“ genau auf „Menü“ liegt.
 3. **Footer Phone:** Figma hat Innenabstand 24 links/rechts, die Liste darüber 16. Im Code 16 (Grid-Rand), damit alles bündig ist.
 4. **Desktop-Schrift:** Figma zeigt nur 1440 mit H2. Zwischen 1024 und 1439 nutzt der Code H3 (entschieden 2026-09-29). Bei 1440 bricht „Haftbücher & Schicksale“ als aktuelle Seite (Quadrat davor) um, wie in Figma.
-5. **Tokens:** `color/navigation-menu/*` gibt es in Figma, aber noch nicht in `tokens/`. `menu.css` trägt sie lokal. Motion-Zeiten sind Kandidaten für Tokens.
+5. **Tokens:** `color/navigation-menu/*` seit 2026-09-30 in `tokens/` (lokale Werte in `menu.css` entfernt). Motion-Zeiten sind Kandidaten für Tokens.
 6. **Tablet:** Figma hat keinen Tablet-Frame. Ab 768 stehen Liste und Bild nebeneinander (entschieden 2026-09-29), Abbinder bleibt bis 1023 wie Phone. Kopf wie der Seitenkopf: Icons ab 768, Öffnungszeit ab 1024 (entschieden 2026-09-29).
 7. **Kopf Bildung:** Der Seitenkopf im Prototyp „angebote-filter“ hatte zwei Icon-Buttons. Er ist jetzt vom Haftbuch übernommen (drei Icons mit Leichte Sprache), wie das Overlay (entschieden 2026-09-29).
 8. **Niedrige Desktop-Viewports:** Ist der Viewport niedriger als der Inhalt, scrollt das Menü. 1024 × 768 passt mit H3 ohne Scrollen.

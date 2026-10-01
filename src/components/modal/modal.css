@@ -11,13 +11,7 @@
    weil er an keinem Rand hängt (egal ob aus dem Kopf oder unten im Off-Canvas ausgelöst). */
 
 .modal {
-  /* filter-cell-Farben (Figma Semantic color/filter-cell/*) sind noch nicht in tokens/ exportiert.
-     Lokale Fallbacks wie im Prototyp; entfernen, sobald dist/css/tokens.css sie liefert. */
-  --color-filter-cell-bg-hover: var(--color-neutral-alpha-900-5);
-  --color-filter-cell-bg-pressed: var(--color-neutral-alpha-900-10);
-  --color-filter-cell-bg-active: var(--color-primary-900);
-  --color-filter-cell-fg-active: var(--color-neutral-0);
-  --color-filter-cell-indicator-active: var(--color-accent-highlight);
+  /* Zeilen der Sprachauswahl nutzen die filter-cell-Farben (Tokens color/filter-cell/*, seit 2026-09-30 in tokens/). */
   --modal-pad: var(--space-16);
 
   box-sizing: border-box;
@@ -200,10 +194,10 @@ html.modal-lock { overflow: hidden; }
   background-color: var(--color-filter-cell-bg-active);
   color: var(--color-filter-cell-fg-active);
 }
-.modal__option[aria-current="true"] .modal__option-code { color: var(--color-filter-cell-fg-active); }
+.modal__option[aria-current="true"] .modal__option-code { color: var(--color-filter-cell-count-active); }
 .modal__option[aria-current="true"] .modal__indicator {
-  border-color: var(--color-filter-cell-indicator-active);
-  background-color: var(--color-filter-cell-indicator-active);
+  border-color: var(--color-filter-cell-status);
+  background-color: var(--color-filter-cell-status);
 }
 .modal__option:focus-visible {
   z-index: 1;

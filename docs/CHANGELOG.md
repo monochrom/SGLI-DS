@@ -1,5 +1,71 @@
 # Changelog
 
+## 2026-09-30 – Doku Bilder und Lightbox in Figma
+
+- Figma (Freigabe Danilo): Doku-Frame „Bilder“ `2950:2917` auf 🎨 Foundations, nur Aufbau und Verhalten: Craft-Felder je Bild (Alternativtext, Bildunterschrift, Infotext) und je Modul (Schalter „Lightbox“), Bildunterschrift im Modul, Auslöser im Modul, Lightbox-Previews Desktop/Phone mit Backdrop, Aufbau, Verhalten, Bewegung.
+- Figma: neue Komponenten auf 💎 Components, Rahmen „Lightbox“ `2949:188`: `lightbox` `2949:191` (Breakpoint Desktop/Phone; Props Caption, Info, Counter, Show Caption, Show Info, Show Navigation) und `lightbox-trigger` `2949:580` (Button/Icon mit CornersOut auf heller Fläche). Keine neuen Variablen, gebunden an `color/bg/card`, `color/text/*`, `color/divider/default`, `space/*`. Backdrop wie beim Modal nicht in der Komponente.
+- Nachtrag (Danilo): Bild unter 1024 volle Breite der Fläche, auch im Hochformat, höchstens 65 % der Viewporthöhe. Pfeile bleiben auf allen Breakpoints (kurz entfernt, wieder eingesetzt, Navigation in der Phone-Variante jetzt `2961:157`). Doku-Texte Aufbau/Verhalten und Hochformat-Preview angepasst.
+- PLAN.md §7/§8 nachgezogen.
+
+## 2026-09-30 – Tokens aus Figma synchronisiert
+
+- Voller Abgleich aller vier Collections (Primitives 100, Semantic 58, Typography 41, Layout 5) mit `tokens/`. Neu: `color/filter-cell/*` (bg-hover, bg-pressed, bg-active, fg-active, count-active, status) und `color/navigation-menu/*` (fg, border, border-hover, border-pressed, indicator) in `semantic/color.json`, Abweichungen in `semantic/context/primary-900.json`. Alles andere war identisch (inkl. der Kontrast-Änderungen vom selben Tag). Effect Styles (shadow-sm/md/lg) und Grid Styles unverändert.
+- Bewusst nicht übernommen (wie bisher): Semantic `color/accent/highlight` (gleicher Pfad wie das Primitive), Font-Fallbacks im Repo (`sans-serif`, `ui-monospace`) bleiben.
+- Lokale Ersatzwerte entfernt: `src/components/modal/modal.css`, `prototype/angebote-filter/prototype.css` (filter-cell), `prototype/shared/menu.css` (navigation-menu). `--color-filter-cell-indicator-active` heißt jetzt wie in Figma `--color-filter-cell-status`; Trefferzahl/Kürzel in der gewählten Zeile nutzen `--color-filter-cell-count-active`.
+- Lint: 233 Tokens, 0 Verstöße.
+
+## 2026-09-30 – Kontraste je Modulfarbe, Marquee Pause-Button
+
+- Figma (Freigabe Danilo) und `tokens/semantic/context/*.json`: `toggle/track-off` surface-200/300/400 → neutral/500, secondary-400 → neutral/700; `interactive-secondary` surface-300/400 → secondary/700 (Hover secondary/800), secondary-400 → secondary/900 (Hover neutral/900); `feedback/error` surface-400 und secondary-400 → neutral/900. `npm run build`, Lint: 0 Verstöße in allen 7 Kontexten.
+- Figma: Komponente `marquee` hat einen Pause-Button (Icon-Button ohne Rahmen), absolut links unten am Seitenrand im Freiraum neben dem Band. Doku-Frame „Marquee“ nachgezogen.
+
+## 2026-09-30 – Doku-Abgleich Figma, Seitenkopf, Slider, FAQ, Ampel
+
+- Figma: Varianten-Property überall `Breakpoint` mit `Desktop | Phone` (15 Sets, u. a. Button `Size`, Chip `Viewport`, Hero `Mobile`, `device`, `breakpoin`).
+- Figma: neue Doku-Frames auf 🎨 Foundations, nur Aufbau und Verhalten: Seitenkopf `2929:2012`, Menü `2929:2253`, Slider `2930:2449`, FAQ `2930:2730`, Marquee `2930:2885`, Fokus `2932:2853`, Motion `2932:2974`. Section-Spacing: Hero-Zuordnung (`2932:3025`).
+- Prototyp angebote-filter: Ampel 1–3 / 4–8 / ab 9 (Kunde), Schwellen als Konstante `AMPEL`. Dummy-Daten so verteilt, dass alle drei Stufen vorkommen (Inklusion 3, Aus- und Weiterbildung 7). README, SPEC-FILTER, KUNDENABSTIMMUNG nachgezogen.
+- Prototypen: Seitenkopf scrollt heraus und kommt beim Hochscrollen zurück (`prototype/shared/header.js`, `header.css`).
+- Prototyp angebote-filter: Slider aus `filter.js` nach `prototype/shared/slider.js`: Ende ist Ende, Fokus wechselt vom deaktivierten Pfeil auf den anderen, Tab und Pfeiltasten schieben die Karte ganz ins Bild.
+- Prototypen: FAQ klappt animiert auf und zu (`prototype/shared/faq.js`, Höhe `--motion-base`/`--ease-out` wie die Haftbuch-Zeilen), mehrere Fragen offen.
+- `src/styles/context.css`: Kommentar zur Voreinstellung surface-100 in Craft.
+- PLAN.md §6 konkreter Kontrast-Vorschlag, §7/§8 Entscheidungen und neue To-dos.
+
+## 2026-09-30 – Section-Spacing-Regeln im Code
+
+- `src/styles/section.css` neu: Jedes Modul liest `--section-pt`, `--section-pb`, `--section-px` (Standard von `:root`), die Regeln setzen sie am Modul. Module = direkte Kinder von `<main>` oder `.modules`, immer mit `data-context`. Regeln: gleiche Farbe hintereinander → oben ohne (Specificity 0, alle anderen Regeln gewinnen); Ausnahme nach `.section--hero-home`, `.section--hero-media`, `.section--bleed`, `.section--flush-y` → oben Standard; `.section--text` unten kompakt; `.section--bleed` rundum ohne; `.cut-edges` oben und unten kompakt; `.section--hero-media` und `.section--hero-text:has(.hero-back)` oben ohne. `.section--compact`, `--flush-y`, `--flush-x` setzen jetzt die Properties statt direkt `padding`.
+- `src/styles/cut-edges.css`: Cut-Edges als letztes Modul in `<main>`/`.modules` → kein Keil unten.
+- Prototypen angebote-filter und haftbuch: Modul-Padding liest die Properties, Hero trägt `.section--hero-text`. Sichtbare Änderung: Hero oben Standard statt kompakt (Desktop 64 → 112, Phone 32 → 64). Abstände Hero → Liste und FAQ → Feature bleiben gleich, nur sitzt der Abstand jetzt am Modul davor (Regel 2). teaser-feature behält unten 0 (Moduldesign).
+- Styleguide: Abschnitt „Section-Spacing“ mit zwei Beispielfolgen, die ihre berechneten Abstände live anzeigen. Cut-Edges-Demos ohne `section--compact` (kommt aus der Regel).
+- Figma-Doku „Section-Spacing“: Randlos-Text um „folgendes Modul oben Standard“ ergänzt.
+
+
+## 2026-09-30 – Section-Spacing dokumentiert (Figma)
+
+- Figma: neuer Doku-Frame „Section-Spacing“ (`2909:1850`) auf 🎨 Foundations unter dem Frame „Foundations“. Stufen Standard, Kompakt, Ohne, Randlos je Desktop und Phone, Beispielflächen an die Layout-Variablen gebunden (nur visuell, keine Zahlen). Regeln als Beispielfolgen: Normalfall, gleiche Farbe hintereinander (oben ohne), Textfolge (oben ohne, unten kompakt), Modul mit Cut-Edges (kompakt), Randlos (rundum ohne), Hero (Startseite immer Standard oben, mit Bild oben ohne, nur Text oben Standard, mit Zurück-Button oben ohne und fester Abstand zur Headline).
+- Nachtrag „Nach dem Hero“: Modul in derselben Farbe nach einem Hero nur mit Text oder nach dem Hero „Presse“ hat oben keinen Abstand, nach anderen Heros (z. B. mit Bild) oben Standard. Mit Beispiel und Gegenbeispiel, Text bei „Gleiche Farbe hintereinander“ präzisiert.
+- Regeln mit Danilo abgestimmt 2026-09-30, siehe PLAN.md §7.
+
+
+## 2026-09-30 – Cut-Edge kippt rechts, Parallax
+
+- Entschieden: Der obere Keil kippt jetzt um die linke obere Ecke, das rechte Ende fällt in die Endlage (vorher: Drehpunkt unten rechts, linkes Ende stieg). `.cut-edges--tilt` baut die Fläche dafür umgekehrt auf (Grundfläche Modulfarbe, Nachbar-Dreieck oben rechts). Der Experiment-Modifier `.cut-edges--tilt-right` und die Test-Schalter sind wieder entfernt.
+- Bewegung weiter an die Scroll-Position gekoppelt, jetzt aber linear mit festem Verhältnis (Parallax): Die Kante bewegt sich um `--cut-tilt-factor` (0.25) der Scrollstrecke, der Scrollweg bis zur Endlage ergibt sich daraus (Desktop 1440 ≈ 450 px, Phone ≈ 120 px). Beginn später: Oberkante des Moduls `--cut-tilt-offset` 30vh über dem unteren Rand (vorher 10vh). Keilhöhe über `cqw`, das Modul ist dafür Container (`container-type: inline-size`, nur mit Tilt und Scroll-Driven-Support).
+- Zwischenstand am selben Tag verworfen: auslösendes Script mit fester Dauer (`src/scripts/cut-edges-tilt.js`, `--motion-cut-tilt`, `--ease-cut-tilt`), lief automatisch statt mit dem Scroll.
+- Motion: `--ease-scroll` entfernt (linear braucht keine Kurve).
+- Styleguide: zweiter Regler „Parallax-Faktor“. Figma-Doku „Cut-Edges“ (`2898:1948`), Abschnitt Bewegung: Standbilder mit Drehpunkt oben links, Text nachgezogen. Protokoll: `docs/EXPERIMENT-cut-edges-tilt-right.md`.
+
+## 2026-09-30 – Experiment: Cut-Edge kippt rechts
+
+- Zum Testen, nicht entschieden: neuer Modifier `.cut-edges--tilt-right` (Drehpunkt oben links, das rechte Ende fällt in die Endlage). `.cut-edges--tilt` bleibt unverändert der Standard.
+- Umschalter im Styleguide (Kippen beim Scrollen) und im Prototyp angebote-filter (Schalter „Test Keil“ unten rechts, `?tilt=right`).
+- Protokoll und Rückbau: `docs/EXPERIMENT-cut-edges-tilt-right.md`.
+
+## 2026-09-30 – Cut-Edges: Einsatzregeln und Figma-Doku
+
+- Figma: neuer Doku-Frame „Cut-Edges“ (`2898:1948`) auf 🎨 Foundations rechts neben „Suche“. Abschnitte Aufbau (Desktop/Phone), Farben, Einsatz im CMS, Letztes Modul der Seite, Bewegung. Nur Aufbau und Verhalten, gebaut aus den echten `cut-edges`-Instanzen und dem Toggle.
+- Einsatzregeln entschieden (PLAN.md §7): alle 7 Modulfarben, Keilfarbe = Modulfarbe; höchstens 1 Modul pro Seite, per Schalter in Craft, optional, an den anderen Modulen dann deaktiviert; letztes Modul ohne Keil unten, bündig zum Footer; Section-Spacing y `compact` statt `default`; nur der obere Keil kippt.
+- Offen im Code: Keil unten am letzten Modul ausblenden, `compact` bei Cut-Edges.
+
 ## 2026-09-29 – Cut-Edge kippt beim Scrollen
 
 - Cut-Edges (Foundation): neuer Modifier `.cut-edges--tilt` für den oberen Keil. Die Diagonale dreht sich beim Runterscrollen um ihren tiefsten Punkt unten rechts von 60 % der Keilhöhe (≈ 6,7°) in die Figma-Endlage (≈ 11°), an den Scroll gekoppelt (Scroll-Driven Animation, Bereich: Oberkante 10 vh → 60 vh über dem unteren Rand), rückwärts beim Hochscrollen. Der Keil bleibt ein Dreieck, der Streifen behält seine Höhe. Start per `--cut-tilt-start` einstellbar. Firefox (keine Scroll-Driven Animations) und „Bewegung reduzieren“: Endlage.

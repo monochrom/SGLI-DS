@@ -8,9 +8,9 @@ Stand 2026-09-11. Grundlage: Filtertabelle des Kunden (Screenshot vom 2026-09-11
 
 ### Mengen und Regeln
 
-- [ ] **Wie viele Angebote gibt es real je Zielgruppe?** Heute und voraussichtlich in 12 Monaten. Entscheidet, ob die Ampel greift. Unter 9 Angeboten je Zielgruppe gibt es nie Detailfilter.
-- [ ] Ampel-Schwellen **9 und 20** bestätigen oder an die realen Mengen anpassen.
-- [ ] Regel für die Stufe 9 bis 20: **die zwei relevantesten Filter je Zielgruppe**, die im Bestand tatsächlich trennen (mindestens zwei Optionen mit Treffern), statt fest „Thema und Dauer“. Die Reihenfolge der Chips ist die Priorität und wird je Zielgruppe festgelegt.
+- [ ] **Wie viele Angebote gibt es real je Zielgruppe?** Heute und voraussichtlich in 12 Monaten. Entscheidet, ob die Ampel greift. Bei 1 bis 3 Angeboten je Zielgruppe gibt es keine Detailfilter.
+- [x] Ampel-Schwellen: **1 bis 3 / 4 bis 8 / ab 9** (vom Kunden angepasst, 2026-09-30; vorher 9 und 20).
+- [ ] Regel für die Stufe 4 bis 8: **die zwei relevantesten Filter je Zielgruppe**, die im Bestand tatsächlich trennen (mindestens zwei Optionen mit Treffern), statt fest „Thema und Dauer“. Die Reihenfolge der Chips ist die Priorität und wird je Zielgruppe festgelegt.
 - [ ] **Einfachauswahl** je Filter und je Zielgruppe bestätigen (keine Mehrfachauswahl, kein Kombinieren von Zielgruppen).
 - [ ] Reihenfolge der Zielgruppen-Chips: Schulen, Aus- und Weiterbildung, Hochschulen, Erwachsenenbildung, Inklusion.
 
@@ -59,7 +59,7 @@ Stand 2026-09-11. Grundlage: Filtertabelle des Kunden (Screenshot vom 2026-09-11
 
 ## B. Optimierte Filterliste je Zielgruppe
 
-Reihenfolge = Priorität = Anzeigereihenfolge der Chips. Stufe 9 bis 20 zeigt die ersten zwei Filter, die im Bestand trennen. Optionen ohne Treffer erscheinen nicht. Kundenwording beibehalten, Änderungen markiert mit ⟶.
+Reihenfolge = Priorität = Anzeigereihenfolge der Chips. Stufe 4 bis 8 zeigt die ersten zwei Filter, die im Bestand trennen. Optionen ohne Treffer erscheinen nicht. Kundenwording beibehalten, Änderungen markiert mit ⟶.
 
 ### Schulen
 

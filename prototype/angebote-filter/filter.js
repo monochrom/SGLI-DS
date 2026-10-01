@@ -1,10 +1,10 @@
 /* SGLI Prototyp „Bildung“ – Filter-Logik (Vanilla JS, kein Backend)
    Regeln aus Figma („Regeln für Filter“, „Dynamische Ausgabe von Tags“, Node 2548:24966):
 
-   Ampel für Detailfilter (bezogen auf die Angebote der gewählten Zielgruppe):
-     unter 9 Angebote   → keine Detailfilter
-     9 bis 20 Angebote  → Dauer und Thema
-     über 20 Angebote   → alle Detailfilter (Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache)
+   Ampel für Detailfilter (bezogen auf die Angebote der gewählten Zielgruppe, Kunde 2026-09-30):
+     1 bis 3 Angebote   → keine Detailfilter
+     4 bis 8 Angebote   → Dauer und Thema
+     ab 9 Angeboten     → alle Detailfilter (Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache)
    Ohne gewählte Zielgruppe zeigt Figma keine Detailfilter (Frame „Bildung - Filter Default“).
 
    Tags in der Liste: 3 Slots. 2 dynamische Slots je Filterschritt, 1 Slot für die Dauer.
@@ -97,12 +97,13 @@
   function results() { return D.ANGEBOTE.filter(function (a) { return matches(a); }); }
   function poolCount() { return D.ANGEBOTE.filter(matchesZielgruppe).length; }
 
-  /* Ampel: 'none' | 'mid' | 'all' */
+  /* Ampel: 'none' | 'mid' | 'all'. Schwellen in einer Konfiguration halten (Craft), nicht im Template. */
+  var AMPEL = { mid: 4, all: 9 };
   function tier() {
     if (!state.zielgruppe) return 'none';
     var n = poolCount();
-    if (n < 9) return 'none';
-    if (n <= 20) return 'mid';
+    if (n < AMPEL.mid) return 'none';
+    if (n < AMPEL.all) return 'mid';
     return 'all';
   }
   function visibleDetailFilters() {
@@ -495,22 +496,7 @@
     if (e.target === el.offcanvas) closeOffcanvas();
   });
 
-  /* ---------- Teaser-Slider (nur Vor/Zurück) ---------- */
-  document.querySelectorAll('[data-slider]').forEach(function (slider) {
-    var track = slider.querySelector('[data-slider-track]');
-    var prev = slider.querySelector('[data-slider-prev]');
-    var next = slider.querySelector('[data-slider-next]');
-    function step() { var card = track.firstElementChild; return card ? card.getBoundingClientRect().width + 16 : 300; }
-    function update() {
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-    }
-    prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
-    track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  });
+  /* Teaser-Slider: ../shared/slider.js */
 
   /* ---------- Start (optional ?zielgruppe=Schulen für Demo-Links) ---------- */
   var params = new URLSearchParams(window.location.search);

@@ -104,7 +104,7 @@ body { background-color: var(--color-bg-page); }
 
 /* ---------- Hero (Figma: hero-default) ---------- */
 .hero-default {
-  padding: var(--section-spacing-y-compact) var(--section-spacing-x-default) 0;
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
   text-align: center;
 }
 .hero-default__text {
@@ -124,7 +124,7 @@ body { background-color: var(--color-bg-page); }
 
 /* ---------- Bildungs-Filter (Figma: education-filter, filter) ---------- */
 .edu-filter-section {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
 }
 .edu-filter {
   display: grid;
@@ -480,17 +480,8 @@ body { background-color: var(--color-bg-page); }
 
 /* ---------- Off-Canvas ----------
    Panel, Motion und Scroll-Sperre kommen aus der Komponente src/components/off-canvas/ (seit 2026-09-29).
-   Hier nur die Filter-Inhalte (filter-cell). Tokens der Figma-Komponente filter-cell (Semantic:
-   color/filter-cell/*) sind noch nicht in tokens/ exportiert: lokale Fallbacks, entfernen sobald
-   dist/css/tokens.css sie liefert. indicator-active: in Figma hartkodiert #CDDC39 (kein Token),
-   Entscheidung 2026-09-22: accent/highlight. */
-.offcanvas {
-  --color-filter-cell-bg-hover: var(--color-neutral-alpha-900-5);
-  --color-filter-cell-bg-pressed: var(--color-neutral-alpha-900-10);
-  --color-filter-cell-bg-active: var(--color-primary-900);
-  --color-filter-cell-fg-active: var(--color-neutral-0);
-  --color-filter-cell-indicator-active: var(--color-accent-highlight);
-}
+   Hier nur die Filter-Inhalte (filter-cell). Farben aus den Tokens color/filter-cell/* (seit 2026-09-30
+   in tokens/). Marker der gewählten Zeile = color/filter-cell/status (accent/highlight, vorher lokal). */
 
 /* ---------- filter-cell (Figma: filter-cell 2646:40456, Selection Off/On × State) ----------
    Zeile 52 px: Padding 16/12, Gap 24, Divider unten. Links Indikator 12 × 12 + Label-M (Gap 12),
@@ -574,10 +565,10 @@ body { background-color: var(--color-bg-page); }
   background-color: var(--color-filter-cell-bg-active);
   color: var(--color-filter-cell-fg-active);
 }
-.filter-cell:has(.filter-cell__input:checked) .filter-cell__count { color: var(--color-filter-cell-fg-active); }
+.filter-cell:has(.filter-cell__input:checked) .filter-cell__count { color: var(--color-filter-cell-count-active); }
 .filter-cell:has(.filter-cell__input:checked) .filter-cell__indicator {
-  border-color: var(--color-filter-cell-indicator-active);
-  background-color: var(--color-filter-cell-indicator-active);
+  border-color: var(--color-filter-cell-status);
+  background-color: var(--color-filter-cell-status);
   animation: filter-cell-check var(--motion-base) var(--ease-out);
 }
 .filter-cell:has(.filter-cell__input:checked) .filter-cell__count { transition-delay: 40ms; }
@@ -599,7 +590,7 @@ body { background-color: var(--color-bg-page); }
    section-header, text-row, image-section, text-row mit Gap 80. Padding y compact (Desktop 64).
    Kopf: Label + H2 (Gap 16), Intro H6 darunter (Gap 24). Desktop 6 von 12 Spalten, mittig. */
 .text-content-grid {
-  padding: var(--section-spacing-y-compact) var(--section-spacing-x-default);
+  padding: var(--section-pt) var(--section-px) var(--section-pb); /* compact kommt von .cut-edges (Regel 4) */
 }
 .text-content-grid > .wrap {
   display: grid;
@@ -662,7 +653,7 @@ body { background-color: var(--color-bg-page); }
    Phone: Bild oben, Text darunter (Gap 40, Text ohne Innenabstand). Desktop: zwei gleiche Spalten,
    Gap 24, Text vertikal mittig mit Padding 24. */
 .image-text {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
 }
 .image-text__grid {
   display: grid;
@@ -702,7 +693,7 @@ body { background-color: var(--color-bg-page); }
    Intro: Label + H2 (Gap 16), Text H6 (Gap 16). Karte bg/inset: Label, Name + Adresse (Gap 8),
    Button mit Gap 48. Phone: gestapelt, Gap 48, Karte Padding 16. Desktop: zwei gleiche Spalten, Gap 64. */
 .contact {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
 }
 .contact__grid {
   display: grid;
@@ -747,7 +738,7 @@ body { background-color: var(--color-bg-page); }
    Desktop: Kopf 5 + 6 Spalten, Karten 321 mit Bild 321:428, Gap 80, Pfeile rechts mit Gap 64.
    Die Spur trägt 6 px Innenabstand für den Fokusring, die Außenabstände ziehen ihn wieder ab. */
 .teaser-slider {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default);
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
   overflow: hidden;
 }
 .section-header--split {
@@ -817,9 +808,9 @@ body { background-color: var(--color-bg-page); }
 /* ---------- FAQ (Figma: faq-section 2522:59549 / Phone 2522:59572, Aufbau wie haftbuch) ----------
    Intro: Label + H2 + Text (Gap 16), Button mit Gap 40. Liste Gap 16, Item: Frage H5 + Plus/Minus,
    Antwort Body/M text/secondary (Gap 16), Divider unten mit 16 Abstand, kein Divider oben.
-   Padding unten 0: teaser-feature folgt in derselben Fläche und bringt den Abstand mit. */
+   Abstände über section.css: teaser-feature folgt in derselben Fläche und hat oben keinen Abstand (Regel 2). */
 .faq {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default) 0;
+  padding: var(--section-pt) var(--section-px) var(--section-pb);
 }
 .faq__grid { display: grid; gap: var(--space-48) var(--grid-gutter); }
 .faq__intro { display: grid; gap: var(--space-16); justify-items: start; }
@@ -853,6 +844,9 @@ body { background-color: var(--color-bg-page); }
 .faq-item__q .icon--minus { display: none; }
 .faq-item[open] .faq-item__q .icon--plus { display: none; }
 .faq-item[open] .faq-item__q .icon--minus { display: block; }
+/* Zuklappen läuft animiert (../shared/faq.js), [open] bleibt bis zum Ende: Icon sofort tauschen */
+.faq-item.is-closing .faq-item__q .icon--plus { display: block; }
+.faq-item.is-closing .faq-item__q .icon--minus { display: none; }
 .faq-item__a { margin: var(--space-16) 0 0; color: var(--color-text-secondary); }
 @media (min-width: 1024px) {
   .faq__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
@@ -866,7 +860,7 @@ body { background-color: var(--color-bg-page); }
    Deko: ca. 71 % der Bildbreite, mittig auf dem Bild, leicht nach rechts versetzt, darf oben über
    die Karte hinausragen (Phone). */
 .teaser-feature {
-  padding: var(--section-spacing-y-default) var(--section-spacing-x-default) 0;
+  padding: var(--section-pt) var(--section-px) 0; /* unten 0: Moduldesign, die Karte schließt ab */
 }
 .feature-card {
   display: grid;

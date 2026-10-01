@@ -14,13 +14,8 @@
    4. Abbinder (Footer) blendet ein
    Schließen (umgekehrt): Inhalt und Bild blenden aus, die Fläche fährt nach oben zu, zuletzt geht die Abdunkelung weg. */
 
-/* ---------- Tokens (Figma Semantic color/navigation-menu/*, noch nicht in tokens/ → lokale Werte) ---------- */
+/* ---------- Farben: Tokens color/navigation-menu/* (seit 2026-09-30 in tokens/) ---------- */
 .menu {
-  --color-navigation-menu-fg: var(--color-neutral-900);
-  --color-navigation-menu-border: var(--color-neutral-alpha-900-20);
-  --color-navigation-menu-border-hover: var(--color-neutral-900);
-  --color-navigation-menu-border-pressed: var(--color-primary-700);
-  --color-navigation-menu-indicator: var(--color-neutral-alpha-900-20);
 
   /* Motion: Ebenen-Werte aus src/styles/motion.css (dort ist das Menü Master), Choreografie lokal */
   --menu-ease: var(--ease-surface);         /* weich rein und raus: Flächen */

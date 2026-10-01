@@ -79,13 +79,13 @@ Bezugsgröße ist **Pool**, nicht Treffer. Damit blendet ein gesetzter Detailfil
 | Bedingung | Zeile „Genauer filtern“ |
 |---|---|
 | keine Zielgruppe gesetzt | nicht anzeigen (Figma „Filter Default“) |
-| Pool < 9 | nicht anzeigen |
-| 9 ≤ Pool ≤ 20 | Thema, Dauer |
-| Pool > 20 | Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache |
+| Pool 1 bis 3 | nicht anzeigen |
+| Pool 4 bis 8 | Thema, Dauer |
+| Pool ab 9 | Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache |
 
 Reihenfolge der Chips wie in der letzten Zeile. Ein **gesetzter** Detailfilter bleibt immer sichtbar, auch wenn die Ampel ihn gerade nicht anbieten würde (kann nur nach Datenänderung zwischen zwei Requests vorkommen).
 
-Die Schwellen 9 und 20 gehören in eine Konfiguration (Craft: `config/sgli.php` oder ein Global Set), nicht in Templates.
+Schwellen vom Kunden angepasst am 2026-09-30 (vorher 9 und 20). Die Schwellen 4 und 9 gehören in eine Konfiguration (Craft: `config/sgli.php` oder ein Global Set), nicht in Templates.
 
 Empfehlung: Klassenstufe und Förderbedarf nur anbieten, wenn sie für die Zielgruppe sinnvoll sind (Klassenstufe → Schulen, Förderbedarf → Inklusion). Ist in Figma nicht festgelegt und im Prototyp nicht umgesetzt. Entscheidung offen.
 

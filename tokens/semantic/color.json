@@ -207,6 +207,64 @@
         "$type": "color",
         "$value": "{color.neutral.0}"
       }
+    },
+    "filter-cell": {
+      "bg-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.alpha.900-5}",
+        "$description": "Semantic color for filter-cell; follows color/button/icon/bg-hover."
+      },
+      "bg-pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.alpha.900-10}",
+        "$description": "Semantic color for filter-cell; follows color/button/icon/bg-pressed."
+      },
+      "bg-active": {
+        "$type": "color",
+        "$value": "{color.primary.900}",
+        "$description": "Semantic color for filter-cell; follows color/chip/bg-active."
+      },
+      "fg-active": {
+        "$type": "color",
+        "$value": "{color.neutral.0}",
+        "$description": "Semantic color for filter-cell; follows color/chip/fg-active."
+      },
+      "count-active": {
+        "$type": "color",
+        "$value": "{color.neutral.0}",
+        "$description": "Semantic color for filter-cell; follows color/chip/badge-fg-active."
+      },
+      "status": {
+        "$type": "color",
+        "$value": "{color.accent.highlight}"
+      }
+    },
+    "navigation-menu": {
+      "fg": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Navigation menu foreground."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.neutral.alpha.900-20}",
+        "$description": "Navigation menu divider."
+      },
+      "border-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Navigation menu divider on hover and current states."
+      },
+      "border-pressed": {
+        "$type": "color",
+        "$value": "{color.primary.700}",
+        "$description": "Navigation menu divider while pressed."
+      },
+      "indicator": {
+        "$type": "color",
+        "$value": "{color.neutral.alpha.900-20}",
+        "$description": "Current navigation item indicator."
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 # SGLI Design System – Analyse & Repo-Plan
 
-Stand: 2026-09-10 (Feedback eingearbeitet, Figma am 2026-09-10 neu gescannt)
+Stand: 2026-09-10 (Feedback eingearbeitet, Figma am 2026-09-10 neu gescannt), Doku-Abgleich 2026-09-30 in §7/§8
 Quelle: Figma „SGLI – Design“ (fileKey `Nm1wSBrrniedJI8ojcjZIp`), gelesen per Figma MCP (Plugin-API, **read-only**).
 
 ---
@@ -277,7 +277,9 @@ Regel: Figma-Name wird nur normalisiert (Slash → Punkt/Bindestrich, lowercase)
 
 ---
 
-## 6. Kontrast-Befunde aus dem Lint (2026-09-10, in Figma zu klären)
+## 6. Kontrast-Befunde aus dem Lint (2026-09-10, gelöst 2026-09-30)
+
+**Gelöst 2026-09-30:** Vorschlag unten umgesetzt (Danilo), Fehlertext in surface-400 und secondary-400 = neutral/900 (auf diesen Flächen liegen nie Formularfelder). In Figma gesetzt, in `tokens/semantic/context/*.json` übernommen, Lint 0 Verstöße in allen 7 Kontexten.
 
 `npm run tokens:lint` prüft 31 Paare je Kontext gegen WCAG 2.2 AA (Text 4.5:1, UI 3:1). Stand nach Nachscan 2026-09-10 (text/secondary in surface-400 und secondary-400 auf neutral/700 gelöst): surface-50, surface-100 und primary-900 sind sauber. Verbleibende Befunde:
 
@@ -295,9 +297,40 @@ Regel: Figma-Name wird nur normalisiert (Slash → Punkt/Bindestrich, lowercase)
 
 Vorschlag: In den Modes surface-200/300/400 und secondary-400 dunklere Aliase setzen (`toggle/track-off` → neutral/500 oder 600, `interactive-secondary` → secondary/700 oder 800, `feedback/error` in surface-400 und secondary-400 → dunkler als error/dark, ggf. neutral/900). Divider (alpha 20 %) sind dekorativ und werden nur informativ gelistet.
 
+Konkreter Vorschlag 2026-09-30 (nachgerechnet, Figma-Stand = Repo-Stand). `text/secondary` ist nicht betroffen, das ist seit dem 10.09. gelöst.
+
+| Token | Mode | heute | Vorschlag | neu |
+|---|---|---|---|---|
+| `toggle/track-off` | surface-200, -300, -400 | neutral/400 (2.85 / 2.49 / 2.23) | neutral/500 | 4.07 / 3.56 / 3.18 |
+| `toggle/track-off` | secondary-400 | neutral/400 (1.42) | neutral/700 | 4.77 |
+| `interactive-secondary` | surface-300, -400 | secondary/600 (3.96 / 3.54) | secondary/700, Hover secondary/800 | 5.62 / 5.02 |
+| `interactive-secondary` | secondary-400 | secondary/600 (2.25) | secondary/900, Hover neutral/900 | 5.55 |
+| `feedback/error` | surface-400 | error/dark (4.35) | a) neues Primitive error/darker `#991b1b` oder b) neutral/900 + Icon | 5.58 / 11.8 |
+| `feedback/error` | secondary-400 | error/dark (2.76) | neutral/900 + Warn-Icon (kein Rot erreicht 4.5 auf Grün) | 7.51 |
+
+Einfachere Alternative für `toggle/track-off`: neutral/600 in allen surface-Modes (6.50 / 5.69 / 5.08).
+
 ## 7. To-dos
 
-- [ ] **Cut-Edges bei den Modulen schärfen.** Entschieden 2026-09-10: Keile belegen eigenen Platz, rechteckiger Container um die Shape, Höhe der Shape bestimmt Höhe des Containers (kein Overlap). Hinter den Cut-Edges steckt weitere Funktionalität, Danilo brieft dazu gesondert, bevor die Module gebaut werden. `.cut-edges--overlap` bleibt bis dahin ungenutzt.
+- [ ] **Cut-Edges bei den Modulen schärfen.** Entschieden 2026-09-10: Keile belegen eigenen Platz, rechteckiger Container um die Shape, Höhe der Shape bestimmt Höhe des Containers (kein Overlap). `.cut-edges--overlap` bleibt ungenutzt. Einsatzregeln entschieden 2026-09-30 (Figma-Doku-Frame „Cut-Edges“ auf 🎨 Foundations):
+  1. Farbe = Hintergrundfarbe des Moduls, alle 7 Kontexte (surface-50 bis surface-400, primary-900, secondary-400).
+  2. Höchstens 1 Modul pro Seite trägt Cut-Edges. In Craft per Schalter am Modul, optional. Ist er an einem Modul an, ist er an allen anderen Modulen der Seite deaktiviert. Zwei Keile übereinander sind damit ausgeschlossen.
+  3. Schalter an = Keil oben und unten (Annahme, wie Template Bildung).
+  4. Letztes Modul der Seite: kein unterer Keil, das Modul schließt bündig mit dem Footer ab.
+  5. Section-Spacing y des Moduls: `compact` statt `default`, solange Cut-Edges an sind.
+  6. Nur der obere Keil kippt (`.cut-edges--tilt`). Entschieden 2026-09-30: rechtes Ende fällt (Drehpunkt oben links), an die Scroll-Position gekoppelt, linear mit Parallax-Faktor 0.25, Beginn bei 30vh über dem unteren Rand.
+  Code: Regel 4 (after am letzten Modul) in `cut-edges.css`, Regel 5 (compact) in `section.css`, beides 2026-09-30.
+- [x] **Entscheidung Kippen links/rechts** (2026-09-30): rechts. Umgesetzt, Protokoll in `docs/EXPERIMENT-cut-edges-tilt-right.md`. Figma-Doku Abschnitt Bewegung (`2898:1948`) nachgezogen.
+- [x] **Dokumentation: Section-Spacing** in Figma (`2909:1850`, 2026-09-30). Regeln (mit Danilo abgestimmt):
+  1. Standard oben, unten, seitlich ist der Normalfall.
+  2. Folgt ein Modul auf eins in derselben Hintergrundfarbe: oben ohne.
+  3. Textfolge (mehrere Textblöcke): oben ohne, unten kompakt; der erste Block oben Standard.
+  4. Modul mit Cut-Edges: oben und unten kompakt.
+  5. Randlos (z. B. image-fullwidth): rundum ohne.
+  6. Hero: Startseite oben immer Standard; mit Bild oben ohne; nur Text oben Standard; nur Text mit eingeblendetem Zurück-Button oben ohne, fester Abstand Zurück → Headline.
+  7. Nach dem Hero: Folgt auf einen Hero nur mit Text oder auf `hero-press` („Presse“) ein Modul in derselben Farbe, hat es oben keinen Abstand (Regel 2). Nach allen anderen Heros (z. B. mit Bild) behält es oben Standard. Danilo: wichtig.
+- [x] **Section-Spacing im Code und Styleguide** (2026-09-30): Regeln 1–7 in `src/styles/section.css`, Ausnahme zu Regel 2 auch nach randlosen Modulen, Prototypen umgestellt, Styleguide-Abschnitt „Section-Spacing“. Offen: den festen Abstand Zurück → Headline setzt jedes Hero-Modul selbst (Figma hero-default 80/40, hero-press 48/40), sobald Heros mit Zurück-Button gebaut werden.
+- [ ] **Figma aufräumen, Section-Spacing** (nur Danilo): text-content-grid mit Cut-Edges nutzt in „Bildung - Mobile“ und einer Variante „Bildung - Filter Zielgruppe“ (Desktop + Mobile 377) `y/default` statt `y/compact`. hero-default (`2352:7024`) hat Desktop oben ohne/unten kompakt und Phone kompakt/kompakt, Regel: nur Text oben Standard (ohne Zurück-Button) und unten Standard; Template Bildung zeigt den Hero oben kompakt. faq-section Bildung unten ohne statt teaser-feature oben ohne (optisch gleich, Regel 2 legt den Abstand ans Modul davor).
 - [ ] **Barrierefreiheits-Check** (WCAG 2.2 AA / BFSG): Kontrast-Befunde aus Abschnitt 6 in Figma lösen, dann Lint erneut; Fokus-Reihenfolge, Tastaturbedienung, Zoom 200 %/400 %, Reflow, Screenreader-Semantik der Core Components und Module. Als eigener Schritt nach Phase B einplanen.
 - [ ] Danilo prüft Styleguide (`npm run docs` → http://localhost:4321/docs/ und /docs/components.html).
 - [ ] Commit über die GitHub-App (macht Danilo).
@@ -317,6 +350,18 @@ Vorschlag: In den Modes surface-200/300/400 und secondary-400 dunklere Aliase se
   11. Leere versteckte Frames im Forms-Frame (`2746:24717`–`24719`) füllen oder löschen.
   12. section-header off-canvas `2613:27966`: Close-Button ohne Rahmen (wie Modal/Menü), Fläche rechts bündig mit dem Inhalt, X oben auf Höhe des Kickers (Code seit 2026-09-29).
   13. Input: Wert auf dem Phone 16 statt 15 px (iOS zoomt unter 16 px, Code seit 2026-09-29).
+- [x] **Doku-Abgleich Figma** (2026-09-30, mit Danilo abgestimmt). Erledigt:
+  - Figma: Varianten-Property überall `Breakpoint` mit `Desktop | Phone` (Tablet bleibt, wo vorhanden). 15 Sets umbenannt (u. a. Button `Size`, Chip `Viewport`, Hero `Mobile`, text-row/list-cell `device`, publications-list `breakpoin`).
+  - Figma: neue Doku-Frames (nur Aufbau und Verhalten) auf 🎨 Foundations: Seitenkopf `2929:2012`, Menü `2929:2253`, Slider `2930:2449`, FAQ `2930:2730`, Marquee `2930:2885` (rechts neben Cut-Edges), Fokus `2932:2853`, Motion `2932:2974` (rechts neben Section-Spacing). Section-Spacing: Hero-Zuordnung ergänzt (`2932:3025`).
+  - Code: Ampel 1–3 / 4–8 / ab 9 (`prototype/angebote-filter`), Seitenkopf scrollt heraus und kommt beim Hochscrollen zurück (`prototype/shared/header.*`), Slider mit Tastatur und Ende = Ende (`prototype/shared/slider.js`), FAQ klappt animiert (`prototype/shared/faq.js`).
+- [x] **Kontrast je Modulfarbe** (2026-09-30): Vorschlag aus Abschnitt 6 in Figma und Repo umgesetzt, Lint sauber.
+- [x] **Marquee Pause-Button** (2026-09-30): in der Komponente `marquee` (`2146:14`) absolut links unten am Seitenrand im Freiraum neben dem Band, kein eigener Platz (Desktop `2934:4778`, Phone `2934:4782`). Code folgt mit dem Modul: `position: absolute` im Modul, Abstand = Section-Spacing x.
+- [x] **Doku Bilder** (2026-09-30): Figma-Doku-Frame „Bilder“ `2950:2917` auf 🎨 Foundations (rechts neben Marquee), Komponenten `lightbox` `2949:191` (Breakpoint Desktop/Phone, Props Caption, Info, Counter, Show Caption/Info/Navigation) und `lightbox-trigger` `2949:580` im Rahmen „Lightbox“ `2949:188` auf 💎 Components. Code folgt mit den Bildmodulen.
+- [ ] **Figma aufräumen, Bilder** (nur Danilo): image-text-single und image-text-double haben noch keinen Schalter `Caption` (BU gilt laut Doku auch dort).
+- [ ] **Modul 3D-Rundgang (Embed)**, als Option im Ausstellungs-Template. Noch nicht gestaltet.
+- [ ] **Filter Veranstaltungen / Presse:** Regeln kommen später vom Kunden. Bis dahin nur der lose Frame `filter` in den Templates.
+- [ ] **Figma aufräumen, Doku** (später, nur Danilo): alte Frames Buttons, Form Fields, Radio & Checkbox, Toggle, Chip auf das neue Format kürzen (sprechen noch von „On-light/On-dark“, Toggle-Notes widersprechen den Formularen, Chip-Notes der Einfachauswahl); Rückfrage-Buttons im Off-Canvas-Text „Abbrechen / Verwerfen“ → „Weiter bearbeiten / Verwerfen“ wie im Modal; Section „Module Documentation“ (`2262:10898`) ersetzen oder löschen (beschreibt Module, die es nicht gibt); faq-section `Breakpoint = Desktop Centered` als eigene Property; Frame-Namen in Templates (doppelte „Bildung - Mobile“, „Besuch – Desktop“); Text „Regeln für Filter“ in Templates auf 1–3 / 4–8 / ab 9; Fokus: Maus/Touch-Darstellung der Felder als Variante.
+- [x] Off-Canvas und Forms bleiben vorerst getrennt (Danilo, 2026-09-30).
 
 ## 8. Entschieden (nicht mehr offen)
 
@@ -326,3 +371,17 @@ Entschieden am 2026-09-10:
 2. **Tablet-Grid:** 12 Spalten, Gutter 16, Margin 24.
 3. **Shadows:** vorerst nicht im Repo. Kommen erst, wenn eine Komponente sie braucht.
 4. **Prototyp (Phase C):** wird später auf Basis von Danilos fertigem Bildungsangebote-Template umgesetzt, nicht jetzt. Erst Foundations, dann Core Components.
+
+Entschieden am 2026-09-30 (Doku-Abgleich):
+
+5. **Modulfarbe:** 7 Farben (surface-50 bis surface-400, primary-900, secondary-400). Voreinstellung in Craft ist **surface-100**. Jedes Modul trägt `data-context`. Wrapper in den Templates sind nur ein Hilfsmittel für die Abstimmung, keine Module.
+6. **Cut-Edges nur an Modulen, die in Figma den Schalter `cut-edges` haben.** Figma führt, andere Module bekommen den Schalter in Craft nicht. Keil gehört immer zu genau einem Modul.
+7. **Hero-Gruppen** (für Section-Spacing): Startseite hero-home; mit Bild hero-exhibition, hero-event, hero-timeline, hero-biography; nur Text hero-default (Zurück-Button über „Show back-link“); Presse hero-press.
+8. **Filter-Ampel** (Kunde): 1–3 Angebote keine Detailfilter, 4–8 Thema und Dauer, ab 9 alle.
+9. **Seitenkopf:** nicht fixiert, scrollt heraus, kommt beim Hochscrollen zurück (Standard-Pattern).
+10. **Slider:** Ende ist Ende (Pfeil deaktiviert), Phone ohne Pfeile, Tastatur über Tab und Pfeiltasten in der Reihe.
+11. **FAQ:** mehrere Fragen gleichzeitig offen, animiertes Auf- und Zuklappen.
+12. **Marquee:** Reduced Motion = steht still. Sonst Pause-Button als Icon-Button ohne Rahmen, absolut links unten im Modul am Seitenrand, ohne eigenen Platz.
+13. **Kontraste:** Vorschlag aus Abschnitt 6 übernommen, Fehlertext auf surface-400 und secondary-400 = neutral/900.
+14. **Bilder:** gilt für alle Bildmodule und die Bild-Text-Module. Je Bild in Craft: Alternativtext (Pflicht), Bildunterschrift und Infotext (optional). Leere BU = nichts, auch kein Abstand. BU bleibt auch mit Lightbox unter dem Bild. Infotext nur in der Lightbox, immer sichtbar (nicht aufklappbar).
+15. **Lightbox:** Schalter je Modul in Craft (Standard aus). Backdrop wie Off-Canvas/Menü, große helle Fläche. Ab 1024 Bild links, Spalte rechts (Zähler, Schließen, BU, Infotext, Pfeile); darunter Bild oben, Pfeile, Text. Pfeile auf allen Breakpoints (Danilo, nach kurzem Versuch ohne Pfeile; WCAG 2.5.7 verlangt eine Alternative zum Wischen). Bild unter 1024 volle Breite der Fläche ohne Rand, auch im Hochformat, **max. 65 % Viewporthöhe**, damit auf 667-px-Phones unter den Pfeilen der Anfang der BU sichtbar bleibt. Blättert nur im Modul, Ende ist Ende wie beim Slider. Bewegung wie das Modal. Annahmen (nicht explizit entschieden): Hinweis-Symbol CornersOut unten rechts im Bild, kein eigener Zoom, Bildwechsel per Überblenden.

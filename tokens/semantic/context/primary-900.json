@@ -203,6 +203,55 @@
         "$type": "color",
         "$value": "{color.primary.900}"
       }
+    },
+    "filter-cell": {
+      "bg-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.alpha.0-5}",
+        "$description": "Semantic color for filter-cell; follows color/button/icon/bg-hover."
+      },
+      "bg-pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.alpha.0-10}",
+        "$description": "Semantic color for filter-cell; follows color/button/icon/bg-pressed."
+      },
+      "bg-active": {
+        "$type": "color",
+        "$value": "{color.neutral.0}",
+        "$description": "Semantic color for filter-cell; follows color/chip/bg-active."
+      },
+      "fg-active": {
+        "$type": "color",
+        "$value": "{color.primary.900}",
+        "$description": "Semantic color for filter-cell; follows color/chip/fg-active."
+      },
+      "count-active": {
+        "$type": "color",
+        "$value": "{color.primary.900}",
+        "$description": "Semantic color for filter-cell; follows color/chip/badge-fg-active."
+      }
+    },
+    "navigation-menu": {
+      "fg": {
+        "$type": "color",
+        "$value": "{color.neutral.0}",
+        "$description": "Navigation menu foreground."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.neutral.alpha.0-40}",
+        "$description": "Navigation menu divider."
+      },
+      "border-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.0}",
+        "$description": "Navigation menu divider on hover and current states."
+      },
+      "border-pressed": {
+        "$type": "color",
+        "$value": "{color.secondary.200}",
+        "$description": "Navigation menu divider while pressed."
+      }
     }
   }
 }

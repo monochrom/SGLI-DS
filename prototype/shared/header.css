@@ -1,0 +1,16 @@
+/* SGLI Prototyp – Seitenkopf: scrollt heraus, kommt beim Hochscrollen zurück (Logik in header.js)
+   Figma-Doku „Seitenkopf“ (2929:2012). Nur die Zustände; Aufbau des Kopfes steht im CSS der Prototypen (.site-nav).
+   Motion: kleiner Slide-in von oben (--motion-base, --ease-content aus src/styles/motion.css). */
+
+.site-nav-slot { position: relative; }
+
+.site-nav.is-fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: var(--z-sticky);
+  transition: transform var(--motion-base) var(--ease-content);
+}
+.site-nav.is-fixed.is-hidden { transform: translateY(-100%); }
+.site-nav.is-parking { transition: none; }

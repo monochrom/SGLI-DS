@@ -21,7 +21,7 @@ Ein Server ist nötig, weil die Icons aus dem SVG-Sprite (`dist/icons/sprite.svg
 | `SPEC-FILTER.md` | Spezifikation für den Developer: Datenmodell, URL-Zustand, Ampel, Chips, Off-Canvas, Tag-Slots, offene Punkte |
 | `index.html` | Template „Bildung“: navigation, hero-default, education-filter + list-item-education, text-content-grid (cut-edges, primary-900), image-text-single, contact-section, teaser-slider, faq-section, teaser-feature, footer, Off-Canvas Filter und Kontakt als natives `<dialog>`, Rückfrage-Modal |
 | `prototype.css` | Modul-CSS des Prototypen (BEM, nur Tokens, mobile first: Phone → md 768 → lg 1024), inkl. filter-cell. Das Panel selbst kommt seit 2026-09-29 aus `src/components/off-canvas/` |
-| `filter.js` | Filter-Logik, Tag-Slots, Off-Canvas (`showModal`), „Weitere laden“, Slider-Pfeile (Vanilla JS) |
+| `filter.js` | Filter-Logik, Tag-Slots, Off-Canvas (`showModal`), „Weitere laden“ (Vanilla JS). Slider, FAQ und Seitenkopf liegen in `../shared/` |
 | `data.js` | 47 Dummy-Angebote mit allen Filter-Attributen (erfunden, Titel an Figma angelehnt) |
 | `../shared/assets/` | Social-Icons Instagram, Facebook, LinkedIn für den Footer (Kopie aus `haftbuch/assets/icons`, als Maske mit `currentColor`) |
 | `assets/img/` | Logo (SVG, Farbe über `currentColor`) und Bilder aus Figma, verkleinert auf 1200 px |
@@ -32,11 +32,13 @@ Ein Server ist nötig, weil die Icons aus dem SVG-Sprite (`dist/icons/sprite.svg
 
 | Angebote | Detailfilter |
 |---|---|
-| unter 9 | keine |
-| 9 bis 20 | Thema, Dauer |
-| über 20 | Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache |
+| 1 bis 3 | keine |
+| 4 bis 8 | Thema, Dauer |
+| ab 9 | Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache |
 
-Dummy-Daten so verteilt, dass alle drei Stufen vorkommen: Schulen 29 · Erwachsenenbildung 15 · Hochschulen 13 · Aus- und Weiterbildung 9 · Inklusion 7.
+Schwellen vom Kunden angepasst am 2026-09-30 (es wird nicht so viele Angebote geben), vorher 9 und 20.
+
+Dummy-Daten so verteilt, dass alle drei Stufen vorkommen: Schulen 29 · Erwachsenenbildung 15 · Hochschulen 13 (alle Detailfilter) · Aus- und Weiterbildung 7 (Thema, Dauer) · Inklusion 3 (keine).
 
 **Tags in der Liste** (3 Slots, Slot 3 immer Dauer; Lesart B, entschieden 2026-09-11)
 
@@ -87,7 +89,7 @@ Das Attribut, nach dem gerade gefiltert wird, wird als Tag übersprungen, weil e
 
 Bestätigt am 2026-09-11: 1, 2, 3, 6. Entschieden: 4 (geteilter Chip), 5 (Lesart B).
 
-1. **Ohne Zielgruppe keine Detailfilter.** Figma „Filter Default“ zeigt bei 47 Angeboten nur die Zielgruppen-Zeile, obwohl die Ampel bei über 20 alle Detailfilter vorsähe. Umgesetzt wie in Figma.
+1. **Ohne Zielgruppe keine Detailfilter.** Figma „Filter Default“ zeigt bei 47 Angeboten nur die Zielgruppen-Zeile, obwohl die Ampel ab 9 alle Detailfilter vorsähe. Umgesetzt wie in Figma.
 2. **Ampel-Bezugsgröße** ist die Trefferzahl der Zielgruppe, nicht die aktuell gefilterte Zahl. Sonst würde ein gesetzter Detailfilter (z. B. Thema → 7 Treffer) seine eigene Zeile ausblenden. Gesetzte Detailfilter bleiben immer sichtbar.
 3. **Zielgruppe ist Einfachauswahl**, Detailfilter je ein Wert. In Figma ist immer nur ein Chip aktiv.
 4. ~~Klick auf einen aktiven Detail-Chip entfernt den Wert.~~ **Entschieden 2026-09-11: geteilter Chip.** Label öffnet das Off-Canvas erneut, X entfernt.
@@ -125,7 +127,7 @@ Abgeglichen mit Desktop `2522:59511` und Phone `2522:59552`. Behoben:
 2. Frame „Responsive-Verhalten“ (`2640:26547`) ist ebenfalls eine Kopie von „Allgemein“. Es fehlt: Desktop rechtes Panel 520 px volle Höhe mit Divider links, Phone Bottom Sheet 85 %, Umschaltpunkt (im Prototyp lg 1024), Buttons gestapelt.
 3. „Allgemein“ Punkt 2 („am unteren Viewport-Rand, max 85 %“) gilt nur für Phone; die Usage Notes sagen das korrekt.
 4. Backdrop-Klick widersprüchlich: „Allgemein“ nur ohne Datenverlust, Usage Notes „immer“. Vorschlag: Backdrop schließt immer, bei Formularen mit Eingaben vorher Rückfrage. Der Filter schließt ohne Einschränkung.
-5. filter-cell Indikator „On“ hartkodiert #CDDC39, an keine Variable gebunden, in keiner Palette. Vorschlag: Token `color/filter-cell/indicator-active` anlegen (accent/highlight oder neutral/0).
+5. ~~filter-cell Indikator „On“ hartkodiert #CDDC39.~~ **Erledigt:** Figma hat jetzt `color/filter-cell/status` (accent/highlight), seit 2026-09-30 in `tokens/`, Code nutzt `--color-filter-cell-status`.
 6. section-header `Breakpoint=Desktop, type=off-canvas` (`2613:27966`) existiert, wird aber in keiner Preview genutzt (alle nutzen Phone/off-canvas, wie die Usage Notes fordern). Löschen oder die Phone-Variante breakpoint-los benennen.
 7. Quadratischer Indikator bei Einfachauswahl. Entweder runder Indikator oder in der Doku explizit „Einfachauswahl trotz Quadrat“ vermerken.
 8. Bestätigungs-Off-Canvas: Sticky Action Footer liegt neben dem Body (`2715:30201`), bei Filter/Kontakt/Buchung innerhalb. Eine Struktur für den Developer.

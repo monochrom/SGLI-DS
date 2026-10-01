@@ -1192,6 +1192,127 @@
     "original": "{color.neutral.0}",
     "file": "tokens/semantic/color.json"
   },
+  "color-filter-cell-bg-hover": {
+    "value": "#1a19170d",
+    "type": "color",
+    "path": [
+      "color",
+      "filter-cell",
+      "bg-hover"
+    ],
+    "original": "{color.neutral.alpha.900-5}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-filter-cell-bg-pressed": {
+    "value": "#1a19171a",
+    "type": "color",
+    "path": [
+      "color",
+      "filter-cell",
+      "bg-pressed"
+    ],
+    "original": "{color.neutral.alpha.900-10}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-filter-cell-bg-active": {
+    "value": "#201747",
+    "type": "color",
+    "path": [
+      "color",
+      "filter-cell",
+      "bg-active"
+    ],
+    "original": "{color.primary.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-filter-cell-fg-active": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "filter-cell",
+      "fg-active"
+    ],
+    "original": "{color.neutral.0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-filter-cell-count-active": {
+    "value": "#fffdf9",
+    "type": "color",
+    "path": [
+      "color",
+      "filter-cell",
+      "count-active"
+    ],
+    "original": "{color.neutral.0}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-filter-cell-status": {
+    "value": "#eaff00",
+    "type": "color",
+    "path": [
+      "color",
+      "filter-cell",
+      "status"
+    ],
+    "original": "{color.accent.highlight}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-navigation-menu-fg": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "navigation-menu",
+      "fg"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-navigation-menu-border": {
+    "value": "#1a191733",
+    "type": "color",
+    "path": [
+      "color",
+      "navigation-menu",
+      "border"
+    ],
+    "original": "{color.neutral.alpha.900-20}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-navigation-menu-border-hover": {
+    "value": "#1a1917",
+    "type": "color",
+    "path": [
+      "color",
+      "navigation-menu",
+      "border-hover"
+    ],
+    "original": "{color.neutral.900}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-navigation-menu-border-pressed": {
+    "value": "#2e2263",
+    "type": "color",
+    "path": [
+      "color",
+      "navigation-menu",
+      "border-pressed"
+    ],
+    "original": "{color.primary.700}",
+    "file": "tokens/semantic/color.json"
+  },
+  "color-navigation-menu-indicator": {
+    "value": "#1a191733",
+    "type": "color",
+    "path": [
+      "color",
+      "navigation-menu",
+      "indicator"
+    ],
+    "original": "{color.neutral.alpha.900-20}",
+    "file": "tokens/semantic/color.json"
+  },
   "radius-none": {
     "value": "0px",
     "type": "dimension",

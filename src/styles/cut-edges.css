@@ -81,14 +81,23 @@
       right top / calc(100% - var(--cut-after-x)) 100% no-repeat;
 }
 
-/* Kippen beim Scrollen (.cut-edges--tilt, nur der obere Keil): Die Diagonale dreht sich um ihren
-   tiefsten Punkt unten rechts in die Figma-Endlage (280/1440 ≈ 11°). Start bei --cut-tilt-start der
-   Keilhöhe (0.6 ≈ 6,7°). Der Keil bleibt ein Dreieck, der Streifen behält seine Höhe (kein Layoutsprung).
-   Umsetzung: Der Verlauf wird unten verankert und in der Höhe von start auf 100 % gezogen, darüber
-   liegt die Nachbarfläche. Die Drehung ist an den Scroll gekoppelt (Scroll-Driven Animation): von
-   „Oberkante 10 vh über dem unteren Rand“ bis „Oberkante 60 vh darüber“ (knapp über der Mitte),
-   rückwärts beim Hochscrollen.
-   Ohne Unterstützung (Firefox) oder bei reduzierter Bewegung: Endlage, wie ohne Modifier. */
+/* Letztes Modul der Seite (entschieden 2026-09-30): kein Keil unten, das Modul schließt bündig mit dem
+   Footer ab. Der Footer liegt außerhalb von <main>, das Modul ist dort das letzte Kind. */
+:where(main, .modules) > .cut-edges--after:last-child::after {
+  display: none;
+}
+
+/* Kippen (.cut-edges--tilt, nur der obere Keil). Entschieden 2026-09-30: Drehpunkt oben links, das
+   rechte Ende der Diagonale fällt in die Figma-Endlage (280/1440 ≈ 11°). Start bei --cut-tilt-start der
+   Keilhöhe (0.6 ≈ 6,7°). Der Streifen behält seine Höhe (kein Layoutsprung).
+   Umsetzung: Grundfläche in Modulfarbe, darauf das Nachbar-Dreieck oben rechts, oben verankert und in
+   der Höhe von start auf 100 % gezogen. In der Endlage ist das genau der statische Keil.
+   Bewegung: an die Scroll-Position gekoppelt (Scroll-Driven Animation), linear, also mit festem
+   Verhältnis zum Scrollen (Parallax): Die Kante bewegt sich um --cut-tilt-factor der Scrollstrecke.
+   Beginn, wenn die Oberkante des Moduls --cut-tilt-offset über dem unteren Rand liegt. Der Scrollweg bis
+   zur Endlage ergibt sich aus Weg der Kante / Faktor, Weg der Kante = (1 − start) × Keilhöhe, Keilhöhe =
+   Modulbreite × 280/1440 (cqw, das Modul ist Container). Rückwärts beim Hochscrollen.
+   Ohne Unterstützung (Firefox) oder bei reduzierter Bewegung: Endlage. */
 @property --cut-tilt {
   syntax: "<number>";
   inherits: false;
@@ -100,22 +109,33 @@
   to   { --cut-tilt: 1; }
 }
 
+.cut-edges--tilt {
+  --cut-tilt-start: 0.6;
+  --cut-tilt-factor: 0.25;
+  --cut-tilt-offset: 30vh;
+}
+
+.cut-edges--tilt.cut-edges--before::before {
+  background:
+    linear-gradient(to bottom left,
+      var(--cut-before-bg) calc(50% - 0.5px), var(--cut-color) calc(50% + 0.5px))
+      left top / 100% calc(var(--cut-tilt) * 100%) no-repeat,
+    var(--cut-color);
+}
+
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .cut-edges--tilt {
-      --cut-tilt-start: 0.6;
+      container-type: inline-size;
       view-timeline: --cut-tilt block;
     }
 
     .cut-edges--tilt.cut-edges--before::before {
-      background:
-        linear-gradient(to top right,
-          var(--cut-color) calc(50% - 0.5px), var(--cut-before-bg) calc(50% + 0.5px))
-          left bottom / 100% calc(var(--cut-tilt) * 100%) no-repeat,
-        var(--cut-before-bg);
-      animation: cut-tilt var(--ease-scroll) both;
+      animation: cut-tilt linear both;
       animation-timeline: --cut-tilt;
-      animation-range: cover 10vh cover 60vh;
+      animation-range:
+        cover var(--cut-tilt-offset)
+        cover calc(var(--cut-tilt-offset) + (1 - var(--cut-tilt-start)) * 100cqw * 280 / 1440 / var(--cut-tilt-factor));
     }
   }
 }
