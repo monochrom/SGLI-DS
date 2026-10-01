@@ -1,5 +1,5 @@
 /* SGLI Prototyp „Bildung“ – Dummy-Daten
-   Statische Angebote für den Kundentest der Filterlogik. Kein Backend.
+   Statische Angebote zum Testen der Filterlogik. Kein Backend.
    Jedes Angebot trägt alle Attribute, die die Filter kennen. Werte sind erfunden, Titel angelehnt an Figma. */
 
 window.SGLI_DATA = (function () {

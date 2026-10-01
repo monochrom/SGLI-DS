@@ -1,31 +1,30 @@
 /* SGLI Prototyp – Scroll-Motion
-   Übernommen aus dem alten Prototyp (sgli-prototype.netlify.app, js/main.js), Parameter 1:1.
    Alle Bewegungen hängen direkt an der Scroll-Position (keine Einmal-Animation, keine Dauer, keine
    Kurve): Runterscrollen spielt vorwärts, Hochscrollen rückwärts. Fortschritt 0…1, linear.
 
    Markup (Werte stehen am Element, damit sie im Prototyp justierbar bleiben):
 
-   1. Wachsen mit dem Scrollen der Seite (alter Prototyp: Hero-Form und Hero-Bild)
+   1. Wachsen mit dem Scrollen der Seite (Hero-Form und Hero-Bild)
       <div data-motion="scale" data-motion-from="0.75" data-motion-range="0.9">
       Fortschritt = scrollY / (Viewporthöhe × range). Skaliert von „from“ auf 1 (= Design-Größe).
 
-   2. Wachsen, sobald das Element ins Bild kommt (alter Prototyp: Ornament „Die Stiftung“)
+   2. Wachsen, sobald das Element ins Bild kommt (Ornament „Die Stiftung“)
       <div data-motion="scale" data-motion-ref="self" data-motion-from="0.75" data-motion-range="0.6">
       Fortschritt = (Viewporthöhe − Oberkante des Elements) / (Viewporthöhe × range).
       Gemessen wird die Lage ohne Skalierung, der Drehpunkt kommt aus transform-origin im CSS.
 
-   3. Bild-Schwenk (alter Prototyp: Vollbild-Foto über „Bildungsangebote“)
+   3. Bild-Schwenk (Vollbild-Foto über „Bildungsangebote“)
       <div data-motion="pan" data-motion-zoom="1.12" data-motion-distance="40"><img …></div>
       Bild leicht vergrößert (Puffer gegen Ränder), wandert von −distance nach +distance px.
       Fortschritt = (Viewporthöhe − Oberkante des Containers) / Viewporthöhe.
 
-   4. Auffächern (alter Prototyp: Haftbuch-Motiv, 4 Ebenen)
+   4. Auffächern (Haftbuch-Motiv, 4 Ebenen)
       <div data-motion="fan"> mit einem [data-fan-anchor] (bleibt stehen) und [data-fan-layer]-Ebenen.
       Ausgangslage: alle Ebenen deckungsgleich auf dem Anker. Sie wandern gleichzeitig zu ihrer
       CSS-Position (Ziel). Start, wenn die Oberkante des Containers 150 px über dem unteren Rand liegt,
       Ende nach weiteren 0,9 Viewporthöhen.
 
-   5. Bildrahmen rücken in ihre Lage (neu 2026-10-01, teaser-timeline, nicht aus dem alten Prototyp)
+   5. Bildrahmen rücken in ihre Lage (teaser-timeline)
       <img data-motion="drift" data-motion-range="0.8"> mit dem Startversatz im CSS: --drift-y (px).
       Das Element startet um --drift-y nach unten versetzt und steigt beim Reinscrollen in seine Lage.
       Unterschiedliche Werte je Bild = unterschiedliche Geschwindigkeit, die Collage baut sich auf.
@@ -41,7 +40,7 @@
 
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var FAN_START_DELAY = 150; // px, alter Prototyp: erst wenn die Form schon größtenteils im Bild ist
+  var FAN_START_DELAY = 150; // px: erst wenn die Form schon größtenteils im Bild ist
   var FAN_RANGE = 0.9;       // Viewporthöhen, gemeinsam für alle Ebenen (synchrones Auffächern)
 
   function clamp(v) { return Math.min(Math.max(v, 0), 1); }

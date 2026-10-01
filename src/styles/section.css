@@ -1,7 +1,6 @@
 /* SGLI – Section Spacing
    Figma Layout-Collection: section-spacing/y/{default,compact,none}, section-spacing/x/{default,none}.
-   Werte wechseln per Breakpoint in dist/css/layout.css. Regeln: Figma-Doku „Section-Spacing“ (2909:1850),
-   mit Danilo abgestimmt 2026-09-30 (PLAN.md §7).
+   Werte wechseln per Breakpoint in dist/css/layout.css. Regeln: Figma-Doku „Section-Spacing“ (2909:1850).
 
    Mechanik
    Jedes Modul hat drei Custom Properties: --section-pt (oben), --section-pb (unten), --section-px (seitlich).

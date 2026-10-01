@@ -5,10 +5,10 @@
 
    Herkunft der Blöcke:
    - Navigation, Section-Header, Teaser-Slider, Teaser-Feature, Footer, Logo, Hinweisleiste:
-     unverändert aus ../angebote-filter/prototype.css (dort am 2026-09-29 gegen Figma abgeglichen).
+     unverändert aus ../angebote-filter/prototype.css.
    - Teaser-Timeline: unverändert aus ../haftbuch/haftbuch.css.
    - Neu für die Startseite: hero-home, teaser-grid, teaser-stacked, teaser-event-list, teaser-search,
-     image-fullwidth, Ergänzungen am Slider (Aktionszeile) und die Bewegungen aus dem alten Prototyp
+     image-fullwidth, Ergänzungen am Slider (Aktionszeile) und die Bewegungen
      (Hover-Zoom hier, Scroll-Kopplung in ../shared/scroll-motion.js). */
 
 /* Motion: --motion-* und --ease-* kommen aus src/styles/motion.css (Foundation). */
@@ -336,7 +336,7 @@ body { background-color: var(--color-bg-page); }
   .timeline__img--quaternary { grid-column: 5 / span 2; grid-row: 1; height: 100%; aspect-ratio: auto; }
 }
 
-/* Bewegung (../shared/scroll-motion.js, data-motion="drift", entschieden 2026-10-01, Richtwerte):
+/* Bewegung (../shared/scroll-motion.js, data-motion="drift", Richtwerte):
    Die Bildrahmen starten nach unten versetzt und steigen beim Reinscrollen unterschiedlich schnell in
    ihre Lage, die Collage baut sich auf. Nur der Rahmen bewegt sich, der Bildinhalt bleibt unverändert.
    Versatz je Breakpoint so gewählt, dass sich nichts überlappt (Abstände Phone 32, Desktop 24). */
@@ -606,7 +606,6 @@ body { background-color: var(--color-bg-page); }
   align-items: flex-start;
   gap: var(--space-24);
 }
-.hero-home__actions .btn--primary { align-self: stretch; }
 .hero-home__media { transform-origin: 50% 0; }
 .hero-home__img {
   display: block;
@@ -624,7 +623,6 @@ body { background-color: var(--color-bg-page); }
   .hero-home__content { gap: var(--space-48); }
   .hero-home__desc { justify-self: end; width: min(553px, 100%); }
   .hero-home__actions { flex-direction: row; align-items: center; }
-  .hero-home__actions .btn--primary { align-self: auto; }
 }
 @media (min-width: 1024px) {
   .hero-home__grid { gap: var(--space-80); }
@@ -915,9 +913,9 @@ body { background-color: var(--color-bg-page); }
   object-fit: cover;
 }
 
-/* ---------- Hover-Zoom (aus dem alten Prototyp) ----------
-   Teaser-Bilder zoomen beim Hover über die Karte auf 110 %, 0,4 s ease-out (Werte 1:1).
-   Ausnahme von „Zustände nur Farbe“ (Motion-Regel), entschieden 2026-10-01. Nur mit echtem Hover
+/* ---------- Hover-Zoom ----------
+   Teaser-Bilder zoomen beim Hover über die Karte auf 110 %, 0,4 s ease-out.
+   Ausnahme von „Zustände nur Farbe“ (Motion-Regel). Nur mit echtem Hover
    (Maus, Trackpad), auf Touch bliebe der Zoom nach dem Tippen stehen. Reduced Motion: kein Zoom. */
 .teaser-card__media,
 .teaser-block__media { overflow: hidden; }

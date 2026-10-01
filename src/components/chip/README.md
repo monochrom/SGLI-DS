@@ -30,4 +30,4 @@ Padding `space-8` / `space-12`, Gap `space-6`, Label-M. Farben `color/chip/{bg,b
 ## Hinweise
 
 - `aria-pressed` ist die richtige Semantik für Filter-Toggles. Für Chips, die navigieren, `<a class="chip">` ohne `aria-pressed`.
-- Das Toggle-Verhalten in der Vorschau ist ein Fünfzeiler; im Prototyp wird die Filterlogik darauf aufgebaut.
+- Das Toggle-Verhalten in der Vorschau ist ein Fünfzeiler; die Filterlogik im Prototyp `angebote-filter` baut darauf auf.

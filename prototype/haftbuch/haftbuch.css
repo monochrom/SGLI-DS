@@ -348,7 +348,7 @@ body { background-color: var(--color-bg-page); }
 .hb-row.is-open .hb-row__icon .icon--plus { opacity: 0; transform: rotate(90deg); }
 .hb-row.is-open .hb-row__icon .icon--minus { opacity: 1; }
 
-/* Fokusring außen wie überall (focus.css, entschieden 2026-09-29). Er braucht 6 px, der Seitenrand ist
+/* Fokusring außen wie überall (focus.css). Er braucht 6 px, der Seitenrand ist
    mindestens 16. z-index hebt ihn über die Trennlinien der Nachbarzeilen. */
 .hb-row__summary:focus-visible {
   position: relative;
@@ -388,8 +388,7 @@ body { background-color: var(--color-bg-page); }
 }
 
 /* Phone (Figma 2834:26159): Karte über beide Spalten, color/bg/card, Padding 16, Gap 32.
-   Abweichung von Figma (entschieden 2026-09-29): Geburtsort und Haftzeitraum stehen oben im Panel,
-   weil die Phone-Zeile sie nicht zeigt. Danilo zieht Figma nach. */
+   Geburtsort und Haftzeitraum stehen oben im Panel, weil die Phone-Zeile sie nicht zeigt. */
 .hb-row__panel {
   display: flex;
   flex-direction: column;
@@ -651,7 +650,7 @@ body { background-color: var(--color-bg-page); }
   .timeline__img--quaternary { grid-column: 5 / span 2; grid-row: 1; height: 100%; aspect-ratio: auto; }
 }
 
-/* Bewegung (../shared/scroll-motion.js, data-motion="drift", entschieden 2026-10-01, Richtwerte):
+/* Bewegung (../shared/scroll-motion.js, data-motion="drift", Richtwerte):
    Die Bildrahmen starten nach unten versetzt und steigen beim Reinscrollen unterschiedlich schnell in
    ihre Lage, die Collage baut sich auf. Nur der Rahmen bewegt sich, der Bildinhalt bleibt unverändert.
    Versatz je Breakpoint so gewählt, dass sich nichts überlappt (Abstände Phone 32, Desktop 24). */

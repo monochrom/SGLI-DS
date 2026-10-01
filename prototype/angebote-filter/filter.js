@@ -1,7 +1,7 @@
 /* SGLI Prototyp „Bildung“ – Filter-Logik (Vanilla JS, kein Backend)
-   Regeln aus Figma („Regeln für Filter“, „Dynamische Ausgabe von Tags“, Node 2548:24966):
+   Regeln aus Figma („Regeln für Filter“, „Dynamische Ausgabe von Tags“, Section Bildung 2522:59510):
 
-   Ampel für Detailfilter (bezogen auf die Angebote der gewählten Zielgruppe, Kunde 2026-09-30):
+   Ampel für Detailfilter (bezogen auf die Angebote der gewählten Zielgruppe):
      1 bis 3 Angebote   → keine Detailfilter
      4 bis 8 Angebote   → Dauer und Thema
      ab 9 Angeboten     → alle Detailfilter (Klassenstufe, Thema, Format, Förderbedarf, Dauer, Sprache)
@@ -118,7 +118,7 @@
   }
 
   /* ---------- Tags je Angebot (3 Slots) ----------
-     Lesart B (entschieden 2026-09-11): die gesetzten Filter entscheiden, nicht die Ampelstufe.
+     Die gesetzten Filter entscheiden, nicht die Ampelstufe.
        keine Zielgruppe          → Zielgruppen (max 2)
        Zielgruppe, kein Detail   → Thema (max 2)
        Zielgruppe + Detailfilter → Slot 1: Klassenstufe, sonst Thema, sonst Format (max 2)
@@ -458,7 +458,7 @@
     if (next) next.querySelector('a').focus();
   });
 
-  /* Auswahl setzen oder, bei erneutem Klick auf die gewählte Option, wieder aufheben (entschieden 2026-09-23).
+  /* Auswahl setzen oder, bei erneutem Klick auf die gewählte Option, wieder aufheben.
      Radios kennen kein natives Abwählen, daher: change setzt eine neue Option, click/Space/Enter auf der
      bereits gewählten Option entfernt den Wert. Die Liste wird nicht neu gebaut, der Fokus bleibt. */
   function setOption(value) {

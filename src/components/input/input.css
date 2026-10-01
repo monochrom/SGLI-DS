@@ -118,10 +118,10 @@
   padding-bottom: 5px;
 }
 
-/* ---------- Fokus: zwei Stufen je nach Bedienart (entschieden 2026-09-29) ----------
+/* ---------- Fokus: zwei Stufen je nach Bedienart ----------
    Tastatur (und Fallback ohne JS): Doppelring AUSSEN um die Box wie bei Buttons und Chips (focus.css):
    2 focus-inner direkt am Rahmen, darum 4 focus-outer. Das Feld behält seine volle Innenfläche.
-   Figma (Focused, z. B. 1658:6496) zeigt den Ring noch innen, wird angepasst.
+   Abweichung: Figma (Focused, z. B. 1658:6496) zeigt den Ring innen.
    Maus/Touch: ruhiger Zustand ohne Ring, Rahmen 2 px in focus-outer (1 px Rahmen + 1 px Inset-Schatten,
    nichts verschiebt sich). Das Label oben und der Cursor zeigen den Fokus zusätzlich.
    Die Bedienart setzt src/scripts/focus-modality.js als data-focus-modality auf <html>. */

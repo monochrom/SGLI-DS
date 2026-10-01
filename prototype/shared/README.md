@@ -16,7 +16,7 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 | `header.js` / `header.css` | Seitenkopf nicht fixiert: scrollt heraus, gleitet beim Hochscrollen von oben herein, ganz oben wieder im Seitenfluss. Platzhalter hält die Höhe. Fokus im ausgeblendeten Kopf blendet ihn ein. Figma-Doku „Seitenkopf“ `2929:2012`. |
 | `slider.js` | Slider (`[data-slider]`): Pfeil um eine Karte, Ende ist Ende (Pfeil deaktiviert, Fokus springt auf den anderen Pfeil), Tab schiebt die fokussierte Karte ins Bild, Pfeiltasten links/rechts springen von Karte zu Karte. Phone ohne Pfeile (CSS). Figma-Doku „Slider“ `2930:2449`. |
 | `faq.js` | FAQ (`details.faq-item`): Höhe klappt weich auf und zu, Antwort blendet ein, mehrere Fragen gleichzeitig offen. Natives `<details>` bleibt. `.is-closing` tauscht das Icon sofort (Regel im CSS der Prototypen). Figma-Doku „FAQ“ `2930:2730`. |
-| `scroll-motion.js` | Scroll-gekoppelte Bewegungen aus dem alten Prototyp (Parameter 1:1): wachsen (`data-motion="scale"`, Bezug Seite oder Element), Bild-Schwenk (`pan`), Auffächern (`fan`). Werte als `data-motion-*` am Element. Reduced Motion: Endlage. Genutzt auf der Startseite, Details in `../startseite/README.md`. |
+| `scroll-motion.js` | Scroll-gekoppelte Bewegungen: wachsen (`data-motion="scale"`, Bezug Seite oder Element), Bild-Schwenk (`pan`), Auffächern (`fan`). Werte als `data-motion-*` am Element. Reduced Motion: Endlage. Genutzt auf der Startseite, Details in `../startseite/README.md`. |
 | `language.js` | Baut die Sprachauswahl (Komponente `src/components/modal`, `type=language`) und hängt sie an `<body>`. Öffnet über jeden Button mit `data-modal-open="modal-language"` (Seitenkopf und Menü). Dummy: Deutsch vorausgewählt, jede Option schließt nur. Einbinden nach `../../src/components/modal/modal.js`. |
 
 ## Einbinden
@@ -39,15 +39,15 @@ Figma: Navigation / Menu Overlay `2802:62629` (Desktop `2802:62628`, Phone `2802
 - Links auf Seiten, die es im Prototyp nicht gibt (Besuch, Ausstellung, Footer-Links), tun nichts.
 - Phone bis 767: nur Liste, ohne Bild. Ab 768: Liste und Bild, beide Spalten im Figma-Verhältnis 628 : 668. Kopf: Icon-Buttons ab 768, Öffnungszeit erst ab 1024 (die Icons sind wichtiger, die Öffnungszeit wandert zuerst ins Menü). Über der Liste stehen darum bis 767 Öffnungszeit, Suche und Sprach-Buttons, von 768 bis 1023 nur die Öffnungszeit. Menüpunkte in H3, erst ab 1440 in H2; lange Punkte dürfen umbrechen.
 
-## Abweichungen von Figma / offene Punkte
+## Abweichungen von Figma
 
 1. **Tippfehler in Figma:** Button „SChliessen“ (Desktop) und „Schließsen“ (Phone), Adresse „Lindenstraßse“ bzw. „Lindenstrase“. Im Code: „Schließen“, „Lindenstraße 54/55“.
 2. **Kopf Phone:** Overlay-Logo 140 × 43 und Kopfhöhe 72 in Figma, Seitenkopf 131 × 40. Im Code wie der Seitenkopf, damit „Schließen“ genau auf „Menü“ liegt.
 3. **Footer Phone:** Figma hat Innenabstand 24 links/rechts, die Liste darüber 16. Im Code 16 (Grid-Rand), damit alles bündig ist.
-4. **Desktop-Schrift:** Figma zeigt nur 1440 mit H2. Zwischen 1024 und 1439 nutzt der Code H3 (entschieden 2026-09-29). Bei 1440 bricht „Haftbücher & Schicksale“ als aktuelle Seite (Quadrat davor) um, wie in Figma.
-5. **Tokens:** `color/navigation-menu/*` seit 2026-09-30 in `tokens/` (lokale Werte in `menu.css` entfernt). Motion-Zeiten sind Kandidaten für Tokens.
-6. **Tablet:** Figma hat keinen Tablet-Frame. Ab 768 stehen Liste und Bild nebeneinander (entschieden 2026-09-29), Abbinder bleibt bis 1023 wie Phone. Kopf wie der Seitenkopf: Icons ab 768, Öffnungszeit ab 1024 (entschieden 2026-09-29).
-7. **Kopf Bildung:** Der Seitenkopf im Prototyp „angebote-filter“ hatte zwei Icon-Buttons. Er ist jetzt vom Haftbuch übernommen (drei Icons mit Leichte Sprache), wie das Overlay (entschieden 2026-09-29).
+4. **Desktop-Schrift:** Figma zeigt nur 1440 mit H2. Zwischen 1024 und 1439 nutzt der Code H3. Bei 1440 bricht „Haftbücher & Schicksale“ als aktuelle Seite (Quadrat davor) um, wie in Figma.
+5. **Tokens:** Farben aus `color/navigation-menu/*`. Die Motion-Zeiten stehen als Custom Properties in `menu.css` bzw. `src/styles/motion.css`, nicht als Figma-Variablen.
+6. **Tablet:** Figma hat keinen Tablet-Frame. Ab 768 stehen Liste und Bild nebeneinander, Abbinder bleibt bis 1023 wie Phone. Kopf wie der Seitenkopf: Icons ab 768, Öffnungszeit ab 1024.
+7. **Seitenkopf:** in allen Prototypen gleich, drei Icons (Sprache, Leichte Sprache, Suche) wie das Overlay.
 8. **Niedrige Desktop-Viewports:** Ist der Viewport niedriger als der Inhalt, scrollt das Menü. 1024 × 768 passt mit H3 ohne Scrollen.
 
 ## Suche und Übergabe aus dem Menü

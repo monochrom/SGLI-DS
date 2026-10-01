@@ -11,7 +11,7 @@
    weil er an keinem Rand hängt (egal ob aus dem Kopf oder unten im Off-Canvas ausgelöst). */
 
 .modal {
-  /* Zeilen der Sprachauswahl nutzen die filter-cell-Farben (Tokens color/filter-cell/*, seit 2026-09-30 in tokens/). */
+  /* Zeilen der Sprachauswahl nutzen die filter-cell-Farben (Tokens color/filter-cell/*). */
   --modal-pad: var(--space-16);
 
   box-sizing: border-box;

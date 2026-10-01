@@ -274,7 +274,7 @@ html.menu-lock { overflow: hidden; }
 .menu__foot-group { display: flex; flex-direction: column; }
 
 /* ---------- Ab Tablet (md 768): Liste + Bild ----------
-   Figma hat keinen Tablet-Frame. Liste und Bild stehen ab 768 nebeneinander (entschieden 2026-09-29).
+   Figma hat keinen Tablet-Frame. Liste und Bild stehen ab 768 nebeneinander.
    Kopf: Icon-Buttons ab md (wie der Seitenkopf), Öffnungszeit erst ab lg. Abbinder bleibt bis lg wie Phone.
    Tablet: Öffnungszeit steht über der Liste, das Bild läuft über die volle Höhe. */
 @media (min-width: 768px) {

@@ -119,7 +119,7 @@ html:has(dialog.offcanvas[open]) {
 .offcanvas__title:focus,
 .offcanvas__title:focus-visible { outline: none; box-shadow: none; }
 
-/* Close: Button/Icon ohne Rahmen wie im Modal und im Menü-Kopf (entschieden 2026-09-29, Figma zeigt noch den Rahmen).
+/* Close: Button/Icon ohne Rahmen wie im Modal und im Menü-Kopf (Abweichung: Figma zeigt hier den Rahmen).
    Rechts: die ganze Fläche (auch Hover/Pressed) schließt bündig mit Trennlinie und Inhalt ab.
    Oben: das X sitzt auf der Oberkante des Kopfs (Kicker, ohne Kicker Titel), die Fläche ragt dafür um ihren
    Innenabstand nach oben in das Padding. margin-bottom hebt den Einfluss auf die Kopfhöhe auf (Trennlinie bleibt

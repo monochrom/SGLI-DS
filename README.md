@@ -1,6 +1,6 @@
 # SGLI Design System
 
-Design System der Gedenkstätte Lindenstraße (SGLI). Quelle ist die Figma-Datei „SGLI – Design“ (ZK Team). Dieses Repo liefert Tokens, Foundations, Core Components und Doku für die Umsetzung in Craft CMS.
+Design System der Gedenkstätte Lindenstraße (SGLI). Quelle ist die Figma-Datei „SGLI – Design“. Dieses Repo liefert Tokens, Foundations, Core Components und Doku für die Umsetzung in Craft CMS.
 
 ## Quickstart
 
@@ -18,11 +18,13 @@ npm run docs         # Styleguide auf http://localhost:4321/docs/
 | `tokens/` | Design Tokens im DTCG-Format (W3C), aus Figma exportiert |
 | `dist/css/` | generierte CSS Custom Properties: `tokens.css`, `contexts.css`, `typography.css`, `layout.css`, `text-styles.css`, `index.css` |
 | `dist/icons/sprite.svg` | SVG-Sprite aller genutzten Icons (Phosphor + 4 Custom-Carets) |
-| `src/styles/` | Foundations: Fonts, Reset, Base, Kontexte, Grid, Section, Fokus, Icons, Cut-Edges |
-| `src/components/` | Core Components (folgen in Phase B) |
+| `src/styles/` | Foundations: Motion, Fonts, Reset, Base, Kontexte, Grid, Section-Spacing, Fokus, Icons, Cut-Edges |
+| `src/components/` | Core Components: Button, Input, Toggle, Checkbox/Radio, Chip, Tag, Form, Off-Canvas, Modal (je CSS, Vorschau-HTML, README) |
+| `src/scripts/` | Foundation-Scripts, z. B. `focus-modality.js` (Fokusring nur bei Tastaturbedienung) |
 | `assets/fonts/` | Switzer (400/600 + Italic), IBM Plex Mono (500), woff2, self-hosted |
 | `assets/icons/` | Einzel-SVGs |
-| `docs/` | statischer Styleguide |
+| `docs/` | statischer Styleguide, `FIGMA-MAPPING.md` (Figma → Repo), `CHANGELOG.md` |
+| `prototype/` | Klick-Prototypen (Startseite, Bildung mit Filter, Haftbuch), nutzen Tokens, Foundations und Komponenten |
 | `scripts/` | Export (Figma, read-only), Build, Lint, Sprite |
 
 ## Einbinden
@@ -44,7 +46,7 @@ Oder nur die Tokens (z. B. wenn Craft eigene Basis-Styles hat):
 - **Kontexte statt Themes.** Ein Modul bekommt `data-context="primary-900"` (oder surface-100 … secondary-400) und alle semantischen Farben stellen sich darauf ein. Ohne Attribut gilt surface-50.
 - **Mobile first.** Phone-Werte in `:root`, Tablet ab 768px, Desktop ab 1024px. Weitere Breakpoints (480, 1280, 1440) sind als Tokens vorbereitet.
 - **Text Styles** als Klassen `.text-h1` … `.text-label-s` und als Element-Mapping (`h1`–`h6`, `p`, `blockquote`, `small`).
-- **Fokus** doppelter Ring innen 2px / außen 4px, nur bei `:focus-visible`.
+- **Fokus** doppelter Ring außen (innen 2px / außen 4px), nur bei Tastaturbedienung (`src/scripts/focus-modality.js`).
 - **Icons** per `<svg class="icon"><use href="/dist/icons/sprite.svg#icon-ArrowRight"></use></svg>`.
 
-Details, Entscheidungen und offene Punkte: [PLAN.md](PLAN.md). Arbeitsregeln: [CLAUDE.md](CLAUDE.md).
+Details: [docs/FIGMA-MAPPING.md](docs/FIGMA-MAPPING.md) (Zuordnung Figma → Tokens/CSS) und die README je Komponente in `src/components/`.

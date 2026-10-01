@@ -4,7 +4,7 @@
    nach Mausklick und bei programmatischem focus() (Safari/Firefox, auch auf Touch: Dialog öffnet →
    Fokus auf „Schließen“ → Ring, obwohl niemand die Tastatur benutzt hat).
    focus.css blendet deshalb bei data-focus-modality="pointer" jeden Fokusring aus, Formularfelder zeigen
-   dann den ruhigen 2-px-Rahmen (input.css). Entschieden 2026-09-29: kein Fokuszustand, den der Nutzer
+   dann den ruhigen 2-px-Rahmen (input.css). Grundsatz: kein Fokuszustand, den der Nutzer
    nicht selbst per Tastatur ausgelöst hat.
 
    - Tab (auch Shift+Tab) → keyboard.

@@ -101,9 +101,9 @@ Craft: `sgli:form-success` am `<form>` abfangen (`preventDefault()`), per `fetch
 - Bestätigung: Icon CheckCircle 48 in `color/feedback/success`, H6 + Body-M `color/text/secondary`, Gap 12 (Desktop 16 zwischen Icon und Text)
 - Abstände `space-8/12/16/24/48`
 
-## Abweichungen und offene Punkte
+## Abweichungen von Figma und Hinweise
 
-- Phone-Frames Kontakt und Anmeldung in Figma (`2753:30067`, `2753:30157`) stehen noch auf Padding 20 und „Section header / Mobile“. Umgesetzt ist das Filter-Muster (entschieden mit Danilo 2026-09-23), Figma zieht nach.
+- Phone-Panels Kontakt und Anmeldung folgen dem Muster des Filter-Panels. Die Figma-Frames (`2753:30067`, `2753:30157`) zeigen Padding 20 und „Section header / Mobile“.
 - Figma legt den Sticky Footer im Desktop-Frame in den Body, beim Filter daneben. Im Code liegt er immer neben dem Body (eine Struktur).
-- Der Kopftitel war im Filter-Prototyp bisher H3 nach Token (wächst ab md). Jetzt fest 24 px wie das Figma-Instance `section-header Breakpoint=Phone` in allen Panels und wie im Modal.
+- Der Kopftitel ist fest 24 px wie die Figma-Instanz `section-header Breakpoint=Phone` in allen Panels und wie im Modal.
 - Zwischen 768 und 1023 ist das Sheet so breit wie der Viewport, Formularreihen stehen dort schon nebeneinander (Container Query ab 440 px).

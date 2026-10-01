@@ -81,13 +81,13 @@
       right top / calc(100% - var(--cut-after-x)) 100% no-repeat;
 }
 
-/* Letztes Modul der Seite (entschieden 2026-09-30): kein Keil unten, das Modul schließt bündig mit dem
+/* Letztes Modul der Seite: kein Keil unten, das Modul schließt bündig mit dem
    Footer ab. Der Footer liegt außerhalb von <main>, das Modul ist dort das letzte Kind. */
 :where(main, .modules) > .cut-edges--after:last-child::after {
   display: none;
 }
 
-/* Kippen (.cut-edges--tilt, nur der obere Keil). Entschieden 2026-09-30: Drehpunkt oben links, das
+/* Kippen (.cut-edges--tilt, nur der obere Keil). Drehpunkt oben links, das
    rechte Ende der Diagonale fällt in die Figma-Endlage (280/1440 ≈ 11°). Start bei --cut-tilt-start der
    Keilhöhe (0.6 ≈ 6,7°). Der Streifen behält seine Höhe (kein Layoutsprung).
    Umsetzung: Grundfläche in Modulfarbe, darauf das Nachbar-Dreieck oben rechts, oben verankert und in
@@ -140,9 +140,8 @@
   }
 }
 
-/* Entschieden 2026-09-10: Keile belegen eigenen Platz (rechteckiger Container, Höhe = Shape-Höhe).
-   Die Overlap-Variante unten bleibt ungenutzt, bis Danilo die Module gesondert brieft (weitere
-   Funktionalität hinter den Cut-Edges, siehe PLAN.md To-dos). */
+/* Standard: Keile belegen eigenen Platz (rechteckiger Container, Höhe = Shape-Höhe).
+   Die Overlap-Variante unten ist vorbereitet, wird aber derzeit nicht genutzt. */
 .cut-edges--overlap {
   z-index: 1;
 }

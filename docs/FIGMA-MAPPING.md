@@ -33,7 +33,7 @@ Figma-Name wird nur normalisiert: Slash → Punkt (Token) bzw. Bindestrich (CSS)
 
 - **Font-Fallbacks:** Figma liefert `Switzer` / `IBM Plex Mono`, das Repo ergänzt `system-ui, sans-serif` bzw. `ui-monospace, monospace`.
 - **Semantic `color/accent/highlight`** ist nicht im Repo, weil Primitives denselben Pfad haben und der Wert in allen 7 Kontexten identisch ist. `--color-accent-highlight` kommt aus den Primitives.
-- **Line-Height / Letter-Spacing** werden aus den Text Styles gelesen, nicht aus den Typography-Variablen. Seit dem Scan vom 2026-09-10 sind beide identisch. H1 Letter-Spacing steht im Style als −2 px und wird als −2 % geführt (Entscheidung).
+- **Line-Height / Letter-Spacing** werden aus den Text Styles gelesen, nicht aus den Typography-Variablen. Seit dem Scan vom 2026-09-10 sind beide identisch. H1 Letter-Spacing steht im Style als −2 px und wird als −2 % geführt.
 - **Shadows** (Effect Styles shadow-sm/md/lg) sind vorerst nicht im Repo.
 - **Tablet-Grid** (12 / 16 / 24) existiert nur im Repo.
 - **Breakpoints** existieren nur im Repo. Figma-Modes Tablet/Desktop sind an md/lg gebunden.

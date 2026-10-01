@@ -28,4 +28,4 @@ Track 44 × 24 `radius-full`, Padding `space-4`, Thumb 16. Farben `color/toggle/
 ## Hinweise
 
 - `role="switch"` macht aus der Checkbox einen Schalter für Screenreader.
-- Kontrast von `toggle/track-off` auf surface-200 bis 400 und secondary-400 liegt unter 3:1 (Lint-Befund, in Figma zu lösen).
+- `toggle/track-off` erreicht in allen 7 Kontexten mindestens 3:1 (geprüft per `npm run tokens:lint`).

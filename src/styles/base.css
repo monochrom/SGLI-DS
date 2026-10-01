@@ -43,7 +43,7 @@ blockquote {
   letter-spacing: var(--letter-spacing-quote);
 }
 
-/* Links (entschieden 2026-10-01, Figma-Doku „Links“ auf 🎨 Foundations):
+/* Links (Figma-Doku „Links“ auf 🎨 Foundations):
    - immer in der Textfarbe der Umgebung und unterstrichen. Keine eigene Linkfarbe: Auf den
      7 Modulfarben ist keine einzelne Farbe überall lesbar (z. B. primary-900 auf primary-900).
    - Hover (nur mit Maus): der Unterstrich wird kräftiger, die Farbe bleibt.

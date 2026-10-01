@@ -98,9 +98,9 @@ Vollständige Beispiele (Kontakt, Anmeldung, Fehler): `form.html`.
 - Optionen der Selects (Anliegen, Einschränkungen, Sprache) sind Platzhalter, Figma zeigt nur die Labels. Inhalte pflegt die Redaktion.
 - Serverseitige Fehler mit denselben Klassen und ARIA-Attributen ausgeben, dann greift das Zurücksetzen beim Korrigieren automatisch.
 
-## Abweichungen und offene Punkte
+## Abweichungen von Figma und Hinweise
 
-- Einwilligungstext im Kontaktformular: Figma nutzt den Text der Anmeldung („Buchungsanfrage“). Im Kontakt steht „Anfrage“. Text klären.
-- Error-State von Select und Datum ohne WarningCircle (dort sitzt Caret bzw. Kalender/Uhr). In Figma prüfen, ob das Icon dort ersetzt wird.
-- Toggle-Abschnitte stehen in Figma auf „On“, im Code ist das der Startzustand. Ob Gruppenbesuch und Besondere Bedürfnisse standardmäßig aus sein sollen, entscheidet Danilo.
+- Einwilligungstext: Kontakt spricht von „Anfrage“, Anmeldung von „Buchungsanfrage“. Figma nutzt im Kontakt den Text der Anmeldung.
+- Error-State von Select und Datum ohne WarningCircle, dort sitzt Caret bzw. Kalender/Uhr.
+- Toggle-Abschnitte (Gruppenbesuch, Besondere Bedürfnisse) starten wie in Figma auf „On“.
 - Anrede ist nicht Pflicht (kein `*` in Figma).

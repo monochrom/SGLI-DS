@@ -70,9 +70,9 @@ Sprachname immer in der eigenen Sprache (`lang`), aktuelle Sprache mit `aria-cur
 - Intro Body/M `color/text/secondary`, Kicker Label-S `color/text/secondary`
 - Abstände `space-8/12/16/24/40` (Kopf → Inhalt: confirm 40, language Phone 24 / ab lg 40), Close-Button = Button/Icon ohne Rahmen (Figma-Override wie im Menü)
 
-## Abweichungen und offene Punkte
+## Hinweise
 
-- `color/filter-cell/*` ist noch nicht in `tokens/` exportiert. `modal.css` trägt lokale Fallbacks wie der Prototyp.
-- `--motion-*` sind noch keine Figma-Variablen, sondern Foundation-CSS (`src/styles/motion.css`).
+- Die Zeilen der Sprachauswahl nutzen die Tokens `color/filter-cell/*`.
+- `--motion-*` sind keine Figma-Variablen, sondern Foundation-CSS (`src/styles/motion.css`).
 - Umschaltpunkt Phone → Desktop bei lg (1024), gleich wie Button-Größe und Off-Canvas. Zwischen 768 und 1023 steht das Modal 520 breit mit Phone-Innenleben.
 - Fokusring der Sprachzeilen innen (Scroll-Container), alle anderen außen. Auf Phone hat `.modal__content` seitlich 6 px Luft für den Außenring der Buttons.
