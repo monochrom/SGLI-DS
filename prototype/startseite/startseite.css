@@ -548,11 +548,11 @@ body { background-color: var(--color-bg-page); }
    Bild 343 : 344 mit Schnitt unten links (Transparenz im Bild), Inhalt → Bild 48.
    Ab Tablet: Bild 16 : 9 (1360 × 765), Text 553 breit rechtsbündig, Buttons nebeneinander.
    Desktop: Titel → Text 112, Inhalt → Bild 80.
-   Grundriss-Linie (ground-plan-outline) liegt hinter dem Inhalt, 8 px weiß. Phone: 255 % der Breite,
-   links −91,7 %, 118 px von oben (Figma-Constraints links/rechts). Ab Tablet wie Figma an Ober- und
-   Unterkante des Heros gebunden (0,33 % / 0,31 %), Breite aus dem Seitenverhältnis, mittig +5 px.
-   Der Hero schneidet nur seitlich ab (overflow-x: clip): Die Linie ist breiter als der Viewport, darf
-   unten aber über den Rand laufen (Phone: Spitze ragt je nach Texthöhe ins nächste Modul, gleiche Farbe).
+   Grundriss-Linie (ground-plan-outline) liegt hinter dem Inhalt, 8 px weiß, Größe immer aus der
+   Hero-Höhe (Breite aus dem Seitenverhältnis), damit sie bei jeder Breite im Hero bleibt.
+   Phone: 118 px von oben, 28 px von unten, Mitte 53 px links der Viewport-Mitte (Figma bei 375).
+   Ab Tablet an Ober- und Unterkante gebunden (0,33 % / 0,31 %), mittig +5 px.
+   Der Hero schneidet nur seitlich ab (overflow-x: clip): Die Linie ist breiter als der Viewport.
    Bewegung (scroll-motion.js, Drehpunkt oben Mitte): Linie 75 → 100 %, Bild 60 → 100 %. */
 .hero-home {
   position: relative;
@@ -562,9 +562,11 @@ body { background-color: var(--color-bg-page); }
 .hero-home__plan {
   position: absolute;
   top: 118px;
-  left: -91.73%;
-  width: 254.93%;
+  bottom: 28px;
+  left: calc(50% - 53px);
+  width: auto; /* Höhe aus top/bottom, Breite aus aspect-ratio */
   aspect-ratio: 1480 / 1520;
+  translate: -50% 0; /* einzelne Property: scroll-motion.js setzt scale dazu */
   color: var(--color-neutral-0);
   pointer-events: none;
   transform-origin: 50% 0;
@@ -617,8 +619,6 @@ body { background-color: var(--color-bg-page); }
     top: 0.33%;
     bottom: 0.31%;
     left: calc(50% + 5px);
-    width: auto; /* Höhe aus top/bottom, Breite aus aspect-ratio (wie Figma) */
-    translate: -50% 0; /* einzelne Property: scroll-motion.js setzt scale dazu */
   }
   .hero-home__content { gap: var(--space-48); }
   .hero-home__desc { justify-self: end; width: min(553px, 100%); }
